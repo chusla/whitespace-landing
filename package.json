@@ -1,0 +1,15 @@
+{
+  "name": "whitespace-landing",
+  "version": "1.0.0",
+  "description": "Whitespace meditation app landing page",
+  "type": "module",
+  "scripts": {
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
