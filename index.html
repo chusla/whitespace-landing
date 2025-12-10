@@ -245,8 +245,6 @@
             }
         }
     </style>
-    <!-- Vercel Speed Insights - loaded via ES module -->
-    <script type="module" src="speed-insights.js"></script>
 </head>
 <body>
     <canvas id="phosphene-canvas"></canvas>
@@ -359,34 +357,63 @@
         const emailInput = document.getElementById('emailInput');
         const submitBtn = form.querySelector('.submit-btn');
 
+        console.log('✅ Form handler initialized');
+        console.log('Form elements:', { form, emailInput, submitBtn, successMessage });
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            console.log('🔵 Form submitted');
+            console.log('Email value:', emailInput.value);
             
             // Disable button during submission
             submitBtn.disabled = true;
             submitBtn.textContent = 'Joining...';
             
-            // Replace with your actual form submission logic
-            // Example: await fetch('/api/subscribe', { 
-            //     method: 'POST', 
-            //     body: JSON.stringify({ email: emailInput.value }) 
-            // });
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 800));
-            
-            // Show success message
-            successMessage.classList.add('show');
-            emailInput.value = '';
-            submitBtn.textContent = 'Joined!';
-            
-            // Reset button after delay
-            setTimeout(() => {
+            try {
+                console.log('📤 Sending request to /api/subscribe');
+                
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailInput.value })
+                });
+
+                console.log('📥 Response status:', response.status);
+                console.log('📥 Response ok:', response.ok);
+
+                const data = await response.json();
+                console.log('📥 Response data:', data);
+                
+                if (response.ok) {
+                    console.log('✅ Success!');
+                    // Show success message
+                    successMessage.textContent = data.message || '✓ You\'re on the list. We\'ll notify you when we launch.';
+                    successMessage.classList.add('show');
+                    emailInput.value = '';
+                    submitBtn.textContent = 'Joined!';
+                    
+                    // Reset button after delay
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Join Waitlist';
+                        successMessage.classList.remove('show');
+                    }, 3000);
+                } else {
+                    console.error('❌ Error response:', data);
+                    alert(data.error || 'Something went wrong. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Join Waitlist';
+                }
+            } catch (error) {
+                console.error('❌ Fetch error:', error);
+                console.error('Error details:', error.message);
+                alert('Failed to join waitlist. Please try again.');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Join Waitlist';
-                successMessage.classList.remove('show');
-            }, 3000);
+            }
         });
+
+        console.log('✅ Event listener attached');
 
         // Auto-focus on desktop
         if (window.innerWidth > 768) {
@@ -395,5 +422,8 @@
             }, 1000);
         }
     </script>
+    
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
