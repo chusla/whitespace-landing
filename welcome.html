@@ -1,163 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png">
-    
-    <title>Welcome to Whitespace</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
+        <link rel="icon" type="image/png" href="/favicon.png">
+        
+        <title>Welcome to Whitespace</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+        <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
         }
-
+        
         body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            font-family: 'Inter', -apple-system, sans-serif;
-            display: flex;
-            flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        font-family: 'Inter', -apple-system, sans-serif;
+        display: flex;
+        flex-direction: column;
         }
-
+        
         #phosphene-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
         }
-
+        
         .container {
-            position: relative;
-            z-index: 1;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
         }
-
+        
         .content {
-            max-width: 600px;
-            text-align: center;
+        max-width: 600px;
+        text-align: center;
         }
-
+        
         .message-container {
-            margin-bottom: 48px;
+        margin-bottom: 48px;
         }
-
+        
         .word {
-            font-family: 'Crimson Pro', serif;
-            font-size: clamp(28px, 6vw, 42px);
-            line-height: 1.5;
-            color: #ffffff;
-            opacity: 0;
-            display: inline-block;
-            margin-right: 0.3em;
+        font-family: 'Crimson Pro', serif;
+        font-size: clamp(28px, 6vw, 42px);
+        line-height: 1.5;
+        color: #ffffff;
+        opacity: 0;
+        display: inline-block;
+        margin-right: 0.3em;
         }
-
+                
         .word.highlight {
-            color: rgba(107, 140, 255, 0.9);
+            font-weight: 500;
         }
-
+        
         .tagline {
-            font-family: 'Crimson Pro', serif;
-            font-size: clamp(18px, 4vw, 24px);
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 24px;
-            opacity: 0;
-            line-height: 1.6;
+        font-family: 'Crimson Pro', serif;
+        font-size: clamp(18px, 4vw, 24px);
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 24px;
+        opacity: 0;
+        line-height: 1.6;
         }
-
+        
         .subheader {
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.5);
-            opacity: 0;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.5);
+        opacity: 0;
         }
-
+        
         .footer {
-            position: absolute;
-            bottom: 60px;
-            text-align: center;
-            opacity: 0;
+        position: absolute;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        opacity: 0;
         }
-
+        
         .footer-text {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 300;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 300;
         }
-
+        
         @keyframes fadeInWord {
-            to {
-                opacity: 1;
-            }
+        to {
+            opacity: 1;
         }
-
+        }
+        
         @keyframes fadeInElement {
-            to {
-                opacity: 1;
-            }
+        to {
+            opacity: 1;
         }
-
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 24px;
-            }
-
-            .message-container {
-                margin-bottom: 32px;
-            }
-
-            .tagline {
-                margin-bottom: 20px;
-            }
+        .container {
+            padding: 24px;
         }
-
+        
+        .message-container {
+            margin-bottom: 32px;
+        }
+        
+        .tagline {
+            margin-bottom: 20px;
+        }
+        }
+        
         @media (max-height: 700px) {
-            .message-container {
-                margin-bottom: 32px;
-            }
+        .message-container {
+            margin-bottom: 32px;
         }
-    </style>
-</head>
-<body>
-    <canvas id="phosphene-canvas"></canvas>
-
-    <div class="container">
+        }
+        </style>
+        </head>
+        <body>
+        <canvas id="phosphene-canvas"></canvas>
+        
+        <div class="container">
         <div class="content">
-            <div class="message-container" id="message"></div>
-            <div class="tagline" id="tagline">Your personal space for sleep, calm and focus.</div>
-            <div class="subheader" id="subheader">We'll let you know when your space is ready.</div>
+        <div class="message-container" id="message"></div>
+        <div class="tagline" id="tagline">Your personal space for sleep, calm and focus.</div>
+        <div class="subheader" id="subheader">We'll let you know when your space is ready.</div>
         </div>
-    </div>
-
-    <div class="footer" id="footer">
+        </div>
+        
+        <div class="footer" id="footer">
         <p class="footer-text">© 2025 Whitespace</p>
-    </div>
-
-    <script>
+        </div>
+        
+        <script>
         // Get name from URL
         const params = new URLSearchParams(window.location.search);
         const userName = params.get('name') || 'friend';
-
+        
         // Capitalize first letter
         const displayName = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
-
+        
         // Message with word-by-word animation
         const message = `Welcome to Whitespace, ${displayName}.`;
         const words = message.split(' ');
@@ -165,108 +167,108 @@
         const tagline = document.getElementById('tagline');
         const subheader = document.getElementById('subheader');
         const footer = document.getElementById('footer');
-
+        
         // Render words
         words.forEach((word, index) => {
-            const span = document.createElement('span');
-            span.className = 'word';
-            
-            // Highlight the user's name (last word with period)
-            if (word === `${displayName}.`) {
-                span.classList.add('highlight');
-            }
-            
-            span.textContent = word + ' ';
-            messageContainer.appendChild(span);
-
-            // Animate each word (400ms initial delay + 300ms per word)
-            setTimeout(() => {
-                span.style.animation = 'fadeInWord 300ms ease forwards';
-            }, 400 + index * 300);
+        const span = document.createElement('span');
+        span.className = 'word';
+        
+        // Highlight the user's name (last word with period)
+        if (word === `${displayName}.`) {
+            span.classList.add('highlight');
+        }
+        
+        span.textContent = word + ' ';
+        messageContainer.appendChild(span);
+        
+        // Animate each word (400ms initial delay + 300ms per word)
+        setTimeout(() => {
+            span.style.animation = 'fadeInWord 300ms ease forwards';
+        }, 400 + index * 300);
         });
-
+        
         // Calculate timing for subsequent elements
         const lastWordTime = 400 + words.length * 300;
-
+        
         // Show tagline 600ms after last word
         setTimeout(() => {
-            tagline.style.animation = 'fadeInElement 400ms ease forwards';
+        tagline.style.animation = 'fadeInElement 400ms ease forwards';
         }, lastWordTime + 600);
-
+        
         // Show subheader 300ms after tagline
         setTimeout(() => {
-            subheader.style.animation = 'fadeInElement 400ms ease forwards';
+        subheader.style.animation = 'fadeInElement 400ms ease forwards';
         }, lastWordTime + 1000);
-
+        
         // Show footer 300ms after subheader
         setTimeout(() => {
-            footer.style.animation = 'fadeInElement 400ms ease forwards';
+        footer.style.animation = 'fadeInElement 400ms ease forwards';
         }, lastWordTime + 1300);
-
+        
         // Phosphene background (same as landing page)
         const canvas = document.getElementById('phosphene-canvas');
         const ctx = canvas.getContext('2d');
         let phosphenes = [];
-
+        
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         }
-
+        
         function createPhosphenes() {
-            phosphenes = [];
-            const count = 60;
-            for (let i = 0; i < count; i++) {
-                const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
-                phosphenes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 150 + 80,
-                    opacity: Math.random() * 0.04 + 0.015,
-                    vx: (Math.random() - 0.5) * 0.2,
-                    vy: (Math.random() - 0.5) * 0.2,
-                    color: `hsl(${hue}, 70%, 60%)`
-                });
-            }
-        }
-
-        function animatePhosphenes() {
-            ctx.fillStyle = 'rgb(10, 10, 15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            phosphenes.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < -p.radius) p.x = canvas.width + p.radius;
-                if (p.x > canvas.width + p.radius) p.x = -p.radius;
-                if (p.y < -p.radius) p.y = canvas.height + p.radius;
-                if (p.y > canvas.height + p.radius) p.y = -p.radius;
-
-                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
-                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
+        phosphenes = [];
+        const count = 60;
+        for (let i = 0; i < count; i++) {
+            const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
+            phosphenes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 150 + 80,
+                opacity: Math.random() * 0.04 + 0.015,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2,
+                color: `hsl(${hue}, 70%, 60%)`
             });
-
-            requestAnimationFrame(animatePhosphenes);
         }
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            createPhosphenes();
+        }
+        
+        function animatePhosphenes() {
+        ctx.fillStyle = 'rgb(10, 10, 15)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        phosphenes.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+        
+            if (p.x < -p.radius) p.x = canvas.width + p.radius;
+            if (p.x > canvas.width + p.radius) p.x = -p.radius;
+            if (p.y < -p.radius) p.y = canvas.height + p.radius;
+            if (p.y > canvas.height + p.radius) p.y = -p.radius;
+        
+            const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+            gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
         });
-
+        
+        requestAnimationFrame(animatePhosphenes);
+        }
+        
+        window.addEventListener('resize', () => {
+        resizeCanvas();
+        createPhosphenes();
+        });
+        
         resizeCanvas();
         createPhosphenes();
         animatePhosphenes();
-    </script>
-    
-    <!-- Vercel Analytics -->
-    <script defer src="/_vercel/insights/script.js"></script>
-</body>
-</html>
+        </script>
+        
+        <!-- Vercel Analytics -->
+        <script defer src="/_vercel/insights/script.js"></script>
+        </body>
+        </html>
