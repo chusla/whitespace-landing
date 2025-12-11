@@ -58,67 +58,30 @@
             margin-right: 0.3em;
         }
 
-        .word.username {
+        .word.highlight {
             color: rgba(107, 140, 255, 0.9);
         }
 
-        .play-button-wrapper {
-            margin-top: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            width: 180px;
-            height: 180px;
+        .subheader {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 48px;
             opacity: 0;
         }
 
-        .breathing-circle {
+        .footer {
             position: absolute;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            bottom: 60px;
+            text-align: center;
+            opacity: 0;
         }
 
-        .play-button {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.03);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .play-button:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .play-icon {
-            width: 0;
-            height: 0;
-            border-left: 14px solid rgba(255, 255, 255, 0.8);
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            margin-left: 3px;
-        }
-
-        .pause-icon {
-            display: flex;
-            gap: 3px;
-        }
-
-        .pause-bar {
-            width: 3px;
-            height: 16px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 2px;
+        .footer-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
         }
 
         @keyframes fadeInWord {
@@ -127,9 +90,24 @@
             }
         }
 
-        @keyframes fadeInControls {
+        @keyframes fadeInElement {
             to {
                 opacity: 1;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px;
+            }
+
+            .word {
+                font-size: 24px;
+            }
+
+            .subheader {
+                margin-top: 32px;
             }
         }
     </style>
@@ -139,185 +117,57 @@
 
     <div class="container">
         <div class="message-container" id="message"></div>
-        
-        <div class="play-button-wrapper" id="playWrapper">
-            <div class="breathing-circle" id="breathingCircle"></div>
-            <button class="play-button" id="playButton">
-                <div class="play-icon" id="playIcon"></div>
-            </button>
-        </div>
+        <div class="subheader" id="subheader">We'll let you know when your space is ready.</div>
+    </div>
+
+    <div class="footer" id="footer">
+        <p class="footer-text">© 2025 Whitespace</p>
     </div>
 
     <script>
         // Get name from URL
         const params = new URLSearchParams(window.location.search);
-        const userName = params.get('name') || 'Friend';
+        const userName = params.get('name') || 'friend';
+
+        // Capitalize first letter
+        const displayName = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
 
         // Message with word-by-word animation
-        const message = `Welcome to Whitespace, ${userName}.`;
+        const message = `Welcome to Whitespace, ${displayName}, your personal space for sleep, calm and focus.`;
         const words = message.split(' ');
         const messageContainer = document.getElementById('message');
-        const playWrapper = document.getElementById('playWrapper');
-        const playButton = document.getElementById('playButton');
-        const playIcon = document.getElementById('playIcon');
-        const breathingCircle = document.getElementById('breathingCircle');
-
-        let isPlaying = false;
-        let audio = null;
+        const subheader = document.getElementById('subheader');
+        const footer = document.getElementById('footer');
 
         // Render words
         words.forEach((word, index) => {
             const span = document.createElement('span');
             span.className = 'word';
-            if (word === `${userName}.`) {
-                span.classList.add('username');
+            
+            // Highlight the user's name
+            if (word === `${displayName},`) {
+                span.classList.add('highlight');
             }
+            
             span.textContent = word + ' ';
             messageContainer.appendChild(span);
 
-            // Animate each word
+            // Animate each word (400ms initial delay + 300ms per word)
             setTimeout(() => {
                 span.style.animation = 'fadeInWord 300ms ease forwards';
             }, 400 + index * 300);
         });
 
-        // Show play button after last word
+        // Show subheader 600ms after last word
         setTimeout(() => {
-            playWrapper.style.animation = 'fadeInControls 400ms ease forwards';
-            
-            // Load audio
-            fetch(`/api/generate-welcome?name=${encodeURIComponent(userName)}`)
-                .then(r => r.json())
-                .then(data => {
-                    if (data.audioUrl) {
-                        audio = new Audio(data.audioUrl);
-                        audio.addEventListener('ended', () => {
-                            isPlaying = false;
-                            updatePlayButton();
-                            stopBreathing();
-                        });
-                    }
-                })
-                .catch(err => console.error('Failed to load audio:', err));
+            subheader.style.animation = 'fadeInElement 400ms ease forwards';
         }, 400 + words.length * 300 + 600);
 
-        // Play/pause handler
-        playButton.addEventListener('click', async () => {
-            if (!audio) return;
-
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                stopBreathing();
-            } else {
-                try {
-                    await audio.play();
-                    isPlaying = true;
-                    startBreathing();
-                } catch (err) {
-                    console.error('Playback error:', err);
-                }
-            }
-            updatePlayButton();
-        });
-
-        function updatePlayButton() {
-            if (isPlaying) {
-                playIcon.className = 'pause-icon';
-                playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
-            } else {
-                playIcon.className = 'play-icon';
-                playIcon.innerHTML = '';
-            }
-        }
-
-        function startBreathing() {
-            breathingCircle.style.transition = 'transform 2s ease-in-out, opacity 2s ease-in-out';
-            breathingCircle.style.animation = 'none';
-            
-            let growing = true;
-            const breathe = () => {
-                if (!isPlaying) return;
-                
-                if (growing) {
-                    breathingCircle.style.transform = 'scale(1.1)';
-                    breathingCircle.style.opacity = '0.9';
-                } else {
-                    breathingCircle.style.transform = 'scale(0.9)';
-                    breathingCircle.style.opacity = '0.3';
-                }
-                growing = !growing;
-                setTimeout(breathe, 2000);
-            };
-            breathe();
-        }
-
-        function stopBreathing() {
-            breathingCircle.style.transform = 'scale(1)';
-            breathingCircle.style.opacity = '0.3';
-        }
+        // Show footer 300ms after subheader
+        setTimeout(() => {
+            footer.style.animation = 'fadeInElement 400ms ease forwards';
+        }, 400 + words.length * 300 + 900);
 
         // Phosphene background (same as landing page)
         const canvas = document.getElementById('phosphene-canvas');
-        const ctx = canvas.getContext('2d');
-        let phosphenes = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        function createPhosphenes() {
-            phosphenes = [];
-            const count = 60;
-            for (let i = 0; i < count; i++) {
-                const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
-                phosphenes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 150 + 80,
-                    opacity: Math.random() * 0.04 + 0.015,
-                    vx: (Math.random() - 0.5) * 0.2,
-                    vy: (Math.random() - 0.5) * 0.2,
-                    color: `hsl(${hue}, 70%, 60%)`
-                });
-            }
-        }
-
-        function animatePhosphenes() {
-            ctx.fillStyle = 'rgb(10, 10, 15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            phosphenes.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < -p.radius) p.x = canvas.width + p.radius;
-                if (p.x > canvas.width + p.radius) p.x = -p.radius;
-                if (p.y < -p.radius) p.y = canvas.height + p.radius;
-                if (p.y > canvas.height + p.radius) p.y = -p.radius;
-
-                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
-                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            requestAnimationFrame(animatePhosphenes);
-        }
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            createPhosphenes();
-        });
-
-        resizeCanvas();
-        createPhosphenes();
-        animatePhosphenes();
-    </script>
-</body>
-</html>
+        const ctx = canvas.ge
