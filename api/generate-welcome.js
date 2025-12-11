@@ -18,8 +18,8 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         script,
-        voiceId: 'your-noa-voice-id', // Your ElevenLabs voice ID for Noa
-        backgroundMusic: 'ambient-1' // Or whatever your background track is
+        voiceId: 'ROMJ9yK1NAMuu1ggrjDW', // Your ElevenLabs voice ID for Noa
+        backgroundMusic: 'forest-ambience' // Or whatever your background track is
       })
     });
 
