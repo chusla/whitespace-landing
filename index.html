@@ -230,4 +230,195 @@
             }
         }
 
-        @media (max-height: 700px
+        @media (max-height: 700px) {
+            .container {
+                padding: 40px 40px 60px;
+            }
+
+            .heading {
+                margin-bottom: 24px;
+            }
+
+            .subheading {
+                margin-bottom: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="phosphene-canvas"></canvas>
+
+    <div class="container">
+        <div class="logo-container">
+            <img src="better_logo__3_.png" alt="Whitespace" class="logo">
+        </div>
+
+        <div class="content">
+            <h1 class="heading">Make space for yourself to focus.</h1>
+            
+            <p class="subheading">Be among the first to experience meditation created uniquely for you</p>
+            
+            <form class="input-container" id="emailForm">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        class="name-input email-input" 
+                        placeholder="First name" 
+                        required
+                        id="nameInput"
+                        autocomplete="given-name"
+                        style="margin-bottom: 20px;"
+                    >
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        placeholder="your@email.com" 
+                        required
+                        id="emailInput"
+                        autocomplete="email"
+                    >
+                </div>
+                
+                <button type="submit" class="submit-btn">Join Waitlist</button>
+                
+                <div class="success-message" id="successMessage">
+                    ✓ Preparing your welcome...
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">© 2025 Whitespace</p>
+        </div>
+    </div>
+
+    <script>
+        // Phosphene Background
+        const canvas = document.getElementById('phosphene-canvas');
+        const ctx = canvas.getContext('2d');
+        let phosphenes = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createPhosphenes() {
+            phosphenes = [];
+            const count = 60;
+            for (let i = 0; i < count; i++) {
+                const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
+                phosphenes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 150 + 80,
+                    opacity: Math.random() * 0.04 + 0.015,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    color: `hsl(${hue}, 70%, 60%)`
+                });
+            }
+        }
+
+        function animatePhosphenes() {
+            ctx.fillStyle = 'rgb(10, 10, 15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            phosphenes.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < -p.radius) p.x = canvas.width + p.radius;
+                if (p.x > canvas.width + p.radius) p.x = -p.radius;
+                if (p.y < -p.radius) p.y = canvas.height + p.radius;
+                if (p.y > canvas.height + p.radius) p.y = -p.radius;
+
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animatePhosphenes);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createPhosphenes();
+        });
+
+        resizeCanvas();
+        createPhosphenes();
+        animatePhosphenes();
+
+        // Form handling
+        const form = document.getElementById('emailForm');
+        const successMessage = document.getElementById('successMessage');
+        const emailInput = document.getElementById('emailInput');
+        const submitBtn = form.querySelector('.submit-btn');
+
+        console.log('✅ Form handler initialized');
+        console.log('Form elements:', { form, emailInput, submitBtn, successMessage });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log('🔵 Form submitted');
+            
+            const name = document.getElementById('nameInput').value;
+            const email = emailInput.value;
+            
+            console.log('Name:', name, 'Email:', email);
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Joining...';
+            
+            try {
+                console.log('📤 Sending request to /api/subscribe');
+                
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, name })
+                });
+
+                console.log('📥 Response status:', response.status);
+
+                const data = await response.json();
+                console.log('📥 Response data:', data);
+                
+                if (response.ok) {
+                    console.log('✅ Success! Redirecting to welcome...');
+                    // Redirect to welcome page with name
+                    window.location.href = `/welcome.html?name=${encodeURIComponent(name)}`;
+                } else {
+                    console.error('❌ Error response:', data);
+                    alert(data.error || 'Something went wrong. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Join Waitlist';
+                }
+            } catch (error) {
+                console.error('❌ Fetch error:', error);
+                alert('Failed to join waitlist. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Join Waitlist';
+            }
+        });
+
+        console.log('✅ Event listener attached');
+
+        // Auto-focus on desktop
+        if (window.innerWidth > 768) {
+            setTimeout(() => {
+                document.getElementById('nameInput').focus();
+            }, 1000);
+        }
+    </script>
+    
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
