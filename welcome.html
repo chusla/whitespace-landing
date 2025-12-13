@@ -95,6 +95,7 @@
             right: 0;
             text-align: center;
             opacity: 0;
+            z-index: 2;  /* Add this line - ensures footer is above canvas (z-index: 0) */
         }
 
         .footer-text {
@@ -116,6 +117,7 @@
             text-decoration: none;
             font-size: 13px;
             transition: color 0.2s ease;
+            pointer-events: auto;  /* Add this line - ensures links are clickable */
         }
 
         .footer-link:hover {
