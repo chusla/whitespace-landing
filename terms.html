@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <title>Terms of Service — Whitespace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: rgb(10, 10, 15);
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        #phosphene-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 0 30px rgba(107, 140, 255, 0.4));
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .last-updated {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+        }
+
+        .content {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .content h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: #ffffff;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: #ffffff;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            margin-bottom: 16px;
+        }
+
+        .content ul, .content ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .content hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 40px 0;
+        }
+
+        .content strong {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .content h2 {
+                font-size: 24px;
+            }
+
+            .content h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="phosphene-canvas"></canvas>
+
+    <div class="container">
+        <div class="header">
+            <a href="/"><img src="better_logo__3_.png" alt="Whitespace" class="logo"></a>
+            <h1>Terms of Service</h1>
+            <p class="last-updated">Last Updated: December 2025</p>
+        </div>
+
+        <div class="content">
+            <p>Welcome to Whitespace. These Terms of Service ("Terms") govern your use of the Whitespace mobile application and related services (collectively, the "Service"). By using Whitespace, you agree to these Terms.</p>
+
+            <hr>
+
+            <h2>1. ABOUT WHITESPACE</h2>
+            <p>Whitespace is a personalized meditation and audio wellness application. The Service uses artificial intelligence to generate customized audio sessions based on your inputs, preferences, and stated intentions. Sessions are created using third-party text generation and voice synthesis technologies.</p>
+
+            <h2>2. ACCOUNT REGISTRATION</h2>
+            
+            <h3>2.1 Eligibility</h3>
+            <p>You must be at least 13 years old to use Whitespace. If you are under 18, you represent that your parent or legal guardian has reviewed and agreed to these Terms.</p>
+
+            <h3>2.2 Account Security</h3>
+            <p>You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account. Notify us immediately of any unauthorized use.</p>
+
+            <h3>2.3 Anonymous Use</h3>
+            <p>You may use certain features of Whitespace without creating an account. Anonymous usage is subject to these Terms. If you later create an account, your anonymous data may be linked to your account.</p>
+
+            <h2>3. CREDITS AND SUBSCRIPTIONS</h2>
+
+            <h3>3.1 Credit System</h3>
+            <p>Whitespace uses a credit-based system for generating personalized audio sessions. Different session lengths and formats require different numbers of credits. The number of credits required for any session is displayed in the app before generation.</p>
+            <p>Session durations are approximate. Actual output length may vary based on content, pacing, and your experience level settings. Credit requirements may change as the Service evolves.</p>
+
+            <h3>3.2 Free Credits</h3>
+            <p>New users may receive complimentary credits upon signup or email verification. Additional credits may be earned through referral programs or promotional offers. Free credits are subject to availability and may be modified or discontinued at any time without notice.</p>
+
+            <h3>3.3 Subscription Plans</h3>
+            <p>Whitespace offers one or more subscription plans that provide recurring credits and access to premium features. The specific plans, pricing, credit amounts, and benefits available to you are displayed in the app at the time of purchase.</p>
+            <p>Subscription prices are in US dollars and may vary by region. Prices are subject to change with notice.</p>
+
+            <h3>3.4 Credit Expiration and Rollover</h3>
+            <ul>
+                <li>Subscription credits are granted at the start of each billing cycle</li>
+                <li>Unused credits may roll over for a limited period, as described in the app</li>
+                <li>Rolled-over credits expire at the end of the applicable rollover period</li>
+                <li>Credits have no cash value and cannot be transferred between accounts except as explicitly permitted</li>
+            </ul>
+
+            <h3>3.5 À La Carte Purchases</h3>
+            <p>Individual credit packs may be purchased without a subscription. Credit pack pricing and quantities are displayed in the app at the time of purchase. Purchased credits do not expire but have no cash value and are non-transferable.</p>
+
+            <h3>3.6 Billing and Renewal</h3>
+            <ul>
+                <li>Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period</li>
+                <li>Payment is charged to your Apple ID or Google Play account at confirmation of purchase</li>
+                <li>Manage subscriptions and turn off auto-renewal in your device's account settings</li>
+            </ul>
+
+            <h3>3.7 Cancellation</h3>
+            <p>You may cancel your subscription at any time through your device's account settings. Upon cancellation:</p>
+            <ul>
+                <li>You retain access to subscription benefits until the end of the current billing period</li>
+                <li>Unused credits remain available until they expire per Section 3.4</li>
+                <li>No refunds are provided for partial billing periods</li>
+            </ul>
+
+            <h3>3.8 Refunds</h3>
+            <p>Refund requests are handled according to Apple App Store and Google Play Store policies. We do not provide direct refunds for in-app purchases.</p>
+
+            <h2>4. GIFTS AND GIFT CREDITS</h2>
+
+            <h3>4.1 Purchasing Gifts</h3>
+            <p>Whitespace may offer the ability to purchase gifts in the form of credits or time-limited access for others. Gifts are not subscriptions for the purchaser. Gift options and pricing are displayed in the app at the time of purchase.</p>
+            <p>Gift purchases are final and non-refundable once the gift code is generated.</p>
+
+            <h3>4.2 Gift Codes</h3>
+            <ul>
+                <li>Gift codes are valid for the period specified at the time of purchase</li>
+                <li>Codes may only be redeemed once</li>
+                <li>Lost or stolen codes cannot be replaced</li>
+                <li>The purchaser may not redeem their own gift code</li>
+            </ul>
+
+            <h3>4.3 Gift Redemption</h3>
+            <p>When a gift is redeemed, the recipient receives the associated credits or access immediately. Gift recipients must agree to these Terms upon redemption.</p>
+
+            <h3>4.4 Scheduled Delivery</h3>
+            <p>Gifts may be scheduled for future delivery. We are not responsible for delivery failures due to incorrect recipient information.</p>
+
+            <h2>5. REFERRAL PROGRAM</h2>
+
+            <h3>5.1 Earning Referral Credits</h3>
+            <p>You may earn credits by referring new users to Whitespace. Referral rewards and the conditions for earning them are described in the app.</p>
+
+            <h3>5.2 Referral Limits</h3>
+            <p>To prevent abuse, referral rewards are subject to rate limits. Current limits are displayed in the app and may be adjusted at any time.</p>
+
+            <h3>5.3 Prohibited Referral Activities</h3>
+            <p>The following are prohibited and may result in forfeiture of credits and account termination:</p>
+            <ul>
+                <li>Self-referrals or creating multiple accounts</li>
+                <li>Automated or bot-generated referrals</li>
+                <li>Fraudulent or deceptive referral practices</li>
+                <li>Purchasing or selling referral codes</li>
+            </ul>
+
+            <h2>6. USER CONTENT AND CONDUCT</h2>
+
+            <h3>6.1 Your Inputs</h3>
+            <p>You retain ownership of the text inputs you provide (intentions, goals, preferences). By submitting inputs, you grant Whitespace a license to use them for generating your sessions and improving our Service.</p>
+
+            <h3>6.2 Generated Content</h3>
+            <p>Audio sessions generated by Whitespace are created for your personal, non-commercial use. You may:</p>
+            <ul>
+                <li>Listen to your sessions on any personal device</li>
+                <li>Download sessions for offline personal use</li>
+                <li>Share sessions with friends and family for personal use</li>
+            </ul>
+            <p>You may not:</p>
+            <ul>
+                <li>Sell, license, or commercially distribute generated sessions</li>
+                <li>Use generated content to train AI models</li>
+                <li>Remove or alter any attribution or metadata</li>
+                <li>Claim generated content as entirely your own original creation</li>
+            </ul>
+
+            <h3>6.3 Prohibited Uses</h3>
+            <p>You agree not to use Whitespace to:</p>
+            <ul>
+                <li>Generate content that is harmful, abusive, or illegal</li>
+                <li>Attempt to bypass usage limits or security measures</li>
+                <li>Interfere with or disrupt the Service</li>
+                <li>Violate any applicable laws or regulations</li>
+            </ul>
+
+            <h2>7. INTELLECTUAL PROPERTY</h2>
+
+            <h3>7.1 Whitespace Property</h3>
+            <p>The Whitespace name, logo, app design, underlying technology, and all original content are owned by Whitespace or its licensors and protected by intellectual property laws.</p>
+
+            <h3>7.2 Third-Party Services</h3>
+            <p>Whitespace uses third-party services for text generation, voice synthesis, data storage, and subscription management. Your use of Whitespace is also subject to these providers' terms of service.</p>
+
+            <h2>8. DISCLAIMERS</h2>
+
+            <h3>8.1 Not Medical Advice</h3>
+            <p>Whitespace is a wellness tool, not a medical device or treatment. The Service is not intended to diagnose, treat, cure, or prevent any medical or psychological condition. Always consult qualified healthcare professionals for medical concerns.</p>
+
+            <h3>8.2 AI-Generated Content</h3>
+            <p>Sessions are generated by artificial intelligence and may occasionally produce unexpected, inaccurate, or inappropriate content. We continuously work to improve quality but cannot guarantee perfection.</p>
+
+            <h3>8.3 Service Availability</h3>
+            <p>We strive for high availability but do not guarantee uninterrupted access. Session generation depends on third-party services that may experience downtime.</p>
+
+            <h3>8.4 No Warranty</h3>
+            <p><strong>THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</strong></p>
+
+            <h2>9. LIMITATION OF LIABILITY</h2>
+            <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW, WHITESPACE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY.</strong></p>
+            <p><strong>OUR TOTAL LIABILITY FOR ANY CLAIMS ARISING FROM THESE TERMS OR YOUR USE OF THE SERVICE SHALL NOT EXCEED THE AMOUNT YOU PAID TO WHITESPACE IN THE TWELVE MONTHS PRECEDING THE CLAIM.</strong></p>
+
+            <h2>10. INDEMNIFICATION</h2>
+            <p>You agree to indemnify and hold harmless Whitespace, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from your use of the Service or violation of these Terms.</p>
+
+            <h2>11. CHANGES TO TERMS</h2>
+            <p>We may modify these Terms at any time. We will notify you of material changes through the app or by email. Continued use of the Service after changes constitutes acceptance of the modified Terms.</p>
+
+            <h2>12. TERMINATION</h2>
+
+            <h3>12.1 By You</h3>
+            <p>You may stop using Whitespace at any time. To delete your account and data, use the account deletion option in Settings or contact us.</p>
+
+            <h3>12.2 By Us</h3>
+            <p>We may suspend or terminate your account for violations of these Terms, fraudulent activity, or as required by law. We may also discontinue the Service with reasonable notice.</p>
+
+            <h3>12.3 Effect of Termination</h3>
+            <p>Upon termination, your right to use the Service ceases immediately. Unused credits are forfeited. Provisions that by their nature should survive termination will survive.</p>
+
+            <h2>13. DISPUTE RESOLUTION</h2>
+
+            <h3>13.1 Informal Resolution</h3>
+            <p>Before filing any claim, you agree to contact us and attempt to resolve the dispute informally for at least 30 days.</p>
+
+            <h3>13.2 Governing Law</h3>
+            <p>These Terms are governed by the laws of the State of Delaware, USA, without regard to conflict of law principles.</p>
+
+            <h3>13.3 Arbitration</h3>
+            <p>Any disputes not resolved informally shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. You waive any right to participate in class actions.</p>
+
+            <h2>14. GENERAL PROVISIONS</h2>
+
+            <h3>14.1 Entire Agreement</h3>
+            <p>These Terms constitute the entire agreement between you and Whitespace regarding the Service.</p>
+
+            <h3>14.2 Severability</h3>
+            <p>If any provision is found unenforceable, the remaining provisions remain in effect.</p>
+
+            <h3>14.3 No Waiver</h3>
+            <p>Our failure to enforce any right or provision does not constitute a waiver.</p>
+
+            <h3>14.4 Assignment</h3>
+            <p>You may not assign these Terms. We may assign our rights and obligations without restriction.</p>
+
+            <h2>15. CONTACT US</h2>
+            <p>For questions about these Terms or support inquiries:</p>
+            <p><strong>Email:</strong> hello@trywhitespace.com</p>
+            <p><strong>Address:</strong><br>
+            One 2 All LLC<br>
+            2248 Broadway #1409<br>
+            New York, NY 10024</p>
+
+            <hr>
+
+            <p><em>By using Whitespace, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</em></p>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">© 2025 Whitespace</p>
+            <div class="footer-links">
+                <a href="/terms.html" class="footer-link">Terms</a>
+                <a href="/privacy.html" class="footer-link">Privacy</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Phosphene Background (same as landing page)
+        const canvas = document.getElementById('phosphene-canvas');
+        const ctx = canvas.getContext('2d');
+        let phosphenes = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createPhosphenes() {
+            phosphenes = [];
+            const count = 60;
+            for (let i = 0; i < count; i++) {
+                const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
+                phosphenes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 150 + 80,
+                    opacity: Math.random() * 0.04 + 0.015,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    color: `hsl(${hue}, 70%, 60%)`
+                });
+            }
+        }
+
+        function animatePhosphenes() {
+            ctx.fillStyle = 'rgb(10, 10, 15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            phosphenes.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < -p.radius) p.x = canvas.width + p.radius;
+                if (p.x > canvas.width + p.radius) p.x = -p.radius;
+                if (p.y < -p.radius) p.y = canvas.height + p.radius;
+                if (p.y > canvas.height + p.radius) p.y = -p.radius;
+
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animatePhosphenes);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createPhosphenes();
+        });
+
+        resizeCanvas();
+        createPhosphenes();
+        animatePhosphenes();
+    </script>
+</body>
+</html>

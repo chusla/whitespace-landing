@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <title>Privacy Policy — Whitespace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: rgb(10, 10, 15);
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        #phosphene-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 0 30px rgba(107, 140, 255, 0.4));
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .last-updated {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+        }
+
+        .content {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .content h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: #ffffff;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: #ffffff;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            margin-bottom: 16px;
+        }
+
+        .content ul, .content ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .content hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 40px 0;
+        }
+
+        .content strong {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .content table th,
+        .content table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content table th {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .content h2 {
+                font-size: 24px;
+            }
+
+            .content h3 {
+                font-size: 18px;
+            }
+
+            .content table {
+                font-size: 12px;
+            }
+
+            .content table th,
+            .content table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="phosphene-canvas"></canvas>
+
+    <div class="container">
+        <div class="header">
+            <a href="/"><img src="better_logo__3_.png" alt="Whitespace" class="logo"></a>
+            <h1>Privacy Policy</h1>
+            <p class="last-updated">Last Updated: December 2025</p>
+        </div>
+
+        <div class="content">
+            <p>Whitespace ("we," "us," or "our") respects your privacy. This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our mobile application and related services (the "Service").</p>
+
+            <hr>
+
+            <h2>1. INFORMATION WE COLLECT</h2>
+
+            <h3>1.1 Information You Provide</h3>
+            
+            <p><strong>Account Information</strong></p>
+            <ul>
+                <li>Email address</li>
+                <li>Display name</li>
+                <li>Password (encrypted)</li>
+                <li>Profile preferences (experience level, voice preferences)</li>
+            </ul>
+
+            <p><strong>Session Inputs</strong></p>
+            <ul>
+                <li>Your stated intentions and goals (e.g., "I want to feel calm before my presentation")</li>
+                <li>Context selections (daytime/bedtime)</li>
+                <li>Duration preferences</li>
+                <li>Name and pronunciation preferences</li>
+            </ul>
+
+            <p><strong>Payment Information</strong></p>
+            <ul>
+                <li>We do not directly collect or store payment card information</li>
+                <li>Payments are processed by Apple (App Store) or Google (Play Store)</li>
+                <li>We receive transaction confirmations and subscription status</li>
+            </ul>
+
+            <p><strong>Communications</strong></p>
+            <ul>
+                <li>Support requests and correspondence</li>
+                <li>Feedback you choose to provide</li>
+            </ul>
+
+            <h3>1.2 Information Collected Automatically</h3>
+
+            <p><strong>Usage Data</strong></p>
+            <ul>
+                <li>Sessions generated and listened to</li>
+                <li>App feature usage</li>
+                <li>Session completion rates</li>
+                <li>Credit balance and transaction history</li>
+            </ul>
+
+            <p><strong>Device Information</strong></p>
+            <ul>
+                <li>Device type and operating system</li>
+                <li>App version</li>
+                <li>Unique device identifiers (for anonymous users)</li>
+                <li>Time zone and language settings</li>
+            </ul>
+
+            <p><strong>Log Data</strong></p>
+            <ul>
+                <li>IP address (temporarily, for security)</li>
+                <li>Access times</li>
+                <li>Error logs</li>
+            </ul>
+
+            <h3>1.3 Information from Third Parties</h3>
+
+            <p><strong>Authentication Providers</strong></p>
+            <p>If you sign in with Google or Apple:</p>
+            <ul>
+                <li>Basic profile information (name, email)</li>
+                <li>We do not receive or store your password from these providers</li>
+            </ul>
+
+            <p><strong>Analytics</strong> (if enabled)</p>
+            <ul>
+                <li>Aggregated, anonymized usage statistics</li>
+                <li>We do not use advertising trackers or share data with ad networks</li>
+            </ul>
+
+            <h2>2. HOW WE USE YOUR INFORMATION</h2>
+
+            <h3>2.1 To Provide the Service</h3>
+            <ul>
+                <li>Generate personalized audio sessions based on your inputs</li>
+                <li>Process your subscriptions and credit transactions</li>
+                <li>Deliver gift subscriptions you send or receive</li>
+                <li>Save your sessions and preferences</li>
+                <li>Provide customer support</li>
+            </ul>
+
+            <h3>2.2 To Improve the Service</h3>
+            <ul>
+                <li>Analyze usage patterns to improve features</li>
+                <li>Debug technical issues</li>
+                <li>Develop new features based on user needs</li>
+                <li>Improve our internal systems and personalization models using anonymized, aggregated data only</li>
+            </ul>
+
+            <h3>2.3 To Communicate With You</h3>
+            <ul>
+                <li>Send transaction confirmations</li>
+                <li>Notify you when sessions are ready</li>
+                <li>Deliver gift notifications</li>
+                <li>Respond to support requests</li>
+                <li>Send important service updates</li>
+            </ul>
+
+            <h3>2.4 To Protect the Service</h3>
+            <ul>
+                <li>Detect and prevent fraud</li>
+                <li>Enforce our Terms of Service</li>
+                <li>Protect against abuse of referral programs</li>
+                <li>Maintain security of our systems</li>
+            </ul>
+
+            <h2>3. HOW WE SHARE YOUR INFORMATION</h2>
+
+            <h3>3.1 Service Providers</h3>
+            <p>We share information with third-party service providers who assist in operating our Service:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Purpose</th>
+                        <th>Data Shared</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Supabase</strong></td>
+                        <td>Database and authentication</td>
+                        <td>Account data, session data, preferences</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Anthropic (Claude)</strong></td>
+                        <td>AI text generation</td>
+                        <td>Session inputs (intentions, context)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ElevenLabs</strong></td>
+                        <td>Voice synthesis</td>
+                        <td>Generated scripts, voice preferences</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RevenueCat</strong></td>
+                        <td>Subscription management</td>
+                        <td>User ID, purchase history</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Railway</strong></td>
+                        <td>Audio processing</td>
+                        <td>Generated audio files</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Apple/Google</strong></td>
+                        <td>Payment processing</td>
+                        <td>Transaction data</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>These providers are contractually obligated to protect your information and use it only for the services they provide to us.</p>
+
+            <h3>3.2 We Do NOT Share Your Information With</h3>
+            <ul>
+                <li>Advertising networks</li>
+                <li>Data brokers</li>
+                <li>Social media platforms (unless you choose to share)</li>
+                <li>Any third parties for their marketing purposes</li>
+            </ul>
+
+            <h3>3.3 Legal Requirements</h3>
+            <p>We may disclose information if required by law, court order, or government request, or to protect the rights, property, or safety of Whitespace, our users, or others.</p>
+
+            <h3>3.4 Business Transfers</h3>
+            <p>If Whitespace is involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction. We will notify you of any such change.</p>
+
+            <h2>4. YOUR PRIVACY CHOICES</h2>
+
+            <h3>4.1 Access and Update</h3>
+            <p>You can access and update your profile information at any time through the app's Settings.</p>
+
+            <h3>4.2 View Your Data</h3>
+            <p>You can view your:</p>
+            <ul>
+                <li>Profile information</li>
+                <li>Session history</li>
+                <li>Accumulated personalization data (user profile history)</li>
+                <li>Credit transaction history</li>
+            </ul>
+
+            <h3>4.3 Edit or Clear Personalization</h3>
+            <p>Whitespace accumulates context about you over time to improve personalization. You can:</p>
+            <ul>
+                <li>View what we've learned about you</li>
+                <li>Edit specific details</li>
+                <li>Clear your personalization history entirely</li>
+            </ul>
+            <p>This is available in Settings → Privacy → Personalization Data.</p>
+
+            <h3>4.4 Download Your Data</h3>
+            <p>You may request a copy of your personal data by contacting us at hello@trywhitespace.com.</p>
+
+            <h3>4.5 Delete Your Account</h3>
+            <p>You can delete your account and all associated data:</p>
+            <ul>
+                <li>In the app: Settings → Account → Delete Account</li>
+                <li>By contacting: hello@trywhitespace.com</li>
+            </ul>
+            <p>Upon deletion:</p>
+            <ul>
+                <li>Your account and profile are permanently removed</li>
+                <li>Your generated sessions are deleted</li>
+                <li>Your personalization history is erased</li>
+                <li>Transaction records may be retained as required by law</li>
+            </ul>
+            <p>Account deletion is irreversible. Unused credits are forfeited.</p>
+
+            <h3>4.6 Communication Preferences</h3>
+            <p>You can manage notification preferences in the app's Settings. Note that you cannot opt out of essential service communications (e.g., subscription confirmations, security alerts).</p>
+
+            <h2>5. DATA RETENTION</h2>
+
+            <h3>5.1 Account Data</h3>
+            <p>We retain your account data for as long as your account is active. After account deletion, we remove personal data within 30 days, except as required for legal or business purposes.</p>
+
+            <h3>5.2 Session Data</h3>
+            <p>Generated sessions are retained until you delete them or your account. You can delete individual sessions at any time.</p>
+
+            <h3>5.3 Usage Logs</h3>
+            <p>Technical logs are retained for up to 90 days for debugging and security purposes.</p>
+
+            <h3>5.4 Transaction Records</h3>
+            <p>Purchase and subscription records may be retained for up to 7 years as required for tax and legal compliance.</p>
+
+            <h2>6. DATA SECURITY</h2>
+
+            <h3>6.1 Technical Measures</h3>
+            <p>We implement industry-standard security measures including:</p>
+            <ul>
+                <li>Encryption of data in transit (TLS/SSL)</li>
+                <li>Encryption of sensitive data at rest</li>
+                <li>Secure authentication protocols</li>
+                <li>Regular security assessments</li>
+                <li>Access controls and monitoring</li>
+            </ul>
+
+            <h3>6.2 Infrastructure</h3>
+            <p>Our infrastructure is hosted on:</p>
+            <ul>
+                <li>Supabase (AWS-backed, SOC 2 compliant)</li>
+                <li>Railway (secure container hosting)</li>
+            </ul>
+
+            <h3>6.3 Limitations</h3>
+            <p>No method of transmission or storage is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.</p>
+
+            <h2>7. CHILDREN'S PRIVACY</h2>
+            <p>Whitespace is not intended for children under 13. We do not knowingly collect personal information from children under 13. If we learn we have collected information from a child under 13, we will delete it promptly. If you believe a child has provided us with personal information, please contact us.</p>
+
+            <h2>8. INTERNATIONAL DATA TRANSFERS</h2>
+            <p>Whitespace is operated from the United States. If you are accessing the Service from outside the United States, your information will be transferred to and processed in the United States, which may have different data protection laws than your country.</p>
+            <p>By using Whitespace, you consent to this transfer. We take steps to ensure your data receives adequate protection consistent with applicable laws.</p>
+
+            <h2>9. YOUR CALIFORNIA PRIVACY RIGHTS</h2>
+            <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA):</p>
+
+            <h3>9.1 Right to Know</h3>
+            <p>You may request information about the categories and specific pieces of personal information we have collected, the sources of that information, and how we use and share it.</p>
+
+            <h3>9.2 Right to Delete</h3>
+            <p>You may request deletion of your personal information, subject to certain exceptions.</p>
+
+            <h3>9.3 Right to Non-Discrimination</h3>
+            <p>We will not discriminate against you for exercising your privacy rights.</p>
+
+            <h3>9.4 No Sale of Personal Information</h3>
+            <p>We do not sell your personal information as defined by the CCPA.</p>
+
+            <p>To exercise these rights, contact us at hello@trywhitespace.com or use the in-app privacy controls.</p>
+
+            <h2>10. EUROPEAN PRIVACY RIGHTS (GDPR)</h2>
+            <p>If you are in the European Economic Area (EEA), United Kingdom, or Switzerland, you have additional rights:</p>
+
+            <h3>10.1 Legal Basis for Processing</h3>
+            <p>We process your data based on:</p>
+            <ul>
+                <li><strong>Contract:</strong> To provide the Service you requested</li>
+                <li><strong>Consent:</strong> For optional features and communications</li>
+                <li><strong>Legitimate Interests:</strong> To improve and secure our Service</li>
+            </ul>
+
+            <h3>10.2 Your Rights</h3>
+            <ul>
+                <li><strong>Access:</strong> Request a copy of your data</li>
+                <li><strong>Rectification:</strong> Correct inaccurate data</li>
+                <li><strong>Erasure:</strong> Request deletion of your data</li>
+                <li><strong>Restriction:</strong> Limit how we process your data</li>
+                <li><strong>Portability:</strong> Receive your data in a portable format</li>
+                <li><strong>Objection:</strong> Object to certain processing activities</li>
+                <li><strong>Withdraw Consent:</strong> Where processing is based on consent</li>
+            </ul>
+
+            <h3>10.3 Exercising Rights</h3>
+            <p>Contact us at hello@trywhitespace.com. We will respond within 30 days.</p>
+
+            <h3>10.4 Complaints</h3>
+            <p>You have the right to lodge a complaint with your local data protection authority.</p>
+
+            <h2>11. APPLE APP TRACKING TRANSPARENCY</h2>
+
+            <h3>11.1 Our Approach</h3>
+            <p>Whitespace does NOT track you across other companies' apps and websites for advertising purposes. We do not:</p>
+            <ul>
+                <li>Use advertising identifiers (IDFA)</li>
+                <li>Share data with advertising networks</li>
+                <li>Link your data with third-party data for advertising</li>
+            </ul>
+
+            <h3>11.2 User IDs</h3>
+            <p>We collect user IDs solely for:</p>
+            <ul>
+                <li>Account management and authentication</li>
+                <li>Providing app functionality</li>
+                <li>Storing your preferences and sessions</li>
+            </ul>
+            <p>This is NOT "tracking" as defined by Apple's App Tracking Transparency framework.</p>
+
+            <h2>12. THIRD-PARTY LINKS AND SERVICES</h2>
+            <p>The Service may contain links to third-party websites or services. We are not responsible for the privacy practices of these third parties. We encourage you to review their privacy policies.</p>
+
+            <h2>13. CHANGES TO THIS POLICY</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of material changes through the app or by email. The "Last Updated" date at the top indicates when the policy was last revised.</p>
+            <p>Continued use of the Service after changes constitutes acceptance of the updated policy.</p>
+
+            <h2>14. CONTACT US</h2>
+            <p>For privacy-related questions, to exercise your rights, or for general support:</p>
+            <p><strong>Email:</strong> hello@trywhitespace.com</p>
+            <p><strong>Address:</strong><br>
+            One 2 All LLC<br>
+            2248 Broadway #1409<br>
+            New York, NY 10024</p>
+
+            <hr>
+
+            <p><em>Your privacy matters to us. Whitespace is designed to help you find calm, not to exploit your data. If you have any questions about our privacy practices, please don't hesitate to reach out.</em></p>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">© 2025 Whitespace</p>
+            <div class="footer-links">
+                <a href="/terms.html" class="footer-link">Terms</a>
+                <a href="/privacy.html" class="footer-link">Privacy</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Phosphene Background (same as landing page)
+        const canvas = document.getElementById('phosphene-canvas');
+        const ctx = canvas.getContext('2d');
+        let phosphenes = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createPhosphenes() {
+            phosphenes = [];
+            const count = 60;
+            for (let i = 0; i < count; i++) {
+                const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
+                phosphenes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 150 + 80,
+                    opacity: Math.random() * 0.04 + 0.015,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    color: `hsl(${hue}, 70%, 60%)`
+                });
+            }
+        }
+
+        function animatePhosphenes() {
+            ctx.fillStyle = 'rgb(10, 10, 15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            phosphenes.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < -p.radius) p.x = canvas.width + p.radius;
+                if (p.x > canvas.width + p.radius) p.x = -p.radius;
+                if (p.y < -p.radius) p.y = canvas.height + p.radius;
+                if (p.y > canvas.height + p.radius) p.y = -p.radius;
+
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animatePhosphenes);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createPhosphenes();
+        });
+
+        resizeCanvas();
+        createPhosphenes();
+        animatePhosphenes();
+    </script>
+</body>
+</html>

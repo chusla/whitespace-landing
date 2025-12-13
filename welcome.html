@@ -89,18 +89,37 @@
         }
         
         .footer {
-        position: absolute;
-        bottom: 60px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        opacity: 0;
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            opacity: 0;
         }
-        
+
         .footer-text {
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.4);
-        font-weight: 300;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: rgba(255, 255, 255, 0.7);
         }
         
         @keyframes fadeInWord {
@@ -149,7 +168,11 @@
         </div>
         
         <div class="footer" id="footer">
-        <p class="footer-text">© 2025 Whitespace</p>
+            <p class="footer-text">© 2025 Whitespace</p>
+            <div class="footer-links">
+                <a href="/terms.html" class="footer-link">Terms</a>
+                <a href="/privacy.html" class="footer-link">Privacy</a>
+            </div>
         </div>
         
         <script>
