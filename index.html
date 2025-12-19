@@ -7,7 +7,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png">
     
-    <title>Whitespace — Meditation created uniquely for you</title>
+    <title>Whitespace — Meditation spaces created just for you</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -111,6 +111,11 @@
             line-height: 1.25;
             margin-bottom: 64px;
             min-height: 1.25em;
+            opacity: 0; /* Hide initially */
+        }
+
+        .hero h1.animating {
+            opacity: 1; /* Show when animation starts */
         }
 
         .hero h1 .word {
@@ -752,6 +757,18 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
+        /* Superscript link styling */
+        sup a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        sup a:hover {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: underline;
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -834,12 +851,13 @@
                 class="logo fade-up visible fade-up-delay-3"
             >
 
-            <h1 id="heroHeadline" class="fade-up visible fade-up-delay-5">
-                Meditation created uniquely for you
+            <h1 id="heroHeadline">
+                Meditation spaces created<br>just for you.
             </h1>
 
             <p class="hero-subtitle fade-up visible fade-up-delay-7">
-                Experience meditation guidance crafted specifically for this moment.
+                Every meditation space is personalized and generated on-demand, just for you. 
+                Beyond our curated library, experience guided meditations tailored precisely for the moments you are working through or the goals you are working towards.
             </p>
 
             <div class="fade-up visible fade-up-delay-9">
@@ -886,7 +904,7 @@
         <div class="section-container">
             <div class="section-header fade-up">
                 <h2>How It Works</h2>
-                <p>Simple, intuitive, and uniquely relevant to your specific needs</p>
+                <p>Simple, intuitive, and uniquely relevant to your needs</p>
             </div>
 
             <div class="screenshots-grid">
@@ -902,7 +920,7 @@
                     <div class="screenshot-frame">
                         <img src="src/assets/step 2.png" alt="AI generating your session" class="screenshot-img">
                     </div>
-                    <h3>Your Space is Crafted</h3>
+                    <h3>Your Personal Space is Created</h3>
                     <p class="inter">Watch as your personalized meditation is created in real-time</p>
                 </div>
 
@@ -1051,7 +1069,7 @@
                         </svg>
                     </div>
                     <h3>Backed by Science, Built for You</h3>
-                    <p class="inter">Research confirms meditation apps deliver real benefits. Whitespace takes this further—every meditation is crafted specifically for you, teaching techniques that adapt to your needs over time.<sup>*</sup></p>
+                    <p class="inter">Research confirms meditation apps deliver real benefits<sup><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12333550/" target="_blank" rel="noopener">*</a></sup>. Whitespace takes this further—every meditation is crafted specifically for you, teaching techniques that adapt to your needs over time.</p>
                 </div>
 
                 <div class="feature-card fade-up fade-up-delay-2">
@@ -1063,7 +1081,7 @@
                         </svg>
                     </div>
                     <h3>Whitespace Intelligence</h3>
-                    <p class="inter">Powered by a proprietary framework that understands you better over time. Every space adapts to your needs, mood, and goals in real-time.</p>
+                    <p class="inter">Powered by a proprietary framework that understands you better over time. Every space adapts to your unique history as well as your needs, mood, and goals in real-time.</p>
                 </div>
 
                 <div class="feature-card fade-up fade-up-delay-3">
@@ -1242,14 +1260,40 @@
         // ==========================================
         function animateHeadline() {
             const headline = document.getElementById('heroHeadline');
-            const text = headline.textContent.trim();
-            const words = text.split(' ');
+            const html = headline.innerHTML.trim();
+            
+            // Split by <br> tags first, then process each line
+            const parts = html.split(/<br\s*\/?>/i);
+            const allWords = [];
+            
+            parts.forEach((part, partIndex) => {
+                const words = part.trim().split(/\s+/);
+                words.forEach((word, wordIndex) => {
+                    if (word) {
+                        allWords.push({
+                            word: word,
+                            index: allWords.length,
+                            isAfterBreak: partIndex > 0 && wordIndex === 0
+                        });
+                    }
+                });
+                // Add <br> after each part except the last
+                if (partIndex < parts.length - 1) {
+                    allWords.push({ word: '<br>', index: allWords.length, isBreak: true });
+                }
+            });
+            
+            // Make headline visible when animation starts
+            headline.classList.add('animating');
             
             // Slow, deliberate pace like a meditation teacher
             // 0.5s between each word appearing
-            headline.innerHTML = words.map((word, index) => 
-                `<span class="word" style="animation-delay: ${0.8 + index * 0.5}s">${word}</span>`
-            ).join(' ');
+            headline.innerHTML = allWords.map((item) => {
+                if (item.isBreak) {
+                    return '<br>';
+                }
+                return `<span class="word" style="animation-delay: ${0.8 + item.index * 0.5}s">${item.word}</span>`;
+            }).join(' ');
         }
 
         // Run after a short delay to let the page settle
