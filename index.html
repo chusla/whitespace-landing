@@ -7,10 +7,11 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png">
     
-    <title>Whitespace — Make space for yourself to focus</title>
+    <title>Whitespace — Meditation created uniquely for you</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -18,13 +19,15 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
             font-family: 'Inter', -apple-system, sans-serif;
-            display: flex;
-            flex-direction: column;
+            background: #0a0a0f;
+            color: white;
+            overflow-x: hidden;
         }
 
         /* Phosphene Background */
@@ -37,177 +40,773 @@
             z-index: 0;
         }
 
-        /* Main Container */
-        .container {
-            position: relative;
-            z-index: 1;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 60px 40px 80px;
-            max-width: 600px;
-            margin: 0 auto;
-            width: 100%;
-        }
+        /* Utility Classes */
+        .crimson { font-family: 'Crimson Pro', serif; }
+        .inter { font-family: 'Inter', sans-serif; }
 
-        /* Logo */
-        .logo-container {
-            text-align: center;
+        /* Animation Classes */
+        .fade-up {
             opacity: 0;
-            animation: fadeIn 1s ease 0.3s forwards;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        .logo {
-            width: 180px;
-            height: auto;
-            filter: drop-shadow(0 0 30px rgba(107, 140, 255, 0.4));
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Content Area */
-        .content {
-            flex: 1;
+        .fade-up-delay-1 { transition-delay: 0.1s; }
+        .fade-up-delay-2 { transition-delay: 0.2s; }
+        .fade-up-delay-3 { transition-delay: 0.3s; }
+        .fade-up-delay-4 { transition-delay: 0.4s; }
+        .fade-up-delay-5 { transition-delay: 0.5s; }
+        .fade-up-delay-6 { transition-delay: 0.6s; }
+        .fade-up-delay-7 { transition-delay: 0.7s; }
+        .fade-up-delay-8 { transition-delay: 0.8s; }
+        .fade-up-delay-9 { transition-delay: 0.9s; }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 60px 24px;
+        }
+
+        .hero-content {
+            max-width: 900px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 40px 0;
+        }
+
+        .logo {
+            width: 210px;
+            height: auto;
+            margin-bottom: 0;
+            filter: drop-shadow(0 0 30px rgba(107, 140, 255, 0.4));
+        }
+
+        @media (min-width: 768px) {
+            .logo {
+                width: 240px;
+                margin-bottom: 0;
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.25;
+            margin-bottom: 64px;
+            min-height: 1.25em;
+        }
+
+        .hero h1 .word {
+            display: inline-block;
             opacity: 0;
-            animation: fadeIn 1s ease 0.6s forwards;
+            transform: translateY(12px);
+            animation: wordFadeIn 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
         }
 
-        .heading {
-            font-family: 'Crimson Pro', serif;
-            font-size: clamp(28px, 6vw, 42px);
-            font-weight: 400;
-            color: #ffffff;
-            letter-spacing: 0;
-            line-height: 1.5;
-            margin-bottom: 32px;
+        @keyframes wordFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            max-width: 640px;
+            margin: 0 auto 56px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-subtitle {
+                margin-bottom: 64px;
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .scroll-mouse {
+            width: 24px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            padding-top: 8px;
+        }
+
+        .scroll-dot {
+            width: 4px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Email Signup Form */
+        .email-form {
+            width: 100%;
             max-width: 500px;
+            margin: 0 auto;
         }
 
-        .subheading {
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .form-row {
+                flex-direction: row;
+            }
+        }
+
+        .form-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: white;
             font-family: 'Crimson Pro', serif;
-            font-size: clamp(16px, 3.5vw, 20px);
-            font-weight: 300;
-            color: #ffffff;
-            letter-spacing: 0;
-            line-height: 1.5;
-            margin-bottom: 48px;
-            max-width: 500px;
-        }
-
-        /* Input Container */
-        .input-container {
-            width: 100%;
-            max-width: 480px;
-            margin-bottom: 32px;
-        }
-
-        .input-wrapper {
-            position: relative;
-            width: 100%;
-            margin-bottom: 16px;
-        }
-
-        .email-input {
-            width: 100%;
-            padding: 14px 4px;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-            font-size: 20px;
-            font-family: 'Crimson Pro', serif;
-            font-weight: 400;
-            text-align: center;
+            font-size: 16px;
+            outline: none;
             transition: border-color 0.3s ease;
         }
 
-        .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.35);
-            font-family: 'Crimson Pro', serif;
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
         }
 
-        .email-input:focus {
-            outline: none;
-            border-bottom-color: rgba(255, 255, 255, 0.4);
+        .form-input:focus {
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .submit-btn {
-            width: 100%;
-            padding: 16px 40px;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 18px;
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
             font-family: 'Crimson Pro', serif;
-            font-weight: 400;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
-            transition: opacity 0.2s ease;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .submit-btn:hover {
-            opacity: 0.7;
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.02);
         }
 
         .submit-btn:active {
-            opacity: 0.5;
+            transform: scale(0.98);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-note {
+            text-align: center;
+            margin-top: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        .success-message {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            border-radius: 12px;
+        }
+
+        .success-message.show {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-message svg {
+            width: 20px;
+            height: 20px;
+            color: #4ade80;
+        }
+
+        .success-message span {
+            font-family: 'Crimson Pro', serif;
+            font-size: 16px;
+            color: #4ade80;
+        }
+
+        /* Sections */
+        section {
+            position: relative;
+            z-index: 10;
+            padding: 96px 24px;
+        }
+
+        @media (min-width: 768px) {
+            section {
+                padding: 128px 24px;
+            }
+        }
+
+        .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.875rem, 4vw, 3rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* App Screenshots */
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .screenshots-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .screenshot-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .screenshot-frame {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto 24px;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .screenshot-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 32px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .screenshot-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 32px;
+        }
+
+        .screenshot-card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .screenshot-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Differentiator Section */
+        .differentiator-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .comparison-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .comparison-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .comparison-item.positive {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .comparison-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .comparison-icon.negative {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .comparison-icon.positive {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+        .comparison-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .comparison-icon.negative svg {
+            color: #f87171;
+        }
+
+        .comparison-icon.positive svg {
+            color: #4ade80;
+        }
+
+        .comparison-item p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .comparison-item:not(.positive) p {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .comparison-item.positive p {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            transition: background 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .feature-card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.7;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 32px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .cta-box {
+                padding: 64px 48px;
+            }
+        }
+
+        .cta-box h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.875rem, 4vw, 2.5rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 24px;
+        }
+
+        .cta-box > p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 32px;
+        }
+
+        /* Audio Sample */
+        .audio-sample {
+            margin-top: 48px;
+            padding: 48px 32px;
+            text-align: center;
+        }
+
+        .audio-sample-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .audio-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            line-height: 36px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 8px;
+        }
+
+        .audio-duration {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.5px;
+            margin-bottom: 48px;
+        }
+
+        /* Play Button Wrapper with Breathing Circle */
+        .play-button-wrapper {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Breathing Circle - thin border that animates */
+        .breathing-circle {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        border-color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .breathing-circle.breathing {
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: scale(0.9);
+                border-color: rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                transform: scale(1.1);
+                border-color: rgba(255, 255, 255, 0.9);
+            }
+        }
+
+        /* Play Button Container */
+        .play-button-container {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .play-button-container.pulsing {
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.04);
+            }
+        }
+
+        /* Play Button */
+        .play-btn {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Inner glow effect */
+        .play-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .play-btn:hover::before {
+            opacity: 1;
+        }
+
+        .play-btn.playing::before {
+            opacity: 1;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Play Icon - Triangle */
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 16px solid rgba(255, 255, 255, 0.8);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 4px;
+        }
+
+        /* Pause Icon - Two Bars */
+        .pause-icon {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .pause-bar {
+            width: 4px;
+            height: 22px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+        }
+
+        /* Footnote */
+        .footnote {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            margin-top: 24px;
+            padding: 0 24px;
+        }
+
+        .footnote a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+        }
+
+        .footnote a:hover {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* Footer */
-        .footer {
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 1s ease 0.9s forwards;
+        footer {
+            position: relative;
+            z-index: 10;
+            padding: 48px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .footer-text {
-            font-size: 13px;
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .footer-logo {
+            width: 96px;
+            height: auto;
+            opacity: 0.6;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.4);
-            font-weight: 300;
-            margin-bottom: 12px;
         }
 
         .footer-links {
             display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
+            gap: 32px;
         }
 
         .footer-link {
-            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
             text-decoration: none;
-            font-size: 13px;
             transition: color 0.2s ease;
         }
 
         .footer-link:hover {
             color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Success Message */
-        .success-message {
-            display: none;
-            padding: 16px 24px;
-            background: rgba(107, 200, 140, 0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(107, 200, 140, 0.3);
-            border-radius: 12px;
-            color: #6bc88c;
-            font-size: 15px;
-            font-family: 'Crimson Pro', serif;
-            margin-top: 16px;
-            text-align: center;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .success-message.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
         }
 
         /* Animations */
@@ -221,102 +820,342 @@
                 transform: translateY(0);
             }
         }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 24px 60px;
-            }
-
-            .logo {
-                width: 140px;
-            }
-
-            .heading {
-                font-size: 32px;
-                margin-bottom: 24px;
-            }
-
-            .subheading {
-                margin-bottom: 32px;
-            }
-
-            .email-input,
-            .submit-btn {
-                font-size: 16px;
-                padding: 18px 20px;
-            }
-        }
-
-        @media (max-height: 700px) {
-            .container {
-                padding: 40px 40px 60px;
-            }
-
-            .heading {
-                margin-bottom: 24px;
-            }
-
-            .subheading {
-                margin-bottom: 32px;
-            }
-        }
     </style>
 </head>
 <body>
     <canvas id="phosphene-canvas"></canvas>
 
-    <div class="container">
-        <div class="logo-container">
-            <img src="better_logo__3_.png" alt="Whitespace" class="logo">
-        </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img 
+                src="src/assets/whitespace logo.png" 
+                alt="Whitespace" 
+                class="logo fade-up visible fade-up-delay-3"
+            >
 
-        <div class="content">
-            <h1 class="heading">Make space for yourself to focus.</h1>
-            
-            <p class="subheading">Be among the first to experience <br>
-                meditation created uniquely for you.</p>
-            
-            <form class="input-container" id="emailForm">
-                <div class="input-wrapper">
-                    <input 
-                        type="text" 
-                        class="name-input email-input" 
-                        placeholder="First name" 
-                        required
-                        id="nameInput"
-                        autocomplete="given-name"
-                        style="margin-bottom: 20px;"
-                    >
-                    <input 
-                        type="email" 
-                        class="email-input" 
-                        placeholder="your@email.com" 
-                        required
-                        id="emailInput"
-                        autocomplete="email"
-                    >
-                </div>
-                
-                <button type="submit" class="submit-btn">Join Waitlist</button>
-                
-                <div class="success-message" id="successMessage">
-                    ✓ Preparing your welcome...
-                </div>
-            </form>
-        </div>
+            <h1 id="heroHeadline" class="fade-up visible fade-up-delay-5">
+                Meditation created uniquely for you
+            </h1>
 
-        <div class="footer">
-            <p class="footer-text">© 2025 Whitespace</p>
-            <div class="footer-links">
-                <a href="/terms" class="footer-link">Terms</a>
-                <a href="/privacy" class="footer-link">Privacy</a>
+            <p class="hero-subtitle fade-up visible fade-up-delay-7">
+                Experience meditation guidance crafted specifically for this moment.
+            </p>
+
+            <div class="fade-up visible fade-up-delay-9">
+                <form class="email-form" id="heroEmailForm">
+                    <div class="form-row">
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            placeholder="First name" 
+                            required
+                            id="heroNameInput"
+                            autocomplete="given-name"
+                        >
+                        <input 
+                            type="email" 
+                            class="form-input" 
+                            placeholder="your@email.com" 
+                            required
+                            id="heroEmailInput"
+                            autocomplete="email"
+                        >
+                        <button type="submit" class="submit-btn">Join Waitlist</button>
+                    </div>
+                    <p class="form-note inter">Be the first to experience truly personalized meditation</p>
+                    <div class="success-message" id="heroSuccessMessage">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Preparing your welcome...</span>
+                    </div>
+                </form>
             </div>
         </div>
+
+        <div class="scroll-indicator fade-up visible" style="transition-delay: 1.5s;">
+            <div class="scroll-mouse">
+                <div class="scroll-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Screenshots Section -->
+    <section>
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <h2>How It Works</h2>
+                <p>Simple, intuitive, and uniquely relevant to your specific needs</p>
+            </div>
+
+            <div class="screenshots-grid">
+                <div class="screenshot-card fade-up fade-up-delay-1">
+                    <div class="screenshot-frame">
+                        <img src="src/assets/step 1.png" alt="Set your intention screen" class="screenshot-img">
+                    </div>
+                    <h3>Set Your Intention</h3>
+                    <p class="inter">Tell the app what you need - focus, calm, clarity, or anything else</p>
+                </div>
+
+                <div class="screenshot-card fade-up fade-up-delay-2">
+                    <div class="screenshot-frame">
+                        <img src="src/assets/step 2.png" alt="AI generating your session" class="screenshot-img">
+                    </div>
+                    <h3>Your Space is Crafted</h3>
+                    <p class="inter">Watch as your personalized meditation is created in real-time</p>
+                </div>
+
+                <div class="screenshot-card fade-up fade-up-delay-3">
+                    <div class="screenshot-frame">
+                        <img src="src/assets/step 3.png" alt="Immersive playback experience" class="screenshot-img">
+                    </div>
+                    <h3>Immersive Experience</h3>
+                    <p class="inter">Beautiful audio with binaural soundscapes and calming guidance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Sample Section -->
+    <section style="padding: 48px 24px;">
+        <div style="max-width: 500px; margin: 0 auto;">
+            <div class="audio-sample fade-up">
+                <p class="audio-sample-label inter">Hear a Sample</p>
+                
+                <p class="audio-title">Steady Ground</p>
+                <p class="audio-duration inter">2 minutes</p>
+
+                <!-- Play Button Wrapper with Breathing Circle -->
+                <div class="play-button-wrapper">
+                    <div class="breathing-circle" id="breathingCircle"></div>
+                    <div class="play-button-container" id="playButtonContainer">
+                        <button class="play-btn" id="playBtn">
+                            <div class="play-icon" id="playIcon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <audio id="sampleAudio" src="src/assets/steady ground.mp3" preload="metadata"></audio>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiator Section -->
+    <section>
+        <div class="differentiator-container">
+            <div class="section-header fade-up">
+                <h2>Why Whitespace is Different</h2>
+                <p>Whitespace isn't a meditation library, it's a teacher that knows you better over time.</p>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-row fade-up fade-up-delay-1">
+                    <div class="comparison-item">
+                        <div class="comparison-icon negative">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                        <p class="inter">Limited to a fixed library of content</p>
+                    </div>
+                    <div class="comparison-item positive">
+                        <div class="comparison-icon positive">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <p class="inter">Fresh meditations generated for your specific intention, plus a curated library</p>
+                    </div>
+                </div>
+
+                <div class="comparison-row fade-up fade-up-delay-2">
+                    <div class="comparison-item">
+                        <div class="comparison-icon negative">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                        <p class="inter">Generic guidance for everyone</p>
+                    </div>
+                    <div class="comparison-item positive">
+                        <div class="comparison-icon positive">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <p class="inter">Personalized to your mood, goals, and current state</p>
+                    </div>
+                </div>
+
+                <div class="comparison-row fade-up fade-up-delay-3">
+                    <div class="comparison-item">
+                        <div class="comparison-icon negative">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                        <p class="inter">Monthly subscription for unused content</p>
+                    </div>
+                    <div class="comparison-item positive">
+                        <div class="comparison-icon positive">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <p class="inter">Pay only for the spaces you actually create</p>
+                    </div>
+                </div>
+
+                <div class="comparison-row fade-up fade-up-delay-4">
+                    <div class="comparison-item">
+                        <div class="comparison-icon negative">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                        <p class="inter">Same meditation repeated over time</p>
+                    </div>
+                    <div class="comparison-item positive">
+                        <div class="comparison-icon positive">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <p class="inter">New experience every single time you practice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section>
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <h2>What Makes Whitespace Special</h2>
+                <p>Technology and wisdom combined for truly transformative meditation</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card fade-up fade-up-delay-1">
+                    <div class="feature-icon">
+                        <!-- Research/Science icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 3h6v6l3 3-3 3v6H9v-6l-3-3 3-3V3Z"/>
+                            <path d="M12 3v18"/>
+                        </svg>
+                    </div>
+                    <h3>Backed by Science, Built for You</h3>
+                    <p class="inter">Research confirms meditation apps deliver real benefits. Whitespace takes this further—every meditation is crafted specifically for you, teaching techniques that adapt to your needs over time.<sup>*</sup></p>
+                </div>
+
+                <div class="feature-card fade-up fade-up-delay-2">
+                    <div class="feature-icon">
+                        <!-- Lightbulb/Intelligence icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2Z"/>
+                            <path d="M9 21h6M10 17v4M14 17v4"/>
+                        </svg>
+                    </div>
+                    <h3>Whitespace Intelligence</h3>
+                    <p class="inter">Powered by a proprietary framework that understands you better over time. Every space adapts to your needs, mood, and goals in real-time.</p>
+                </div>
+
+                <div class="feature-card fade-up fade-up-delay-3">
+                    <div class="feature-icon">
+                        <!-- Headphones icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/>
+                        </svg>
+                    </div>
+                    <h3>Premium Audio Experience</h3>
+                    <p class="inter">Natural voice synthesis combined with binaural soundscapes and subtle frequency patterns to guide you into deeper meditative states.</p>
+                </div>
+
+                <div class="feature-card fade-up fade-up-delay-4">
+                    <div class="feature-icon">
+                        <!-- Flexible pricing icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                            <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+                        </svg>
+                    </div>
+                    <h3>Flexible Pricing</h3>
+                    <p class="inter">Choose what works for you—monthly plans for daily practice, or à la carte credits for occasional use. No pressure, just options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section>
+        <div class="final-cta fade-up">
+            <div class="cta-box">
+                <h2 class="crimson">Be among the first</h2>
+                <p class="inter">Join the waitlist and get early access when Whitespace launches. Plus, exclusive benefits for our founding members.</p>
+                
+                <form class="email-form" id="ctaEmailForm">
+                    <div class="form-row">
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            placeholder="First name" 
+                            required
+                            id="ctaNameInput"
+                            autocomplete="given-name"
+                        >
+                        <input 
+                            type="email" 
+                            class="form-input" 
+                            placeholder="your@email.com" 
+                            required
+                            id="ctaEmailInput"
+                            autocomplete="email"
+                        >
+                        <button type="submit" class="submit-btn">Join Waitlist</button>
+                    </div>
+                    <div class="success-message" id="ctaSuccessMessage">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Preparing your welcome...</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footnote -->
+    <div class="footnote">
+        <p>* <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12333550/" target="_blank" rel="noopener">Creswell & Goldberg, American Psychologist (2025)</a> — Meta-analyses reveal app-based meditation produces consistent reductions in depression, anxiety, and stress.</p>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <img src="src/assets/whitespace logo.png" alt="Whitespace" class="footer-logo">
+                <p class="footer-copyright inter">© 2025 Whitespace. All rights reserved.</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="/privacy" class="footer-link inter">Privacy Policy</a>
+                <a href="/terms" class="footer-link inter">Terms of Service</a>
+                <a href="mailto:hello@whitespace.so" class="footer-link inter">Contact</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Phosphene Background
+        // ==========================================
+        // Enhanced Phosphene Background with Pulsing
+        // ==========================================
         const canvas = document.getElementById('phosphene-canvas');
         const ctx = canvas.getContext('2d');
         let phosphenes = [];
@@ -328,17 +1167,25 @@
 
         function createPhosphenes() {
             phosphenes = [];
-            const count = 60;
+            const count = 120;
             for (let i = 0; i < count; i++) {
-                const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
+                const hue = Math.random() > 0.4 ? 210 + Math.random() * 30 : 250 + Math.random() * 20;
+                const saturation = Math.random() * 25 + 20;
+                const lightness = Math.random() * 25 + 40;
                 phosphenes.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    radius: Math.random() * 150 + 80,
+                    radius: Math.random() * 200 + 100,
+                    baseRadius: Math.random() * 200 + 100,
                     opacity: Math.random() * 0.04 + 0.015,
-                    vx: (Math.random() - 0.5) * 0.2,
-                    vy: (Math.random() - 0.5) * 0.2,
-                    color: `hsl(${hue}, 70%, 60%)`
+                    baseOpacity: Math.random() * 0.04 + 0.015,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    hue: hue,
+                    saturation: saturation,
+                    lightness: lightness,
+                    pulseSpeed: Math.random() * 0.02 + 0.01,
+                    pulsePhase: Math.random() * Math.PI * 2
                 });
             }
         }
@@ -351,13 +1198,25 @@
                 p.x += p.vx;
                 p.y += p.vy;
 
+                // Pulsing/breathing effect
+                p.pulsePhase += p.pulseSpeed;
+                const pulse = Math.sin(p.pulsePhase);
+                p.radius = p.baseRadius + pulse * 40;
+                p.opacity = p.baseOpacity + pulse * 0.02;
+
+                // Gentle drift in velocity
+                p.vx += (Math.random() - 0.5) * 0.01;
+                p.vy += (Math.random() - 0.5) * 0.01;
+                p.vx = Math.max(-0.4, Math.min(0.4, p.vx));
+                p.vy = Math.max(-0.4, Math.min(0.4, p.vy));
+
                 if (p.x < -p.radius) p.x = canvas.width + p.radius;
                 if (p.x > canvas.width + p.radius) p.x = -p.radius;
                 if (p.y < -p.radius) p.y = canvas.height + p.radius;
                 if (p.y > canvas.height + p.radius) p.y = -p.radius;
 
                 const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
+                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${p.opacity})`);
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
                 ctx.fillStyle = gradient;
@@ -378,22 +1237,53 @@
         createPhosphenes();
         animatePhosphenes();
 
-        // Form handling
-        const form = document.getElementById('emailForm');
-        const successMessage = document.getElementById('successMessage');
-        const emailInput = document.getElementById('emailInput');
-        const submitBtn = form.querySelector('.submit-btn');
+        // ==========================================
+        // Word-by-Word Animation for Hero Headline
+        // ==========================================
+        function animateHeadline() {
+            const headline = document.getElementById('heroHeadline');
+            const text = headline.textContent.trim();
+            const words = text.split(' ');
+            
+            // Slow, deliberate pace like a meditation teacher
+            // 0.5s between each word appearing
+            headline.innerHTML = words.map((word, index) => 
+                `<span class="word" style="animation-delay: ${0.8 + index * 0.5}s">${word}</span>`
+            ).join(' ');
+        }
 
-        console.log('✅ Form handler initialized');
-        console.log('Form elements:', { form, emailInput, submitBtn, successMessage });
+        // Run after a short delay to let the page settle
+        setTimeout(animateHeadline, 300);
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // ==========================================
+        // Intersection Observer for Scroll Animations
+        // ==========================================
+        const observerOptions = {
+            root: null,
+            rootMargin: '-50px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ==========================================
+        // Form Handling (Existing Workflow)
+        // ==========================================
+        async function handleFormSubmit(form, nameInput, emailInput, submitBtn, successMessage) {
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            
             console.log('🔵 Form submitted');
-            
-            const name = document.getElementById('nameInput').value;
-            const email = emailInput.value;
-            
             console.log('Name:', name, 'Email:', email);
             
             submitBtn.disabled = true;
@@ -429,14 +1319,97 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Join Waitlist';
             }
+        }
+
+        // Hero Form
+        const heroForm = document.getElementById('heroEmailForm');
+        heroForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleFormSubmit(
+                heroForm,
+                document.getElementById('heroNameInput'),
+                document.getElementById('heroEmailInput'),
+                heroForm.querySelector('.submit-btn'),
+                document.getElementById('heroSuccessMessage')
+            );
         });
 
-        console.log('✅ Event listener attached');
+        // CTA Form
+        const ctaForm = document.getElementById('ctaEmailForm');
+        ctaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleFormSubmit(
+                ctaForm,
+                document.getElementById('ctaNameInput'),
+                document.getElementById('ctaEmailInput'),
+                ctaForm.querySelector('.submit-btn'),
+                document.getElementById('ctaSuccessMessage')
+            );
+        });
+
+        console.log('✅ Form handlers initialized');
+
+        // ==========================================
+        // Audio Sample Player with Breathing Circle
+        // ==========================================
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const breathingCircle = document.getElementById('breathingCircle');
+        const playButtonContainer = document.getElementById('playButtonContainer');
+        const sampleAudio = document.getElementById('sampleAudio');
+        let isPlaying = false;
+
+        function updatePlayState(playing) {
+            isPlaying = playing;
+            
+            if (playing) {
+                // Show pause icon
+                playIcon.className = 'pause-icon';
+                playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
+                // Start breathing animation
+                breathingCircle.classList.add('breathing');
+                playButtonContainer.classList.add('pulsing');
+                playBtn.classList.add('playing');
+            } else {
+                // Show play icon (triangle) - clear innerHTML first
+                playIcon.className = 'play-icon';
+                playIcon.innerHTML = ''; // Clear any pause bars
+                // Stop breathing animation
+                breathingCircle.classList.remove('breathing');
+                playButtonContainer.classList.remove('pulsing');
+                playBtn.classList.remove('playing');
+            }
+        }
+
+        // Initialize with play icon
+        updatePlayState(false);
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                sampleAudio.pause();
+                updatePlayState(false);
+            } else {
+                sampleAudio.play();
+                updatePlayState(true);
+            }
+        });
+
+        sampleAudio.addEventListener('ended', () => {
+            updatePlayState(false);
+        });
+
+        sampleAudio.addEventListener('pause', () => {
+            updatePlayState(false);
+        });
+
+        sampleAudio.addEventListener('play', () => {
+            updatePlayState(true);
+        });
 
         // Auto-focus on desktop
         if (window.innerWidth > 768) {
             setTimeout(() => {
-                document.getElementById('nameInput').focus();
+                document.getElementById('heroNameInput').focus();
             }, 1000);
         }
     </script>
