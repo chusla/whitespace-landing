@@ -484,6 +484,13 @@
             font-weight: 500;
         }
 
+        /* Hide negative comparison items on mobile */
+        @media (max-width: 767px) {
+            .comparison-item:not(.positive) {
+                display: none;
+            }
+        }
+
         /* Feature Grid */
         .feature-grid {
             display: grid;
@@ -954,7 +961,7 @@
                     </div>
                 </div>
 
-                <audio id="sampleAudio" src="src/assets/steady ground.mp3" preload="metadata"></audio>
+                <audio id="sampleAudio" src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766135607508x869146036860977800/Steady%20Ground.mp3" preload="metadata"></audio>
             </div>
         </div>
     </section>
