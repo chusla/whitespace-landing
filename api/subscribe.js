@@ -1,6 +1,7 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@trywhitespace.com';
 
 export default async function handler(req, res) {
   // CORS headers
@@ -110,6 +111,61 @@ export default async function handler(req, res) {
       }
     } else {
       console.warn('RESEND_API_KEY not set, skipping email');
+    }
+
+    // Send notification email to admin
+    if (RESEND_API_KEY && ADMIN_EMAIL) {
+      try {
+        const notificationResponse = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${RESEND_API_KEY}`
+          },
+          body: JSON.stringify({
+            from: 'Whitespace <hello@trywhitespace.com>',
+            to: ADMIN_EMAIL,
+            subject: `New Waitlist Signup: ${name}`,
+            html: `
+              <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+                <h2 style="font-size: 24px; color: #1a1a1a; margin-bottom: 20px;">
+                  New Waitlist Signup
+                </h2>
+                <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                  <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 10px 0;">
+                    <strong>Name:</strong> ${name}
+                  </p>
+                  <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 10px 0;">
+                    <strong>Email:</strong> ${email.toLowerCase().trim()}
+                  </p>
+                  <p style="font-size: 16px; line-height: 1.6; color: #333; margin: 10px 0;">
+                    <strong>Signed up at:</strong> ${new Date().toLocaleString()}
+                  </p>
+                </div>
+                <p style="font-size: 14px; line-height: 1.6; color: #666; margin-top: 20px;">
+                  This is an automated notification from your Whitespace waitlist.
+                </p>
+              </div>
+            `
+          })
+        });
+
+        if (!notificationResponse.ok) {
+          const error = await notificationResponse.text();
+          console.error('Notification email error:', error);
+          console.warn('Notification email failed but user was saved to database');
+        }
+      } catch (notificationError) {
+        console.error('Error sending notification email:', notificationError);
+        // Don't fail the whole request if notification email fails
+      }
+    } else {
+      if (!RESEND_API_KEY) {
+        console.warn('RESEND_API_KEY not set, skipping notification email');
+      }
+      if (!ADMIN_EMAIL) {
+        console.warn('ADMIN_EMAIL not set, skipping notification email');
+      }
     }
 
     return res.status(200).json({ success: true });
