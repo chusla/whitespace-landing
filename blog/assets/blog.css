@@ -1,0 +1,645 @@
+/* ==========================================
+   Whitespace Blog Styles
+   ========================================== */
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Phosphene Background */
+#phosphene-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Utility Classes */
+.crimson { font-family: 'Crimson Pro', serif; }
+.inter { font-family: 'Inter', sans-serif; }
+
+/* ==========================================
+   Blog Navigation
+   ========================================== */
+.blog-nav {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.nav-logo img {
+    width: 120px;
+    height: auto;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.nav-logo:hover img {
+    opacity: 1;
+}
+
+.nav-link {
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* ==========================================
+   Blog Index Page
+   ========================================== */
+.blog-hero {
+    position: relative;
+    z-index: 10;
+    padding: 96px 24px 64px;
+    text-align: center;
+}
+
+.blog-hero h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 16px;
+}
+
+.blog-hero .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* Blog Post Grid */
+.blog-grid {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+}
+
+@media (min-width: 768px) {
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Blog Card */
+.blog-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+}
+
+.blog-card:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(107, 140, 255, 0.1);
+}
+
+.blog-card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.blog-card-content {
+    padding: 24px;
+}
+
+.blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 12px;
+}
+
+.blog-card-meta .divider {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.blog-card h2 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.blog-card-excerpt {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.blog-card-link {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: rgba(107, 140, 255, 0.8);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s ease;
+}
+
+.blog-card:hover .blog-card-link {
+    color: rgba(107, 140, 255, 1);
+}
+
+/* ==========================================
+   Blog Post Article
+   ========================================== */
+.blog-post {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+}
+
+/* Post Header */
+.post-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 24px;
+}
+
+.post-divider {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.post-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.2;
+    margin-bottom: 24px;
+}
+
+.post-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+/* Featured Image */
+.post-featured-image {
+    margin-bottom: 48px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.post-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Post Content */
+.post-content {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.post-content p {
+    margin-bottom: 24px;
+}
+
+.post-content h2 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 64px;
+    margin-bottom: 24px;
+}
+
+.post-content h3 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 48px;
+    margin-bottom: 16px;
+}
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: 24px;
+    padding-left: 24px;
+}
+
+.post-content li {
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.post-content li strong {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.post-content em {
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+.post-content a {
+    color: rgba(107, 140, 255, 0.8);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.post-content a:hover {
+    color: rgba(107, 140, 255, 1);
+    border-bottom-color: rgba(107, 140, 255, 0.5);
+}
+
+/* Citation Links */
+.citation-link {
+    color: rgba(107, 140, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.85em;
+}
+
+.citation-link:hover {
+    color: rgba(107, 140, 255, 1);
+}
+
+/* Pull Quote */
+.pull-quote {
+    margin: 48px 0;
+    padding: 32px 48px;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid rgba(107, 140, 255, 0.5);
+    border-radius: 8px;
+}
+
+.pull-quote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.pull-quote cite {
+    display: block;
+    margin-top: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: normal;
+}
+
+/* Post Footer */
+.post-footer {
+    margin-top: 96px;
+}
+
+/* CTA Box */
+.post-cta {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 48px 32px;
+    text-align: center;
+}
+
+.post-cta h3 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 16px;
+}
+
+.post-cta p {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 16px 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.02);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* References Section */
+.references {
+    margin-top: 96px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.references h4 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 24px;
+}
+
+.reference-list {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.5);
+    padding-left: 24px;
+}
+
+.reference-list li {
+    margin-bottom: 16px;
+}
+
+.reference-list a {
+    color: rgba(107, 140, 255, 0.8);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.reference-list a:hover {
+    color: rgba(107, 140, 255, 1);
+    border-bottom-color: rgba(107, 140, 255, 0.5);
+}
+
+/* Related Posts Section */
+.related-posts {
+    margin-top: 72px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.related-posts h4 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+}
+
+.related-posts-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 24px;
+}
+
+.related-posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+@media (min-width: 640px) {
+    .related-posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.related-post-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.related-post-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.related-post-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.related-post-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.related-post-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.related-post-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ==========================================
+   Site Footer
+   ========================================== */
+.site-footer {
+    position: relative;
+    z-index: 10;
+    padding: 48px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.footer-logo {
+    width: 96px;
+    height: auto;
+    opacity: 0.6;
+}
+
+.footer-copyright {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-links {
+    display: flex;
+    gap: 32px;
+}
+
+.footer-link {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ==========================================
+   Animations
+   ========================================== */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-up-delay-1 { transition-delay: 0.1s; }
+.fade-up-delay-2 { transition-delay: 0.2s; }
+.fade-up-delay-3 { transition-delay: 0.3s; }
+.fade-up-delay-4 { transition-delay: 0.4s; }
+.fade-up-delay-5 { transition-delay: 0.5s; }
+.fade-up-delay-6 { transition-delay: 0.6s; }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   Responsive Adjustments
+   ========================================== */
+@media (max-width: 640px) {
+    .blog-nav {
+        padding: 20px 16px;
+    }
+    
+    .nav-logo img {
+        width: 100px;
+    }
+    
+    .post-header {
+        text-align: left;
+    }
+    
+    .post-meta {
+        justify-content: flex-start;
+    }
+    
+    .pull-quote {
+        padding: 24px;
+        margin: 32px 0;
+    }
+    
+    .post-cta {
+        padding: 32px 24px;
+    }
+}
+

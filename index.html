@@ -154,9 +154,63 @@
         /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
-            bottom: 48px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
+        }
+
+        /* Journal Peek Teaser */
+        .journal-peek-teaser {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 32px 24px;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .journal-peek-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
+            animation: peekPulse 3s ease-in-out infinite;
+            pointer-events: auto;
+            cursor: default;
+        }
+
+        .peek-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(107, 140, 255, 0.8);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes peekPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(107, 140, 255, 0.4);
+            }
+            50% { 
+                transform: scale(1.2);
+                box-shadow: 0 0 10px 3px rgba(107, 140, 255, 0.3);
+            }
+        }
+
+        /* Journal Featured Section (first after hero) */
+        .journal-featured {
+            padding-top: 48px;
         }
 
         .scroll-mouse {
@@ -608,6 +662,108 @@
             line-height: 1.7;
         }
 
+        /* Journal Section */
+        .journal-section {
+            position: relative;
+            z-index: 10;
+        }
+
+        .journal-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto 48px;
+        }
+
+        @media (min-width: 768px) {
+            .journal-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+        }
+
+        .journal-card {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .journal-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 60px rgba(107, 140, 255, 0.08);
+        }
+
+        .journal-card-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+        }
+
+        .journal-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .journal-card:hover .journal-card-image img {
+            transform: scale(1.05);
+        }
+
+        .journal-card-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .journal-card-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(107, 140, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .journal-card h3 {
+            font-size: clamp(1.125rem, 2vw, 1.25rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .journal-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .journal-card-link {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .journal-card:hover .journal-card-link {
+            color: rgba(107, 140, 255, 0.9);
+        }
+
+        .journal-cta {
+            text-align: center;
+        }
+
         /* Final CTA */
         .final-cta {
             max-width: 800px;
@@ -963,6 +1119,59 @@
                 <div class="scroll-dot"></div>
             </div>
         </div>
+
+        <!-- Journal Peek Teaser -->
+        <div class="journal-peek-teaser">
+            <div class="journal-peek-label inter">
+                <span class="peek-dot"></span>
+                Latest from The Journal
+            </div>
+        </div>
+    </section>
+
+    <!-- From The Journal Section -->
+    <section class="journal-section journal-featured" id="journal">
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <h2>From The Journal</h2>
+                <p>Science-backed insights on meditation and mental wellness</p>
+            </div>
+
+            <div class="journal-grid">
+                <a href="/blog/sleep-science.html" class="journal-card fade-up fade-up-delay-1">
+                    <div class="journal-card-image">
+                        <img src="/blog/assets/blog-images/paradox.png" alt="The Science of Better Sleep">
+                    </div>
+                    <div class="journal-card-content">
+                        <span class="journal-card-tag inter">Sleep Science</span>
+                        <h3 class="crimson">How Meditation Apps Are Transforming Rest</h3>
+                        <p class="inter">New research reveals that app-based mindfulness produces measurable improvements in sleep quality.</p>
+                        <span class="journal-card-link crimson">Read Article →</span>
+                    </div>
+                </a>
+
+                <a href="/blog/athletes-meditate.html" class="journal-card fade-up fade-up-delay-2">
+                    <div class="journal-card-image">
+                        <img src="/blog/assets/blog-images/performance.png" alt="Why Elite Athletes Meditate">
+                    </div>
+                    <div class="journal-card-content">
+                        <span class="journal-card-tag inter">Performance</span>
+                        <h3 class="crimson">Why Elite Athletes Meditate</h3>
+                        <p class="inter">From Phil Jackson to Steph Curry—discover the mental edge transforming professional sports.</p>
+                        <span class="journal-card-link crimson">Read Article →</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="journal-cta fade-up fade-up-delay-3">
+                <a href="/blog" class="ghost-btn">
+                    View All Articles
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </section>
 
     <!-- App Screenshots Section -->
@@ -1193,6 +1402,7 @@
             </div>
             
             <div class="footer-links">
+                <a href="/blog" class="footer-link inter">Blog</a>
                 <a href="/privacy" class="footer-link inter">Privacy Policy</a>
                 <a href="/terms" class="footer-link inter">Terms of Service</a>
                 <a href="mailto:hello@whitespace.so" class="footer-link inter">Contact</a>
