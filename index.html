@@ -10,7 +10,7 @@
     <title>Whitespace | Personalized AI Meditation & Focus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@100;200;300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -117,7 +117,7 @@
         .hero h1 {
             font-family: 'Crimson Pro', serif;
             font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 400;
+            font-weight: 100;
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.25;
             margin-bottom: 32px;
@@ -140,6 +140,10 @@
             opacity: 0;
             transform: translateY(12px);
             animation: wordFadeIn 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+
+        .hero h1 .word.emphasis {
+            font-weight: 500;
         }
 
         @keyframes wordFadeIn {
@@ -1098,7 +1102,7 @@
             >
 
             <h1 id="heroHeadline">
-                Meditation that adapts<br>to you.
+                Guided meditations that<br>adapt to you.
             </h1>
 
             <p class="hero-subtitle fade-up visible fade-up-delay-7">
@@ -1576,7 +1580,9 @@
                 if (item.isBreak) {
                     return '<br>';
                 }
-                return `<span class="word" style="animation-delay: ${0.8 + item.index * 0.5}s">${item.word}</span>`;
+                // Add emphasis class to "you" for slightly heavier weight
+                const emphasisClass = item.word.replace(/[.,!?]/g, '').toLowerCase() === 'you' ? ' emphasis' : '';
+                return `<span class="word${emphasisClass}" style="animation-delay: ${0.8 + item.index * 0.5}s">${item.word}</span>`;
             }).join(' ');
         }
 
