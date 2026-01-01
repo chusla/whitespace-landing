@@ -12,12 +12,12 @@
     <meta property="og:title" content="Loving-Kindness Meditation: The Science of Cultivating Compassion | Whitespace">
     <meta property="og:description" content="Research reveals how loving-kindness meditation builds empathy, reduces inflammation, increases positive emotions, and transforms relationships.">
     <meta property="og:type" content="article">
-    <meta property="og:image" content="https://whitespace.so/blog/assets/blog-images/loving kindness.png">
-    <meta property="og:url" content="https://whitespace.so/blog/loving-kindness-meditation.html">
+    <meta property="og:image" content="https://trywhitespace.com/blog/assets/blog-images/loving kindness.png">
+    <meta property="og:url" content="https://trywhitespace.com/blog/loving-kindness-meditation.html">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Loving-Kindness Meditation: The Science of Cultivating Compassion">
     <meta name="twitter:description" content="Research reveals how loving-kindness meditation builds empathy, reduces inflammation, and transforms relationships.">
-    <meta name="twitter:image" content="https://whitespace.so/blog/assets/blog-images/loving kindness.png">
+    <meta name="twitter:image" content="https://trywhitespace.com/blog/assets/blog-images/loving kindness.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -273,103 +273,12 @@
         </footer>
     </article>
     
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <img src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" alt="Whitespace" class="footer-logo">
-                <p class="footer-copyright inter">© 2025 Whitespace. All rights reserved.</p>
-            </div>
-            
-            <div class="footer-links">
-                <a href="/blog" class="footer-link inter">Blog</a>
-                <a href="/privacy" class="footer-link inter">Privacy Policy</a>
-                <a href="/terms" class="footer-link inter">Terms of Service</a>
-                <a href="mailto:hello@whitespace.so" class="footer-link inter">Contact</a>
-            </div>
-        </div>
-    </footer>
+    <!-- Shared Components -->
+    <script src="/blog/assets/js/header.js"></script>
+    <script src="/blog/assets/js/phosphene.js"></script>
+    <script src="/blog/assets/js/footer.js"></script>
     
-    <script>
-        const canvas = document.getElementById('phosphene-canvas');
-        const ctx = canvas.getContext('2d');
-        let phosphenes = [];
-        const INTENSITY_MULTIPLIER = 0.3;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        function createPhosphenes() {
-            phosphenes = [];
-            const count = 120;
-            for (let i = 0; i < count; i++) {
-                const hue = Math.random() > 0.4 ? 210 + Math.random() * 30 : 250 + Math.random() * 20;
-                const saturation = Math.random() * 25 + 20;
-                const lightness = Math.random() * 25 + 40;
-                phosphenes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 200 + 100,
-                    baseRadius: Math.random() * 200 + 100,
-                    opacity: (Math.random() * 0.04 + 0.015) * INTENSITY_MULTIPLIER,
-                    baseOpacity: (Math.random() * 0.04 + 0.015) * INTENSITY_MULTIPLIER,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
-                    hue: hue,
-                    saturation: saturation,
-                    lightness: lightness,
-                    pulseSpeed: Math.random() * 0.02 + 0.01,
-                    pulsePhase: Math.random() * Math.PI * 2
-                });
-            }
-        }
-
-        function animatePhosphenes() {
-            ctx.fillStyle = 'rgb(10, 10, 15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            phosphenes.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.pulsePhase += p.pulseSpeed;
-                const pulse = Math.sin(p.pulsePhase);
-                p.radius = p.baseRadius + pulse * 40;
-                p.opacity = p.baseOpacity + pulse * 0.02 * INTENSITY_MULTIPLIER;
-                p.vx += (Math.random() - 0.5) * 0.01;
-                p.vy += (Math.random() - 0.5) * 0.01;
-                p.vx = Math.max(-0.4, Math.min(0.4, p.vx));
-                p.vy = Math.max(-0.4, Math.min(0.4, p.vy));
-
-                if (p.x < -p.radius) p.x = canvas.width + p.radius;
-                if (p.x > canvas.width + p.radius) p.x = -p.radius;
-                if (p.y < -p.radius) p.y = canvas.height + p.radius;
-                if (p.y > canvas.height + p.radius) p.y = -p.radius;
-
-                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${p.opacity})`);
-                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            requestAnimationFrame(animatePhosphenes);
-        }
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            createPhosphenes();
-        });
-
-        resizeCanvas();
-        createPhosphenes();
-        animatePhosphenes();
-    </script>
-    
+    <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
