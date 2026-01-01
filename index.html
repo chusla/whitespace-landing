@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personalized meditation spaces for the moments that matter. Tell Whitespace what you need and get AI-generated guidance made for you - instantly.">
+    <meta name="description" content="Personalized guided meditations generated on-demand. No two sessions are alike. Join the waitlist for early access.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/src/assets/favicon.png">
     
-    <title>Whitespace | Personalized AI Meditation & Focus</title>
+    <title>Whitespace | Meditation That Adapts to You</title>
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://whitespace.so/">
-    <meta property="og:title" content="Whitespace | Personalized AI Meditation & Focus">
-    <meta property="og:description" content="Personalized meditation spaces for the moments that matter. Tell Whitespace what you need and get AI-generated guidance made for you - instantly.">
+    <meta property="og:title" content="Whitespace | Meditation That Adapts to You">
+    <meta property="og:description" content="Personalized guided meditations generated on-demand. No two sessions are alike. Join the waitlist.">
     <meta property="og:image" content="https://whitespace.so/src/assets/og-image.png">
     <meta property="og:site_name" content="Whitespace">
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://whitespace.so/">
-    <meta name="twitter:title" content="Whitespace | Personalized AI Meditation & Focus">
-    <meta name="twitter:description" content="Personalized meditation spaces for the moments that matter. Tell Whitespace what you need and get AI-generated guidance made for you - instantly.">
+    <meta name="twitter:title" content="Whitespace | Meditation That Adapts to You">
+    <meta name="twitter:description" content="Personalized guided meditations generated on-demand. No two sessions are alike. Join the waitlist.">
     <meta name="twitter:image" content="https://whitespace.so/src/assets/og-image.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@100;200;300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -91,7 +91,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 24px;
+            padding: 40px 24px 40px;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                padding: 60px 24px 180px;
+            }
         }
 
         .hero-content {
@@ -101,12 +107,17 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex: 1;
-            padding: 40px 0;
+            padding: 20px 0;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                padding: 40px 0;
+            }
         }
 
         .logo {
-            width: 210px;
+            width: 160px;
             height: auto;
             margin-bottom: 0;
             filter: drop-shadow(0 0 30px rgba(107, 140, 255, 0.4));
@@ -122,12 +133,18 @@
         .hero h1 {
             font-family: 'Crimson Pro', serif;
             font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 400;
+            font-weight: 100;
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.25;
-            margin-bottom: 64px;
+            margin-bottom: 32px;
             min-height: 1.25em;
             opacity: 0; /* Hide initially */
+        }
+
+        @media (min-width: 768px) {
+            .hero h1 {
+                margin-bottom: 64px;
+            }
         }
 
         .hero h1.animating {
@@ -139,6 +156,10 @@
             opacity: 0;
             transform: translateY(12px);
             animation: wordFadeIn 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+
+        .hero h1 .word.emphasis {
+            font-weight: 500;
         }
 
         @keyframes wordFadeIn {
@@ -158,7 +179,7 @@
             color: rgba(255, 255, 255, 0.6);
             line-height: 1.7;
             max-width: 640px;
-            margin: 0 auto 56px;
+            margin: 0 auto 32px;
         }
 
         @media (min-width: 768px) {
@@ -173,6 +194,13 @@
             bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .scroll-indicator {
+                display: block;
+            }
         }
 
         /* Journal Peek Teaser */
@@ -185,6 +213,13 @@
             display: flex;
             justify-content: center;
             pointer-events: none;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .journal-peek-teaser {
+                display: flex;
+            }
         }
 
         .journal-peek-label {
@@ -358,13 +393,14 @@
             flex-direction: column;
             gap: 16px;
             align-items: center;
-            margin-top: 24px;
+            margin-top: 16px;
         }
 
         @media (min-width: 640px) {
             .hero-cta-row {
                 flex-direction: row;
                 justify-content: center;
+                margin-top: 24px;
             }
         }
 
@@ -1082,11 +1118,11 @@
             >
 
             <h1 id="heroHeadline">
-                Meditation that evolves<br>with you.
+                Your personal meditation guide.<br>On-demand.
             </h1>
 
             <p class="hero-subtitle fade-up visible fade-up-delay-7">
-                Personalized meditation spaces for the moments that matter. Tell Whitespace what you need and get guidance made for you - instantly.
+                Personalized meditation spaces for the moments that matter. Tell Whitespace what you need and get guidance made for you - exactly when you need it.
             </p>
 
             <div class="fade-up visible fade-up-delay-9">
@@ -1560,7 +1596,9 @@
                 if (item.isBreak) {
                     return '<br>';
                 }
-                return `<span class="word" style="animation-delay: ${0.8 + item.index * 0.5}s">${item.word}</span>`;
+                // Add emphasis class to "you" for slightly heavier weight
+                const emphasisClass = item.word.replace(/[.,!?]/g, '').toLowerCase() === 'you' ? ' emphasis' : '';
+                return `<span class="word${emphasisClass}" style="animation-delay: ${0.8 + item.index * 0.5}s">${item.word}</span>`;
             }).join(' ');
         }
 
