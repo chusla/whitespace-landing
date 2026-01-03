@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024, height=1024">
+    <title>Immerse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 1024px;
+            height: 1024px;
+            overflow: hidden;
+            background: rgb(8, 25, 45);
+        }
+        
+        #phosphene-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1024px;
+            height: 1024px;
+        }
+        
+        .flow-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 120px;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 80px rgba(100, 200, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="phosphene-canvas" width="1024" height="1024"></canvas>
+    <div class="flow-text">IMMERSE</div>
+    
+    <script>
+        (function() {
+            const canvas = document.getElementById('phosphene-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let phosphenes = [];
+            const INTENSITY_MULTIPLIER = 0.6;
+            const WIDTH = 1024;
+            const HEIGHT = 1024;
+
+            function createPhosphenes() {
+                phosphenes = [];
+                const count = 120;
+                for (let i = 0; i < count; i++) {
+                    // Ocean blue hues: deep teal, aquamarine, cerulean, deep blue
+                    const rand = Math.random();
+                    let hue, saturation, lightness;
+                    if (rand < 0.4) {
+                        // Deep teal / aquamarine
+                        hue = 175 + Math.random() * 20; // 175-195
+                        saturation = Math.random() * 30 + 50;
+                        lightness = Math.random() * 20 + 35;
+                    } else if (rand < 0.7) {
+                        // Ocean blue / cerulean
+                        hue = 195 + Math.random() * 25; // 195-220
+                        saturation = Math.random() * 35 + 45;
+                        lightness = Math.random() * 25 + 40;
+                    } else {
+                        // Deep blue / navy hints
+                        hue = 210 + Math.random() * 30; // 210-240
+                        saturation = Math.random() * 30 + 40;
+                        lightness = Math.random() * 20 + 30;
+                    }
+                    
+                    phosphenes.push({
+                        x: Math.random() * WIDTH,
+                        y: Math.random() * HEIGHT,
+                        radius: Math.random() * 220 + 80,
+                        baseRadius: Math.random() * 220 + 80,
+                        opacity: (Math.random() * 0.06 + 0.025) * INTENSITY_MULTIPLIER,
+                        baseOpacity: (Math.random() * 0.06 + 0.025) * INTENSITY_MULTIPLIER,
+                        vx: (Math.random() - 0.5) * 0.25,
+                        vy: (Math.random() - 0.5) * 0.25,
+                        hue: hue,
+                        saturation: saturation,
+                        lightness: lightness,
+                        pulseSpeed: Math.random() * 0.015 + 0.008,
+                        pulsePhase: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+
+            function animatePhosphenes() {
+                ctx.fillStyle = 'rgb(8, 25, 45)';
+                ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+                phosphenes.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.pulsePhase += p.pulseSpeed;
+                    const pulse = Math.sin(p.pulsePhase);
+                    p.radius = p.baseRadius + pulse * 50;
+                    p.opacity = p.baseOpacity + pulse * 0.015 * INTENSITY_MULTIPLIER;
+                    p.vx += (Math.random() - 0.5) * 0.008;
+                    p.vy += (Math.random() - 0.5) * 0.008;
+                    p.vx = Math.max(-0.35, Math.min(0.35, p.vx));
+                    p.vy = Math.max(-0.35, Math.min(0.35, p.vy));
+
+                    if (p.x < -p.radius) p.x = WIDTH + p.radius;
+                    if (p.x > WIDTH + p.radius) p.x = -p.radius;
+                    if (p.y < -p.radius) p.y = HEIGHT + p.radius;
+                    if (p.y > HEIGHT + p.radius) p.y = -p.radius;
+
+                    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                    gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${p.opacity})`);
+                    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animatePhosphenes);
+            }
+
+            createPhosphenes();
+            animatePhosphenes();
+        })();
+    </script>
+</body>
+</html>
+
