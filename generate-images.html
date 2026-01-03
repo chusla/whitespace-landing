@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate 1024x1024 Images</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            padding: 40px;
+            min-height: 100vh;
+        }
+        h1 { margin-bottom: 30px; font-weight: 300; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        .card h2 {
+            margin-bottom: 15px;
+            font-weight: 400;
+            font-size: 18px;
+        }
+        canvas {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #4a6cf7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        button:hover { background: #3b5ce5; }
+        .info {
+            margin-top: 10px;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>App Store Image Generator (1024 × 1024)</h1>
+    <div class="grid">
+        <div class="card">
+            <h2>FLOW - Standard Dark</h2>
+            <canvas id="flow-canvas" width="1024" height="1024"></canvas>
+            <button onclick="download('flow-canvas', 'flow-1024.png')">Download PNG</button>
+            <div class="info">1024 × 1024 px</div>
+        </div>
+        <div class="card">
+            <h2>ELEVATE - Sky Blue</h2>
+            <canvas id="elevate-canvas" width="1024" height="1024"></canvas>
+            <button onclick="download('elevate-canvas', 'elevate-1024.png')">Download PNG</button>
+            <div class="info">1024 × 1024 px</div>
+        </div>
+        <div class="card">
+            <h2>IMMERSE - Ocean Blue</h2>
+            <canvas id="immerse-canvas" width="1024" height="1024"></canvas>
+            <button onclick="download('immerse-canvas', 'immerse-1024.png')">Download PNG</button>
+            <div class="info">1024 × 1024 px</div>
+        </div>
+    </div>
+
+    <script>
+        const SIZE = 1024;
+
+        // Explicitly load Inter font for canvas
+        async function loadFonts() {
+            const font = new FontFace('Inter', 'url(https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYAZ9hiA.woff2)', {
+                weight: '300',
+                style: 'normal'
+            });
+            await font.load();
+            document.fonts.add(font);
+            
+            generateFlow();
+            generateElevate();
+            generateImmerse();
+        }
+        
+        loadFonts();
+
+        function createPhosphenes(config) {
+            const phosphenes = [];
+            for (let i = 0; i < config.count; i++) {
+                const hueData = config.hueFunc();
+                phosphenes.push({
+                    x: Math.random() * SIZE,
+                    y: Math.random() * SIZE,
+                    radius: Math.random() * 200 + 100,
+                    opacity: (Math.random() * 0.06 + 0.02) * config.intensity,
+                    hue: hueData.hue,
+                    saturation: hueData.saturation,
+                    lightness: hueData.lightness
+                });
+            }
+            return phosphenes;
+        }
+
+        function drawPhosphenes(ctx, phosphenes, bgColor) {
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+
+            phosphenes.forEach(p => {
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${p.opacity})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function drawText(ctx, text, color, fontSize, letterSpacing) {
+            ctx.fillStyle = color;
+            ctx.font = `300 ${fontSize}px "Inter", sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Manual letter spacing
+            const chars = text.split('');
+            const totalWidth = chars.length * letterSpacing;
+            let x = (SIZE - totalWidth) / 2 + letterSpacing / 2;
+            
+            chars.forEach(char => {
+                ctx.fillText(char, x, SIZE / 2);
+                x += letterSpacing;
+            });
+        }
+
+        function generateFlow() {
+            const canvas = document.getElementById('flow-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Base phosphenes - brighter
+            const phosphenes = createPhosphenes({
+                count: 60,
+                intensity: 0.8,
+                hueFunc: () => ({
+                    hue: Math.random() > 0.4 ? 210 + Math.random() * 30 : 250 + Math.random() * 20,
+                    saturation: Math.random() * 30 + 25,
+                    lightness: Math.random() * 20 + 50
+                })
+            });
+            
+            // Add brighter corner phosphenes
+            const corners = [
+                { x: 150, y: 150 },
+                { x: SIZE - 150, y: 150 },
+                { x: 150, y: SIZE - 150 },
+                { x: SIZE - 150, y: SIZE - 150 }
+            ];
+            
+            corners.forEach(corner => {
+                for (let i = 0; i < 10; i++) {
+                    const hue = Math.random() > 0.5 ? 210 + Math.random() * 25 : 245 + Math.random() * 25;
+                    phosphenes.push({
+                        x: corner.x + (Math.random() - 0.5) * 350,
+                        y: corner.y + (Math.random() - 0.5) * 350,
+                        radius: Math.random() * 200 + 100,
+                        opacity: Math.random() * 0.08 + 0.04,
+                        hue: hue,
+                        saturation: Math.random() * 35 + 35,
+                        lightness: Math.random() * 15 + 60
+                    });
+                }
+            });
+            
+            drawPhosphenes(ctx, phosphenes, 'rgb(10, 10, 15)');
+            drawText(ctx, 'FLOW', 'rgba(255, 255, 255, 0.95)', 160, 190);
+        }
+
+        function generateElevate() {
+            const canvas = document.getElementById('elevate-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const phosphenes = createPhosphenes({
+                count: 100,
+                intensity: 0.9,
+                hueFunc: () => ({
+                    hue: 185 + Math.random() * 35,
+                    saturation: Math.random() * 40 + 50,
+                    lightness: Math.random() * 20 + 70
+                })
+            });
+            
+            drawPhosphenes(ctx, phosphenes, 'rgb(220, 240, 255)');
+            drawText(ctx, 'ELEVATE', 'rgb(20, 50, 80)', 130, 140);
+        }
+
+        function generateImmerse() {
+            const canvas = document.getElementById('immerse-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const phosphenes = createPhosphenes({
+                count: 120,
+                intensity: 0.6,
+                hueFunc: () => {
+                    const rand = Math.random();
+                    if (rand < 0.4) {
+                        return { hue: 175 + Math.random() * 20, saturation: Math.random() * 30 + 50, lightness: Math.random() * 20 + 35 };
+                    } else if (rand < 0.7) {
+                        return { hue: 195 + Math.random() * 25, saturation: Math.random() * 35 + 45, lightness: Math.random() * 25 + 40 };
+                    } else {
+                        return { hue: 210 + Math.random() * 30, saturation: Math.random() * 30 + 40, lightness: Math.random() * 20 + 30 };
+                    }
+                }
+            });
+            
+            drawPhosphenes(ctx, phosphenes, 'rgb(8, 25, 45)');
+            drawText(ctx, 'IMMERSE', 'rgba(255, 255, 255, 0.95)', 120, 130);
+        }
+
+        function download(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
+
