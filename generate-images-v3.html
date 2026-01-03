@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Whitespace App Icons - Flow, Elevate, Immerse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0d0d12 0%, #1a1a2e 50%, #0d0d12 100%);
+            color: #e0e0e0;
+            padding: 50px;
+            min-height: 100vh;
+        }
+        h1 {
+            font-weight: 200;
+            font-size: 32px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.5;
+            margin-bottom: 50px;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+        }
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .card h2 {
+            font-weight: 300;
+            font-size: 22px;
+            margin-bottom: 8px;
+            letter-spacing: 4px;
+        }
+        .card .concept {
+            font-size: 13px;
+            opacity: 0.4;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+        canvas {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 60px;
+            margin-bottom: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+        }
+        button {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>WHITESPACE</h1>
+    <p class="subtitle">App Icon Concepts — 1024 × 1024</p>
+    
+    <div class="grid">
+        <div class="card">
+            <h2>FLOW</h2>
+            <p class="concept">Evening sky</p>
+            <canvas id="flow" width="1024" height="1024"></canvas>
+            <button onclick="download('flow', 'whitespace-flow.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>ELEVATE</h2>
+            <p class="concept">Sky blue</p>
+            <canvas id="elevate" width="1024" height="1024"></canvas>
+            <button onclick="download('elevate', 'whitespace-elevate.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>IMMERSE</h2>
+            <p class="concept">Deep ocean blue</p>
+            <canvas id="immerse" width="1024" height="1024"></canvas>
+            <button onclick="download('immerse', 'whitespace-immerse.png')">Download PNG</button>
+        </div>
+    </div>
+
+    <script>
+        const SIZE = 1024;
+        const CENTER = SIZE / 2;
+
+        window.addEventListener('load', () => {
+            // Wait for fonts to be ready
+            document.fonts.ready.then(() => {
+                generateFlow();
+                generateElevate();
+                generateImmerse();
+            });
+        });
+
+        // ========== FLOW ==========
+        // Evening sky
+        function generateFlow() {
+            const canvas = document.getElementById('flow');
+            const ctx = canvas.getContext('2d');
+            
+            // Evening sky gradient - deep blue to purple-blue
+            const sky = ctx.createLinearGradient(0, 0, 0, SIZE);
+            sky.addColorStop(0, '#0a0f1a');
+            sky.addColorStop(0.3, '#141e35');
+            sky.addColorStop(0.6, '#1a2847');
+            sky.addColorStop(1, '#0d1525');
+            ctx.fillStyle = sky;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Draw text
+            drawText(ctx, 'FLOW', 'rgba(255, 255, 255, 0.95)');
+        }
+
+        // ========== ELEVATE ==========
+        // Sky Blue
+        function generateElevate() {
+            const canvas = document.getElementById('elevate');
+            const ctx = canvas.getContext('2d');
+            
+            // Base - light sky blue
+            ctx.fillStyle = '#e8f4fc';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - bright sky feel
+            const sphere = ctx.createRadialGradient(CENTER, CENTER * 0.7, 0, CENTER, CENTER, SIZE * 0.8);
+            sphere.addColorStop(0, '#ffffff');
+            sphere.addColorStop(0.2, '#e0f0fa');
+            sphere.addColorStop(0.5, '#c5e4f5');
+            sphere.addColorStop(0.8, '#a8d4ef');
+            sphere.addColorStop(1, '#8bc4e8');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Soft bright center
+            const glow = ctx.createRadialGradient(CENTER, CENTER * 0.8, 0, CENTER, CENTER * 0.8, 350);
+            glow.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
+            glow.addColorStop(0.5, 'rgba(255, 255, 255, 0.2)');
+            glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER * 0.8, 350, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text - dark for light background
+            drawText(ctx, 'ELEVATE', 'rgba(30, 60, 90, 0.9)');
+        }
+
+        // ========== IMMERSE ==========
+        // Deep Ocean Blue
+        function generateImmerse() {
+            const canvas = document.getElementById('immerse');
+            const ctx = canvas.getContext('2d');
+            
+            // Base - deep ocean
+            ctx.fillStyle = '#040d18';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - deep ocean depths
+            const sphere = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.75);
+            sphere.addColorStop(0, '#0d2a42');
+            sphere.addColorStop(0.3, '#0a2035');
+            sphere.addColorStop(0.6, '#071828');
+            sphere.addColorStop(1, '#040d18');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Deep glow
+            const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 280);
+            glow.addColorStop(0, 'rgba(60, 140, 180, 0.2)');
+            glow.addColorStop(0.5, 'rgba(40, 100, 150, 0.1)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 280, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text
+            drawText(ctx, 'IMMERSE', 'rgba(255, 255, 255, 0.95)');
+        }
+
+        // Draw centered text with letter spacing
+        function drawText(ctx, text, color) {
+            ctx.fillStyle = color;
+            ctx.font = '300 140px "Inter", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Manual letter spacing
+            const spacing = 25;
+            const chars = text.split('');
+            const totalWidth = (chars.length - 1) * spacing;
+            
+            // Measure actual text width
+            let charWidths = chars.map(c => ctx.measureText(c).width);
+            let actualWidth = charWidths.reduce((a, b) => a + b, 0) + totalWidth;
+            
+            let x = CENTER - actualWidth / 2;
+            
+            chars.forEach((char, i) => {
+                ctx.fillText(char, x + charWidths[i] / 2, CENTER);
+                x += charWidths[i] + spacing;
+            });
+        }
+
+        function download(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
