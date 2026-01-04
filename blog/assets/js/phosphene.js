@@ -16,9 +16,12 @@
     let smoothMouseX = 0, smoothMouseY = 0;
     let isMouseOver = false;
     let cursorGlowOpacity = 0;
-    const CURSOR_GLOW_RADIUS = 180;
-    const PROXIMITY_THRESHOLD = 250;
-    const LERP_SPEED = 0.08;
+    
+    // Enhanced settings - more pronounced
+    const CURSOR_GLOW_RADIUS = 280;
+    const PROXIMITY_THRESHOLD = 350;
+    const GRAVITY_STRENGTH = 0.15;
+    const LERP_SPEED = 0.1;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -55,19 +58,20 @@
         return start + (end - start) * factor;
     }
 
-    // Draw cursor-following glow
+    // Draw cursor-following glow - more pronounced
     function drawCursorGlow() {
-        if (cursorGlowOpacity <= 0) return;
+        if (cursorGlowOpacity <= 0.01) return;
         
         const gradient = ctx.createRadialGradient(
             smoothMouseX, smoothMouseY, 0,
             smoothMouseX, smoothMouseY, CURSOR_GLOW_RADIUS
         );
         
-        // Soft cyan-blue glow
-        const glowOpacity = 0.12 * cursorGlowOpacity * INTENSITY_MULTIPLIER;
-        gradient.addColorStop(0, `hsla(200, 60%, 65%, ${glowOpacity})`);
-        gradient.addColorStop(0.4, `hsla(220, 50%, 55%, ${glowOpacity * 0.5})`);
+        // Brighter cyan-blue glow
+        const glowOpacity = 0.25 * cursorGlowOpacity * INTENSITY_MULTIPLIER;
+        gradient.addColorStop(0, `hsla(200, 70%, 70%, ${glowOpacity * 1.5})`);
+        gradient.addColorStop(0.3, `hsla(210, 60%, 60%, ${glowOpacity})`);
+        gradient.addColorStop(0.6, `hsla(220, 50%, 50%, ${glowOpacity * 0.4})`);
         gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
         
         ctx.fillStyle = gradient;
@@ -86,9 +90,24 @@
         
         // Fade cursor glow in/out
         const targetOpacity = isMouseOver ? 1 : 0;
-        cursorGlowOpacity = lerp(cursorGlowOpacity, targetOpacity, 0.05);
+        cursorGlowOpacity = lerp(cursorGlowOpacity, targetOpacity, 0.08);
 
         phosphenes.forEach(p => {
+            // Calculate distance to cursor for gravity and proximity effects
+            const dx = smoothMouseX - p.x;
+            const dy = smoothMouseY - p.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // Gravity pull toward cursor
+            if ((isMouseOver || cursorGlowOpacity > 0.01) && distance < PROXIMITY_THRESHOLD && distance > 10) {
+                const gravityCurve = 1 - (distance / PROXIMITY_THRESHOLD);
+                const gravityForce = gravityCurve * gravityCurve * GRAVITY_STRENGTH * cursorGlowOpacity;
+                
+                // Normalize direction and apply gravity
+                p.vx += (dx / distance) * gravityForce;
+                p.vy += (dy / distance) * gravityForce;
+            }
+            
             p.x += p.vx;
             p.y += p.vy;
             p.pulsePhase += p.pulseSpeed;
@@ -98,30 +117,26 @@
             let currentRadius = p.baseRadius + pulse * 40;
             let currentOpacity = p.baseOpacity + pulse * 0.02 * INTENSITY_MULTIPLIER;
             
-            // Proximity boost when mouse is near
-            if (isMouseOver || cursorGlowOpacity > 0.01) {
-                const dx = p.x - smoothMouseX;
-                const dy = p.y - smoothMouseY;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+            // Proximity boost - more pronounced brightness and size
+            if ((isMouseOver || cursorGlowOpacity > 0.01) && distance < PROXIMITY_THRESHOLD) {
+                const proximityFactor = 1 - (distance / PROXIMITY_THRESHOLD);
+                const boost = proximityFactor * proximityFactor * cursorGlowOpacity;
                 
-                if (distance < PROXIMITY_THRESHOLD) {
-                    // Smooth falloff based on distance
-                    const proximityFactor = 1 - (distance / PROXIMITY_THRESHOLD);
-                    const boost = proximityFactor * proximityFactor * cursorGlowOpacity;
-                    
-                    // Increase radius and opacity
-                    currentRadius += boost * 50;
-                    currentOpacity += boost * 0.04 * INTENSITY_MULTIPLIER;
-                }
+                // Increased radius and opacity boost
+                currentRadius += boost * 80;
+                currentOpacity += boost * 0.08 * INTENSITY_MULTIPLIER;
             }
             
             p.radius = currentRadius;
-            p.opacity = currentOpacity;
+            p.opacity = Math.min(currentOpacity, 0.15); // Cap opacity
             
+            // Gentle drift + damping
             p.vx += (Math.random() - 0.5) * 0.01;
             p.vy += (Math.random() - 0.5) * 0.01;
-            p.vx = Math.max(-0.4, Math.min(0.4, p.vx));
-            p.vy = Math.max(-0.4, Math.min(0.4, p.vy));
+            p.vx *= 0.99; // Slight damping for smoother movement
+            p.vy *= 0.99;
+            p.vx = Math.max(-0.5, Math.min(0.5, p.vx));
+            p.vy = Math.max(-0.5, Math.min(0.5, p.vy));
 
             if (p.x < -p.radius) p.x = canvas.width + p.radius;
             if (p.x > canvas.width + p.radius) p.x = -p.radius;

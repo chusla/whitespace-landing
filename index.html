@@ -1478,15 +1478,31 @@
 
     <script>
         // ==========================================
-        // Enhanced Phosphene Background with Pulsing
+        // Enhanced Phosphene Background with Hover Effects
         // ==========================================
         const canvas = document.getElementById('phosphene-canvas');
         const ctx = canvas.getContext('2d');
         let phosphenes = [];
 
+        // Mouse tracking variables
+        let mouseX = 0, mouseY = 0;
+        let smoothMouseX = 0, smoothMouseY = 0;
+        let isMouseOver = false;
+        let cursorGlowOpacity = 0;
+        
+        // Enhanced settings - more pronounced
+        const CURSOR_GLOW_RADIUS = 320;
+        const PROXIMITY_THRESHOLD = 400;
+        const GRAVITY_STRENGTH = 0.18;
+        const LERP_SPEED = 0.1;
+
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        }
+
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
         }
 
         function createPhosphenes() {
@@ -1514,25 +1530,87 @@
             }
         }
 
+        // Draw cursor-following glow - pronounced
+        function drawCursorGlow() {
+            if (cursorGlowOpacity <= 0.01) return;
+            
+            const gradient = ctx.createRadialGradient(
+                smoothMouseX, smoothMouseY, 0,
+                smoothMouseX, smoothMouseY, CURSOR_GLOW_RADIUS
+            );
+            
+            // Bright cyan-blue glow
+            const glowOpacity = 0.3 * cursorGlowOpacity;
+            gradient.addColorStop(0, `hsla(200, 70%, 70%, ${glowOpacity * 1.5})`);
+            gradient.addColorStop(0.3, `hsla(210, 60%, 60%, ${glowOpacity})`);
+            gradient.addColorStop(0.6, `hsla(220, 50%, 50%, ${glowOpacity * 0.4})`);
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(smoothMouseX, smoothMouseY, CURSOR_GLOW_RADIUS, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
         function animatePhosphenes() {
             ctx.fillStyle = 'rgb(10, 10, 15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            // Smooth mouse position with lerp
+            smoothMouseX = lerp(smoothMouseX, mouseX, LERP_SPEED);
+            smoothMouseY = lerp(smoothMouseY, mouseY, LERP_SPEED);
+            
+            // Fade cursor glow in/out
+            const targetOpacity = isMouseOver ? 1 : 0;
+            cursorGlowOpacity = lerp(cursorGlowOpacity, targetOpacity, 0.08);
+
             phosphenes.forEach(p => {
+                // Calculate distance to cursor for gravity and proximity effects
+                const dx = smoothMouseX - p.x;
+                const dy = smoothMouseY - p.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // Gravity pull toward cursor
+                if ((isMouseOver || cursorGlowOpacity > 0.01) && distance < PROXIMITY_THRESHOLD && distance > 10) {
+                    const gravityCurve = 1 - (distance / PROXIMITY_THRESHOLD);
+                    const gravityForce = gravityCurve * gravityCurve * GRAVITY_STRENGTH * cursorGlowOpacity;
+                    
+                    // Normalize direction and apply gravity
+                    p.vx += (dx / distance) * gravityForce;
+                    p.vy += (dy / distance) * gravityForce;
+                }
+                
                 p.x += p.vx;
                 p.y += p.vy;
 
                 // Pulsing/breathing effect
                 p.pulsePhase += p.pulseSpeed;
                 const pulse = Math.sin(p.pulsePhase);
-                p.radius = p.baseRadius + pulse * 40;
-                p.opacity = p.baseOpacity + pulse * 0.02;
+                
+                // Base radius and opacity from pulse
+                let currentRadius = p.baseRadius + pulse * 40;
+                let currentOpacity = p.baseOpacity + pulse * 0.02;
+                
+                // Proximity boost - pronounced brightness and size
+                if ((isMouseOver || cursorGlowOpacity > 0.01) && distance < PROXIMITY_THRESHOLD) {
+                    const proximityFactor = 1 - (distance / PROXIMITY_THRESHOLD);
+                    const boost = proximityFactor * proximityFactor * cursorGlowOpacity;
+                    
+                    // Increased radius and opacity boost
+                    currentRadius += boost * 100;
+                    currentOpacity += boost * 0.1;
+                }
+                
+                p.radius = currentRadius;
+                p.opacity = Math.min(currentOpacity, 0.2); // Cap opacity
 
-                // Gentle drift in velocity
+                // Gentle drift + damping
                 p.vx += (Math.random() - 0.5) * 0.01;
                 p.vy += (Math.random() - 0.5) * 0.01;
-                p.vx = Math.max(-0.4, Math.min(0.4, p.vx));
-                p.vy = Math.max(-0.4, Math.min(0.4, p.vy));
+                p.vx *= 0.99; // Slight damping for smoother movement
+                p.vy *= 0.99;
+                p.vx = Math.max(-0.5, Math.min(0.5, p.vx));
+                p.vy = Math.max(-0.5, Math.min(0.5, p.vy));
 
                 if (p.x < -p.radius) p.x = canvas.width + p.radius;
                 if (p.x > canvas.width + p.radius) p.x = -p.radius;
@@ -1549,8 +1627,26 @@
                 ctx.fill();
             });
 
+            // Draw cursor glow on top
+            drawCursorGlow();
+
             requestAnimationFrame(animatePhosphenes);
         }
+
+        // Mouse event listeners
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mouseenter', () => {
+            isMouseOver = true;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isMouseOver = false;
+        });
 
         window.addEventListener('resize', () => {
             resizeCanvas();
