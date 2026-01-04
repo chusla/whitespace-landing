@@ -1,6 +1,6 @@
 // ==========================================
-// Phosphene Background (30% intensity for blog)
-// With interactive hover effects
+// Phosphene Background - Shared Module
+// Configure intensity via data-intensity attribute on canvas
 // ==========================================
 
 (function() {
@@ -9,7 +9,9 @@
     
     const ctx = canvas.getContext('2d');
     let phosphenes = [];
-    const INTENSITY_MULTIPLIER = 0.3;
+    
+    // Read intensity from data attribute (default: 1 = full intensity)
+    const INTENSITY_MULTIPLIER = parseFloat(canvas.dataset.intensity) || 1;
 
     // Mouse tracking variables
     let mouseX = 0, mouseY = 0;
@@ -17,11 +19,11 @@
     let isMouseOver = false;
     let cursorGlowOpacity = 0;
     
-    // Enhanced settings - more pronounced
-    const CURSOR_GLOW_RADIUS = 280;
-    const PROXIMITY_THRESHOLD = 350;
-    const GRAVITY_STRENGTH = 0.15;
-    const LERP_SPEED = 0.1;
+    // Hover effect settings (subtle)
+    const CURSOR_GLOW_RADIUS = 180;
+    const PROXIMITY_THRESHOLD = 300;
+    const GRAVITY_STRENGTH = 0.12;
+    const LERP_SPEED = 0.08;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -58,7 +60,7 @@
         return start + (end - start) * factor;
     }
 
-    // Draw cursor-following glow - more pronounced
+    // Draw cursor-following glow - subtle
     function drawCursorGlow() {
         if (cursorGlowOpacity <= 0.01) return;
         
@@ -67,11 +69,10 @@
             smoothMouseX, smoothMouseY, CURSOR_GLOW_RADIUS
         );
         
-        // Brighter cyan-blue glow
-        const glowOpacity = 0.25 * cursorGlowOpacity * INTENSITY_MULTIPLIER;
-        gradient.addColorStop(0, `hsla(200, 70%, 70%, ${glowOpacity * 1.5})`);
-        gradient.addColorStop(0.3, `hsla(210, 60%, 60%, ${glowOpacity})`);
-        gradient.addColorStop(0.6, `hsla(220, 50%, 50%, ${glowOpacity * 0.4})`);
+        // Subtle cyan-blue glow
+        const glowOpacity = 0.12 * cursorGlowOpacity * INTENSITY_MULTIPLIER;
+        gradient.addColorStop(0, `hsla(200, 60%, 65%, ${glowOpacity})`);
+        gradient.addColorStop(0.4, `hsla(210, 50%, 55%, ${glowOpacity * 0.5})`);
         gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
         
         ctx.fillStyle = gradient;
@@ -117,18 +118,18 @@
             let currentRadius = p.baseRadius + pulse * 40;
             let currentOpacity = p.baseOpacity + pulse * 0.02 * INTENSITY_MULTIPLIER;
             
-            // Proximity boost - more pronounced brightness and size
+            // Proximity boost - subtle brightness and size increase
             if ((isMouseOver || cursorGlowOpacity > 0.01) && distance < PROXIMITY_THRESHOLD) {
                 const proximityFactor = 1 - (distance / PROXIMITY_THRESHOLD);
                 const boost = proximityFactor * proximityFactor * cursorGlowOpacity;
                 
-                // Increased radius and opacity boost
-                currentRadius += boost * 80;
-                currentOpacity += boost * 0.08 * INTENSITY_MULTIPLIER;
+                // Subtle radius and opacity boost
+                currentRadius += boost * 60;
+                currentOpacity += boost * 0.06 * INTENSITY_MULTIPLIER;
             }
             
             p.radius = currentRadius;
-            p.opacity = Math.min(currentOpacity, 0.15); // Cap opacity
+            p.opacity = Math.min(currentOpacity, 0.15 * INTENSITY_MULTIPLIER); // Cap opacity
             
             // Gentle drift + damping
             p.vx += (Math.random() - 0.5) * 0.01;
@@ -159,18 +160,14 @@
         requestAnimationFrame(animatePhosphenes);
     }
 
-    // Mouse event listeners
-    canvas.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
-        mouseY = e.clientY - rect.top;
-    });
-
-    canvas.addEventListener('mouseenter', () => {
+    // Mouse event listeners - use window since canvas is behind content
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         isMouseOver = true;
     });
 
-    canvas.addEventListener('mouseleave', () => {
+    document.addEventListener('mouseleave', () => {
         isMouseOver = false;
     });
 
@@ -182,23 +179,5 @@
     resizeCanvas();
     createPhosphenes();
     animatePhosphenes();
-    
-    // Intersection Observer for Scroll Animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '-50px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
-        observer.observe(el);
-    });
 })();
+

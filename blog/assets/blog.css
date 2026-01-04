@@ -38,12 +38,24 @@ body {
    Page Spacing for Fixed Header
    ========================================== */
 body {
-    padding-top: 88px; /* Height of fixed header + extra clearance for blur */
+    padding-top: 166px; /* Header height (~146px) + clearance for blur */
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 130px;
+    }
 }
 
 @media (max-width: 640px) {
     body {
-        padding-top: 76px;
+        padding-top: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 85px;
     }
 }
 
