@@ -827,7 +827,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 48px 32px;
+            padding: 48px 24px;
             text-align: center;
         }
 
@@ -835,6 +835,10 @@
             .cta-box {
                 padding: 64px 48px;
             }
+        }
+
+        .cta-box .email-form {
+            max-width: 600px;
         }
 
         .cta-box h2 {
@@ -848,7 +852,49 @@
         .cta-box > p {
             font-size: 1.125rem;
             color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 24px;
+        }
+
+        /* Early Access Benefits */
+        .early-access-benefits {
             margin-bottom: 32px;
+        }
+
+        .benefits-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 12px;
+        }
+
+        .benefits-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 16px;
+        }
+
+        .benefit-item {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .benefit-divider {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .benefits-list {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .benefit-divider {
+                display: none;
+            }
         }
 
         /* Audio Sample */
@@ -1146,7 +1192,7 @@
                         >
                         <button type="submit" class="submit-btn">Join Waitlist</button>
                     </div>
-                    <p class="form-note inter">Be the first to experience truly personalized meditation</p>
+                    <p class="form-note inter">Early members receive founding benefits · Space is limited</p>
                     <div class="success-message" id="heroSuccessMessage">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"></polyline>
@@ -1419,7 +1465,18 @@
         <div class="final-cta fade-up">
             <div class="cta-box">
                 <h2 class="crimson">Be among the first</h2>
-                <p class="inter">Join the waitlist and get early access when Whitespace launches. Plus, exclusive benefits for our founding members.</p>
+                <p class="inter">Join the waitlist for early access when we launch.</p>
+                
+                <div class="early-access-benefits">
+                    <p class="benefits-label inter">Founding member benefits</p>
+                    <div class="benefits-list">
+                        <span class="benefit-item inter">Extended free trial</span>
+                        <span class="benefit-divider">·</span>
+                        <span class="benefit-item inter">Locked-in pricing</span>
+                        <span class="benefit-divider">·</span>
+                        <span class="benefit-item inter">Bonus credits</span>
+                    </div>
+                </div>
                 
                 <form class="email-form" id="ctaEmailForm">
                     <div class="form-row">
