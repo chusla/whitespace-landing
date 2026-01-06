@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Whitespace App Icons - Creative Concepts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0d0d12 0%, #1a1a2e 50%, #0d0d12 100%);
+            color: #e0e0e0;
+            padding: 50px;
+            min-height: 100vh;
+        }
+        h1 {
+            font-weight: 200;
+            font-size: 32px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.5;
+            margin-bottom: 50px;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1600px;
+        }
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .card h2 {
+            font-weight: 300;
+            font-size: 20px;
+            margin-bottom: 8px;
+            letter-spacing: 3px;
+        }
+        .card .concept {
+            font-size: 12px;
+            opacity: 0.4;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        canvas {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border-radius: 56px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        button {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>WHITESPACE</h1>
+    <p class="subtitle">App Icon Concepts — 1024 × 1024</p>
+    
+    <div class="grid">
+        <div class="card">
+            <h2>AURORA</h2>
+            <p class="concept">Northern lights, flowing consciousness</p>
+            <canvas id="aurora" width="1024" height="1024"></canvas>
+            <button onclick="download('aurora', 'whitespace-aurora.png')">Download</button>
+        </div>
+        
+        <div class="card">
+            <h2>VOID</h2>
+            <p class="concept">Infinite space, singular focus</p>
+            <canvas id="void" width="1024" height="1024"></canvas>
+            <button onclick="download('void', 'whitespace-void.png')">Download</button>
+        </div>
+        
+        <div class="card">
+            <h2>RIPPLE</h2>
+            <p class="concept">Stillness disturbed, returning to calm</p>
+            <canvas id="ripple" width="1024" height="1024"></canvas>
+            <button onclick="download('ripple', 'whitespace-ripple.png')">Download</button>
+        </div>
+        
+        <div class="card">
+            <h2>EMBER</h2>
+            <p class="concept">Warmth, inner light, gentle glow</p>
+            <canvas id="ember" width="1024" height="1024"></canvas>
+            <button onclick="download('ember', 'whitespace-ember.png')">Download</button>
+        </div>
+    </div>
+
+    <script>
+        const SIZE = 1024;
+        const CENTER = SIZE / 2;
+
+        // Load font
+        async function loadFonts() {
+            const font = new FontFace('Outfit', 'url(https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC1C4G-EiAou6Y.woff2)', {
+                weight: '200',
+                style: 'normal'
+            });
+            await font.load();
+            document.fonts.add(font);
+            
+            generateAurora();
+            generateVoid();
+            generateRipple();
+            generateEmber();
+        }
+        
+        loadFonts();
+
+        // ========== AURORA ==========
+        // Flowing bands of color like northern lights
+        function generateAurora() {
+            const canvas = document.getElementById('aurora');
+            const ctx = canvas.getContext('2d');
+            
+            // Deep night sky gradient
+            const bg = ctx.createLinearGradient(0, 0, 0, SIZE);
+            bg.addColorStop(0, '#0a0a14');
+            bg.addColorStop(0.5, '#0f1528');
+            bg.addColorStop(1, '#0a0a14');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Aurora bands
+            const bands = [
+                { y: 280, color1: 'rgba(64, 224, 208, 0.15)', color2: 'rgba(138, 43, 226, 0.08)', height: 300 },
+                { y: 350, color1: 'rgba(0, 255, 127, 0.12)', color2: 'rgba(75, 0, 130, 0.06)', height: 250 },
+                { y: 420, color1: 'rgba(127, 255, 212, 0.10)', color2: 'rgba(186, 85, 211, 0.05)', height: 200 },
+            ];
+            
+            bands.forEach(band => {
+                ctx.beginPath();
+                ctx.moveTo(0, band.y);
+                
+                // Wavy top edge
+                for (let x = 0; x <= SIZE; x += 20) {
+                    const wave = Math.sin(x * 0.008) * 60 + Math.sin(x * 0.015) * 30;
+                    ctx.lineTo(x, band.y + wave);
+                }
+                
+                // Bottom edge
+                for (let x = SIZE; x >= 0; x -= 20) {
+                    const wave = Math.sin(x * 0.006) * 40 + Math.sin(x * 0.012) * 25;
+                    ctx.lineTo(x, band.y + band.height + wave);
+                }
+                
+                ctx.closePath();
+                
+                const gradient = ctx.createLinearGradient(0, band.y, SIZE, band.y + band.height);
+                gradient.addColorStop(0, band.color1);
+                gradient.addColorStop(0.5, band.color2);
+                gradient.addColorStop(1, band.color1);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            });
+            
+            // Soft glow spots
+            for (let i = 0; i < 8; i++) {
+                const x = Math.random() * SIZE;
+                const y = 300 + Math.random() * 400;
+                const radius = 100 + Math.random() * 150;
+                
+                const glow = ctx.createRadialGradient(x, y, 0, x, y, radius);
+                glow.addColorStop(0, 'rgba(100, 255, 218, 0.08)');
+                glow.addColorStop(0.5, 'rgba(138, 43, 226, 0.04)');
+                glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = glow;
+                ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+            }
+            
+            // Stars
+            for (let i = 0; i < 60; i++) {
+                const x = Math.random() * SIZE;
+                const y = Math.random() * SIZE * 0.4;
+                const size = Math.random() * 2 + 0.5;
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.6 + 0.2})`;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // "W" letterform - abstract
+            drawMinimalW(ctx, 'rgba(255, 255, 255, 0.9)');
+        }
+
+        // ========== VOID ==========
+        // Minimal, single point of light in darkness
+        function generateVoid() {
+            const canvas = document.getElementById('void');
+            const ctx = canvas.getContext('2d');
+            
+            // Pure black
+            ctx.fillStyle = '#050507';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Subtle radial gradient from center
+            const ambient = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.7);
+            ambient.addColorStop(0, 'rgba(30, 30, 50, 0.3)');
+            ambient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = ambient;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Central orb with multiple glow layers
+            const layers = [
+                { radius: 300, opacity: 0.02 },
+                { radius: 200, opacity: 0.04 },
+                { radius: 120, opacity: 0.08 },
+                { radius: 70, opacity: 0.15 },
+                { radius: 40, opacity: 0.4 },
+                { radius: 20, opacity: 0.8 },
+                { radius: 8, opacity: 1 },
+            ];
+            
+            layers.forEach(layer => {
+                const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, layer.radius);
+                glow.addColorStop(0, `rgba(220, 230, 255, ${layer.opacity})`);
+                glow.addColorStop(0.6, `rgba(180, 200, 255, ${layer.opacity * 0.3})`);
+                glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = glow;
+                ctx.beginPath();
+                ctx.arc(CENTER, CENTER, layer.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            // Core white point
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // ========== RIPPLE ==========
+        // Concentric circles emanating from center
+        function generateRipple() {
+            const canvas = document.getElementById('ripple');
+            const ctx = canvas.getContext('2d');
+            
+            // Deep blue-black gradient
+            const bg = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.8);
+            bg.addColorStop(0, '#0c1220');
+            bg.addColorStop(1, '#060810');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Ripple rings
+            const rings = 12;
+            for (let i = rings; i >= 1; i--) {
+                const radius = (i / rings) * 450;
+                const opacity = 0.03 + (1 - i / rings) * 0.12;
+                const width = 1 + (1 - i / rings) * 3;
+                
+                ctx.beginPath();
+                ctx.arc(CENTER, CENTER, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(120, 180, 255, ${opacity})`;
+                ctx.lineWidth = width;
+                ctx.stroke();
+                
+                // Soft glow behind each ring
+                if (i % 2 === 0) {
+                    const ringGlow = ctx.createRadialGradient(CENTER, CENTER, radius - 20, CENTER, CENTER, radius + 20);
+                    ringGlow.addColorStop(0, 'rgba(100, 150, 255, 0)');
+                    ringGlow.addColorStop(0.5, `rgba(100, 150, 255, ${opacity * 0.3})`);
+                    ringGlow.addColorStop(1, 'rgba(100, 150, 255, 0)');
+                    ctx.fillStyle = ringGlow;
+                    ctx.beginPath();
+                    ctx.arc(CENTER, CENTER, radius + 20, 0, Math.PI * 2);
+                    ctx.arc(CENTER, CENTER, radius - 20, 0, Math.PI * 2, true);
+                    ctx.fill();
+                }
+            }
+            
+            // Center point
+            const centerGlow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 60);
+            centerGlow.addColorStop(0, 'rgba(200, 220, 255, 0.8)');
+            centerGlow.addColorStop(0.3, 'rgba(150, 180, 255, 0.3)');
+            centerGlow.addColorStop(1, 'rgba(100, 150, 255, 0)');
+            ctx.fillStyle = centerGlow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 60, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 6, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // ========== EMBER ==========
+        // Warm, glowing orb like inner fire
+        function generateEmber() {
+            const canvas = document.getElementById('ember');
+            const ctx = canvas.getContext('2d');
+            
+            // Warm dark background
+            const bg = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.8);
+            bg.addColorStop(0, '#1a0f0a');
+            bg.addColorStop(1, '#0a0606');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Outer warm glow
+            const outerGlow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 400);
+            outerGlow.addColorStop(0, 'rgba(255, 100, 50, 0.15)');
+            outerGlow.addColorStop(0.5, 'rgba(255, 60, 20, 0.05)');
+            outerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = outerGlow;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Floating ember particles
+            for (let i = 0; i < 40; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 150 + Math.random() * 250;
+                const x = CENTER + Math.cos(angle) * distance;
+                const y = CENTER + Math.sin(angle) * distance - Math.random() * 100;
+                const size = Math.random() * 4 + 1;
+                
+                const particle = ctx.createRadialGradient(x, y, 0, x, y, size * 3);
+                particle.addColorStop(0, `rgba(255, ${150 + Math.random() * 100}, 50, ${0.3 + Math.random() * 0.4})`);
+                particle.addColorStop(1, 'rgba(255, 100, 0, 0)');
+                ctx.fillStyle = particle;
+                ctx.beginPath();
+                ctx.arc(x, y, size * 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Main ember core - multiple warm layers
+            const coreLayers = [
+                { radius: 200, color: 'rgba(255, 80, 20, 0.08)' },
+                { radius: 140, color: 'rgba(255, 120, 40, 0.12)' },
+                { radius: 90, color: 'rgba(255, 160, 60, 0.2)' },
+                { radius: 50, color: 'rgba(255, 200, 100, 0.4)' },
+                { radius: 25, color: 'rgba(255, 230, 180, 0.7)' },
+                { radius: 10, color: 'rgba(255, 250, 240, 0.95)' },
+            ];
+            
+            coreLayers.forEach(layer => {
+                const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, layer.radius);
+                glow.addColorStop(0, layer.color);
+                glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = glow;
+                ctx.beginPath();
+                ctx.arc(CENTER, CENTER, layer.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        // Abstract W mark
+        function drawMinimalW(ctx, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            const w = 120;
+            const h = 80;
+            const x = CENTER - w/2;
+            const y = CENTER - h/2;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + w * 0.25, y + h);
+            ctx.lineTo(x + w * 0.5, y + h * 0.4);
+            ctx.lineTo(x + w * 0.75, y + h);
+            ctx.lineTo(x + w, y);
+            ctx.stroke();
+        }
+
+        function download(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
+

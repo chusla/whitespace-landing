@@ -827,7 +827,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 48px 32px;
+            padding: 48px 24px;
             text-align: center;
         }
 
@@ -835,6 +835,10 @@
             .cta-box {
                 padding: 64px 48px;
             }
+        }
+
+        .cta-box .email-form {
+            max-width: 600px;
         }
 
         .cta-box h2 {
@@ -848,7 +852,49 @@
         .cta-box > p {
             font-size: 1.125rem;
             color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 24px;
+        }
+
+        /* Early Access Benefits */
+        .early-access-benefits {
             margin-bottom: 32px;
+        }
+
+        .benefits-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 12px;
+        }
+
+        .benefits-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 16px;
+        }
+
+        .benefit-item {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .benefit-divider {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .benefits-list {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .benefit-divider {
+                display: none;
+            }
         }
 
         /* Audio Sample */
@@ -1106,7 +1152,7 @@
     </style>
 </head>
 <body>
-    <canvas id="phosphene-canvas"></canvas>
+    <canvas id="phosphene-canvas" data-intensity="1"></canvas>
 
     <!-- Hero Section -->
     <section class="hero" id="waitlist">
@@ -1146,7 +1192,7 @@
                         >
                         <button type="submit" class="submit-btn">Join Waitlist</button>
                     </div>
-                    <p class="form-note inter">Be the first to experience truly personalized meditation</p>
+                    <p class="form-note inter">Early members receive founding benefits · Space is limited</p>
                     <div class="success-message" id="heroSuccessMessage">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"></polyline>
@@ -1419,7 +1465,18 @@
         <div class="final-cta fade-up">
             <div class="cta-box">
                 <h2 class="crimson">Be among the first</h2>
-                <p class="inter">Join the waitlist and get early access when Whitespace launches. Plus, exclusive benefits for our founding members.</p>
+                <p class="inter">Join the waitlist for early access when we launch.</p>
+                
+                <div class="early-access-benefits">
+                    <p class="benefits-label inter">Founding member benefits</p>
+                    <div class="benefits-list">
+                        <span class="benefit-item inter">Extended free trial</span>
+                        <span class="benefit-divider">·</span>
+                        <span class="benefit-item inter">Locked-in pricing</span>
+                        <span class="benefit-divider">·</span>
+                        <span class="benefit-item inter">Bonus credits</span>
+                    </div>
+                </div>
                 
                 <form class="email-form" id="ctaEmailForm">
                     <div class="form-row">
@@ -1476,91 +1533,10 @@
         </div>
     </footer>
 
+    <!-- Phosphene Background -->
+    <script src="/assets/js/phosphene.js"></script>
+
     <script>
-        // ==========================================
-        // Enhanced Phosphene Background with Pulsing
-        // ==========================================
-        const canvas = document.getElementById('phosphene-canvas');
-        const ctx = canvas.getContext('2d');
-        let phosphenes = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        function createPhosphenes() {
-            phosphenes = [];
-            const count = 120;
-            for (let i = 0; i < count; i++) {
-                const hue = Math.random() > 0.4 ? 210 + Math.random() * 30 : 250 + Math.random() * 20;
-                const saturation = Math.random() * 25 + 20;
-                const lightness = Math.random() * 25 + 40;
-                phosphenes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 200 + 100,
-                    baseRadius: Math.random() * 200 + 100,
-                    opacity: Math.random() * 0.04 + 0.015,
-                    baseOpacity: Math.random() * 0.04 + 0.015,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
-                    hue: hue,
-                    saturation: saturation,
-                    lightness: lightness,
-                    pulseSpeed: Math.random() * 0.02 + 0.01,
-                    pulsePhase: Math.random() * Math.PI * 2
-                });
-            }
-        }
-
-        function animatePhosphenes() {
-            ctx.fillStyle = 'rgb(10, 10, 15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            phosphenes.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-
-                // Pulsing/breathing effect
-                p.pulsePhase += p.pulseSpeed;
-                const pulse = Math.sin(p.pulsePhase);
-                p.radius = p.baseRadius + pulse * 40;
-                p.opacity = p.baseOpacity + pulse * 0.02;
-
-                // Gentle drift in velocity
-                p.vx += (Math.random() - 0.5) * 0.01;
-                p.vy += (Math.random() - 0.5) * 0.01;
-                p.vx = Math.max(-0.4, Math.min(0.4, p.vx));
-                p.vy = Math.max(-0.4, Math.min(0.4, p.vy));
-
-                if (p.x < -p.radius) p.x = canvas.width + p.radius;
-                if (p.x > canvas.width + p.radius) p.x = -p.radius;
-                if (p.y < -p.radius) p.y = canvas.height + p.radius;
-                if (p.y > canvas.height + p.radius) p.y = -p.radius;
-
-                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${p.opacity})`);
-                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            requestAnimationFrame(animatePhosphenes);
-        }
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            createPhosphenes();
-        });
-
-        resizeCanvas();
-        createPhosphenes();
-        animatePhosphenes();
-
         // ==========================================
         // Word-by-Word Animation for Hero Headline
         // ==========================================
@@ -1768,7 +1744,7 @@
         }
     </script>
     
-    <!-- Vercel Analytics -->
-    <script defer src="/_vercel/insights/script.js"></script>
+    <!-- Vercel Analytics & Speed Insights -->
+    <script src="/assets/js/analytics.js"></script>
 </body>
 </html>
