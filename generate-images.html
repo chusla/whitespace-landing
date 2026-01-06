@@ -60,29 +60,78 @@
 </head>
 <body>
     <h1>App Store Image Generator (1024 × 1024)</h1>
+    <div style="margin-bottom: 30px; display: flex; align-items: center; gap: 15px;">
+        <label for="textMode" style="font-size: 14px; opacity: 0.8;">Text Mode:</label>
+        <select id="textMode" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 14px; cursor: pointer;">
+            <option value="plans">Plan Names</option>
+            <option value="credits">Credit Amounts</option>
+        </select>
+    </div>
     <div class="grid">
         <div class="card">
-            <h2>FLOW - Standard Dark</h2>
+            <h2 id="flow-title">FLOW - Standard Dark</h2>
             <canvas id="flow-canvas" width="1024" height="1024"></canvas>
-            <button onclick="download('flow-canvas', 'flow-1024.png')">Download PNG</button>
+            <button onclick="download('flow-canvas', getFilename('flow'))">Download PNG</button>
             <div class="info">1024 × 1024 px</div>
         </div>
         <div class="card">
-            <h2>ELEVATE - Sky Blue</h2>
+            <h2 id="elevate-title">ELEVATE - Sky Blue</h2>
             <canvas id="elevate-canvas" width="1024" height="1024"></canvas>
-            <button onclick="download('elevate-canvas', 'elevate-1024.png')">Download PNG</button>
+            <button onclick="download('elevate-canvas', getFilename('elevate'))">Download PNG</button>
             <div class="info">1024 × 1024 px</div>
         </div>
         <div class="card">
-            <h2>IMMERSE - Ocean Blue</h2>
+            <h2 id="immerse-title">IMMERSE - Ocean Blue</h2>
             <canvas id="immerse-canvas" width="1024" height="1024"></canvas>
-            <button onclick="download('immerse-canvas', 'immerse-1024.png')">Download PNG</button>
+            <button onclick="download('immerse-canvas', getFilename('immerse'))">Download PNG</button>
             <div class="info">1024 × 1024 px</div>
         </div>
     </div>
 
     <script>
         const SIZE = 1024;
+
+        // Get text based on current mode
+        function getText(planName) {
+            const mode = document.getElementById('textMode').value;
+            if (mode === 'credits') {
+                const creditMap = {
+                    'FLOW': '1 Credit',
+                    'ELEVATE': '2 Credits',
+                    'IMMERSE': '4 Credits'
+                };
+                return creditMap[planName] || planName;
+            }
+            return planName;
+        }
+
+        // Get filename based on current mode
+        function getFilename(planName) {
+            const mode = document.getElementById('textMode').value;
+            if (mode === 'credits') {
+                const creditMap = {
+                    'flow': '1-credit-1024.png',
+                    'elevate': '2-credits-1024.png',
+                    'immerse': '4-credits-1024.png'
+                };
+                return creditMap[planName] || `${planName}-1024.png`;
+            }
+            return `${planName}-1024.png`;
+        }
+
+        // Update card titles
+        function updateTitles() {
+            const mode = document.getElementById('textMode').value;
+            if (mode === 'credits') {
+                document.getElementById('flow-title').textContent = '1 Credit - Standard Dark';
+                document.getElementById('elevate-title').textContent = '2 Credits - Sky Blue';
+                document.getElementById('immerse-title').textContent = '4 Credits - Ocean Blue';
+            } else {
+                document.getElementById('flow-title').textContent = 'FLOW - Standard Dark';
+                document.getElementById('elevate-title').textContent = 'ELEVATE - Sky Blue';
+                document.getElementById('immerse-title').textContent = 'IMMERSE - Ocean Blue';
+            }
+        }
 
         // Explicitly load Inter font for canvas
         async function loadFonts() {
@@ -96,9 +145,21 @@
             generateFlow();
             generateElevate();
             generateImmerse();
+            updateTitles();
         }
         
         loadFonts();
+
+        // Regenerate when mode changes
+        const textModeSelect = document.getElementById('textMode');
+        if (textModeSelect) {
+            textModeSelect.addEventListener('change', () => {
+                updateTitles();
+                generateFlow();
+                generateElevate();
+                generateImmerse();
+            });
+        }
 
         function createPhosphenes(config) {
             const phosphenes = [];
@@ -130,6 +191,25 @@
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                 ctx.fill();
             });
+        }
+
+        function getTextSize(text) {
+            // Calculate optimal font size and letter spacing for credit text
+            // Canvas is 1024px wide, need to fit text with margins
+            if (text === '1 Credit') {
+                return { fontSize: 140, letterSpacing: 95 };
+            } else if (text === '2 Credits' || text === '4 Credits') {
+                return { fontSize: 130, letterSpacing: 85 };
+            } else if (text.length <= 6) {
+                // Short plan names like FLOW
+                return { fontSize: 160, letterSpacing: 190 };
+            } else if (text.length <= 8) {
+                // Medium plan names like ELEVATE
+                return { fontSize: 130, letterSpacing: 140 };
+            } else {
+                // Longer plan names like IMMERSE
+                return { fontSize: 120, letterSpacing: 130 };
+            }
         }
 
         function drawText(ctx, text, color, fontSize, letterSpacing) {
@@ -188,7 +268,9 @@
             });
             
             drawPhosphenes(ctx, phosphenes, 'rgb(10, 10, 15)');
-            drawText(ctx, 'FLOW', 'rgba(255, 255, 255, 0.95)', 160, 190);
+            const text = getText('FLOW');
+            const size = getTextSize(text);
+            drawText(ctx, text, 'rgba(255, 255, 255, 0.95)', size.fontSize, size.letterSpacing);
         }
 
         function generateElevate() {
@@ -206,7 +288,9 @@
             });
             
             drawPhosphenes(ctx, phosphenes, 'rgb(220, 240, 255)');
-            drawText(ctx, 'ELEVATE', 'rgb(20, 50, 80)', 130, 140);
+            const text = getText('ELEVATE');
+            const size = getTextSize(text);
+            drawText(ctx, text, 'rgb(20, 50, 80)', size.fontSize, size.letterSpacing);
         }
 
         function generateImmerse() {
@@ -229,7 +313,9 @@
             });
             
             drawPhosphenes(ctx, phosphenes, 'rgb(8, 25, 45)');
-            drawText(ctx, 'IMMERSE', 'rgba(255, 255, 255, 0.95)', 120, 130);
+            const text = getText('IMMERSE');
+            const size = getTextSize(text);
+            drawText(ctx, text, 'rgba(255, 255, 255, 0.95)', size.fontSize, size.letterSpacing);
         }
 
         function download(canvasId, filename) {
