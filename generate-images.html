@@ -15,7 +15,16 @@
             padding: 40px;
             min-height: 100vh;
         }
-        h1 { margin-bottom: 30px; font-weight: 300; }
+        h1 { margin-bottom: 10px; font-weight: 300; }
+        h2.section-title {
+            font-weight: 300;
+            font-size: 16px;
+            opacity: 0.6;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section { margin-bottom: 50px; }
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -28,7 +37,7 @@
             padding: 20px;
             text-align: center;
         }
-        .card h2 {
+        .card h3 {
             margin-bottom: 15px;
             font-weight: 400;
             font-size: 18px;
@@ -60,78 +69,59 @@
 </head>
 <body>
     <h1>App Store Image Generator (1024 × 1024)</h1>
-    <div style="margin-bottom: 30px; display: flex; align-items: center; gap: 15px;">
-        <label for="textMode" style="font-size: 14px; opacity: 0.8;">Text Mode:</label>
-        <select id="textMode" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 14px; cursor: pointer;">
-            <option value="plans">Plan Names</option>
-            <option value="credits">Credit Amounts</option>
-        </select>
+    
+    <!-- Subscriptions Section -->
+    <div class="section">
+        <h2 class="section-title">Subscriptions</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>FLOW - Standard Dark</h3>
+                <canvas id="flow-canvas" width="1024" height="1024"></canvas>
+                <button onclick="download('flow-canvas', 'flow-1024.png')">Download PNG</button>
+                <div class="info">1024 × 1024 px</div>
+            </div>
+            <div class="card">
+                <h3>ELEVATE - Sky Blue</h3>
+                <canvas id="elevate-canvas" width="1024" height="1024"></canvas>
+                <button onclick="download('elevate-canvas', 'elevate-1024.png')">Download PNG</button>
+                <div class="info">1024 × 1024 px</div>
+            </div>
+            <div class="card">
+                <h3>IMMERSE - Ocean Blue</h3>
+                <canvas id="immerse-canvas" width="1024" height="1024"></canvas>
+                <button onclick="download('immerse-canvas', 'immerse-1024.png')">Download PNG</button>
+                <div class="info">1024 × 1024 px</div>
+            </div>
+        </div>
     </div>
-    <div class="grid">
-        <div class="card">
-            <h2 id="flow-title">FLOW - Standard Dark</h2>
-            <canvas id="flow-canvas" width="1024" height="1024"></canvas>
-            <button onclick="download('flow-canvas', getFilename('flow'))">Download PNG</button>
-            <div class="info">1024 × 1024 px</div>
-        </div>
-        <div class="card">
-            <h2 id="elevate-title">ELEVATE - Sky Blue</h2>
-            <canvas id="elevate-canvas" width="1024" height="1024"></canvas>
-            <button onclick="download('elevate-canvas', getFilename('elevate'))">Download PNG</button>
-            <div class="info">1024 × 1024 px</div>
-        </div>
-        <div class="card">
-            <h2 id="immerse-title">IMMERSE - Ocean Blue</h2>
-            <canvas id="immerse-canvas" width="1024" height="1024"></canvas>
-            <button onclick="download('immerse-canvas', getFilename('immerse'))">Download PNG</button>
-            <div class="info">1024 × 1024 px</div>
+
+    <!-- Credit Bundles Section -->
+    <div class="section">
+        <h2 class="section-title">Credit Bundles</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>ARRIVE - Dawn Amber</h3>
+                <canvas id="arrive-canvas" width="1024" height="1024"></canvas>
+                <button onclick="download('arrive-canvas', 'arrive-1024.png')">Download PNG</button>
+                <div class="info">1024 × 1024 px</div>
+            </div>
+            <div class="card">
+                <h3>SETTLE - Forest Green</h3>
+                <canvas id="settle-canvas" width="1024" height="1024"></canvas>
+                <button onclick="download('settle-canvas', 'settle-1024.png')">Download PNG</button>
+                <div class="info">1024 × 1024 px</div>
+            </div>
+            <div class="card">
+                <h3>EXPAND - Cosmic Violet</h3>
+                <canvas id="expand-canvas" width="1024" height="1024"></canvas>
+                <button onclick="download('expand-canvas', 'expand-1024.png')">Download PNG</button>
+                <div class="info">1024 × 1024 px</div>
+            </div>
         </div>
     </div>
 
     <script>
         const SIZE = 1024;
-
-        // Get text based on current mode
-        function getText(planName) {
-            const mode = document.getElementById('textMode').value;
-            if (mode === 'credits') {
-                const creditMap = {
-                    'FLOW': '1 Credit',
-                    'ELEVATE': '2 Credits',
-                    'IMMERSE': '4 Credits'
-                };
-                return creditMap[planName] || planName;
-            }
-            return planName;
-        }
-
-        // Get filename based on current mode
-        function getFilename(planName) {
-            const mode = document.getElementById('textMode').value;
-            if (mode === 'credits') {
-                const creditMap = {
-                    'flow': '1-credit-1024.png',
-                    'elevate': '2-credits-1024.png',
-                    'immerse': '4-credits-1024.png'
-                };
-                return creditMap[planName] || `${planName}-1024.png`;
-            }
-            return `${planName}-1024.png`;
-        }
-
-        // Update card titles
-        function updateTitles() {
-            const mode = document.getElementById('textMode').value;
-            if (mode === 'credits') {
-                document.getElementById('flow-title').textContent = '1 Credit - Standard Dark';
-                document.getElementById('elevate-title').textContent = '2 Credits - Sky Blue';
-                document.getElementById('immerse-title').textContent = '4 Credits - Ocean Blue';
-            } else {
-                document.getElementById('flow-title').textContent = 'FLOW - Standard Dark';
-                document.getElementById('elevate-title').textContent = 'ELEVATE - Sky Blue';
-                document.getElementById('immerse-title').textContent = 'IMMERSE - Ocean Blue';
-            }
-        }
 
         // Explicitly load Inter font for canvas
         async function loadFonts() {
@@ -142,24 +132,18 @@
             await font.load();
             document.fonts.add(font);
             
+            // Generate subscriptions
             generateFlow();
             generateElevate();
             generateImmerse();
-            updateTitles();
+            
+            // Generate credit bundles
+            generateArrive();
+            generateSettle();
+            generateExpand();
         }
         
         loadFonts();
-
-        // Regenerate when mode changes
-        const textModeSelect = document.getElementById('textMode');
-        if (textModeSelect) {
-            textModeSelect.addEventListener('change', () => {
-                updateTitles();
-                generateFlow();
-                generateElevate();
-                generateImmerse();
-            });
-        }
 
         function createPhosphenes(config) {
             const phosphenes = [];
@@ -194,20 +178,19 @@
         }
 
         function getTextSize(text) {
-            // Calculate optimal font size and letter spacing for credit text
-            // Canvas is 1024px wide, need to fit text with margins
-            if (text === '1 Credit') {
-                return { fontSize: 140, letterSpacing: 95 };
-            } else if (text === '2 Credits' || text === '4 Credits') {
-                return { fontSize: 130, letterSpacing: 85 };
-            } else if (text.length <= 6) {
-                // Short plan names like FLOW
+            // Credit bundle names - smaller with tighter spacing
+            if (text === 'ARRIVE' || text === 'SETTLE' || text === 'EXPAND') {
+                return { fontSize: 130, letterSpacing: 140 };
+            }
+            
+            if (text.length <= 6) {
+                // Short names like FLOW
                 return { fontSize: 160, letterSpacing: 190 };
             } else if (text.length <= 8) {
-                // Medium plan names like ELEVATE
+                // Medium names like ELEVATE
                 return { fontSize: 130, letterSpacing: 140 };
             } else {
-                // Longer plan names like IMMERSE
+                // Longer names like IMMERSE
                 return { fontSize: 120, letterSpacing: 130 };
             }
         }
@@ -228,6 +211,8 @@
                 x += letterSpacing;
             });
         }
+
+        // ============ SUBSCRIPTIONS ============
 
         function generateFlow() {
             const canvas = document.getElementById('flow-canvas');
@@ -268,9 +253,8 @@
             });
             
             drawPhosphenes(ctx, phosphenes, 'rgb(10, 10, 15)');
-            const text = getText('FLOW');
-            const size = getTextSize(text);
-            drawText(ctx, text, 'rgba(255, 255, 255, 0.95)', size.fontSize, size.letterSpacing);
+            const size = getTextSize('FLOW');
+            drawText(ctx, 'FLOW', 'rgba(255, 255, 255, 0.95)', size.fontSize, size.letterSpacing);
         }
 
         function generateElevate() {
@@ -288,9 +272,8 @@
             });
             
             drawPhosphenes(ctx, phosphenes, 'rgb(220, 240, 255)');
-            const text = getText('ELEVATE');
-            const size = getTextSize(text);
-            drawText(ctx, text, 'rgb(20, 50, 80)', size.fontSize, size.letterSpacing);
+            const size = getTextSize('ELEVATE');
+            drawText(ctx, 'ELEVATE', 'rgb(20, 50, 80)', size.fontSize, size.letterSpacing);
         }
 
         function generateImmerse() {
@@ -313,9 +296,133 @@
             });
             
             drawPhosphenes(ctx, phosphenes, 'rgb(8, 25, 45)');
-            const text = getText('IMMERSE');
-            const size = getTextSize(text);
-            drawText(ctx, text, 'rgba(255, 255, 255, 0.95)', size.fontSize, size.letterSpacing);
+            const size = getTextSize('IMMERSE');
+            drawText(ctx, 'IMMERSE', 'rgba(255, 255, 255, 0.95)', size.fontSize, size.letterSpacing);
+        }
+
+        // ============ CREDIT BUNDLES ============
+
+        // ARRIVE - Dawn Amber (warm sunrise oranges and soft pinks)
+        function generateArrive() {
+            const canvas = document.getElementById('arrive-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const phosphenes = createPhosphenes({
+                count: 80,
+                intensity: 0.75,
+                hueFunc: () => {
+                    const rand = Math.random();
+                    if (rand < 0.5) {
+                        // Warm amber/orange
+                        return { hue: 25 + Math.random() * 20, saturation: Math.random() * 30 + 50, lightness: Math.random() * 20 + 55 };
+                    } else if (rand < 0.8) {
+                        // Soft pink/rose
+                        return { hue: 350 + Math.random() * 20, saturation: Math.random() * 25 + 40, lightness: Math.random() * 15 + 60 };
+                    } else {
+                        // Golden yellow
+                        return { hue: 40 + Math.random() * 15, saturation: Math.random() * 35 + 45, lightness: Math.random() * 20 + 50 };
+                    }
+                }
+            });
+            
+            // Add horizon glow effect
+            for (let i = 0; i < 15; i++) {
+                phosphenes.push({
+                    x: Math.random() * SIZE,
+                    y: SIZE * 0.6 + Math.random() * SIZE * 0.3,
+                    radius: Math.random() * 250 + 150,
+                    opacity: Math.random() * 0.06 + 0.03,
+                    hue: 20 + Math.random() * 25,
+                    saturation: 60 + Math.random() * 20,
+                    lightness: 55 + Math.random() * 15
+                });
+            }
+            
+            drawPhosphenes(ctx, phosphenes, 'rgb(18, 12, 10)');
+            const size = getTextSize('ARRIVE');
+            drawText(ctx, 'ARRIVE', 'rgba(255, 250, 245, 0.95)', size.fontSize, size.letterSpacing);
+        }
+
+        // SETTLE - Forest Green (earthy greens and warm browns)
+        function generateSettle() {
+            const canvas = document.getElementById('settle-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const phosphenes = createPhosphenes({
+                count: 90,
+                intensity: 0.7,
+                hueFunc: () => {
+                    const rand = Math.random();
+                    if (rand < 0.45) {
+                        // Forest green
+                        return { hue: 130 + Math.random() * 30, saturation: Math.random() * 30 + 35, lightness: Math.random() * 20 + 40 };
+                    } else if (rand < 0.75) {
+                        // Sage/moss
+                        return { hue: 90 + Math.random() * 30, saturation: Math.random() * 25 + 25, lightness: Math.random() * 20 + 45 };
+                    } else {
+                        // Warm earth brown
+                        return { hue: 30 + Math.random() * 20, saturation: Math.random() * 30 + 30, lightness: Math.random() * 15 + 35 };
+                    }
+                }
+            });
+            
+            // Add grounding effect at bottom
+            for (let i = 0; i < 12; i++) {
+                phosphenes.push({
+                    x: Math.random() * SIZE,
+                    y: SIZE * 0.7 + Math.random() * SIZE * 0.25,
+                    radius: Math.random() * 200 + 100,
+                    opacity: Math.random() * 0.05 + 0.03,
+                    hue: 35 + Math.random() * 15,
+                    saturation: 35 + Math.random() * 20,
+                    lightness: 30 + Math.random() * 15
+                });
+            }
+            
+            drawPhosphenes(ctx, phosphenes, 'rgb(12, 18, 14)');
+            const size = getTextSize('SETTLE');
+            drawText(ctx, 'SETTLE', 'rgba(235, 245, 235, 0.95)', size.fontSize, size.letterSpacing);
+        }
+
+        // EXPAND - Cosmic Violet (deep purples and magentas with cosmic feel)
+        function generateExpand() {
+            const canvas = document.getElementById('expand-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const phosphenes = createPhosphenes({
+                count: 100,
+                intensity: 0.65,
+                hueFunc: () => {
+                    const rand = Math.random();
+                    if (rand < 0.4) {
+                        // Deep violet
+                        return { hue: 270 + Math.random() * 25, saturation: Math.random() * 35 + 45, lightness: Math.random() * 20 + 35 };
+                    } else if (rand < 0.7) {
+                        // Magenta/fuchsia
+                        return { hue: 300 + Math.random() * 30, saturation: Math.random() * 30 + 40, lightness: Math.random() * 20 + 40 };
+                    } else {
+                        // Deep indigo
+                        return { hue: 250 + Math.random() * 20, saturation: Math.random() * 30 + 35, lightness: Math.random() * 15 + 30 };
+                    }
+                }
+            });
+            
+            // Add cosmic stardust effect scattered throughout
+            for (let i = 0; i < 25; i++) {
+                phosphenes.push({
+                    x: Math.random() * SIZE,
+                    y: Math.random() * SIZE,
+                    radius: Math.random() * 80 + 40,
+                    opacity: Math.random() * 0.12 + 0.06,
+                    hue: 280 + Math.random() * 40,
+                    saturation: 50 + Math.random() * 30,
+                    lightness: 60 + Math.random() * 20
+                });
+            }
+            
+            drawPhosphenes(ctx, phosphenes, 'rgb(15, 10, 22)');
+            const size = getTextSize('EXPAND');
+            drawText(ctx, 'EXPAND', 'rgba(255, 250, 255, 0.95)', size.fontSize, size.letterSpacing);
         }
 
         function download(canvasId, filename) {
