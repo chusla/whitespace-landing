@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Whitespace Subscription Images - Monthly & Annual</title>
+    <title>Whitespace Subscription & Credit Images</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
 </head>
 <body>
     <h1>WHITESPACE</h1>
-    <p class="subtitle">Subscription Images — 1024 × 1024 — Monthly & Annual</p>
+    <p class="subtitle">Subscription & Credit Images — 1024 × 1024</p>
     
     <!-- Monthly Section -->
     <h3 class="section-title">MONTHLY SUBSCRIPTIONS</h3>
@@ -157,8 +157,33 @@
         </div>
     </div>
 
+    <!-- Credit Packages Section -->
+    <h3 class="section-title">CREDIT PACKAGES</h3>
+    <div class="grid">
+        <div class="card">
+            <h2>ARRIVE</h2>
+            <p class="concept">Nebula Amber • 1 Credit</p>
+            <canvas id="arrive-credits" width="1024" height="1024"></canvas>
+            <button onclick="download('arrive-credits', 'arrive-1credit-1024.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>SETTLE</h2>
+            <p class="concept">Nebula Emerald • 2 Credits</p>
+            <canvas id="settle-credits" width="1024" height="1024"></canvas>
+            <button onclick="download('settle-credits', 'settle-2credits-1024.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>EXPAND</h2>
+            <p class="concept">Nebula Violet • 4 Credits</p>
+            <canvas id="expand-credits" width="1024" height="1024"></canvas>
+            <button onclick="download('expand-credits', 'expand-4credits-1024.png')">Download PNG</button>
+        </div>
+    </div>
+
     <div style="text-align: center;">
-        <button class="download-all" onclick="downloadAll()">Download All 6 Images</button>
+        <button class="download-all" onclick="downloadAll()">Download All 9 Images</button>
     </div>
 
     <script>
@@ -176,31 +201,37 @@
                 generateFlow('flow-annual', 'Annual');
                 generateElevate('elevate-annual', 'Annual');
                 generateImmerse('immerse-annual', 'Annual');
+                
+                // Generate Credit Packages
+                generateArrive('arrive-credits', '1 Credit');
+                generateSettle('settle-credits', '2 Credits');
+                generateExpand('expand-credits', '4 Credits');
             });
         });
 
         // ========== FLOW ==========
+        // Nebula-inspired purple (sphere glow style)
         function generateFlow(canvasId, period) {
             const canvas = document.getElementById(canvasId);
             const ctx = canvas.getContext('2d');
             
-            // Base color - deep lake blue at night
-            ctx.fillStyle = '#0a1628';
+            // Base color - deep space purple
+            ctx.fillStyle = '#0c0815';
             ctx.fillRect(0, 0, SIZE, SIZE);
             
-            // Spherical gradient - soft moonlit lake feel
+            // Spherical gradient - nebula purple feel
             const sphere = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.7);
-            sphere.addColorStop(0, '#1a3a5c');
-            sphere.addColorStop(0.3, '#142d4a');
-            sphere.addColorStop(0.6, '#0f2138');
-            sphere.addColorStop(1, '#0a1628');
+            sphere.addColorStop(0, '#2d1f45');
+            sphere.addColorStop(0.3, '#221838');
+            sphere.addColorStop(0.6, '#18122a');
+            sphere.addColorStop(1, '#0c0815');
             ctx.fillStyle = sphere;
             ctx.fillRect(0, 0, SIZE, SIZE);
             
-            // Subtle lighter glow in center
+            // Subtle lighter glow in center - purple/magenta tint
             const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 300);
-            glow.addColorStop(0, 'rgba(100, 160, 200, 0.15)');
-            glow.addColorStop(0.5, 'rgba(70, 130, 180, 0.08)');
+            glow.addColorStop(0, 'rgba(160, 100, 200, 0.18)');
+            glow.addColorStop(0.5, 'rgba(120, 70, 180, 0.10)');
             glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
             ctx.fillStyle = glow;
             ctx.beginPath();
@@ -245,6 +276,7 @@
         }
 
         // ========== IMMERSE ==========
+        // Deep ocean blue (original)
         function generateImmerse(canvasId, period) {
             const canvas = document.getElementById(canvasId);
             const ctx = canvas.getContext('2d');
@@ -276,22 +308,121 @@
             drawTextWithSubtitle(ctx, 'IMMERSE', period, 'rgba(255, 255, 255, 0.95)');
         }
 
+        // ========== ARRIVE ==========
+        // Warm cosmic nebula (coral/salmon/rose tones)
+        function generateArrive(canvasId, credits) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Base - deep warm space
+            ctx.fillStyle = '#150a0c';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - warm nebula feel
+            const sphere = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.7);
+            sphere.addColorStop(0, '#3d1820');
+            sphere.addColorStop(0.3, '#2d1218');
+            sphere.addColorStop(0.6, '#200c10');
+            sphere.addColorStop(1, '#150a0c');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Warm coral/rose glow
+            const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 300);
+            glow.addColorStop(0, 'rgba(255, 120, 100, 0.20)');
+            glow.addColorStop(0.5, 'rgba(220, 80, 90, 0.12)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 300, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text
+            drawTextWithSubtitle(ctx, 'ARRIVE', credits, 'rgba(255, 250, 248, 0.95)');
+        }
+
+        // ========== SETTLE ==========
+        // Emerald/teal cosmic nebula
+        function generateSettle(canvasId, credits) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Base - deep teal space
+            ctx.fillStyle = '#08100f';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - teal nebula feel
+            const sphere = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.7);
+            sphere.addColorStop(0, '#153530');
+            sphere.addColorStop(0.3, '#102825');
+            sphere.addColorStop(0.6, '#0c1c1a');
+            sphere.addColorStop(1, '#08100f');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Teal/emerald glow
+            const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 300);
+            glow.addColorStop(0, 'rgba(80, 200, 180, 0.20)');
+            glow.addColorStop(0.5, 'rgba(50, 160, 140, 0.12)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 300, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text
+            drawTextWithSubtitle(ctx, 'SETTLE', credits, 'rgba(245, 255, 252, 0.95)');
+        }
+
+        // ========== EXPAND ==========
+        // Deep cosmic violet/indigo nebula
+        function generateExpand(canvasId, credits) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Base - deep cosmic violet
+            ctx.fillStyle = '#0a0810';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - rich violet nebula
+            const sphere = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.7);
+            sphere.addColorStop(0, '#281838');
+            sphere.addColorStop(0.3, '#1e1230');
+            sphere.addColorStop(0.6, '#140c20');
+            sphere.addColorStop(1, '#0a0810');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Violet/indigo glow
+            const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 300);
+            glow.addColorStop(0, 'rgba(140, 90, 220, 0.22)');
+            glow.addColorStop(0.5, 'rgba(100, 60, 180, 0.12)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 300, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text
+            drawTextWithSubtitle(ctx, 'EXPAND', credits, 'rgba(250, 248, 255, 0.95)');
+        }
+
         // Draw centered text with letter spacing and subtitle
         function drawTextWithSubtitle(ctx, mainText, subtitle, color) {
             ctx.fillStyle = color;
             
-            // Main text settings
-            const mainFontSize = mainText.length <= 5 ? 140 : 120;
-            ctx.font = `300 ${mainFontSize}px "Inter", sans-serif`;
+            // Main text settings - BIGGER & HEAVIER
+            const mainFontSize = mainText.length <= 5 ? 200 : 170;
+            ctx.font = `400 ${mainFontSize}px "Inter", sans-serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
             // Calculate vertical positions
-            const mainY = CENTER - 40; // Move main text up a bit
-            const subtitleY = CENTER + 80; // Subtitle below
+            const mainY = CENTER - 70; // Move main text up a bit
+            const subtitleY = CENTER + 120; // Subtitle below
             
-            // Manual letter spacing for main text
-            const spacing = mainText.length <= 5 ? 25 : 20;
+            // Manual letter spacing for main text - MORE SPACING
+            const spacing = mainText.length <= 5 ? 45 : 35;
             const chars = mainText.split('');
             let charWidths = chars.map(c => ctx.measureText(c).width);
             let totalWidth = charWidths.reduce((a, b) => a + b, 0) + (chars.length - 1) * spacing;
@@ -303,14 +434,14 @@
                 x += charWidths[i] + spacing;
             });
             
-            // Subtitle - smaller, slightly lower opacity
-            ctx.globalAlpha = 0.7;
-            ctx.font = `300 56px "Inter", sans-serif`;
+            // Subtitle - BIGGER & HEAVIER
+            ctx.globalAlpha = 0.85;
+            ctx.font = `400 100px "Inter", sans-serif`;
             ctx.textAlign = 'center';
             
-            // Letter spacing for subtitle
+            // Letter spacing for subtitle - MORE SPACING
             const subChars = subtitle.split('');
-            const subSpacing = 8;
+            const subSpacing = 18;
             let subCharWidths = subChars.map(c => ctx.measureText(c).width);
             let subTotalWidth = subCharWidths.reduce((a, b) => a + b, 0) + (subChars.length - 1) * subSpacing;
             
@@ -339,7 +470,10 @@
                 { id: 'immerse-monthly', name: 'immerse-monthly-1024.png' },
                 { id: 'flow-annual', name: 'flow-annual-1024.png' },
                 { id: 'elevate-annual', name: 'elevate-annual-1024.png' },
-                { id: 'immerse-annual', name: 'immerse-annual-1024.png' }
+                { id: 'immerse-annual', name: 'immerse-annual-1024.png' },
+                { id: 'arrive-credits', name: 'arrive-1credit-1024.png' },
+                { id: 'settle-credits', name: 'settle-2credits-1024.png' },
+                { id: 'expand-credits', name: 'expand-4credits-1024.png' }
             ];
             
             images.forEach((img, index) => {
