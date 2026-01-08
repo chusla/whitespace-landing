@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Whitespace Subscription Images - Monthly & Annual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0d0d12 0%, #1a1a2e 50%, #0d0d12 100%);
+            color: #e0e0e0;
+            padding: 50px;
+            min-height: 100vh;
+        }
+        h1 {
+            font-weight: 200;
+            font-size: 32px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.5;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .section-title {
+            font-weight: 300;
+            font-size: 18px;
+            margin-bottom: 20px;
+            margin-top: 40px;
+            letter-spacing: 3px;
+            opacity: 0.7;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+        }
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .card h2 {
+            font-weight: 300;
+            font-size: 20px;
+            margin-bottom: 8px;
+            letter-spacing: 4px;
+        }
+        .card .concept {
+            font-size: 13px;
+            opacity: 0.4;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+        canvas {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border-radius: 56px;
+            margin-bottom: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+        }
+        button {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .download-all {
+            margin-top: 40px;
+            padding: 18px 48px;
+            background: linear-gradient(135deg, rgba(100,150,255,0.2), rgba(150,100,255,0.2));
+            border-color: rgba(150,150,255,0.3);
+        }
+        .download-all:hover {
+            background: linear-gradient(135deg, rgba(100,150,255,0.3), rgba(150,100,255,0.3));
+        }
+    </style>
+</head>
+<body>
+    <h1>WHITESPACE</h1>
+    <p class="subtitle">Subscription Images — 1024 × 1024 — Monthly & Annual</p>
+    
+    <!-- Monthly Section -->
+    <h3 class="section-title">MONTHLY SUBSCRIPTIONS</h3>
+    <div class="grid">
+        <div class="card">
+            <h2>FLOW</h2>
+            <p class="concept">Monthly • Summer night lake</p>
+            <canvas id="flow-monthly" width="1024" height="1024"></canvas>
+            <button onclick="download('flow-monthly', 'flow-monthly-1024.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>ELEVATE</h2>
+            <p class="concept">Monthly • Sky blue</p>
+            <canvas id="elevate-monthly" width="1024" height="1024"></canvas>
+            <button onclick="download('elevate-monthly', 'elevate-monthly-1024.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>IMMERSE</h2>
+            <p class="concept">Monthly • Deep ocean blue</p>
+            <canvas id="immerse-monthly" width="1024" height="1024"></canvas>
+            <button onclick="download('immerse-monthly', 'immerse-monthly-1024.png')">Download PNG</button>
+        </div>
+    </div>
+
+    <!-- Annual Section -->
+    <h3 class="section-title">ANNUAL SUBSCRIPTIONS</h3>
+    <div class="grid">
+        <div class="card">
+            <h2>FLOW</h2>
+            <p class="concept">Annual • Summer night lake</p>
+            <canvas id="flow-annual" width="1024" height="1024"></canvas>
+            <button onclick="download('flow-annual', 'flow-annual-1024.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>ELEVATE</h2>
+            <p class="concept">Annual • Sky blue</p>
+            <canvas id="elevate-annual" width="1024" height="1024"></canvas>
+            <button onclick="download('elevate-annual', 'elevate-annual-1024.png')">Download PNG</button>
+        </div>
+        
+        <div class="card">
+            <h2>IMMERSE</h2>
+            <p class="concept">Annual • Deep ocean blue</p>
+            <canvas id="immerse-annual" width="1024" height="1024"></canvas>
+            <button onclick="download('immerse-annual', 'immerse-annual-1024.png')">Download PNG</button>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <button class="download-all" onclick="downloadAll()">Download All 6 Images</button>
+    </div>
+
+    <script>
+        const SIZE = 1024;
+        const CENTER = SIZE / 2;
+
+        window.addEventListener('load', () => {
+            document.fonts.ready.then(() => {
+                // Generate Monthly
+                generateFlow('flow-monthly', 'Monthly');
+                generateElevate('elevate-monthly', 'Monthly');
+                generateImmerse('immerse-monthly', 'Monthly');
+                
+                // Generate Annual
+                generateFlow('flow-annual', 'Annual');
+                generateElevate('elevate-annual', 'Annual');
+                generateImmerse('immerse-annual', 'Annual');
+            });
+        });
+
+        // ========== FLOW ==========
+        function generateFlow(canvasId, period) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Base color - deep lake blue at night
+            ctx.fillStyle = '#0a1628';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - soft moonlit lake feel
+            const sphere = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.7);
+            sphere.addColorStop(0, '#1a3a5c');
+            sphere.addColorStop(0.3, '#142d4a');
+            sphere.addColorStop(0.6, '#0f2138');
+            sphere.addColorStop(1, '#0a1628');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Subtle lighter glow in center
+            const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 300);
+            glow.addColorStop(0, 'rgba(100, 160, 200, 0.15)');
+            glow.addColorStop(0.5, 'rgba(70, 130, 180, 0.08)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 300, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text with subtitle
+            drawTextWithSubtitle(ctx, 'FLOW', period, 'rgba(255, 255, 255, 0.95)');
+        }
+
+        // ========== ELEVATE ==========
+        function generateElevate(canvasId, period) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Base - light sky blue
+            ctx.fillStyle = '#e8f4fc';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - bright sky feel
+            const sphere = ctx.createRadialGradient(CENTER, CENTER * 0.7, 0, CENTER, CENTER, SIZE * 0.8);
+            sphere.addColorStop(0, '#ffffff');
+            sphere.addColorStop(0.2, '#e0f0fa');
+            sphere.addColorStop(0.5, '#c5e4f5');
+            sphere.addColorStop(0.8, '#a8d4ef');
+            sphere.addColorStop(1, '#8bc4e8');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Soft bright center
+            const glow = ctx.createRadialGradient(CENTER, CENTER * 0.8, 0, CENTER, CENTER * 0.8, 350);
+            glow.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
+            glow.addColorStop(0.5, 'rgba(255, 255, 255, 0.2)');
+            glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER * 0.8, 350, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text - dark for light background
+            drawTextWithSubtitle(ctx, 'ELEVATE', period, 'rgba(30, 60, 90, 0.9)');
+        }
+
+        // ========== IMMERSE ==========
+        function generateImmerse(canvasId, period) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Base - deep ocean
+            ctx.fillStyle = '#040d18';
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Spherical gradient - deep ocean depths
+            const sphere = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, SIZE * 0.75);
+            sphere.addColorStop(0, '#0d2a42');
+            sphere.addColorStop(0.3, '#0a2035');
+            sphere.addColorStop(0.6, '#071828');
+            sphere.addColorStop(1, '#040d18');
+            ctx.fillStyle = sphere;
+            ctx.fillRect(0, 0, SIZE, SIZE);
+            
+            // Deep glow
+            const glow = ctx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, 280);
+            glow.addColorStop(0, 'rgba(60, 140, 180, 0.2)');
+            glow.addColorStop(0.5, 'rgba(40, 100, 150, 0.1)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, 280, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw text
+            drawTextWithSubtitle(ctx, 'IMMERSE', period, 'rgba(255, 255, 255, 0.95)');
+        }
+
+        // Draw centered text with letter spacing and subtitle
+        function drawTextWithSubtitle(ctx, mainText, subtitle, color) {
+            ctx.fillStyle = color;
+            
+            // Main text settings
+            const mainFontSize = mainText.length <= 5 ? 140 : 120;
+            ctx.font = `300 ${mainFontSize}px "Inter", sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Calculate vertical positions
+            const mainY = CENTER - 40; // Move main text up a bit
+            const subtitleY = CENTER + 80; // Subtitle below
+            
+            // Manual letter spacing for main text
+            const spacing = mainText.length <= 5 ? 25 : 20;
+            const chars = mainText.split('');
+            let charWidths = chars.map(c => ctx.measureText(c).width);
+            let totalWidth = charWidths.reduce((a, b) => a + b, 0) + (chars.length - 1) * spacing;
+            
+            let x = CENTER - totalWidth / 2;
+            
+            chars.forEach((char, i) => {
+                ctx.fillText(char, x + charWidths[i] / 2, mainY);
+                x += charWidths[i] + spacing;
+            });
+            
+            // Subtitle - smaller, slightly lower opacity
+            ctx.globalAlpha = 0.7;
+            ctx.font = `300 56px "Inter", sans-serif`;
+            ctx.textAlign = 'center';
+            
+            // Letter spacing for subtitle
+            const subChars = subtitle.split('');
+            const subSpacing = 8;
+            let subCharWidths = subChars.map(c => ctx.measureText(c).width);
+            let subTotalWidth = subCharWidths.reduce((a, b) => a + b, 0) + (subChars.length - 1) * subSpacing;
+            
+            let subX = CENTER - subTotalWidth / 2;
+            
+            subChars.forEach((char, i) => {
+                ctx.fillText(char, subX + subCharWidths[i] / 2, subtitleY);
+                subX += subCharWidths[i] + subSpacing;
+            });
+            
+            ctx.globalAlpha = 1;
+        }
+
+        function download(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadAll() {
+            const images = [
+                { id: 'flow-monthly', name: 'flow-monthly-1024.png' },
+                { id: 'elevate-monthly', name: 'elevate-monthly-1024.png' },
+                { id: 'immerse-monthly', name: 'immerse-monthly-1024.png' },
+                { id: 'flow-annual', name: 'flow-annual-1024.png' },
+                { id: 'elevate-annual', name: 'elevate-annual-1024.png' },
+                { id: 'immerse-annual', name: 'immerse-annual-1024.png' }
+            ];
+            
+            images.forEach((img, index) => {
+                setTimeout(() => download(img.id, img.name), index * 300);
+            });
+        }
+    </script>
+</body>
+</html>
+
