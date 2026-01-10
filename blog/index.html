@@ -24,6 +24,152 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/blog/assets/blog.css">
+    
+    <style>
+        /* Featured/Pinned Article Section */
+        .featured-section {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px 32px;
+        }
+        
+        .featured-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(107, 140, 255, 0.9);
+            background: rgba(107, 140, 255, 0.1);
+            border: 1px solid rgba(107, 140, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .featured-label svg {
+            width: 12px;
+            height: 12px;
+        }
+        
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(107, 140, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        @media (min-width: 768px) {
+            .featured-card {
+                grid-template-columns: 1.2fr 1fr;
+            }
+        }
+        
+        .featured-card:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(107, 140, 255, 0.35);
+            box-shadow: 0 20px 50px rgba(107, 140, 255, 0.15);
+        }
+        
+        .featured-card-image {
+            width: 100%;
+            height: 100%;
+            min-height: 240px;
+            object-fit: cover;
+        }
+        
+        .featured-card-content {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .featured-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 16px;
+        }
+        
+        .featured-card-meta .divider {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .featured-card h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        
+        .featured-card-excerpt {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .featured-card-link {
+            font-family: 'Crimson Pro', serif;
+            font-size: 15px;
+            color: rgba(107, 140, 255, 0.8);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+        
+        .featured-card:hover .featured-card-link {
+            color: rgba(107, 140, 255, 1);
+        }
+        
+        /* Section Divider */
+        .section-divider {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 32px 24px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+        
+        .section-divider span {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.35);
+        }
+    </style>
 </head>
 <body>
     <canvas id="phosphene-canvas" data-intensity="0.3"></canvas>
@@ -42,29 +188,99 @@
         <p class="subtitle inter fade-up visible fade-up-delay-1">Science-backed perspectives on meditation, mindfulness, and mental wellness</p>
     </section>
     
-    <!-- Blog Grid -->
-    <section class="blog-grid">
-        <!-- Post 1: Best Meditation Apps 2026 (Most Recent - Jan 1) -->
-        <a href="/blog/best-meditation-apps-2026.html" class="blog-card fade-up visible fade-up-delay-2">
+    <!-- Featured/Pinned Article -->
+    <section class="featured-section fade-up visible fade-up-delay-2">
+        <div class="featured-label">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+            Featured Comparison
+        </div>
+        <a href="/blog/best-meditation-apps-2026.html" class="featured-card">
             <img 
                 src="/blog/assets/blog-images/bestmeditationapps2026.png" 
                 alt="Best meditation apps 2026 comparison" 
-                class="blog-card-image"
+                class="featured-card-image"
             >
-            <div class="blog-card-content">
-                <div class="blog-card-meta inter">
+            <div class="featured-card-content">
+                <div class="featured-card-meta">
                     <span>January 1, 2026</span>
                     <span class="divider">•</span>
                     <span>10 min read</span>
                 </div>
                 <h2 class="crimson">The 5 Best Meditation Apps of 2026: A Comprehensive Review</h2>
-                <p class="blog-card-excerpt inter">Complete comparison of Headspace, Calm, Insight Timer, Waking Up, and Whitespace - honest reviews of what works and what doesn't.</p>
-                <span class="blog-card-link">Read Comparison →</span>
+                <p class="featured-card-excerpt">Complete comparison of Headspace, Calm, Insight Timer, Waking Up, and Whitespace - honest reviews of what works and what doesn't.</p>
+                <span class="featured-card-link">Read Comparison →</span>
+            </div>
+        </a>
+    </section>
+    
+    <!-- Section Divider -->
+    <div class="section-divider">
+        <span>Latest Articles</span>
+    </div>
+    
+    <!-- Blog Grid -->
+    <section class="blog-grid">
+        <!-- Post 1: Why Successful People Meditate (Jan 8) -->
+        <a href="/blog/why-successful-people-meditate.html" class="blog-card fade-up visible fade-up-delay-3">
+            <img 
+                src="/blog/assets/blog-images/performance.png" 
+                alt="Mountain meditation sunrise representing building from within" 
+                class="blog-card-image"
+            >
+            <div class="blog-card-content">
+                <div class="blog-card-meta inter">
+                    <span>January 8, 2026</span>
+                    <span class="divider">•</span>
+                    <span>9 min read</span>
+                </div>
+                <h2 class="crimson">Why Successful People Meditate: The Science of Building From Within</h2>
+                <p class="blog-card-excerpt inter">Discover why high achievers prioritize inner work over external accomplishments. Research shows sustainable success requires building psychological foundations first.</p>
+                <span class="blog-card-link">Read More →</span>
             </div>
         </a>
         
-        <!-- Post 2: App Not Working (Dec 26) -->
-        <a href="/blog/app-not-working.html" class="blog-card fade-up visible fade-up-delay-3">
+        <!-- Post 2: How to Take Control of Your Life (Jan 6) -->
+        <a href="/blog/how-to-take-control-of-your-life.html" class="blog-card fade-up visible fade-up-delay-4">
+            <img 
+                src="/blog/assets/blog-images/focused attention.png" 
+                alt="Person choosing clear path representing taking control" 
+                class="blog-card-image"
+            >
+            <div class="blog-card-content">
+                <div class="blog-card-meta inter">
+                    <span>January 6, 2026</span>
+                    <span class="divider">•</span>
+                    <span>8 min read</span>
+                </div>
+                <h2 class="crimson">How to Take Control of Your Life (When Everything Feels Out of Control)</h2>
+                <p class="blog-card-excerpt inter">Learn about locus of control—the hidden psychological factor that predicts success better than IQ or talent. Research-backed strategies to shift from external to internal control.</p>
+                <span class="blog-card-link">Read More →</span>
+            </div>
+        </a>
+        
+        <!-- Post 3: Why Willpower Fails (Jan 4) -->
+        <a href="/blog/why-willpower-fails.html" class="blog-card fade-up visible fade-up-delay-5">
+            <img 
+                src="/blog/assets/blog-images/digital overwhelm.png" 
+                alt="Contrast between forced effort and sustainable flow" 
+                class="blog-card-image"
+            >
+            <div class="blog-card-content">
+                <div class="blog-card-meta inter">
+                    <span>January 4, 2026</span>
+                    <span class="divider">•</span>
+                    <span>9 min read</span>
+                </div>
+                <h2 class="crimson">The Real Reason Your Willpower Fails (And How to Fix It)</h2>
+                <p class="blog-card-excerpt inter">New research reveals willpower isn't just a limited resource—your beliefs about it change how it works. Learn how meditation builds sustainable inner resources.</p>
+                <span class="blog-card-link">Read More →</span>
+            </div>
+        </a>
+        
+        <!-- Post 4: App Not Working (Dec 26) -->
+        <a href="/blog/app-not-working.html" class="blog-card fade-up visible fade-up-delay-6">
             <img 
                 src="/blog/assets/blog-images/thumbnails/digital overwhelm.png" 
                 alt="Digital overwhelm and meditation app choice overload" 
@@ -82,8 +298,8 @@
             </div>
         </a>
         
-        <!-- Post 3: Focus & Productivity (Dec 22) -->
-        <a href="/blog/focus-productivity.html" class="blog-card fade-up visible fade-up-delay-4">
+        <!-- Post 5: Focus & Productivity (Dec 22) -->
+        <a href="/blog/focus-productivity.html" class="blog-card fade-up visible fade-up-delay-7">
             <img 
                 src="/blog/assets/blog-images/thumbnails/focused attention.png" 
                 alt="Abstract visualization of focused attention" 
@@ -101,8 +317,8 @@
             </div>
         </a>
         
-        <!-- Post 4: Meditation Frequency (Dec 18) -->
-        <a href="/blog/meditation-frequency.html" class="blog-card fade-up visible fade-up-delay-5">
+        <!-- Post 6: Meditation Frequency (Dec 18) -->
+        <a href="/blog/meditation-frequency.html" class="blog-card fade-up visible fade-up-delay-8">
             <img 
                 src="/blog/assets/blog-images/thumbnails/meditation calendar.png" 
                 alt="Meditation frequency and schedule concept" 
@@ -120,8 +336,8 @@
             </div>
         </a>
         
-        <!-- Post 5: Brain Rewiring (Dec 13) -->
-        <a href="/blog/brain-rewiring.html" class="blog-card fade-up visible fade-up-delay-6">
+        <!-- Post 7: Brain Rewiring (Dec 13) -->
+        <a href="/blog/brain-rewiring.html" class="blog-card fade-up visible fade-up-delay-9">
             <img 
                 src="/blog/assets/blog-images/thumbnails/neural network.png" 
                 alt="Abstract visualization of neural networks and neuroplasticity" 
@@ -139,8 +355,8 @@
             </div>
         </a>
         
-        <!-- Post 6: Somatic Meditation (Dec 9) -->
-        <a href="/blog/somatic-meditation.html" class="blog-card fade-up visible fade-up-delay-7">
+        <!-- Post 8: Somatic Meditation (Dec 9) -->
+        <a href="/blog/somatic-meditation.html" class="blog-card fade-up visible fade-up-delay-10">
             <img 
                 src="/blog/assets/blog-images/thumbnails/somatic.png" 
                 alt="Body awareness and somatic meditation visualization" 
@@ -158,8 +374,8 @@
             </div>
         </a>
         
-        <!-- Post 7: App Revolution (Dec 6) -->
-        <a href="/blog/app-revolution.html" class="blog-card fade-up visible fade-up-delay-8">
+        <!-- Post 9: App Revolution (Dec 6) -->
+        <a href="/blog/app-revolution.html" class="blog-card fade-up visible fade-up-delay-11">
             <img 
                 src="/blog/assets/blog-images/thumbnails/digital zen.png" 
                 alt="Abstract fusion of digital technology and meditation" 
@@ -177,8 +393,8 @@
             </div>
         </a>
         
-        <!-- Post 8: Loving-Kindness Meditation (Dec 1) -->
-        <a href="/blog/loving-kindness-meditation.html" class="blog-card fade-up visible fade-up-delay-9">
+        <!-- Post 10: Loving-Kindness Meditation (Dec 1) -->
+        <a href="/blog/loving-kindness-meditation.html" class="blog-card fade-up visible fade-up-delay-12">
             <img 
                 src="/blog/assets/blog-images/thumbnails/loving kindness.png" 
                 alt="Expanding circles of compassion visualization" 
@@ -196,8 +412,8 @@
             </div>
         </a>
         
-        <!-- Post 9: Anxiety Relief (Nov 29) -->
-        <a href="/blog/anxiety-relief.html" class="blog-card fade-up visible fade-up-delay-10">
+        <!-- Post 11: Anxiety Relief (Nov 29) -->
+        <a href="/blog/anxiety-relief.html" class="blog-card fade-up visible fade-up-delay-12">
             <img 
                 src="/blog/assets/blog-images/thumbnails/calm the storm.png" 
                 alt="Abstract visualization of anxiety transforming into calm" 
@@ -215,8 +431,8 @@
             </div>
         </a>
         
-        <!-- Post 10: Athletes Meditate (Nov 22) -->
-        <a href="/blog/athletes-meditate.html" class="blog-card fade-up visible fade-up-delay-11">
+        <!-- Post 12: Athletes Meditate (Nov 22) -->
+        <a href="/blog/athletes-meditate.html" class="blog-card fade-up visible fade-up-delay-12">
             <img 
                 src="/blog/assets/blog-images/thumbnails/performance.png" 
                 alt="Abstract visualization of focused athletic mindset and meditation" 
@@ -234,7 +450,7 @@
             </div>
         </a>
         
-        <!-- Post 11: Daily Meditation Debate (Nov 18) -->
+        <!-- Post 13: Daily Meditation Debate (Nov 18) -->
         <a href="/blog/daily-meditation-debate.html" class="blog-card fade-up visible fade-up-delay-12">
             <img 
                 src="/blog/assets/blog-images/thumbnails/Time split.png" 
@@ -253,7 +469,7 @@
             </div>
         </a>
         
-        <!-- Post 12: Sleep Science (Nov 15) -->
+        <!-- Post 14: Sleep Science (Nov 15) -->
         <a href="/blog/sleep-science.html" class="blog-card fade-up visible fade-up-delay-12">
             <img 
                 src="/blog/assets/blog-images/thumbnails/paradox.png" 
@@ -282,4 +498,3 @@
     <script src="/assets/js/analytics.js"></script>
 </body>
 </html>
-

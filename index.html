@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personalized guided meditations generated on-demand. No two sessions are alike. Join the waitlist for early access.">
+    <meta name="description" content="Your edge, on-demand. Personalized meditation that aligns mind, body, and intention - clearing the noise so you can build what matters. For founders and high-performers.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/src/assets/favicon.png">
     
-    <title>Whitespace | Meditation That Adapts to You</title>
+    <title>Whitespace | 10x Your Inner Self</title>
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://trywhitespace.com/">
-    <meta property="og:title" content="Whitespace | Meditation That Adapts to You">
-    <meta property="og:description" content="Personalized guided meditations generated on-demand. No two sessions are alike. Join the waitlist for early access.">
-    <meta property="og:image" content="https://trywhitespace.com/src/assets/og-image.png?v=2">
+    <meta property="og:title" content="Whitespace | 10x Your Inner Self">
+    <meta property="og:description" content="Your edge, on-demand. Personalized meditation that aligns mind, body, and intention - clearing the noise so you can build what matters. For founders and high-performers.">
+    <meta property="og:image" content="https://trywhitespace.com/src/assets/10x_your_inner_self.png">
     <meta property="og:site_name" content="Whitespace">
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://trywhitespace.com/">
-    <meta name="twitter:title" content="Whitespace | Meditation That Adapts to You">
-    <meta name="twitter:description" content="Personalized guided meditations generated on-demand. No two sessions are alike. Join the waitlist for early access.">
-    <meta name="twitter:image" content="https://trywhitespace.com/src/assets/twitter-card.png">
+    <meta name="twitter:title" content="Whitespace | 10x Your Inner Self">
+    <meta name="twitter:description" content="Your edge, on-demand. Personalized meditation that aligns mind, body, and intention - clearing the noise so you can build what matters. For founders and high-performers.">
+    <meta name="twitter:image" content="https://trywhitespace.com/src/assets/10x_your_inner_self.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@100;200;300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -409,6 +409,15 @@
             margin-top: 12px;
             color: rgba(255, 255, 255, 0.4);
             font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .form-note.warning {
+            color: rgba(255, 180, 120, 0.9);
+        }
+
+        .form-note.error {
+            color: rgba(255, 120, 120, 0.9);
         }
 
         .success-message {
@@ -1164,11 +1173,11 @@
             >
 
             <h1 id="heroHeadline">
-                Your personal meditation guide.<br>On-demand.
+                10x Your Inner Self
             </h1>
 
             <p class="hero-subtitle fade-up visible fade-up-delay-7">
-                Personalized meditation spaces for the moments that matter. Tell Whitespace what you need and get guidance made for you - exactly when you need it.
+                Align your mind, body, and intention. Whitespace generates personalized meditation sessions tailored to your goals - whether you need laser focus before a pitch, grounding after chaos, or clarity for your next big move.
             </p>
 
             <div class="fade-up visible fade-up-delay-9">
@@ -1190,9 +1199,18 @@
                             id="heroEmailInput"
                             autocomplete="email"
                         >
+                        <!-- Honeypot field - hidden from humans, bots will fill it -->
+                        <input 
+                            type="text" 
+                            name="website" 
+                            id="heroWebsiteInput"
+                            autocomplete="off"
+                            tabindex="-1"
+                            style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
+                        >
                         <button type="submit" class="submit-btn">Join Waitlist</button>
                     </div>
-                    <p class="form-note inter">Early members receive founding benefits · Space is limited</p>
+                    <p class="form-note inter" id="heroFormNote">Limited founding member spots · Your competition isn't waiting</p>
                     <div class="success-message" id="heroSuccessMessage">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"></polyline>
@@ -1232,7 +1250,7 @@
         <div class="section-container">
             <div class="section-header fade-up">
                 <h2>From The Journal</h2>
-                <p>Science-backed insights on meditation and mental wellness</p>
+                <p>Research-backed insights for clarity, alignment, and peak performance</p>
             </div>
 
             <div class="journal-grid">
@@ -1289,7 +1307,7 @@
         <div class="section-container">
             <div class="section-header fade-up">
                 <h2>How It Works</h2>
-                <p>Simple, intuitive and uniquely relevant to you</p>
+                <p>Built for the way high-performers actually operate</p>
             </div>
 
             <div class="screenshots-grid">
@@ -1298,7 +1316,7 @@
                         <img src="src/assets/step 1.png" alt="Set your intention screen" class="screenshot-img">
                     </div>
                     <h3>Set Your Intention</h3>
-                    <p class="inter">Tell the app what you need - focus, calm, clarity, or anything else</p>
+                    <p class="inter">Need pre-meeting focus? Post-sprint recovery? Creative unblocking? Just say it.</p>
                 </div>
 
                 <div class="screenshot-card fade-up fade-up-delay-2">
@@ -1306,7 +1324,7 @@
                         <img src="src/assets/step 2.png" alt="AI generating your session" class="screenshot-img">
                     </div>
                     <h3>Your Personal Space is Created</h3>
-                    <p class="inter">Watch as your personalized meditation is created in real-time</p>
+                    <p class="inter">A meditation is generated and engineered for your exact mental state - in seconds</p>
                 </div>
 
                 <div class="screenshot-card fade-up fade-up-delay-3">
@@ -1314,7 +1332,7 @@
                         <img src="src/assets/step 3.png" alt="Immersive playback experience" class="screenshot-img">
                     </div>
                     <h3>Immersive Experience</h3>
-                    <p class="inter">Beautiful audio with binaural soundscapes and calming guidance</p>
+                    <p class="inter">Premium audio with binaural frequencies designed to optimize your brain state</p>
                 </div>
             </div>
         </div>
@@ -1324,7 +1342,7 @@
     <section id="audio-sample" style="padding: 48px 24px;">
         <div style="max-width: 500px; margin: 0 auto;">
             <div class="audio-sample fade-up">
-                <p class="audio-sample-label inter">Experience Your First Space</p>
+                <p class="audio-sample-label inter">Test Your Edge</p>
                 
                 <p class="audio-title">Steady Ground</p>
                 <p class="audio-duration inter">2 minutes</p>
@@ -1348,8 +1366,8 @@
     <section>
         <div class="differentiator-container">
             <div class="section-header fade-up">
-                <h2>Why Whitespace is Different</h2>
-                <p>Whitespace isn't a meditation library, it's a teacher that knows you better over time.</p>
+                <h2>Not Another Meditation App</h2>
+                <p>Whitespace is a tool for total alignment - it learns your patterns, anticipates your needs, and compounds your clarity over time.</p>
             </div>
 
             <div class="comparison-grid">
@@ -1360,7 +1378,7 @@
                     </div>
                     <div class="comparison-item positive">
                         <div class="comparison-icon positive">→</div>
-                        <p class="inter">Fresh meditations generated for your specific intention, plus a curated library</p>
+                        <p class="inter">Every session is unique, generated fresh for your specific goals - focus, recovery, creativity, decision-making</p>
                     </div>
                 </div>
 
@@ -1371,7 +1389,7 @@
                     </div>
                     <div class="comparison-item positive">
                         <div class="comparison-icon positive">→</div>
-                        <p class="inter">Personalized to your mood, goals, and current state</p>
+                        <p class="inter">Personalized to your workload, energy levels, and what you're building</p>
                     </div>
                 </div>
 
@@ -1382,7 +1400,7 @@
                     </div>
                     <div class="comparison-item positive pricing-highlight">
                         <div class="comparison-icon positive">→</div>
-                        <p class="inter">Waste-free pricing. Flexible credits that match your actual rhythm, with rollover options.</p>
+                        <p class="inter">Pay for what you use. Credits that match your rhythm, with full rollover.</p>
                     </div>
                 </div>
 
@@ -1393,7 +1411,7 @@
                     </div>
                     <div class="comparison-item positive">
                         <div class="comparison-icon positive">→</div>
-                        <p class="inter">New experience every single time you practice</p>
+                        <p class="inter">Every session compounds on the last, strengthening your alignment</p>
                     </div>
                 </div>
             </div>
@@ -1404,8 +1422,8 @@
     <section>
         <div class="section-container">
             <div class="section-header fade-up">
-                <h2>What Makes Whitespace Special</h2>
-                <p>Technology and wisdom combined for truly transformative meditation</p>
+                <h2>Your Unfair Advantage</h2>
+                <p>Proprietary technology that learns you, adapts to you, and compounds your alignment over time</p>
             </div>
 
             <div class="feature-grid">
@@ -1417,8 +1435,8 @@
                             <path d="M12 3v18"/>
                         </svg>
                     </div>
-                    <h3>Backed by Science, Built for You</h3>
-                    <p class="inter">Research confirms meditation apps deliver real benefits<sup><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12333550/" target="_blank" rel="noopener">*</a></sup>. Whitespace takes this further—every meditation is crafted specifically for you, teaching techniques that adapt to your needs over time.</p>
+                    <h3>Backed by Research, Built for Results</h3>
+                    <p class="inter">Research shows meditation improves focus, reduces decision fatigue, and accelerates recovery from stress<sup><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12333550/" target="_blank" rel="noopener">*</a></sup>. Whitespace delivers these benefits in sessions that fit your schedule - personalized to where you are right now.</p>
                 </div>
 
                 <div class="feature-card fade-up fade-up-delay-2">
@@ -1430,7 +1448,7 @@
                         </svg>
                     </div>
                     <h3>Whitespace Intelligence</h3>
-                    <p class="inter">Powered by a proprietary framework that understands you better over time. Every space adapts to your unique history as well as your needs, mood, and goals in real-time.</p>
+                    <p class="inter">Proprietary technology that learns what works for you - tracking patterns, optimizing guidance, and delivering sessions that compound your clarity and alignment over time.</p>
                 </div>
 
                 <div class="feature-card fade-up fade-up-delay-3">
@@ -1441,7 +1459,7 @@
                         </svg>
                     </div>
                     <h3>Premium Audio Experience</h3>
-                    <p class="inter">Natural voice synthesis combined with binaural soundscapes and subtle frequency patterns to guide you into deeper meditative states.</p>
+                    <p class="inter">Natural voice synthesis combined with binaural soundscapes and subtle frequency patterns designed to guide you into deeper states - in minutes, not hours.</p>
                 </div>
 
                 <div class="feature-card fade-up fade-up-delay-4">
@@ -1453,8 +1471,8 @@
                             <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
                         </svg>
                     </div>
-                    <h3>Flexible Pricing</h3>
-                    <p class="inter">Choose what works for you—monthly plans for regular practice, or annual 'Founding Member' plans with full credit rollover. No wasted subscriptions.</p>
+                    <h3>Built for Your Rhythm</h3>
+                    <p class="inter">No bloated subscriptions. Use credits when you need them - before investor calls, after launches, during creative blocks. Unused credits roll over.</p>
                 </div>
             </div>
         </div>
@@ -1464,17 +1482,17 @@
     <section>
         <div class="final-cta fade-up">
             <div class="cta-box">
-                <h2 class="crimson">Be among the first</h2>
-                <p class="inter">Join the waitlist for early access when we launch.</p>
+                <h2 class="crimson">Get Early Access</h2>
+                <p class="inter">Join founders, creators, and operators already aligning for what's next.</p>
                 
                 <div class="early-access-benefits">
                     <p class="benefits-label inter">Founding member benefits</p>
                     <div class="benefits-list">
-                        <span class="benefit-item inter">Extended free trial</span>
+                        <span class="benefit-item inter">Priority access + extended trial</span>
                         <span class="benefit-divider">·</span>
-                        <span class="benefit-item inter">Locked-in pricing</span>
+                        <span class="benefit-item inter">Founding member pricing (locked)</span>
                         <span class="benefit-divider">·</span>
-                        <span class="benefit-item inter">Bonus credits</span>
+                        <span class="benefit-item inter">Bonus credits to start</span>
                     </div>
                 </div>
                 
@@ -1495,6 +1513,15 @@
                             required
                             id="ctaEmailInput"
                             autocomplete="email"
+                        >
+                        <!-- Honeypot field - hidden from humans, bots will fill it -->
+                        <input 
+                            type="text" 
+                            name="company" 
+                            id="ctaCompanyInput"
+                            autocomplete="off"
+                            tabindex="-1"
+                            style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
                         >
                         <button type="submit" class="submit-btn">Join Waitlist</button>
                     </div>
@@ -1605,14 +1632,79 @@
         });
 
         // ==========================================
+        // Name Validation (Client-side)
+        // ==========================================
+        function isLikelyBadName(name) {
+            const cleaned = name.trim();
+            
+            // Too short
+            if (cleaned.length < 2) return { bad: true, message: 'Please enter your first name' };
+            
+            // Too long for a first name
+            if (cleaned.length > 20) return { bad: true, message: 'Please enter just your first name' };
+            
+            // Must contain at least one vowel
+            const vowels = /[aeiouAEIOU]/;
+            if (!vowels.test(cleaned)) return { bad: true, message: 'Please enter a valid name' };
+            
+            // Too many consonants in a row (5+)
+            const manyConsonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/;
+            if (manyConsonants.test(cleaned)) return { bad: true, message: 'Please enter a valid name' };
+            
+            // Check for suspicious mixed case
+            let caseChanges = 0;
+            for (let i = 1; i < cleaned.length; i++) {
+                const prevIsUpper = cleaned[i-1] === cleaned[i-1].toUpperCase() && cleaned[i-1] !== cleaned[i-1].toLowerCase();
+                const currIsUpper = cleaned[i] === cleaned[i].toUpperCase() && cleaned[i] !== cleaned[i].toLowerCase();
+                const prevIsLetter = /[a-zA-Z]/.test(cleaned[i-1]);
+                const currIsLetter = /[a-zA-Z]/.test(cleaned[i]);
+                if (prevIsLetter && currIsLetter && prevIsUpper !== currIsUpper) {
+                    caseChanges++;
+                }
+            }
+            if (caseChanges > 3) return { bad: true, message: 'Please check your name' };
+            
+            // Only allow letters, spaces, hyphens, apostrophes, periods
+            const validChars = /^[a-zA-Z\s\-'.]+$/;
+            if (!validChars.test(cleaned)) return { bad: true, message: 'Please enter a valid name' };
+            
+            return { bad: false };
+        }
+
+        // ==========================================
         // Form Handling (Existing Workflow)
         // ==========================================
-        async function handleFormSubmit(form, nameInput, emailInput, submitBtn, successMessage) {
+        async function handleFormSubmit(form, nameInput, emailInput, honeypotInput, submitBtn, successMessage, formNote) {
             const name = nameInput.value.trim();
             const email = emailInput.value.trim();
+            const honeypot = honeypotInput ? honeypotInput.value : '';
             
             console.log('🔵 Form submitted');
             console.log('Name:', name, 'Email:', email);
+            
+            // Honeypot check - if filled, silently "succeed" but do nothing
+            if (honeypot) {
+                console.warn('🤖 Honeypot triggered');
+                successMessage.classList.add('show');
+                form.style.display = 'none';
+                return;
+            }
+            
+            // Client-side name validation with user feedback
+            const nameCheck = isLikelyBadName(name);
+            if (nameCheck.bad) {
+                if (formNote) {
+                    formNote.textContent = nameCheck.message;
+                    formNote.classList.add('warning');
+                    nameInput.focus();
+                    // Reset after 4 seconds
+                    setTimeout(() => {
+                        formNote.textContent = 'Limited founding member spots · Your competition isn\'t waiting';
+                        formNote.classList.remove('warning');
+                    }, 4000);
+                }
+                return;
+            }
             
             submitBtn.disabled = true;
             submitBtn.textContent = 'Joining...';
@@ -1623,7 +1715,12 @@
                 const response = await fetch('/api/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, name })
+                    body: JSON.stringify({ 
+                        email, 
+                        name,
+                        website: honeypotInput?.value || '',
+                        company: honeypotInput?.value || ''
+                    })
                 });
 
                 console.log('📥 Response status:', response.status);
@@ -1637,13 +1734,27 @@
                     window.location.href = `/welcome.html?name=${encodeURIComponent(name)}`;
                 } else {
                     console.error('❌ Error response:', data);
-                    alert(data.error || 'Something went wrong. Please try again.');
+                    if (formNote) {
+                        formNote.textContent = data.error || 'Something went wrong. Please try again.';
+                        formNote.classList.add('error');
+                        setTimeout(() => {
+                            formNote.textContent = 'Limited founding member spots · Your competition isn\'t waiting';
+                            formNote.classList.remove('error');
+                        }, 4000);
+                    }
                     submitBtn.disabled = false;
                     submitBtn.textContent = 'Join Waitlist';
                 }
             } catch (error) {
                 console.error('❌ Fetch error:', error);
-                alert('Failed to join waitlist. Please try again.');
+                if (formNote) {
+                    formNote.textContent = 'Something went wrong. Please try again.';
+                    formNote.classList.add('error');
+                    setTimeout(() => {
+                        formNote.textContent = 'Limited founding member spots · Your competition isn\'t waiting';
+                        formNote.classList.remove('error');
+                    }, 4000);
+                }
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Join Waitlist';
             }
@@ -1657,8 +1768,10 @@
                 heroForm,
                 document.getElementById('heroNameInput'),
                 document.getElementById('heroEmailInput'),
+                document.getElementById('heroWebsiteInput'),
                 heroForm.querySelector('.submit-btn'),
-                document.getElementById('heroSuccessMessage')
+                document.getElementById('heroSuccessMessage'),
+                document.getElementById('heroFormNote')
             );
         });
 
@@ -1670,8 +1783,10 @@
                 ctaForm,
                 document.getElementById('ctaNameInput'),
                 document.getElementById('ctaEmailInput'),
+                document.getElementById('ctaCompanyInput'),
                 ctaForm.querySelector('.submit-btn'),
-                document.getElementById('ctaSuccessMessage')
+                document.getElementById('ctaSuccessMessage'),
+                null // CTA form doesn't have a form note
             );
         });
 

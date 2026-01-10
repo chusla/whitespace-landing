@@ -3,6 +3,50 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@trywhitespace.com';
 
+// Subtle bot detection for name field
+function isLikelyBotName(name) {
+  const cleaned = name.trim();
+  
+  // Too long for a first name (most first names are under 15 chars)
+  if (cleaned.length > 20) return true;
+  
+  // Must contain at least one vowel (real names have vowels)
+  const vowels = /[aeiouAEIOU]/;
+  if (!vowels.test(cleaned)) return true;
+  
+  // Check for random character patterns - too many consonants in a row (4+)
+  const manyConsonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/;
+  if (manyConsonants.test(cleaned)) return true;
+  
+  // Check for suspicious mixed case (e.g., "OPOOXwIZfbBt")
+  // Count case changes - real names have 0-2 case changes max
+  let caseChanges = 0;
+  for (let i = 1; i < cleaned.length; i++) {
+    const prevIsUpper = cleaned[i-1] === cleaned[i-1].toUpperCase() && cleaned[i-1] !== cleaned[i-1].toLowerCase();
+    const currIsUpper = cleaned[i] === cleaned[i].toUpperCase() && cleaned[i] !== cleaned[i].toLowerCase();
+    const prevIsLetter = /[a-zA-Z]/.test(cleaned[i-1]);
+    const currIsLetter = /[a-zA-Z]/.test(cleaned[i]);
+    if (prevIsLetter && currIsLetter && prevIsUpper !== currIsUpper) {
+      caseChanges++;
+    }
+  }
+  if (caseChanges > 3) return true;
+  
+  // Only allow letters, spaces, hyphens, apostrophes, and periods (for names like "M.J.")
+  const validChars = /^[a-zA-Z\s\-'.]+$/;
+  if (!validChars.test(cleaned)) return true;
+  
+  // Ratio of uppercase to total letters is suspicious if too high (excluding first letter)
+  if (cleaned.length > 2) {
+    const rest = cleaned.slice(1);
+    const upperCount = (rest.match(/[A-Z]/g) || []).length;
+    const letterCount = (rest.match(/[a-zA-Z]/g) || []).length;
+    if (letterCount > 0 && upperCount / letterCount > 0.4) return true;
+  }
+  
+  return false;
+}
+
 export default async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,7 +62,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email, name } = req.body;
+    const { email, name, website, company } = req.body;
+
+    // Honeypot check - if filled, silently "succeed" but do nothing
+    if (website || company) {
+      console.warn('Honeypot triggered, rejecting:', { email, website, company });
+      return res.status(200).json({ success: true });
+    }
 
     if (!email || !email.includes('@')) {
       return res.status(400).json({ error: 'Invalid email address' });
@@ -26,6 +76,13 @@ export default async function handler(req, res) {
 
     if (!name || name.trim().length === 0) {
       return res.status(400).json({ error: 'Name is required' });
+    }
+
+    // Subtle bot detection
+    if (isLikelyBotName(name)) {
+      // Return success to not tip off bots, but don't actually save
+      console.warn('Bot detected, rejecting:', { name, email });
+      return res.status(200).json({ success: true });
     }
 
     // Save to Supabase
