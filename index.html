@@ -413,11 +413,11 @@
         }
 
         .form-note.warning {
-            color: rgba(255, 180, 120, 0.9);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .form-note.error {
-            color: rgba(255, 120, 120, 0.9);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .success-message {
@@ -1636,6 +1636,7 @@
         // ==========================================
         function isLikelyBadName(name) {
             const cleaned = name.trim();
+            const lower = cleaned.toLowerCase();
             
             // Too short
             if (cleaned.length < 2) return { bad: true, message: 'Please enter your first name' };
@@ -1650,6 +1651,38 @@
             // Too many consonants in a row (5+)
             const manyConsonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/;
             if (manyConsonants.test(cleaned)) return { bad: true, message: 'Please enter a valid name' };
+            
+            // Check for repeating 2-3 char patterns (gibberish detector)
+            // e.g., "awegawgaweg" has "awe", "weg", "aw" repeating
+            if (cleaned.length > 6) {
+                for (let len = 2; len <= 3; len++) {
+                    for (let i = 0; i <= lower.length - len; i++) {
+                        const pattern = lower.substring(i, i + len);
+                        const regex = new RegExp(pattern, 'g');
+                        const matches = (lower.match(regex) || []).length;
+                        if (matches >= 3) return { bad: true, message: 'Please enter a valid name' };
+                    }
+                }
+            }
+            
+            // Check for same letter appearing too many times (e.g., "aaaa" or spread out "awaeaga")
+            const letterCounts = {};
+            for (const char of lower) {
+                if (/[a-z]/.test(char)) {
+                    letterCounts[char] = (letterCounts[char] || 0) + 1;
+                }
+            }
+            const maxLetterCount = Math.max(...Object.values(letterCounts));
+            const letterRatio = maxLetterCount / cleaned.length;
+            if (letterRatio > 0.4 && cleaned.length > 4) return { bad: true, message: 'Please enter a valid name' };
+            
+            // Check for too many unique letters relative to length (gibberish tends to use many letters)
+            // Real short names reuse letters; gibberish often doesn't
+            const uniqueLetters = Object.keys(letterCounts).length;
+            if (cleaned.length > 6 && uniqueLetters <= 4) {
+                // Very few unique letters in a long name = likely gibberish pattern
+                // But allow if it looks like a real name pattern
+            }
             
             // Check for suspicious mixed case
             let caseChanges = 0;
@@ -1667,6 +1700,9 @@
             // Only allow letters, spaces, hyphens, apostrophes, periods
             const validChars = /^[a-zA-Z\s\-'.]+$/;
             if (!validChars.test(cleaned)) return { bad: true, message: 'Please enter a valid name' };
+            
+            // Check for 3+ same letters in a row
+            if (/(.)\1{2,}/.test(lower)) return { bad: true, message: 'Please enter a valid name' };
             
             return { bad: false };
         }

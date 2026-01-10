@@ -6,6 +6,7 @@ const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@trywhitespace.com';
 // Subtle bot detection for name field
 function isLikelyBotName(name) {
   const cleaned = name.trim();
+  const lower = cleaned.toLowerCase();
   
   // Too long for a first name (most first names are under 15 chars)
   if (cleaned.length > 20) return true;
@@ -14,12 +15,37 @@ function isLikelyBotName(name) {
   const vowels = /[aeiouAEIOU]/;
   if (!vowels.test(cleaned)) return true;
   
-  // Check for random character patterns - too many consonants in a row (4+)
+  // Check for random character patterns - too many consonants in a row (5+)
   const manyConsonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/;
   if (manyConsonants.test(cleaned)) return true;
   
+  // Check for repeating 2-3 char patterns (gibberish detector)
+  if (cleaned.length > 6) {
+    for (let len = 2; len <= 3; len++) {
+      for (let i = 0; i <= lower.length - len; i++) {
+        const pattern = lower.substring(i, i + len);
+        const regex = new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+        const matches = (lower.match(regex) || []).length;
+        if (matches >= 3) return true;
+      }
+    }
+  }
+  
+  // Check for same letter appearing too many times
+  const letterCounts = {};
+  for (const char of lower) {
+    if (/[a-z]/.test(char)) {
+      letterCounts[char] = (letterCounts[char] || 0) + 1;
+    }
+  }
+  const maxLetterCount = Math.max(...Object.values(letterCounts));
+  const letterRatio = maxLetterCount / cleaned.length;
+  if (letterRatio > 0.4 && cleaned.length > 4) return true;
+  
+  // Check for 3+ same letters in a row
+  if (/(.)\1{2,}/.test(lower)) return true;
+  
   // Check for suspicious mixed case (e.g., "OPOOXwIZfbBt")
-  // Count case changes - real names have 0-2 case changes max
   let caseChanges = 0;
   for (let i = 1; i < cleaned.length; i++) {
     const prevIsUpper = cleaned[i-1] === cleaned[i-1].toUpperCase() && cleaned[i-1] !== cleaned[i-1].toLowerCase();
