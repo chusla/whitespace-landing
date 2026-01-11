@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10x From Within - Whitespace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 42px;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .section-header .subhead {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Cycle Container with CSS Custom Properties */
+        .cycle-container {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto 50px;
+            aspect-ratio: 1;
+            /* Single variable controls label distance from center */
+            --label-offset: 52%;
+        }
+
+        /* Pulsing circle */
+        .circular-path {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+        .circle-base {
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.02);
+            }
+        }
+
+        /* Center rotating arrow */
+        .center-arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            animation: rotate 8s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .center-arrow svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+
+        /* 
+         * UNIFIED POSITIONING APPROACH
+         * All step nodes use top/left from center with transform centering
+         * Positions calculated using 120-degree intervals:
+         * - Step 1: Top (270°) 
+         * - Step 2: Bottom-right (30°) - 60° below horizontal
+         * - Step 3: Bottom-left (150°) - 60° below horizontal, mirrored
+         * 
+         * Math: sin(60°) ≈ 0.866, cos(60°) = 0.5
+         */
+        .step-node {
+            position: absolute;
+            text-align: center;
+            width: 130px;
+            transition: all 0.3s ease;
+        }
+
+        /* Step 1: Top (270°) - centered horizontally, offset up from center */
+        .step-1 {
+            top: calc(50% - var(--label-offset));
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Step 2: Bottom Right (30°) - offset down-right from center */
+        .step-2 {
+            top: calc(50% + var(--label-offset) * 0.5);
+            left: calc(50% + var(--label-offset) * 0.866);
+            transform: translate(-50%, -50%);
+        }
+
+        /* Step 3: Bottom Left (150°) - offset down-left from center */
+        .step-3 {
+            top: calc(50% + var(--label-offset) * 0.5);
+            left: calc(50% - var(--label-offset) * 0.866);
+            transform: translate(-50%, -50%);
+        }
+
+        .step-number {
+            display: flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0 auto 8px;
+            transition: all 0.3s ease;
+        }
+
+        .step-node h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: rgba(255, 255, 255, 0.85);
+            transition: color 0.3s ease;
+        }
+
+        .prompt {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+            line-height: 1.3;
+            transition: opacity 0.2s ease;
+            min-height: 30px;
+        }
+
+        /* Bottom copy */
+        .bottom-copy {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .bottom-copy p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .bottom-copy .highlight {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+        }
+
+        /* 
+         * RESPONSIVE: Only adjust --label-offset
+         * No need to recalculate complex pixel values
+         */
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 32px;
+            }
+
+            .section-header .subhead {
+                font-size: 16px;
+            }
+
+            .cycle-container {
+                max-width: 340px;
+                margin-bottom: 40px;
+                --label-offset: 50%;
+            }
+
+            .center-arrow {
+                width: 70px;
+                height: 70px;
+            }
+
+            .step-node {
+                width: 115px;
+            }
+
+            .step-node h4 {
+                font-size: 15px;
+            }
+
+            .prompt {
+                font-size: 11px;
+            }
+
+            .bottom-copy p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 40px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .section-header .subhead {
+                font-size: 15px;
+                margin-bottom: 30px;
+            }
+
+            .cycle-container {
+                max-width: 300px;
+                margin-bottom: 40px;
+                --label-offset: 48%;
+            }
+
+            .center-arrow {
+                width: 60px;
+                height: 60px;
+            }
+
+            .step-node {
+                width: 100px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .step-node h4 {
+                font-size: 14px;
+            }
+
+            .prompt {
+                font-size: 10px;
+                min-height: 26px;
+            }
+
+            .bottom-copy p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section-header">
+            <h2>10x Your Results by 10x'ing Your Inner Self</h2>
+            <p class="subhead">Breakthroughs don't come from grinding harder—they come from building stronger foundations.</p>
+        </div>
+
+        <div class="cycle-container">
+            <!-- Pulsing circle -->
+            <div class="circular-path">
+                <div class="circle-base"></div>
+            </div>
+
+            <!-- Rotating circular arrow in center -->
+            <div class="center-arrow">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Circular arrow path -->
+                    <path d="M50 15 A 35 35 0 1 1 49.9 15" 
+                          stroke="rgba(255, 255, 255, 0.4)" 
+                          stroke-width="2" 
+                          stroke-linecap="round"
+                          fill="none"/>
+                    <!-- Arrow head -->
+                    <path d="M 50 15 L 45 20 M 50 15 L 55 20" 
+                          stroke="rgba(255, 255, 255, 0.4)" 
+                          stroke-width="2" 
+                          stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <!-- Step 1: Top - Inner Work -->
+            <div class="step-node step-1">
+                <div class="step-number">1</div>
+                <h4>Inner Work</h4>
+                <div class="prompt" id="prompt-1">Build your foundation</div>
+            </div>
+
+            <!-- Step 2: Bottom Right - Action -->
+            <div class="step-node step-2">
+                <div class="step-number">2</div>
+                <h4>Action</h4>
+                <div class="prompt" id="prompt-2">Move with purpose</div>
+            </div>
+
+            <!-- Step 3: Bottom Left - Results -->
+            <div class="step-node step-3">
+                <div class="step-number">3</div>
+                <h4>Results</h4>
+                <div class="prompt" id="prompt-3">Let wins compound</div>
+            </div>
+        </div>
+
+        <div class="bottom-copy">
+            <p><span class="highlight">Your outer world mirrors your inner state.</span> Strengthen your foundation and watch everything else multiply.</p>
+        </div>
+    </div>
+
+    <script>
+        // Simplified cycling prompts for 3 steps
+        const prompts = {
+            1: [
+                "Build your foundation",
+                "Clarify your vision",
+                "Strengthen your core"
+            ],
+            2: [
+                "Move with purpose",
+                "Take aligned action",
+                "Execute intentionally"
+            ],
+            3: [
+                "Let wins compound",
+                "Recognize progress",
+                "See transformation"
+            ]
+        };
+
+        let currentIndex = {1: 0, 2: 0, 3: 0};
+
+        function cyclePrompts() {
+            [1, 2, 3].forEach((step, i) => {
+                setTimeout(() => {
+                    const element = document.getElementById(`prompt-${step}`);
+                    currentIndex[step] = (currentIndex[step] + 1) % prompts[step].length;
+                    
+                    element.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        element.textContent = prompts[step][currentIndex[step]];
+                        element.style.opacity = '1';
+                    }, 200);
+                }, i * 600);
+            });
+        }
+
+        // Cycle prompts every 4 seconds
+        setInterval(cyclePrompts, 4000);
+    </script>
+</body>
+</html>
