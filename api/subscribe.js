@@ -153,36 +153,101 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           from: 'Whitespace <hello@trywhitespace.com>',
           to: email,
-          subject: 'Welcome to Whitespace',
-          html: `
-            <div style="font-family: Georgia, serif; max-width: 500px; margin: 0 auto; padding: 40px 20px;">
-              <p style="font-size: 18px; line-height: 1.6; color: #1a1a1a;">
-                Hi ${name},
-              </p>
-              <p style="font-size: 16px; line-height: 1.8; color: #333;">
-                I'm Andrew, the founder of Whitespace.
-              </p>
-              <p style="font-size: 16px; line-height: 1.8; color: #333;">
-                Thank you for joining our mailing list.
-              </p>
-              <p style="font-size: 16px; line-height: 1.8; color: #333;">
-                I built this app because I tried all the meditation apps out there and found myself overwhelmed. They had countless sessions in their expansive libraries, but none of them spoke uniquely to what I needed in that moment.
-              </p>
-              <p style="font-size: 16px; line-height: 1.8; color: #333;">
-                Whitespace is different. It's not a library but a teacher that knows you better over time. Each space you create is unique to your moment, your needs, and your practice.
-              </p>
-              <p style="font-size: 16px; line-height: 1.8; color: #333;">
-                We launch soon. Until then, I'd love to hear what brought you here. Feel free to reach out with any questions or suggestions.
-              </p>
-              <p style="font-size: 16px; line-height: 1.8; color: #333;">
-                I look forward to starting this journey with you.
-              </p>
-              <p style="font-size: 16px; line-height: 1.8; color: #666; margin-top: 40px;">
-                Best regards,<br>
-                Andrew
-              </p>
-            </div>
-          `
+          subject: 'Try Whitespace beta now - your feedback will shape what we build',
+          html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <head>
+    <meta content="width=device-width" name="viewport" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta content="telephone=no,address=no,email=no,date=no,url=no" name="format-detection" />
+  </head>
+  <body>
+    <div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0" data-skip-in-text="true">
+      Welcome to Whitespace - get 12 free credits to start
+      <div>
+         ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+      </div>
+    </div>
+    <table border="0" width="100%" cellpadding="0" cellspacing="0" role="presentation" align="center">
+      <tbody>
+        <tr>
+          <td>
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;font-size:1.0769230769230769em;min-height:100%;line-height:155%">
+              <tbody>
+                <tr>
+                  <td>
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="align:left;width:100%;padding-left:0px;padding-right:0px;line-height:155%;max-width:600px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div>
+                              <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; line-height: 1.8; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 40px 20px; background: linear-gradient(180deg, #151821 0%, #0f1119 50%, #151821 100%); font-size: 18px; border-radius: 16px;">
+                                <div style="text-align: center; margin-bottom: 25px; padding: 20px 0;">
+                                  <img src="https://auth.trywhitespace.com/storage/v1/object/public/images/whitespace_banner.png" alt="Whitespace" style="width: 300px; height: 150px; max-width: 100%; display: block; margin: 0 auto;" />
+                                </div>
+
+                                <p style="margin-bottom: 24px;">Hi,</p>
+
+                                <p style="margin-bottom: 24px;">Thanks for joining the Whitespace waitlist.</p>
+
+                                <p style="margin-bottom: 24px;">I'm Andrew, and I built Whitespace to create something different - meditation that adapts to you, not the other way around.</p>
+
+                                <p style="margin-bottom: 24px;">Every session is generated specifically for what you need: better sleep, sharper focus, or just a moment of calm. The meditations are yours to keep and revisit anytime.</p>
+
+                                <p style="margin-bottom: 24px;">The app is live in beta, and you're invited to try it now.</p>
+
+                                <div style="text-align: center; margin: 40px 0;">
+                                  <a href="https://testflight.apple.com/join/RuRQCBjr" style="display: inline-block; vertical-align: middle; margin: 0 4px;">
+                                    <img src="https://auth.trywhitespace.com/storage/v1/object/public/images/apple_badge2.png" alt="Download on TestFlight" style="height: 40px; width: auto; vertical-align: middle; display: inline-block;" />
+                                  </a>
+                                  <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" style="display: inline-block; vertical-align: middle; margin: 0 4px;">
+                                    <img src="https://auth.trywhitespace.com/storage/v1/object/public/images/google_badge.png" alt="Get it on Google Play" style="height: 60px; width: auto; vertical-align: middle; display: inline-block;" />
+                                  </a>
+                                </div>
+
+                                <p style="margin-bottom: 24px;"><strong>You'll start with 12 free credits</strong> - that's over 60 minutes of personalized meditation content that stays in your library forever.</p>
+
+                                <p style="margin-bottom: 24px;">I'd love to hear what you think. Reply anytime with feedback or questions.</p>
+
+                                <p style="margin-top: 32px; margin-bottom: 24px;">Best,<br />Andrew</p>
+
+                                <div style="text-align: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 32px;"></div>
+                              </div>
+                            </div>
+                            <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em"><br /></p>
+                            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" class="node-footer" style="font-size:0.8em">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <hr class="divider" style="width:100%;border:none;border-top:1px solid #eaeaea;padding-bottom:1em;border-width:2px" />
+                                    <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em">
+                                      <span>You are receiving this email because you signed up for the Whitespace waitlist.</span><br /><br /><span>Want to change how you receive these emails?</span><br /><span>You can </span><span><a href="{{unsubscribe_url}}" rel="noopener noreferrer nofollow" ses:no-track="true" style="color:#0670DB;text-decoration-line:none;text-decoration:underline" target="_blank">unsubscribe from this list</a></span><span>.</span>
+                                    </p>
+                                    <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em">
+                                      <span>Whitespace: Custom Sleep Focus</span><br /><span>One2all 2026</span>
+                                    </p>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em"><br /></p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>`
         })
       });
 

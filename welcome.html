@@ -140,6 +140,47 @@
         .footer-link:hover {
             color: rgba(255, 255, 255, 0.7);
         }
+
+        .app-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 32px;
+            opacity: 0;
+            flex-wrap: wrap;
+        }
+
+        .app-badges a {
+            display: inline-flex;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .app-badges a:hover {
+            transform: scale(1.05);
+            opacity: 0.85;
+        }
+
+        .app-badges img {
+            height: 44px;
+            width: auto;
+        }
+
+        .app-badges img[alt="Get it on Google Play"] {
+            height: 66px;
+        }
+
+        .credits-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 20px;
+            opacity: 0;
+        }
+
+        .credits-note strong {
+            color: rgba(255, 255, 255, 0.8);
+        }
         
         @keyframes fadeInWord {
         to {
@@ -181,8 +222,17 @@
         <div class="container">
         <div class="content">
         <div class="message-container" id="message"></div>
-        <div class="tagline" id="tagline">Your personal space for sleep, calm and focus.</div>
-        <div class="subheader" id="subheader">We'll let you know when your space is ready.</div>
+        <div class="tagline" id="tagline">The beta is live — download now to get started.</div>
+        <div class="app-badges" id="appBadges">
+            <a href="https://testflight.apple.com/join/RuRQCBjr" target="_blank" rel="noopener">
+                <img src="https://auth.trywhitespace.com/storage/v1/object/public/images/apple_badge2.png" alt="Download on TestFlight">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener">
+                <img src="https://auth.trywhitespace.com/storage/v1/object/public/images/google_badge.png" alt="Get it on Google Play">
+            </a>
+        </div>
+        <div class="credits-note" id="creditsNote"><strong>12 free credits</strong> — over 60 minutes of personalized meditation</div>
+        <div class="subheader" id="subheader">Check your inbox for a welcome email.</div>
         </div>
         </div>
         
@@ -207,6 +257,8 @@
         const words = message.split(' ');
         const messageContainer = document.getElementById('message');
         const tagline = document.getElementById('tagline');
+        const appBadges = document.getElementById('appBadges');
+        const creditsNote = document.getElementById('creditsNote');
         const subheader = document.getElementById('subheader');
         const footer = document.getElementById('footer');
         
@@ -237,15 +289,25 @@
         tagline.style.animation = 'fadeInElement 400ms ease forwards';
         }, lastWordTime + 600);
         
-        // Show subheader 300ms after tagline
+        // Show app badges 300ms after tagline
+        setTimeout(() => {
+        appBadges.style.animation = 'fadeInElement 400ms ease forwards';
+        }, lastWordTime + 1000);
+        
+        // Show credits note 300ms after badges
+        setTimeout(() => {
+        creditsNote.style.animation = 'fadeInElement 400ms ease forwards';
+        }, lastWordTime + 1400);
+        
+        // Show subheader 300ms after credits
         setTimeout(() => {
         subheader.style.animation = 'fadeInElement 400ms ease forwards';
-        }, lastWordTime + 1000);
+        }, lastWordTime + 1800);
         
         // Show footer 300ms after subheader
         setTimeout(() => {
         footer.style.animation = 'fadeInElement 400ms ease forwards';
-        }, lastWordTime + 1300);
+        }, lastWordTime + 2200);
         
         // Phosphene background (same as landing page)
         const canvas = document.getElementById('phosphene-canvas');
