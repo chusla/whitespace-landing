@@ -136,14 +136,14 @@
             font-weight: 100;
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.25;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             min-height: 1.25em;
             opacity: 0; /* Hide initially */
         }
 
         @media (min-width: 768px) {
             .hero h1 {
-                margin-bottom: 64px;
+                margin-bottom: 32px;
             }
         }
 
@@ -329,22 +329,27 @@
         }
 
         .submit-btn {
-            padding: 16px 32px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: white;
-            font-family: 'Crimson Pro', serif;
-            font-size: 16px;
+            padding: 16px 28px;
+            background: rgba(107, 140, 255, 0.08);
+            border: 1px solid rgba(107, 140, 255, 0.3);
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
             font-weight: 500;
+            letter-spacing: 0.02em;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
+            box-shadow: 0 0 20px rgba(107, 140, 255, 0.15),
+                        0 0 40px rgba(107, 140, 255, 0.08);
         }
 
         .submit-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.02);
+            background: rgba(107, 140, 255, 0.12);
+            border-color: rgba(107, 140, 255, 0.5);
+            box-shadow: 0 0 30px rgba(107, 140, 255, 0.25),
+                        0 0 60px rgba(107, 140, 255, 0.12);
         }
 
         .submit-btn:active {
@@ -1158,13 +1163,432 @@
                 transform: translateY(0);
             }
         }
+
+        /* ==========================================
+           Scenario Rotator - Blur to Focus
+           ========================================== */
+        .scenario-rotator-wrapper {
+            margin: 0;
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .scenario-rotator {
+            min-height: 2.5em;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 640px) {
+            .scenario-rotator {
+                min-height: 3.5em;
+            }
+        }
+
+        .scenario {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) scale(0.95);
+            text-align: center;
+            opacity: 0;
+            filter: blur(12px);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                        filter 1s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 640px) {
+            .scenario {
+                white-space: normal;
+                width: 90%;
+                left: 50%;
+            }
+        }
+
+        .scenario.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(-50%) scale(1);
+        }
+
+        .scenario-tagline {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 48px;
+            font-weight: 300;
+            font-style: italic;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .scenario-tagline em {
+            color: rgba(255, 255, 255, 0.75);
+            font-style: italic;
+        }
+
+        .scenario-tagline strong {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        /* Hero CTA Button - Phosphene Glow */
+        .hero-cta-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.95);
+            background: rgba(107, 140, 255, 0.08);
+            border: 1px solid rgba(107, 140, 255, 0.3);
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(107, 140, 255, 0.15),
+                        0 0 40px rgba(107, 140, 255, 0.08);
+        }
+
+        .hero-cta-btn:hover {
+            background: rgba(107, 140, 255, 0.12);
+            border-color: rgba(107, 140, 255, 0.5);
+            box-shadow: 0 0 30px rgba(107, 140, 255, 0.25),
+                        0 0 60px rgba(107, 140, 255, 0.12);
+        }
+
+        .hero-cta-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* ==========================================
+           Punchline Section
+           ========================================== */
+        .punchline-section {
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .punchline-section h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 24px;
+        }
+
+        .punchline-section .lead {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 640px;
+            margin: 0 auto 16px;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+           Testimonials
+           ========================================== */
+        .testimonials-section {
+            padding: 48px 24px;
+        }
+
+        .testimonials-section .section-header {
+            margin-bottom: 32px;
+        }
+
+        .testimonials-section .section-header p {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .testimonials-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .testimonial-card p {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            font-style: normal;
+            text-align: center;
+        }
+
+        /* ==========================================
+           Pricing Tiers
+           ========================================== */
+        .pricing-section {
+            padding: 96px 24px;
+        }
+
+        .pricing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .pricing-toggle-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .pricing-toggle-label.active {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .pricing-toggle-switch {
+            width: 48px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .pricing-toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(107, 140, 255, 0.9);
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.2s;
+        }
+
+        .pricing-toggle-switch.annual::after {
+            transform: translateX(22px);
+        }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .tier-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .tier-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(107, 140, 255, 0.03);
+        }
+
+        .tier-card:hover {
+            border-color: rgba(107, 140, 255, 0.15);
+            box-shadow: 0 0 40px rgba(107, 140, 255, 0.08);
+        }
+
+        .tier-card.popular {
+            border-color: rgba(107, 140, 255, 0.25);
+            background: rgba(107, 140, 255, 0.04);
+            box-shadow: 0 0 40px rgba(107, 140, 255, 0.1),
+                        0 0 80px rgba(107, 140, 255, 0.05);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(107, 140, 255, 0.9);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        .tier-name {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 4px;
+        }
+
+        .tier-description {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 20px;
+        }
+
+        .tier-details {
+            text-align: left;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .tier-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .tier-detail svg {
+            width: 14px;
+            height: 14px;
+            color: rgba(107, 140, 255, 0.7);
+            flex-shrink: 0;
+        }
+
+        .pricing-note {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .pricing-note p {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 6px;
+        }
+
+        /* ==========================================
+           FAQ Accordion
+           ========================================== */
+        .faq-section {
+            padding: 96px 24px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .faq-question span {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.9);
+            padding-right: 24px;
+        }
+
+        .faq-question svg {
+            width: 20px;
+            height: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-question svg {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+            padding-bottom: 24px;
+        }
+
+        .faq-answer p {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        .faq-contact {
+            text-align: center;
+            margin-top: 48px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .faq-contact a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+        }
+
+        .faq-contact a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body>
     <canvas id="phosphene-canvas" data-intensity="1"></canvas>
 
-    <!-- Hero Section -->
-    <section class="hero" id="waitlist">
+    <!-- Hero Section - Minimal -->
+    <section class="hero" id="hero">
         <div class="hero-content">
             <img 
                 src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" 
@@ -1176,57 +1600,34 @@
                 10x Your Inner Self
             </h1>
 
-            <p class="hero-subtitle fade-up visible fade-up-delay-7">
-                Align your mind, body, and intention. Whitespace creates personalized meditation spaces to help you regain clarity - whether you're preparing for something important, grounding after stress, or finding direction for what comes next.
-            </p>
-
-            <div class="fade-up visible fade-up-delay-9">
-                <form class="email-form" id="heroEmailForm">
-                    <div class="form-row">
-                        <input 
-                            type="text" 
-                            class="form-input" 
-                            placeholder="First name" 
-                            required
-                            id="heroNameInput"
-                            autocomplete="given-name"
-                        >
-                        <input 
-                            type="email" 
-                            class="form-input" 
-                            placeholder="your@email.com" 
-                            required
-                            id="heroEmailInput"
-                            autocomplete="email"
-                        >
-                        <!-- Honeypot field - hidden from humans, bots will fill it -->
-                        <input 
-                            type="text" 
-                            name="website" 
-                            id="heroWebsiteInput"
-                            autocomplete="off"
-                            tabindex="-1"
-                            style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
-                        >
-                        <button type="submit" class="submit-btn">Join Waitlist</button>
-                    </div>
-                    <p class="form-note inter" id="heroFormNote">Limited founding member spots · Your competition isn't waiting</p>
-                    <div class="success-message" id="heroSuccessMessage">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>Making space for you... check your inbox.</span>
-                    </div>
-                </form>
-
-                <div class="hero-cta-row">
-                    <a href="#audio-sample" class="ghost-btn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                        </svg>
-                        Listen to Sample
-                    </a>
+            <!-- Scenario Rotator - Blur to Focus -->
+            <div class="scenario-rotator-wrapper fade-up visible fade-up-delay-7">
+                <div class="scenario-rotator" id="scenarioRotator">
+                    <span class="scenario">After doom-scrolling for 2 hours</span>
+                    <span class="scenario">Manifesting your first $10k MRR</span>
+                    <span class="scenario">Before the demo that could change everything</span>
+                    <span class="scenario">When your co-founder wants to pivot. Again.</span>
+                    <span class="scenario">Before asking for the raise you deserve</span>
+                    <span class="scenario">After bombing that client call</span>
+                    <span class="scenario">Your first day at the new job</span>
+                    <span class="scenario">Before your Saturday doubles match</span>
+                    <span class="scenario">Before your kid's championship game</span>
+                    <span class="scenario">When race day nerves hit at 5am</span>
+                    <span class="scenario">After your toddler's third meltdown</span>
+                    <span class="scenario">Before telling them how you really feel</span>
+                    <span class="scenario">When the 3am thoughts won't stop</span>
+                    <span class="scenario">Before boarding a 14-hour flight</span>
+                    <span class="scenario">When the creative block won't budge</span>
+                    <span class="scenario">After the VC said no</span>
                 </div>
+            </div>
+
+            <p class="scenario-tagline fade-up visible fade-up-delay-8">Whitespace crafts <em>fresh, personalized</em> spoken meditations<br>for exactly where you are. <strong>On-demand.</strong></p>
+
+            <div class="fade-up visible fade-up-delay-9" style="margin-top: 56px;">
+                <a href="#waitlist" class="hero-cta-btn">
+                    Get Instant Beta Access
+                </a>
             </div>
         </div>
 
@@ -1235,18 +1636,359 @@
                 <div class="scroll-dot"></div>
             </div>
         </div>
+    </section>
 
-        <!-- Journal Peek Teaser -->
-        <div class="journal-peek-teaser">
-            <div class="journal-peek-label inter">
-                <span class="peek-dot"></span>
-                Latest from The Journal
+    <!-- Punchline Section -->
+    <section class="punchline-section">
+        <div class="section-container">
+            <h2 class="fade-up">Meditation made for you. Every time.</h2>
+            <p class="lead fade-up fade-up-delay-1">Generic apps give you the same session everyone else gets.</p>
+            <p class="lead fade-up fade-up-delay-2">Whitespace generates fresh, personalized guidance based on your moment, your mood, your goals.</p>
+            <p class="lead fade-up fade-up-delay-3" style="color: rgba(255,255,255,0.7);">Choose your situation. We handle the rest.</p>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section>
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <h2>How It Works</h2>
+                <p>Three steps. Ready on a moment's notice.</p>
+            </div>
+
+            <div class="screenshots-grid">
+                <div class="screenshot-card fade-up fade-up-delay-1">
+                    <div class="screenshot-frame">
+                        <img src="src/assets/step 1.png" alt="Set your intention screen" class="screenshot-img">
+                    </div>
+                    <h3>Set Your Intention</h3>
+                    <p class="inter">Tell us what you're facing right now. Pre-pitch nerves? Post-launch exhaustion? Just say it.</p>
+                </div>
+
+                <div class="screenshot-card fade-up fade-up-delay-2">
+                    <div class="screenshot-frame">
+                        <img src="src/assets/step 2.png" alt="Generating your session" class="screenshot-img">
+                    </div>
+                    <h3>We Generate Your Space</h3>
+                    <p class="inter">A session is created for your exact moment — fresh guidance, personalized soundscape.</p>
+                </div>
+
+                <div class="screenshot-card fade-up fade-up-delay-3">
+                    <div class="screenshot-frame">
+                        <img src="src/assets/step 3.png" alt="Immersive playback experience" class="screenshot-img">
+                    </div>
+                    <h3>Press Play</h3>
+                    <p class="inter">Immersive audio with binaural frequencies. Let go and let it work.</p>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <p>What beta testers are saying</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-up fade-up-delay-1">
+                    <p>"Wait, you're using sleep meditations to manifest MRR targets? Lowkey fascinating."</p>
+                </div>
+                <div class="testimonial-card fade-up fade-up-delay-2">
+                    <p>"Love the on-demand customization. Generic meditations are so 2024."</p>
+                </div>
+                <div class="testimonial-card fade-up fade-up-delay-3">
+                    <p>"Manifest $10K MRR — is that a valid meditation goal? Asking for a friend."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Sample Section -->
+    <section id="audio-sample" style="padding: 48px 24px;">
+        <div style="max-width: 500px; margin: 0 auto;">
+            <div class="audio-sample fade-up">
+                <p class="audio-sample-label inter">Sample Session</p>
+                
+                <p class="audio-title">Steady Ground</p>
+                <p class="audio-duration inter">2 minutes</p>
+
+                <!-- Play Button Wrapper with Breathing Circle -->
+                <div class="play-button-wrapper">
+                    <div class="breathing-circle" id="breathingCircle"></div>
+                    <div class="play-button-container" id="playButtonContainer">
+                        <button class="play-btn" id="playBtn">
+                            <div class="play-icon" id="playIcon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <audio id="sampleAudio" src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766135607508x869146036860977800/Steady%20Ground.mp3" preload="metadata"></audio>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <h2>Choose Your Practice</h2>
+                <p>Credit-based pricing that fits your rhythm.</p>
+            </div>
+
+            <div class="pricing-toggle fade-up">
+                <span class="pricing-toggle-label active" data-period="monthly">Monthly</span>
+                <div class="pricing-toggle-switch" id="pricingToggle"></div>
+                <span class="pricing-toggle-label" data-period="annual">Annual <em style="color: rgba(107, 140, 255, 0.8); font-style: normal;">(save up to 38%)</em></span>
+            </div>
+
+            <div class="tier-grid fade-up">
+                <div class="tier-card">
+                    <h3 class="tier-name">Flow</h3>
+                    <p class="tier-description">For regular practice</p>
+                    <div class="tier-details">
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span class="monthly-credits">Up to 8 sessions/mo</span>
+                            <span class="annual-credits" style="display: none;">Up to 6 sessions/mo</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>All session lengths</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Full Space Library</span>
+                        </div>
+                        <div class="tier-detail annual-only" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Credits roll over</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tier-card popular">
+                    <span class="tier-badge">Most Popular</span>
+                    <h3 class="tier-name">Elevate</h3>
+                    <p class="tier-description">For deeper immersion</p>
+                    <div class="tier-details">
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span class="monthly-credits">Up to 16 sessions/mo</span>
+                            <span class="annual-credits" style="display: none;">Up to 12 sessions/mo</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>All session lengths</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Priority generation</span>
+                        </div>
+                        <div class="tier-detail annual-only" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Credits roll over</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tier-card">
+                    <h3 class="tier-name">Immerse</h3>
+                    <p class="tier-description">For daily practice</p>
+                    <div class="tier-details">
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span class="monthly-credits">Up to 80 sessions/mo</span>
+                            <span class="annual-credits" style="display: none;">Up to 60 sessions/mo</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>All session lengths</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Priority generation</span>
+                        </div>
+                        <div class="tier-detail annual-only" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Credits roll over</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-note fade-up">
+                <p>Pricing details coming soon.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Purchase / Final CTA Section -->
+    <section id="waitlist">
+        <div class="final-cta fade-up">
+            <div class="cta-box">
+                <h2 class="crimson">Start 10x'ing from the inside out</h2>
+                
+                <form class="email-form" id="ctaEmailForm">
+                    <div class="form-row">
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            placeholder="First name" 
+                            required
+                            id="ctaNameInput"
+                            autocomplete="given-name"
+                        >
+                        <input 
+                            type="email" 
+                            class="form-input" 
+                            placeholder="your@email.com" 
+                            required
+                            id="ctaEmailInput"
+                            autocomplete="email"
+                        >
+                        <!-- Honeypot field -->
+                        <input 
+                            type="text" 
+                            name="company" 
+                            id="ctaCompanyInput"
+                            autocomplete="off"
+                            tabindex="-1"
+                            style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
+                        >
+                        <button type="submit" class="submit-btn phosphene-btn">Get Instant Beta Access</button>
+                    </div>
+                    <p class="form-note inter" style="margin-top: 12px;">12 free sessions · Instant access · No waitlist</p>
+                    <div class="success-message" id="ctaSuccessMessage">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Making space for you... check your inbox.</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="section-header fade-up">
+                <h2>Questions? We've got answers.</h2>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>How is Whitespace different from Headspace or Calm?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Those apps give you pre-recorded sessions from a fixed library. Whitespace generates a fresh, personalized meditation every time based on what you're actually facing — whether that's pre-pitch nerves, post-launch exhaustion, or 3am racing thoughts. No two sessions are the same.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>Wait, can meditation actually help me hit my goals?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes — and the research backs it up. Meditation improves focus, reduces decision fatigue, and accelerates recovery from stress. When you're clearer internally, you perform better externally. We're not promising $10k MRR from meditation alone, but we are saying: your inner state affects your outer results.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>How does the personalization work?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>You tell us what you're facing and what kind of session you want. We generate custom guidance, voice, and soundscape tuned to your specific moment. It's not pulling from a library — it's creating something new for you.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>What are credits and how do they work?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Credits are how you generate sessions. 1 credit = 5 minutes of personalized audio. You choose a plan based on how often you practice (Flow, Elevate, or Immerse), and unused credits roll over on annual plans.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>Is the beta actually free?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>You get 2 free sessions to start. Beta members get an additional 10 sessions for a limited time. After that, you'll need a subscription — but beta members lock in founding member pricing and help shape what we build next.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>What platforms is Whitespace available on?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>iOS (via TestFlight) and Android (via Google Play). Sign up with your email and we'll send you direct links to download.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>Is my data private?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. We don't sell your data, and your session content stays between you and Whitespace. See our privacy policy for full details.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <span>I'm skeptical. Does this actually work?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Fair. The best way to find out is to try it. Beta members get 12 free sessions — no commitment. If it's not for you, no hard feelings.</p>
+                </div>
+            </div>
+
+            <p class="faq-contact fade-up">Still have questions? <a href="mailto:hello@trywhitespace.com">hello@trywhitespace.com</a></p>
+        </div>
+    </section>
+
     <!-- From The Journal Section -->
-    <section class="journal-section journal-featured" id="journal">
+    <section class="journal-section" id="journal">
         <div class="section-container">
             <div class="section-header fade-up">
                 <h2>From The Journal</h2>
@@ -1301,245 +2043,6 @@
             </div>
         </div>
     </section>
-
-    <!-- App Screenshots Section -->
-    <section>
-        <div class="section-container">
-            <div class="section-header fade-up">
-                <h2>How It Works</h2>
-                <p>Built for the way high-performers actually operate</p>
-            </div>
-
-            <div class="screenshots-grid">
-                <div class="screenshot-card fade-up fade-up-delay-1">
-                    <div class="screenshot-frame">
-                        <img src="src/assets/step 1.png" alt="Set your intention screen" class="screenshot-img">
-                    </div>
-                    <h3>Set Your Intention</h3>
-                    <p class="inter">Need pre-meeting focus? Post-sprint recovery? Creative unblocking? Just say it.</p>
-                </div>
-
-                <div class="screenshot-card fade-up fade-up-delay-2">
-                    <div class="screenshot-frame">
-                        <img src="src/assets/step 2.png" alt="AI generating your session" class="screenshot-img">
-                    </div>
-                    <h3>Your Personal Space is Created</h3>
-                    <p class="inter">A meditation is generated and engineered for your exact mental state - in seconds</p>
-                </div>
-
-                <div class="screenshot-card fade-up fade-up-delay-3">
-                    <div class="screenshot-frame">
-                        <img src="src/assets/step 3.png" alt="Immersive playback experience" class="screenshot-img">
-                    </div>
-                    <h3>Immersive Experience</h3>
-                    <p class="inter">Premium audio with binaural frequencies designed to optimize your brain state</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Audio Sample Section -->
-    <section id="audio-sample" style="padding: 48px 24px;">
-        <div style="max-width: 500px; margin: 0 auto;">
-            <div class="audio-sample fade-up">
-                <p class="audio-sample-label inter">Test Your Edge</p>
-                
-                <p class="audio-title">Steady Ground</p>
-                <p class="audio-duration inter">2 minutes</p>
-
-                <!-- Play Button Wrapper with Breathing Circle -->
-                <div class="play-button-wrapper">
-                    <div class="breathing-circle" id="breathingCircle"></div>
-                    <div class="play-button-container" id="playButtonContainer">
-                        <button class="play-btn" id="playBtn">
-                            <div class="play-icon" id="playIcon"></div>
-                        </button>
-                    </div>
-                </div>
-
-                <audio id="sampleAudio" src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766135607508x869146036860977800/Steady%20Ground.mp3" preload="metadata"></audio>
-            </div>
-        </div>
-    </section>
-
-    <!-- Differentiator Section -->
-    <section>
-        <div class="differentiator-container">
-            <div class="section-header fade-up">
-                <h2>Not Another Meditation App</h2>
-                <p>Whitespace is a tool for total alignment - it learns your patterns, anticipates your needs, and compounds your clarity over time.</p>
-            </div>
-
-            <div class="comparison-grid">
-                <div class="comparison-row fade-up fade-up-delay-1">
-                    <div class="comparison-item">
-                        <div class="comparison-icon negative">×</div>
-                        <p class="inter">Limited to a fixed library of content</p>
-                    </div>
-                    <div class="comparison-item positive">
-                        <div class="comparison-icon positive">→</div>
-                        <p class="inter">Every session is unique, generated fresh for your specific goals - focus, recovery, creativity, decision-making</p>
-                    </div>
-                </div>
-
-                <div class="comparison-row fade-up fade-up-delay-2">
-                    <div class="comparison-item">
-                        <div class="comparison-icon negative">×</div>
-                        <p class="inter">Generic guidance for everyone</p>
-                    </div>
-                    <div class="comparison-item positive">
-                        <div class="comparison-icon positive">→</div>
-                        <p class="inter">Personalized to your workload, energy levels, and what you're building</p>
-                    </div>
-                </div>
-
-                <div class="comparison-row fade-up fade-up-delay-3">
-                    <div class="comparison-item">
-                        <div class="comparison-icon negative">×</div>
-                        <p class="inter">Monthly subscription for unused content</p>
-                    </div>
-                    <div class="comparison-item positive pricing-highlight">
-                        <div class="comparison-icon positive">→</div>
-                        <p class="inter">Pay for what you use. Credits that match your rhythm, with full rollover.</p>
-                    </div>
-                </div>
-
-                <div class="comparison-row fade-up fade-up-delay-4">
-                    <div class="comparison-item">
-                        <div class="comparison-icon negative">×</div>
-                        <p class="inter">Same meditation repeated over time</p>
-                    </div>
-                    <div class="comparison-item positive">
-                        <div class="comparison-icon positive">→</div>
-                        <p class="inter">Every session compounds on the last, strengthening your alignment</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section>
-        <div class="section-container">
-            <div class="section-header fade-up">
-                <h2>Your Unfair Advantage</h2>
-                <p>Proprietary technology that learns you, adapts to you, and compounds your alignment over time</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-card fade-up fade-up-delay-1">
-                    <div class="feature-icon">
-                        <!-- Research/Science icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M9 3h6v6l3 3-3 3v6H9v-6l-3-3 3-3V3Z"/>
-                            <path d="M12 3v18"/>
-                        </svg>
-                    </div>
-                    <h3>Backed by Research, Built for Results</h3>
-                    <p class="inter">Research shows meditation improves focus, reduces decision fatigue, and accelerates recovery from stress<sup><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12333550/" target="_blank" rel="noopener">*</a></sup>. Whitespace delivers these benefits in sessions that fit your schedule - personalized to where you are right now.</p>
-                </div>
-
-                <div class="feature-card fade-up fade-up-delay-2">
-                    <div class="feature-icon">
-                        <!-- Lightbulb/Intelligence icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2Z"/>
-                            <path d="M9 21h6M10 17v4M14 17v4"/>
-                        </svg>
-                    </div>
-                    <h3>Whitespace Intelligence</h3>
-                    <p class="inter">Proprietary technology that learns what works for you - tracking patterns, optimizing guidance, and delivering sessions that compound your clarity and alignment over time.</p>
-                </div>
-
-                <div class="feature-card fade-up fade-up-delay-3">
-                    <div class="feature-icon">
-                        <!-- Headphones icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/>
-                        </svg>
-                    </div>
-                    <h3>Premium Audio Experience</h3>
-                    <p class="inter">Natural voice synthesis combined with binaural soundscapes and subtle frequency patterns designed to guide you into deeper states - in minutes, not hours.</p>
-                </div>
-
-                <div class="feature-card fade-up fade-up-delay-4">
-                    <div class="feature-icon">
-                        <!-- Flexible pricing icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
-                            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
-                            <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
-                        </svg>
-                    </div>
-                    <h3>Built for Your Rhythm</h3>
-                    <p class="inter">No bloated subscriptions. Use credits when you need them - before investor calls, after launches, during creative blocks. Unused credits roll over.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA Section -->
-    <section>
-        <div class="final-cta fade-up">
-            <div class="cta-box">
-                <h2 class="crimson">Get Early Access</h2>
-                <p class="inter">Join founders, creators, and operators already aligning for what's next.</p>
-                
-                <div class="early-access-benefits">
-                    <p class="benefits-label inter">Founding member benefits</p>
-                    <div class="benefits-list">
-                        <span class="benefit-item inter">Priority access + extended trial</span>
-                        <span class="benefit-divider">·</span>
-                        <span class="benefit-item inter">Founding member pricing (locked)</span>
-                        <span class="benefit-divider">·</span>
-                        <span class="benefit-item inter">Bonus credits to start</span>
-                    </div>
-                </div>
-                
-                <form class="email-form" id="ctaEmailForm">
-                    <div class="form-row">
-                        <input 
-                            type="text" 
-                            class="form-input" 
-                            placeholder="First name" 
-                            required
-                            id="ctaNameInput"
-                            autocomplete="given-name"
-                        >
-                        <input 
-                            type="email" 
-                            class="form-input" 
-                            placeholder="your@email.com" 
-                            required
-                            id="ctaEmailInput"
-                            autocomplete="email"
-                        >
-                        <!-- Honeypot field - hidden from humans, bots will fill it -->
-                        <input 
-                            type="text" 
-                            name="company" 
-                            id="ctaCompanyInput"
-                            autocomplete="off"
-                            tabindex="-1"
-                            style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
-                        >
-                        <button type="submit" class="submit-btn">Join Waitlist</button>
-                    </div>
-                    <div class="success-message" id="ctaSuccessMessage">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>Making space for you... check your inbox.</span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footnote -->
-    <div class="footnote">
-        <p>* <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12333550/" target="_blank" rel="noopener">Creswell & Goldberg, American Psychologist (2025)</a> — Meta-analyses reveal app-based meditation produces consistent reductions in depression, anxiety, and stress.</p>
-    </div>
 
     <!-- Footer -->
     <footer>
@@ -1609,6 +2112,124 @@
 
         // Run after a short delay to let the page settle
         setTimeout(animateHeadline, 300);
+
+        // ==========================================
+        // Scenario Rotator
+        // ==========================================
+        function initScenarioRotator() {
+            const rotator = document.getElementById('scenarioRotator');
+            if (!rotator) return;
+
+            const scenarios = rotator.querySelectorAll('.scenario');
+            if (scenarios.length === 0) return;
+
+            // Convert to array and shuffle
+            const scenarioArray = Array.from(scenarios);
+            for (let i = scenarioArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [scenarioArray[i], scenarioArray[j]] = [scenarioArray[j], scenarioArray[i]];
+            }
+
+            // Reorder in DOM
+            scenarioArray.forEach(s => rotator.appendChild(s));
+
+            let currentIndex = 0;
+            let isPaused = false;
+
+            function showScenario() {
+                if (isPaused) return;
+                
+                scenarioArray.forEach((s, i) => {
+                    s.classList.toggle('active', i === currentIndex);
+                });
+                
+                currentIndex = (currentIndex + 1) % scenarioArray.length;
+            }
+
+            // Pause on hover
+            rotator.addEventListener('mouseenter', () => isPaused = true);
+            rotator.addEventListener('mouseleave', () => {
+                isPaused = false;
+            });
+
+            // Initial display
+            showScenario();
+
+            // Rotate every 5 seconds
+            setInterval(showScenario, 5000);
+        }
+
+        initScenarioRotator();
+
+// ==========================================
+        // FAQ Accordion
+        // ==========================================
+        function initFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(other => {
+                        if (other !== item) {
+                            other.classList.remove('open');
+                        }
+                    });
+
+                    // Toggle current item
+                    item.classList.toggle('open');
+                });
+            });
+        }
+
+        initFAQ();
+
+        // ==========================================
+        // Pricing Toggle
+        // ==========================================
+        function initPricingToggle() {
+            const toggle = document.getElementById('pricingToggle');
+            const labels = document.querySelectorAll('.pricing-toggle-label');
+            const monthlyCredits = document.querySelectorAll('.monthly-credits');
+            const annualCredits = document.querySelectorAll('.annual-credits');
+            const annualOnly = document.querySelectorAll('.annual-only');
+
+            if (!toggle) return;
+
+            let isAnnual = false;
+
+            function updateDisplay() {
+                toggle.classList.toggle('annual', isAnnual);
+                
+                labels.forEach(label => {
+                    const period = label.getAttribute('data-period');
+                    label.classList.toggle('active', 
+                        (period === 'annual' && isAnnual) || 
+                        (period === 'monthly' && !isAnnual)
+                    );
+                });
+
+                monthlyCredits.forEach(el => el.style.display = isAnnual ? 'none' : 'inline');
+                annualCredits.forEach(el => el.style.display = isAnnual ? 'inline' : 'none');
+                annualOnly.forEach(el => el.style.display = isAnnual ? 'flex' : 'none');
+            }
+
+            toggle.addEventListener('click', () => {
+                isAnnual = !isAnnual;
+                updateDisplay();
+            });
+
+            labels.forEach(label => {
+                label.addEventListener('click', () => {
+                    isAnnual = label.getAttribute('data-period') === 'annual';
+                    updateDisplay();
+                });
+            });
+        }
+
+        initPricingToggle();
 
         // ==========================================
         // Intersection Observer for Scroll Animations
@@ -1735,7 +2356,7 @@
                     nameInput.focus();
                     // Reset after 4 seconds
                     setTimeout(() => {
-                        formNote.textContent = 'Limited founding member spots · Your competition isn\'t waiting';
+                        formNote.textContent = 'Start 10x\'ing from the inside out';
                         formNote.classList.remove('warning');
                     }, 4000);
                 }
@@ -1774,12 +2395,12 @@
                         formNote.textContent = data.error || 'Something went wrong. Please try again.';
                         formNote.classList.add('error');
                         setTimeout(() => {
-                            formNote.textContent = 'Limited founding member spots · Your competition isn\'t waiting';
+                            formNote.textContent = 'Start 10x\'ing from the inside out';
                             formNote.classList.remove('error');
                         }, 4000);
                     }
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Join Waitlist';
+                    submitBtn.textContent = 'Get Instant Beta Access';
                 }
             } catch (error) {
                 console.error('❌ Fetch error:', error);
@@ -1787,31 +2408,16 @@
                     formNote.textContent = 'Something went wrong. Please try again.';
                     formNote.classList.add('error');
                     setTimeout(() => {
-                        formNote.textContent = 'Limited founding member spots · Your competition isn\'t waiting';
+                        formNote.textContent = 'Start 10x\'ing from the inside out';
                         formNote.classList.remove('error');
                     }, 4000);
                 }
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Join Waitlist';
+                submitBtn.textContent = 'Get Instant Beta Access';
             }
         }
 
-        // Hero Form
-        const heroForm = document.getElementById('heroEmailForm');
-        heroForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            handleFormSubmit(
-                heroForm,
-                document.getElementById('heroNameInput'),
-                document.getElementById('heroEmailInput'),
-                document.getElementById('heroWebsiteInput'),
-                heroForm.querySelector('.submit-btn'),
-                document.getElementById('heroSuccessMessage'),
-                document.getElementById('heroFormNote')
-            );
-        });
-
-        // CTA Form
+        // CTA Form (main signup form below the fold)
         const ctaForm = document.getElementById('ctaEmailForm');
         ctaForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -1888,10 +2494,11 @@
         // Auto-focus on desktop only, with delay for headline animation
         // Disabled on mobile to prevent layout shift from keyboard
         if (window.innerWidth > 768) {
-            // 1.5s delay ensures word-by-word animation has finished
-            setTimeout(() => {
-                document.getElementById('heroNameInput').focus();
-            }, 1500);
+            // Focus on CTA form name input after scrolling there
+            const ctaNameInput = document.getElementById('ctaNameInput');
+            if (ctaNameInput) {
+                // Don't auto-focus - let user scroll naturally
+            }
         }
     </script>
     
