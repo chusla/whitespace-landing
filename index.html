@@ -1301,6 +1301,7 @@
            ========================================== */
         .testimonials-section {
             padding: 48px 24px;
+            overflow: hidden;
         }
 
         .testimonials-section .section-header {
@@ -1311,37 +1312,48 @@
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-            max-width: 900px;
+        .testimonials-carousel {
+            position: relative;
+            max-width: 1000px;
             margin: 0 auto;
+            min-height: 140px;
         }
 
-        @media (min-width: 768px) {
-            .testimonials-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        .testimonials-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 20px;
+            flex: 0 0 calc(33.333% - 14px);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-card {
+                flex: 0 0 calc(100% - 40px);
+            }
         }
 
         .testimonial-card p {
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.7;
             font-style: normal;
             text-align: center;
+        }
+
+        .testimonial-card strong {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
         }
 
         /* ==========================================
@@ -1648,6 +1660,62 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <p>What People Are Saying</p>
+            </div>
+
+            <div class="testimonials-carousel fade-up">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <div class="testimonial-card">
+                        <p>"I've been using this to have <strong>more patience at home</strong> with my kids."</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"I had a calf strain — used Whitespace to <strong>visualize healing</strong>. Back running way sooner than expected."</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Custom <strong>sleep meditation</strong> before my big tennis match. Woke up ready to compete."</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Wait, you're using this to <strong>manifest MRR targets</strong>? Lowkey fascinating."</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"The <strong>on-demand customization</strong> is unreal. Generic meditations feel so outdated now."</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Finally something for <strong>exactly what I'm dealing with</strong>. Not just generic breathwork."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Sample Section -->
+    <section id="audio-sample" style="padding: 48px 24px;">
+        <div style="max-width: 500px; margin: 0 auto;">
+            <div class="audio-sample fade-up">
+                <p class="audio-sample-label inter">Sample Session</p>
+                
+                <p class="audio-title">Steady Ground</p>
+                <p class="audio-duration inter">2 minutes</p>
+
+                <!-- Play Button Wrapper with Breathing Circle -->
+                <div class="play-button-wrapper">
+                    <div class="breathing-circle" id="breathingCircle"></div>
+                    <div class="play-button-container" id="playButtonContainer">
+                        <button class="play-btn" id="playBtn">
+                            <div class="play-icon" id="playIcon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <audio id="sampleAudio" src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766135607508x869146036860977800/Steady%20Ground.mp3" preload="metadata"></audio>
+            </div>
+        </div>
+    </section>
+
     <!-- How It Works Section -->
     <section>
         <div class="section-container">
@@ -1683,52 +1751,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials-section">
-        <div class="section-container">
-            <div class="section-header fade-up">
-                <p>What beta testers are saying</p>
-            </div>
-
-            <div class="testimonials-grid">
-                <div class="testimonial-card fade-up fade-up-delay-1">
-                    <p>"Wait, you're using sleep meditations to manifest MRR targets? Lowkey fascinating."</p>
-                </div>
-                <div class="testimonial-card fade-up fade-up-delay-2">
-                    <p>"Love the on-demand customization. Generic meditations are so 2024."</p>
-                </div>
-                <div class="testimonial-card fade-up fade-up-delay-3">
-                    <p>"Manifest $10K MRR — is that a valid meditation goal? Asking for a friend."</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Audio Sample Section -->
-    <section id="audio-sample" style="padding: 48px 24px;">
-        <div style="max-width: 500px; margin: 0 auto;">
-            <div class="audio-sample fade-up">
-                <p class="audio-sample-label inter">Sample Session</p>
-                
-                <p class="audio-title">Steady Ground</p>
-                <p class="audio-duration inter">2 minutes</p>
-
-                <!-- Play Button Wrapper with Breathing Circle -->
-                <div class="play-button-wrapper">
-                    <div class="breathing-circle" id="breathingCircle"></div>
-                    <div class="play-button-container" id="playButtonContainer">
-                        <button class="play-btn" id="playBtn">
-                            <div class="play-icon" id="playIcon"></div>
-                        </button>
-                    </div>
-                </div>
-
-                <audio id="sampleAudio" src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766135607508x869146036860977800/Steady%20Ground.mp3" preload="metadata"></audio>
-            </div>
-        </div>
-    </section>
-
 
     <!-- Pricing Section -->
     <section class="pricing-section" id="pricing">
@@ -2230,6 +2252,45 @@
         }
 
         initPricingToggle();
+
+        // ==========================================
+        // Testimonials Carousel (Infinite)
+        // ==========================================
+        function initTestimonialsCarousel() {
+            const track = document.getElementById('testimonialsTrack');
+            if (!track) return;
+
+            const cards = Array.from(track.querySelectorAll('.testimonial-card'));
+            
+            // Clone cards for infinite effect
+            cards.forEach(card => {
+                const clone = card.cloneNode(true);
+                track.appendChild(clone);
+            });
+
+            let position = 0;
+            const cardWidth = window.innerWidth > 768 ? 33.333 : 100;
+            const totalOriginal = cards.length;
+
+            function slide() {
+                position++;
+                track.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                track.style.transform = `translateX(-${position * cardWidth}%)`;
+
+                // When we've scrolled through original set, jump back seamlessly
+                if (position >= totalOriginal) {
+                    setTimeout(() => {
+                        track.style.transition = 'none';
+                        position = 0;
+                        track.style.transform = `translateX(0)`;
+                    }, 600);
+                }
+            }
+
+            setInterval(slide, 3000);
+        }
+
+        initTestimonialsCarousel();
 
         // ==========================================
         // Intersection Observer for Scroll Animations
