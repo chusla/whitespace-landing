@@ -294,7 +294,7 @@
             gap: 12px;
         }
 
-        @media (min-width: 640px) {
+        @media (min-width: 900px) {
             .form-row {
                 flex-direction: row;
             }
@@ -333,6 +333,8 @@
             font-weight: 500;
             letter-spacing: 0.02em;
             cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
             transition: all 0.3s ease;
             white-space: nowrap;
             box-shadow: 0 0 20px rgba(107, 140, 255, 0.15),
@@ -554,6 +556,7 @@
             color: rgba(255, 255, 255, 0.5);
             text-align: center;
             line-height: 1.6;
+            margin-bottom: 24px;
         }
 
         /* Differentiator Section */
@@ -1340,6 +1343,29 @@
             opacity: 1;
         }
 
+        /* Countdown Timer - Minimal */
+        .countdown-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+        }
+
+        .countdown-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .countdown-timer {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 0.02em;
+        }
+
         /* ==========================================
            Punchline Section
            ========================================== */
@@ -1755,15 +1781,13 @@
             <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
 
             <div class="fade-up visible fade-up-delay-8" style="margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
-                <a href="#audio-sample" class="sample-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16">
-                        <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>
-                    </svg>
-                    Hear a Sample
-                </a>
                 <a href="#waitlist" class="hero-cta-btn">
                     Get Instant Beta Access
                 </a>
+                <div class="countdown-wrapper" id="heroCountdown">
+                    <span class="countdown-label">12 free sessions ends in</span>
+                    <span class="countdown-timer" id="hero-timer">6d 05:32:18</span>
+                </div>
             </div>
         </div>
 
@@ -2116,6 +2140,10 @@
                         <button type="submit" class="submit-btn phosphene-btn">Get Instant Beta Access</button>
                     </div>
                     <p class="form-note inter" style="margin-top: 12px;">12 free sessions · Instant access · No waitlist</p>
+                    <div class="countdown-wrapper" id="ctaCountdown" style="margin-top: 16px;">
+                        <span class="countdown-label">12 free sessions ends in</span>
+                        <span class="countdown-timer" id="cta-timer">6d 05:32:18</span>
+                    </div>
                     <div class="success-message" id="ctaSuccessMessage">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"></polyline>
@@ -2415,6 +2443,44 @@
         }
 
         initScenarioRotator();
+
+        // ==========================================
+        // Countdown Timer
+        // ==========================================
+        function initCountdown() {
+            // January 19, 2026 11:59:59 PM EST (UTC-5)
+            const endDate = new Date('2026-01-20T04:59:59Z').getTime();
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = endDate - now;
+                
+                if (distance < 0) {
+                    document.querySelectorAll('.countdown-wrapper').forEach(wrapper => {
+                        wrapper.innerHTML = '<span class="countdown-label">Offer ended</span>';
+                    });
+                    return;
+                }
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                const timeStr = `${days}d ${hours}h ${mins}m ${secs}s`;
+                
+                const heroTimer = document.getElementById('hero-timer');
+                const ctaTimer = document.getElementById('cta-timer');
+                
+                if (heroTimer) heroTimer.textContent = timeStr;
+                if (ctaTimer) ctaTimer.textContent = timeStr;
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+        
+        initCountdown();
 
 // ==========================================
         // FAQ Accordion
