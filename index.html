@@ -1176,7 +1176,7 @@
         }
 
         .scenario-rotator {
-            min-height: 2.5em;
+            min-height: 3em;
             position: relative;
             display: flex;
             align-items: center;
@@ -1187,7 +1187,7 @@
 
         @media (max-width: 640px) {
             .scenario-rotator {
-                min-height: 4em;
+                min-height: 4.5em;
             }
         }
 
@@ -1201,12 +1201,15 @@
             transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
                         filter 1s cubic-bezier(0.4, 0, 0.2, 1),
                         transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(1.125rem, 3vw, 1.5rem);
-            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 400;
+            font-style: italic;
             letter-spacing: -0.01em;
             white-space: nowrap;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.25);
         }
 
         @media (max-width: 640px) {
@@ -1219,7 +1222,7 @@
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 line-height: 1.4;
-                font-size: clamp(0.95rem, 4.2vw, 1.15rem);
+                font-size: clamp(1.15rem, 5vw, 1.5rem);
             }
             
             .scenario.active {
@@ -1231,6 +1234,28 @@
             opacity: 1;
             filter: blur(0);
             transform: translateX(-50%) scale(1);
+        }
+
+        /* Blinking cursor */
+        .scenario::after {
+            content: '|';
+            font-style: normal;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .scenario-subheader {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 24px;
+            font-weight: 400;
         }
 
         .scenario-tagline {
@@ -1341,15 +1366,15 @@
         }
 
         /* ==========================================
-           Testimonials - Dreamy Fade Animation
+           Testimonials - Twitter/X Style Cards
            ========================================== */
         .testimonials-section {
-            padding: 48px 24px;
+            padding: 64px 24px;
             overflow: hidden;
         }
 
         .testimonials-section .section-header {
-            margin-bottom: 32px;
+            margin-bottom: 48px;
         }
 
         .testimonials-section .section-header p {
@@ -1359,160 +1384,116 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        .testimonials-stage {
-            position: relative;
-            max-width: 700px;
+        .tweets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 1100px;
             margin: 0 auto;
-            min-height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 20px;
+            align-items: start;
         }
 
-        @media (max-width: 768px) {
-            .testimonials-stage {
-                min-height: 280px;
-                padding: 0 16px;
+        @media (max-width: 950px) {
+            .tweets-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 480px) {
-            .testimonials-stage {
-                min-height: 320px;
+        @media (max-width: 600px) {
+            .tweets-grid {
+                grid-template-columns: 1fr;
+                max-width: 450px;
             }
         }
 
-        .testimonial-card {
-            position: absolute;
-            left: 50%;
-            width: calc(100% - 40px);
-            max-width: 660px;
-            background: rgba(255, 255, 255, 0.04);
+        .tweet-card {
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            padding: 32px 40px;
-            opacity: 0;
-            filter: blur(16px);
-            transform: translateX(calc(-50% + 60px)) scale(0.96);
-            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        filter 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
+            padding: 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
         }
 
-        @media (max-width: 768px) {
-            .testimonial-card {
-                width: calc(100% - 32px);
-                padding: 28px 24px;
-            }
+        .tweet-card:hover {
+            background: rgba(107, 140, 255, 0.06);
+            border-color: rgba(107, 140, 255, 0.2);
+            box-shadow: 0 0 20px rgba(107, 140, 255, 0.1);
         }
 
-        @media (max-width: 480px) {
-            .testimonial-card {
-                padding: 24px 20px;
-            }
-        }
-
-        .testimonial-card.active {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateX(-50%) scale(1);
-            pointer-events: auto;
-        }
-
-        .testimonial-card.exiting {
-            opacity: 0;
-            filter: blur(16px);
-            transform: translateX(calc(-50% - 60px)) scale(0.96);
-        }
-
-        .testimonial-card p {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(0.9375rem, 2.5vw, 1.25rem);
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.8;
-            font-style: normal;
-            text-align: center;
-            margin: 0;
-        }
-
-        @media (max-width: 480px) {
-            .testimonial-card p {
-                font-size: 0.9375rem;
-                line-height: 1.7;
-            }
-        }
-
-        .testimonial-card strong {
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: 500;
-        }
-
-        /* Quote icons */
-        .testimonial-quote {
-            position: relative;
-            padding: 0 40px;
-        }
-
-        @media (max-width: 768px) {
-            .testimonial-quote {
-                padding: 0 28px;
-            }
-        }
-
-        .quote-icon {
-            position: absolute;
-            width: 28px;
-            height: 28px;
-            opacity: 0.2;
-            color: rgba(255, 255, 255, 1);
-        }
-
-        @media (max-width: 768px) {
-            .quote-icon {
-                width: 20px;
-                height: 20px;
-                opacity: 0.15;
-            }
-        }
-
-        .quote-icon.open {
-            top: -4px;
-            left: 0;
-        }
-
-        .quote-icon.close {
-            bottom: -4px;
-            right: 0;
-        }
-
-        /* Progress dots */
-        .testimonials-dots {
+        .tweet-header {
             display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 24px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
-        .testimonial-dot {
-            width: 6px;
-            height: 6px;
+        .tweet-avatar {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            transition: all 0.4s ease;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .testimonial-dot:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .tweet-author-info {
+            flex: 1;
+            min-width: 0;
         }
 
-        .testimonial-dot.active {
-            background: rgba(107, 140, 255, 0.6);
-            box-shadow: 0 0 12px rgba(107, 140, 255, 0.4);
+        .tweet-name-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tweet-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tweet-handle {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.3;
+        }
+
+        .tweet-x-logo {
+            width: 20px;
+            height: 20px;
+            color: rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
+        .tweet-card:hover .tweet-x-logo {
+            color: rgba(107, 140, 255, 0.6);
+        }
+
+        .tweet-content {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.5;
+            margin: 0 0 12px 0;
+        }
+
+        .tweet-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         /* ==========================================
@@ -1798,11 +1779,10 @@
         <div class="section-container">
             <h2 class="fade-up">Meditation made for you. Every time.</h2>
             <p class="lead fade-up fade-up-delay-1">Generic apps give you the same session everyone else gets.</p>
-            <p class="lead fade-up fade-up-delay-2">Whitespace generates fresh, personalized guidance based on your moment, your mood, your goals.</p>
-            <p class="lead fade-up fade-up-delay-3" style="color: rgba(255,255,255,0.7);">Choose your situation. We handle the rest.</p>
+            <p class="lead fade-up fade-up-delay-2" style="margin-bottom: 0;">Whitespace generates fresh, personalized guidance based on your moment, your mood, your goals.</p>
 
             <!-- Scenario Rotator -->
-            <div class="scenario-rotator-wrapper fade-up fade-up-delay-4" style="margin-top: 40px;">
+            <div class="scenario-rotator-wrapper fade-up fade-up-delay-3" style="margin-top: 72px;">
                 <div class="scenario-rotator" id="scenarioRotator">
                     <span class="scenario">After doom-scrolling for 2 hours</span>
                     <span class="scenario">Manifesting your first $10k MRR</span>
@@ -1821,6 +1801,7 @@
                     <span class="scenario">When the creative block won't budge</span>
                     <span class="scenario">After the VC said no</span>
                 </div>
+                <p class="scenario-subheader fade-up fade-up-delay-4">Choose your situation. We handle the rest.</p>
             </div>
         </div>
     </section>
@@ -1832,52 +1813,115 @@
                 <p>What People Are Saying</p>
             </div>
 
-            <div class="testimonials-stage fade-up" id="testimonialsStage">
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">
-                        <svg class="quote-icon open" viewBox="0 0 24 24" fill="currentColor"><path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/></svg>
-                        <p>I've been using this to have <strong>more patience at home</strong> with my kids.</p>
-                        <svg class="quote-icon close" viewBox="0 0 24 24" fill="currentColor"><path d="M19.417 6.679C20.447 7.773 21 9 21 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311-1.804-.167-3.226-1.648-3.226-3.489a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179zm-10 0C10.447 7.773 11 9 11 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311C4.591 9.322 3.169 7.841 3.169 6a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179z"/></svg>
+            <div class="tweets-grid fade-up">
+                <!-- Tweet 1 - Sourabh Choraria -->
+                <a href="https://x.com/choraria/status/2010429436919984195" target="_blank" rel="noopener" class="tweet-card">
+                    <div class="tweet-header">
+                        <img src="https://unavatar.io/twitter/choraria" alt="" class="tweet-avatar">
+                        <div class="tweet-author-info">
+                            <div class="tweet-name-row">
+                                <span class="tweet-name">Sourabh Choraria</span>
+                            </div>
+                            <span class="tweet-handle">@choraria</span>
+                        </div>
+                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">
-                        <svg class="quote-icon open" viewBox="0 0 24 24" fill="currentColor"><path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/></svg>
-                        <p>I had a calf strain — used Whitespace to <strong>visualize healing</strong>. Back running way sooner than expected.</p>
-                        <svg class="quote-icon close" viewBox="0 0 24 24" fill="currentColor"><path d="M19.417 6.679C20.447 7.773 21 9 21 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311-1.804-.167-3.226-1.648-3.226-3.489a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179zm-10 0C10.447 7.773 11 9 11 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311C4.591 9.322 3.169 7.841 3.169 6a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179z"/></svg>
+                    <p class="tweet-content">Man, this is amazing! My wife might actually love this. Sending her a ping to try it.</p>
+                    <div class="tweet-meta">
+                        <span>10:42 AM · Jan 8, 2026</span>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">
-                        <svg class="quote-icon open" viewBox="0 0 24 24" fill="currentColor"><path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/></svg>
-                        <p>Custom <strong>sleep meditation</strong> before my big tennis match. Woke up ready to compete.</p>
-                        <svg class="quote-icon close" viewBox="0 0 24 24" fill="currentColor"><path d="M19.417 6.679C20.447 7.773 21 9 21 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311-1.804-.167-3.226-1.648-3.226-3.489a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179zm-10 0C10.447 7.773 11 9 11 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311C4.591 9.322 3.169 7.841 3.169 6a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179z"/></svg>
+                </a>
+
+                <!-- Tweet 2 - Lola -->
+                <a href="https://x.com/Lolasasfi/status/2010321044066730439" target="_blank" rel="noopener" class="tweet-card">
+                    <div class="tweet-header">
+                        <img src="https://unavatar.io/twitter/Lolasasfi" alt="" class="tweet-avatar">
+                        <div class="tweet-author-info">
+                            <div class="tweet-name-row">
+                                <span class="tweet-name">Lola</span>
+                            </div>
+                            <span class="tweet-handle">@Lolasasfi</span>
+                        </div>
+                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">
-                        <svg class="quote-icon open" viewBox="0 0 24 24" fill="currentColor"><path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/></svg>
-                        <p>Wait, you're using this to <strong>manifest MRR targets</strong>? Lowkey fascinating.</p>
-                        <svg class="quote-icon close" viewBox="0 0 24 24" fill="currentColor"><path d="M19.417 6.679C20.447 7.773 21 9 21 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311-1.804-.167-3.226-1.648-3.226-3.489a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179zm-10 0C10.447 7.773 11 9 11 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311C4.591 9.322 3.169 7.841 3.169 6a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179z"/></svg>
+                    <p class="tweet-content">wait you're using sleep meditations to manifest mrr targets? lowkey fascinating</p>
+                    <div class="tweet-meta">
+                        <span>3:28 PM · Jan 7, 2026</span>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">
-                        <svg class="quote-icon open" viewBox="0 0 24 24" fill="currentColor"><path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/></svg>
-                        <p>The <strong>on-demand customization</strong> is unreal. Generic meditations feel so outdated now.</p>
-                        <svg class="quote-icon close" viewBox="0 0 24 24" fill="currentColor"><path d="M19.417 6.679C20.447 7.773 21 9 21 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311-1.804-.167-3.226-1.648-3.226-3.489a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179zm-10 0C10.447 7.773 11 9 11 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311C4.591 9.322 3.169 7.841 3.169 6a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179z"/></svg>
+                </a>
+
+                <!-- Tweet 3 - D.R. -->
+                <a href="https://x.com/dmitryrechkin/status/2010578699360551098" target="_blank" rel="noopener" class="tweet-card">
+                    <div class="tweet-header">
+                        <img src="https://unavatar.io/twitter/dmitryrechkin" alt="" class="tweet-avatar">
+                        <div class="tweet-author-info">
+                            <div class="tweet-name-row">
+                                <span class="tweet-name">D.R.</span>
+                            </div>
+                            <span class="tweet-handle">@dmitryrechkin</span>
+                        </div>
+                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">
-                        <svg class="quote-icon open" viewBox="0 0 24 24" fill="currentColor"><path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/></svg>
-                        <p>Finally something for <strong>exactly what I'm dealing with</strong>. Not just generic breathwork.</p>
-                        <svg class="quote-icon close" viewBox="0 0 24 24" fill="currentColor"><path d="M19.417 6.679C20.447 7.773 21 9 21 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311-1.804-.167-3.226-1.648-3.226-3.489a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179zm-10 0C10.447 7.773 11 9 11 10.989c0 3.5-2.457 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.247-5.621-.537.278-1.24.375-1.929.311C4.591 9.322 3.169 7.841 3.169 6a3.5 3.5 0 013.5-3.5c1.073 0 2.099.49 2.748 1.179z"/></svg>
+                    <p class="tweet-content">That shared sample is very cool actually. Nice combo.</p>
+                    <div class="tweet-meta">
+                        <span>8:15 PM · Jan 8, 2026</span>
                     </div>
-                </div>
+                </a>
+
+                <!-- Tweet 4 - Tobby -->
+                <a href="https://x.com/Tobby_scraper/status/2008471779233452059" target="_blank" rel="noopener" class="tweet-card">
+                    <div class="tweet-header">
+                        <img src="https://unavatar.io/twitter/Tobby_scraper" alt="" class="tweet-avatar">
+                        <div class="tweet-author-info">
+                            <div class="tweet-name-row">
+                                <span class="tweet-name">Tobby</span>
+                            </div>
+                            <span class="tweet-handle">@Tobby_scraper</span>
+                        </div>
+                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <p class="tweet-content">Just joined the waitlist!! Super hyped with your product bro 😎</p>
+                    <div class="tweet-meta">
+                        <span>2:33 PM · Jan 2, 2026</span>
+                    </div>
+                </a>
+
+                <!-- Tweet 5 - Suhas -->
+                <a href="https://x.com/zuess05/status/2008606842063384886" target="_blank" rel="noopener" class="tweet-card">
+                    <div class="tweet-header">
+                        <img src="https://unavatar.io/twitter/zuess05" alt="" class="tweet-avatar">
+                        <div class="tweet-author-info">
+                            <div class="tweet-name-row">
+                                <span class="tweet-name">Suhas</span>
+                            </div>
+                            <span class="tweet-handle">@zuess05</span>
+                        </div>
+                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <p class="tweet-content">Wow man sounds so cool. Let me take a look</p>
+                    <div class="tweet-meta">
+                        <span>11:27 PM · Jan 2, 2026</span>
+                    </div>
+                </a>
+
+                <!-- Tweet 6 - GABRIEL -->
+                <a href="https://x.com/_GABRIEL_C_R_/status/2007987939985485995" target="_blank" rel="noopener" class="tweet-card">
+                    <div class="tweet-header">
+                        <img src="https://unavatar.io/twitter/_GABRIEL_C_R_" alt="" class="tweet-avatar">
+                        <div class="tweet-author-info">
+                            <div class="tweet-name-row">
+                                <span class="tweet-name">GABRIEL</span>
+                            </div>
+                            <span class="tweet-handle">@_GABRIEL_C_R_</span>
+                        </div>
+                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <p class="tweet-content">Just did! ✨</p>
+                    <div class="tweet-meta">
+                        <span>6:45 AM · Dec 31, 2025</span>
+                    </div>
+                </a>
             </div>
-            
-            <div class="testimonials-dots fade-up" id="testimonialsDots"></div>
         </div>
     </section>
 
@@ -1915,27 +1959,27 @@
 
             <div class="screenshots-grid">
                 <div class="screenshot-card fade-up fade-up-delay-1">
+                    <h3>Set Your Intention</h3>
+                    <p class="inter">Tell us what you're facing right now. Pre-pitch nerves? Post-launch exhaustion? Just say it.</p>
                     <div class="screenshot-frame">
                         <img src="src/assets/step 1.png" alt="Set your intention screen" class="screenshot-img">
                     </div>
-                    <h3>Set Your Intention</h3>
-                    <p class="inter">Tell us what you're facing right now. Pre-pitch nerves? Post-launch exhaustion? Just say it.</p>
                 </div>
 
                 <div class="screenshot-card fade-up fade-up-delay-2">
+                    <h3>We Generate Your Space</h3>
+                    <p class="inter">A session is created for your exact moment — fresh guidance, personalized soundscape.</p>
                     <div class="screenshot-frame">
                         <img src="src/assets/step 2.png" alt="Generating your session" class="screenshot-img">
                     </div>
-                    <h3>We Generate Your Space</h3>
-                    <p class="inter">A session is created for your exact moment — fresh guidance, personalized soundscape.</p>
                 </div>
 
                 <div class="screenshot-card fade-up fade-up-delay-3">
+                    <h3>Press Play</h3>
+                    <p class="inter">Immersive audio with binaural frequencies. Let go and let it work.</p>
                     <div class="screenshot-frame">
                         <img src="src/assets/step 3.png" alt="Immersive playback experience" class="screenshot-img">
                     </div>
-                    <h3>Press Play</h3>
-                    <p class="inter">Immersive audio with binaural frequencies. Let go and let it work.</p>
                 </div>
             </div>
         </div>
@@ -2442,83 +2486,6 @@
 
         initPricingToggle();
 
-        // ==========================================
-        // Testimonials - Dreamy Fade Animation
-        // ==========================================
-        function initTestimonials() {
-            const stage = document.getElementById('testimonialsStage');
-            const dotsContainer = document.getElementById('testimonialsDots');
-            if (!stage) return;
-
-            const cards = Array.from(stage.querySelectorAll('.testimonial-card'));
-            if (cards.length === 0) return;
-
-            let currentIndex = 0;
-            let isPaused = false;
-            let autoplayInterval;
-
-            // Create dots
-            cards.forEach((_, i) => {
-                const dot = document.createElement('button');
-                dot.className = 'testimonial-dot';
-                dot.setAttribute('aria-label', `View testimonial ${i + 1}`);
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsContainer.appendChild(dot);
-            });
-
-            const dots = dotsContainer.querySelectorAll('.testimonial-dot');
-
-            function showTestimonial(index, direction = 'next') {
-                const prevIndex = currentIndex;
-                currentIndex = index;
-
-                cards.forEach((card, i) => {
-                    card.classList.remove('active', 'exiting');
-                    
-                    if (i === currentIndex) {
-                        // Small delay to ensure exiting animation starts first
-                        setTimeout(() => {
-                            card.classList.add('active');
-                        }, 50);
-                    } else if (i === prevIndex) {
-                        card.classList.add('exiting');
-                    }
-                });
-
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentIndex);
-                });
-            }
-
-            function goToSlide(index) {
-                if (index === currentIndex) return;
-                showTestimonial(index, index > currentIndex ? 'next' : 'prev');
-                resetAutoplay();
-            }
-
-            function nextSlide() {
-                if (isPaused) return;
-                const next = (currentIndex + 1) % cards.length;
-                showTestimonial(next, 'next');
-            }
-
-            function resetAutoplay() {
-                clearInterval(autoplayInterval);
-                autoplayInterval = setInterval(nextSlide, 5000);
-            }
-
-            // Pause on hover
-            stage.addEventListener('mouseenter', () => isPaused = true);
-            stage.addEventListener('mouseleave', () => isPaused = false);
-
-            // Initial display
-            showTestimonial(0);
-
-            // Start autoplay
-            autoplayInterval = setInterval(nextSlide, 5000);
-        }
-
-        initTestimonials();
 
         // ==========================================
         // Intersection Observer for Scroll Animations
