@@ -1,4 +1,5 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const RESEND_AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@trywhitespace.com';
@@ -140,6 +141,39 @@ export default async function handler(req, res) {
       }
       
       throw new Error('Failed to save to database');
+    }
+
+    // Add contact to Resend Audience
+    if (RESEND_API_KEY && RESEND_AUDIENCE_ID) {
+      try {
+        const contactResponse = await fetch(`https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${RESEND_API_KEY}`
+          },
+          body: JSON.stringify({
+            email: email.toLowerCase().trim(),
+            first_name: name.trim(),
+            unsubscribed: false
+          })
+        });
+
+        if (!contactResponse.ok) {
+          const error = await contactResponse.text();
+          console.error('Resend Audience error:', error);
+          // Don't fail the whole request if audience add fails
+        } else {
+          console.log('Contact added to Resend audience');
+        }
+      } catch (audienceError) {
+        console.error('Error adding to Resend audience:', audienceError);
+        // Don't fail the whole request if audience add fails
+      }
+    } else {
+      if (!RESEND_AUDIENCE_ID) {
+        console.warn('RESEND_AUDIENCE_ID not set, skipping audience add');
+      }
     }
 
     // Send welcome email via Resend
