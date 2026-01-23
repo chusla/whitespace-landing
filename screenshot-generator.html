@@ -601,6 +601,10 @@
                         <div class="device">iPad 11"</div>
                         <div class="dims">1668 × 2388</div>
                     </div>
+                    <div class="size-option" data-width="2048" data-height="1000" data-name="Google Play Feature">
+                        <div class="device">GP Feature</div>
+                        <div class="dims">2048 × 1000</div>
+                    </div>
                 </div>
             </div>
 
@@ -644,6 +648,10 @@
                         <div class="layout-icon">◨</div>
                         <div class="layout-name">Split Right</div>
                     </button>
+                    <button class="layout-btn" data-layout="feature-graphic">
+                        <div class="layout-icon">🎬</div>
+                        <div class="layout-name">Feature</div>
+                    </button>
                 </div>
                 
                 <div class="split-controls" id="split-controls" style="display: none; margin-top: 12px;">
@@ -661,6 +669,40 @@
                         <label for="split-phone-angle">Split Phone Angle</label>
                         <input type="range" id="split-phone-angle" min="20" max="60" step="1" value="38">
                         <div class="slider-labels"><span>20°</span><span id="split-angle-value">38°</span><span>60°</span></div>
+                    </div>
+                </div>
+                
+                <!-- Feature Graphic Controls -->
+                <div class="feature-controls" id="feature-controls" style="display: none; margin-top: 12px;">
+                    <div class="form-group">
+                        <label for="feature-text-x">Text X Position</label>
+                        <input type="range" id="feature-text-x" min="10" max="50" step="1" value="26">
+                        <div class="slider-labels"><span>Left</span><span id="feature-text-x-value">26%</span><span>Right</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature-text-y">Text Y Position</label>
+                        <input type="range" id="feature-text-y" min="10" max="60" step="1" value="30">
+                        <div class="slider-labels"><span>Top</span><span id="feature-text-y-value">30%</span><span>Bottom</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature-text-size">Text Size</label>
+                        <input type="range" id="feature-text-size" min="40" max="120" step="2" value="78">
+                        <div class="slider-labels"><span>Small</span><span id="feature-text-size-value">78px</span><span>Large</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature-phone-x">Phone X Position</label>
+                        <input type="range" id="feature-phone-x" min="50" max="95" step="1" value="72">
+                        <div class="slider-labels"><span>Left</span><span id="feature-phone-x-value">72%</span><span>Right</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature-phone-y">Phone Y Position</label>
+                        <input type="range" id="feature-phone-y" min="-20" max="40" step="1" value="12">
+                        <div class="slider-labels"><span>Up</span><span id="feature-phone-y-value">12%</span><span>Down</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature-phone-height">Phone Height</label>
+                        <input type="range" id="feature-phone-height" min="400" max="1200" step="20" value="800">
+                        <div class="slider-labels"><span>Small</span><span id="feature-phone-height-value">800px</span><span>Large</span></div>
                     </div>
                 </div>
             </div>
@@ -708,8 +750,9 @@
             <div class="section">
                 <div class="section-title">Text Content</div>
                 <div class="form-group">
-                    <label for="headline">Headline <span style="color: rgba(255,255,255,0.4); font-weight: 400;">(use *word* for emphasis)</span></label>
-                    <input type="text" id="headline" value="Make *space*" placeholder="Enter headline">
+                    <label for="headline">Headline <span style="color: rgba(255,255,255,0.4); font-weight: 400;">(use *word* for emphasis, Enter for new line)</span></label>
+                    <textarea id="headline" rows="2" placeholder="Enter headline" style="resize: vertical; min-height: 60px;">Make *space*
+for yourself to *focus*</textarea>
                 </div>
                 <div class="form-group">
                     <label for="subheadline">Subheadline</label>
@@ -735,8 +778,20 @@
             </div>
 
             <!-- App Screenshot Section -->
-            <div class="section">
-                <div class="section-title">App Screenshot</div>
+            <div class="section" id="screenshot1-section">
+                <div class="section-title" id="screenshot1-title">App Screenshot (Phone 1 - Bottom)</div>
+                <div class="form-group">
+                    <label for="screen-type-1">Screen Content</label>
+                    <select id="screen-type-1" style="width: 100%;">
+                        <option value="circle">Circle UI (Default)</option>
+                        <option value="goal-input">Focus - Goal Input</option>
+                        <option value="learn-input">Learn - Content Input</option>
+                        <option value="player">Audio Player</option>
+                        <option value="generation-complete">Generation Complete</option>
+                        <option value="program-preview">Learn - Program Preview</option>
+                        <option value="uploaded">Uploaded Screenshot</option>
+                    </select>
+                </div>
                 <div class="file-upload" id="screenshot-upload">
                     <input type="file" accept="image/*" id="screenshot-input">
                     <div class="file-upload-icon">📱</div>
@@ -757,6 +812,32 @@
                         <label for="crop-bottom">Crop from bottom (px)</label>
                         <input type="number" id="crop-bottom" value="0" min="0" max="500" style="width: 100%;">
                     </div>
+                </div>
+            </div>
+            
+            <!-- Second Phone Screenshot (for dual-phone layouts) -->
+            <div class="section" id="screenshot2-section" style="display: none;">
+                <div class="section-title">App Screenshot (Phone 2 - Top)</div>
+                <div class="file-upload" id="screenshot-upload-2">
+                    <input type="file" accept="image/*" id="screenshot-input-2">
+                    <div class="file-upload-icon">📱</div>
+                    <div class="file-upload-text">
+                        <strong>Click to upload</strong> or drag & drop<br>
+                        PNG, JPG up to 10MB
+                    </div>
+                </div>
+                <div class="thumbnail-strip" id="thumbnail-strip-2"></div>
+                <div class="form-group" style="margin-top: 12px;">
+                    <label for="screen-type-2">Screen Content</label>
+                    <select id="screen-type-2" style="width: 100%;">
+                        <option value="circle">Circle UI (Default)</option>
+                        <option value="goal-input">Focus - Goal Input</option>
+                        <option value="learn-input">Learn - Content Input</option>
+                        <option value="player">Audio Player</option>
+                        <option value="generation-complete">Generation Complete</option>
+                        <option value="program-preview">Learn - Program Preview</option>
+                        <option value="uploaded">Uploaded Screenshot</option>
+                    </select>
                 </div>
             </div>
 
@@ -822,6 +903,7 @@
                         <option value="learn-input">Learn - Content Input</option>
                         <option value="player">Audio Player</option>
                         <option value="generation-complete">Generation Complete</option>
+                        <option value="program-preview">Learn - Program Preview</option>
                         <option value="uploaded">Uploaded Screenshot</option>
                     </select>
                 </div>
@@ -1140,8 +1222,8 @@
             width: 1242,
             height: 2688,
             deviceName: 'iPhone 6.5"',
-            headline: 'Make *space*',
-            subheadline: 'for yourself to *focus*',
+            headline: 'Make *space*\nfor yourself to *focus*',
+            subheadline: '',
             textPosition: 'top',
             textOffsetY: 0, // vertical offset for text position (pixels)
             showPhone: true,
@@ -1157,6 +1239,9 @@
             appScreenshot: null,
             cropTop: 0, // pixels to crop from top of uploaded screenshot
             cropBottom: 0, // pixels to crop from bottom of uploaded screenshot
+            // Second phone screenshot (for dual-phone layouts like bottom-peek)
+            appScreenshot2: null,
+            screenType2: 'circle', // Screen type for second phone
             phosphenes: [],
             showCircleUI: true,
             circleText: 'Your space is ready for you.',
@@ -1201,6 +1286,13 @@
             splitPhoneX: 39,   // -100 to 100 (percentage offset) - default for split-left
             splitPhoneY: 0,    // -50 to 50 (percentage offset)
             splitPhoneAngle: 38, // rotation angle for split layouts
+            // Feature graphic positioning
+            featureTextX: 26,      // percentage from left
+            featureTextY: 30,      // percentage from top
+            featureTextSize: 78,   // font size in pixels
+            featurePhoneX: 72,     // percentage from left
+            featurePhoneY: 12,     // percentage from top
+            featurePhoneHeight: 800, // phone height in pixels
             // 3D Frame overlay
             frame3D: null,
             use3DFrame: false,
@@ -1225,7 +1317,8 @@
             'tilted-right': { name: 'Tilted Right', description: 'Slight right tilt', icon: '↗️' },
             'tilted-left': { name: 'Tilted Left', description: 'Slight left tilt', icon: '↖️' },
             'split-left': { name: 'Split Left', description: 'Left half of split phone pair', icon: '◧' },
-            'split-right': { name: 'Split Right', description: 'Right half of split phone pair', icon: '◨' }
+            'split-right': { name: 'Split Right', description: 'Right half of split phone pair', icon: '◨' },
+            'feature-graphic': { name: 'Feature Graphic', description: 'Google Play feature graphic (1024x500)', icon: '🎬' }
         };
 
         // Device-specific phone dimensions (~70% of canvas height)
@@ -1525,6 +1618,121 @@
                     ctx.beginPath();
                     ctx.arc(tabX, iconY, innerR, 0, Math.PI * 2);
                     ctx.fill();
+                } else if (tab.icon === 'learn') {
+                    const bw = iconSize * 0.45;
+                    const bh = iconSize * 0.4;
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.moveTo(tabX, iconY - bh);
+                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY - bh, tabX - bw, iconY - bh * 0.7);
+                    ctx.lineTo(tabX - bw, iconY + bh * 0.8);
+                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(tabX, iconY - bh);
+                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY - bh, tabX + bw, iconY - bh * 0.7);
+                    ctx.lineTo(tabX + bw, iconY + bh * 0.8);
+                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(tabX, iconY - bh);
+                    ctx.lineTo(tabX, iconY + bh * 0.7);
+                    ctx.stroke();
+                } else if (tab.icon === 'spaces') {
+                    const cw = iconSize * 0.5;
+                    const ch = iconSize * 0.35;
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.roundRect(tabX - cw * 0.7, iconY - ch * 0.9, cw * 1.4, ch * 0.5, 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.roundRect(tabX - cw * 0.8, iconY - ch * 0.3, cw * 1.6, ch * 0.7, 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.roundRect(tabX - cw * 0.9, iconY + ch * 0.15, cw * 1.8, ch * 0.8, 3);
+                    ctx.stroke();
+                } else if (tab.icon === 'you') {
+                    const r = iconSize * 0.48;
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY, r, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY - r * 0.25, r * 0.28, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY + r * 0.9, r * 0.55, Math.PI * 1.2, Math.PI * 1.8);
+                    ctx.stroke();
+                }
+                
+                ctx.font = `400 ${labelSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = color;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText(tab.label, tabX, labelY);
+            });
+        }
+
+        // Draw tab bar with Learn tab active (top-level function)
+        function drawLearnTabBar(sx, sy, sw, sh, s) {
+            const textPrimary = '#FFFFFF';
+            const tabBarHeight = sh * 0.085;
+            const tabBarY = sy + sh - tabBarHeight;
+            
+            // Tab bar background
+            ctx.fillStyle = 'rgb(18, 19, 24)';
+            ctx.fillRect(sx, tabBarY, sw, tabBarHeight);
+            
+            // Add noise dithering
+            const tabBarImageData = ctx.getImageData(sx, tabBarY, sw, tabBarHeight);
+            const data = tabBarImageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const noise = (Math.random() - 0.5) * 3;
+                data[i] = Math.max(0, Math.min(255, data[i] + noise));
+                data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
+                data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
+            }
+            ctx.putImageData(tabBarImageData, sx, tabBarY);
+            
+            // Top border
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(sx, tabBarY);
+            ctx.lineTo(sx + sw, tabBarY);
+            ctx.stroke();
+            
+            const tabs = [
+                { icon: 'focus', label: 'Focus', active: false },
+                { icon: 'learn', label: 'Learn', active: true },  // Learn is active
+                { icon: 'spaces', label: 'Spaces', active: false },
+                { icon: 'you', label: 'You', active: false },
+            ];
+            
+            const tabWidth = sw / tabs.length;
+            const iconSize = sw * 0.055;
+            const labelSize = sw * 0.031;
+            
+            tabs.forEach((tab, i) => {
+                const tabX = sx + tabWidth * i + tabWidth / 2;
+                const iconY = tabBarY + tabBarHeight * 0.32;
+                const labelY = tabBarY + tabBarHeight * 0.68;
+                
+                const color = tab.active ? textPrimary : 'rgba(255, 255, 255, 0.4)';
+                
+                ctx.fillStyle = color;
+                ctx.strokeStyle = color;
+                
+                if (tab.icon === 'focus') {
+                    const outerR = iconSize * 0.45;
+                    const innerR = iconSize * 0.25;
+                    ctx.lineWidth = 1.8;
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY, outerR, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY, innerR, 0, Math.PI * 2);
+                    if (tab.active) ctx.fill(); else ctx.stroke();
                 } else if (tab.icon === 'learn') {
                     const bw = iconSize * 0.45;
                     const bh = iconSize * 0.4;
@@ -2445,6 +2653,287 @@
             ctx.fill();
         }
 
+        // Draw Program Preview screen (Learn - curriculum view)
+        function drawProgramPreviewScreen(screenX, screenY, screenWidth, screenHeight, scale, options = {}) {
+            const {
+                programTitle = 'The One Hour Focus Method',
+                programDescription = 'Learn to transform your life with just one hour of focused daily work. Master the psychology of attention, eliminate distractions, and build meaningful projects that create lasting change.',
+                sessionCount = 5,
+                sessionDuration = '~50 min',
+                credits = 10,
+                sessions = [
+                    { title: 'Clearing Mental Space', desc: 'Your mind processes only 50 bits of conscious information per second - distractions steal this precious...', completed: false },
+                    { title: 'The Flow Formula', desc: 'Optimal focus requires three elements: clarity, importance, and urgency, with challenge slightly above...', completed: false },
+                    { title: 'The Three-Phase Rhythm', desc: 'Productive days follow a natural rhythm: fill your mind, empty your mind, use your mind', completed: false },
+                    { title: 'Project-Centered Vision', desc: 'Learning accelerates when tied to real projects, creating tight feedback loops between struggle and growth', completed: false },
+                    { title: 'Embracing Uncertainty', desc: 'Uncertainty is not an obstacle but the natural environment where all meaningful growth occurs', completed: false },
+                ],
+                completedSessions = 0,
+            } = options;
+            
+            // Colors
+            const bgColor = '#0D0D0F';
+            const textPrimary = '#FFFFFF';
+            const textSecondary = 'rgba(255, 255, 255, 0.6)';
+            const textTertiary = 'rgba(255, 255, 255, 0.35)';
+            const borderSubtle = 'rgba(255, 255, 255, 0.08)';
+            
+            // Fill dark background
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(screenX, screenY, screenWidth, screenHeight);
+            
+            // Add phosphene background effect
+            const phospheneCount = Math.floor(10 * state.phonePhospheneIntensity);
+            const brightness = state.phonePhospheneBrightness;
+            for (let i = 0; i < phospheneCount; i++) {
+                const px = screenX + Math.random() * screenWidth;
+                const py = screenY + Math.random() * screenHeight;
+                const pr = Math.random() * screenWidth * 0.35 + screenWidth * 0.1;
+                const hue = 215 + (Math.random() - 0.5) * 40;
+                const baseOpacity = 0.03 * brightness;
+                const gradient = ctx.createRadialGradient(px, py, 0, px, py, pr);
+                gradient.addColorStop(0, `hsla(${hue}, 35%, ${45 * brightness}%, ${baseOpacity})`);
+                gradient.addColorStop(0.5, `hsla(${hue}, 30%, ${40 * brightness}%, ${baseOpacity * 0.5})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            const centerX = screenX + screenWidth / 2;
+            const padding = screenWidth * 0.06;
+            let currentY = screenY + screenHeight * 0.08;  // Start below Dynamic Island
+            
+            // Program title
+            ctx.font = `400 ${screenWidth * 0.068}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            
+            // Word wrap for title
+            const maxWidth = screenWidth - padding * 2;
+            ctx.fillText(programTitle, screenX + padding, currentY);
+            currentY += screenWidth * 0.085;
+            
+            // Program description
+            ctx.font = `400 ${screenWidth * 0.04}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textSecondary;
+            
+            // Word wrap description
+            const words = programDescription.split(' ');
+            let line = '';
+            const lineHeight = screenWidth * 0.055;
+            const descStartY = currentY;
+            
+            for (let i = 0; i < words.length; i++) {
+                const testLine = line + words[i] + ' ';
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && i > 0) {
+                    ctx.fillText(line.trim(), screenX + padding, currentY);
+                    line = words[i] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line.trim(), screenX + padding, currentY);
+            currentY += lineHeight * 1.5;
+            
+            // Stats row: sessions, duration, credits
+            const statsY = currentY;
+            const statsGap = screenWidth * 0.12;
+            let statsX = screenX + padding;
+            
+            ctx.font = `400 ${screenWidth * 0.035}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textSecondary;
+            ctx.textBaseline = 'middle';
+            
+            // Sessions icon (stacked layers)
+            const iconSize = screenWidth * 0.04;
+            ctx.strokeStyle = textSecondary;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.roundRect(statsX, statsY - iconSize * 0.4, iconSize * 0.8, iconSize * 0.5, 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.roundRect(statsX + 2, statsY - iconSize * 0.55, iconSize * 0.8, iconSize * 0.5, 2);
+            ctx.stroke();
+            ctx.fillText(`${sessionCount} sessions`, statsX + iconSize + 6, statsY);
+            
+            statsX += ctx.measureText(`${sessionCount} sessions`).width + iconSize + statsGap;
+            
+            // Duration icon (clock)
+            ctx.beginPath();
+            ctx.arc(statsX + iconSize * 0.4, statsY, iconSize * 0.4, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(statsX + iconSize * 0.4, statsY - iconSize * 0.2);
+            ctx.lineTo(statsX + iconSize * 0.4, statsY);
+            ctx.lineTo(statsX + iconSize * 0.55, statsY + iconSize * 0.1);
+            ctx.stroke();
+            ctx.fillText(sessionDuration, statsX + iconSize + 6, statsY);
+            
+            statsX += ctx.measureText(sessionDuration).width + iconSize + statsGap;
+            
+            // Credits icon (lightning)
+            ctx.beginPath();
+            ctx.moveTo(statsX + iconSize * 0.5, statsY - iconSize * 0.4);
+            ctx.lineTo(statsX + iconSize * 0.2, statsY);
+            ctx.lineTo(statsX + iconSize * 0.45, statsY);
+            ctx.lineTo(statsX + iconSize * 0.3, statsY + iconSize * 0.4);
+            ctx.lineTo(statsX + iconSize * 0.6, statsY - iconSize * 0.05);
+            ctx.lineTo(statsX + iconSize * 0.35, statsY - iconSize * 0.05);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fillText(`${credits} credits`, statsX + iconSize + 6, statsY);
+            
+            currentY += screenHeight * 0.045;
+            
+            // "Customize creation" button
+            ctx.font = `400 ${screenWidth * 0.035}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textTertiary;
+            
+            // Sliders icon
+            const sliderIconX = screenX + padding;
+            ctx.strokeStyle = textTertiary;
+            ctx.lineWidth = 1.2;
+            // Three horizontal lines with dots
+            for (let i = 0; i < 3; i++) {
+                const ly = currentY + i * 5;
+                ctx.beginPath();
+                ctx.moveTo(sliderIconX, ly);
+                ctx.lineTo(sliderIconX + 14, ly);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(sliderIconX + 4 + i * 4, ly, 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.fillText('Customize creation', sliderIconX + 22, currentY + 5);
+            
+            currentY += screenHeight * 0.05;
+            
+            // SESSION OUTLINE header
+            ctx.font = `500 ${screenWidth * 0.028}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textSecondary;
+            ctx.letterSpacing = '2px';
+            ctx.fillText('SESSION OUTLINE', screenX + padding, currentY);
+            currentY += screenHeight * 0.022;
+            
+            ctx.font = `400 ${screenWidth * 0.032}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textTertiary;
+            ctx.fillText('Tap a session to start there', screenX + padding, currentY);
+            currentY += screenHeight * 0.03;
+            
+            // Session list
+            const sessionHeight = screenHeight * 0.085;
+            
+            sessions.forEach((session, index) => {
+                // Top border for each session
+                ctx.strokeStyle = borderSubtle;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(screenX + padding, currentY);
+                ctx.lineTo(screenX + screenWidth - padding, currentY);
+                ctx.stroke();
+                
+                const sessionY = currentY + sessionHeight * 0.35;
+                
+                // Number or checkmark
+                ctx.font = `400 ${screenWidth * 0.038}px "Crimson Pro", Georgia, serif`;
+                if (session.completed || index === 0) {
+                    // Checkmark for completed or first session
+                    ctx.strokeStyle = textSecondary;
+                    ctx.lineWidth = 1.8;
+                    ctx.beginPath();
+                    const checkX = screenX + padding + 4;
+                    const checkY = sessionY - 2;
+                    ctx.moveTo(checkX, checkY);
+                    ctx.lineTo(checkX + 5, checkY + 5);
+                    ctx.lineTo(checkX + 12, checkY - 4);
+                    ctx.stroke();
+                } else {
+                    ctx.fillStyle = textTertiary;
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(`${index + 1}`, screenX + padding + 4, sessionY);
+                }
+                
+                // Session title
+                ctx.font = `500 ${screenWidth * 0.042}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textPrimary;
+                ctx.textAlign = 'left';
+                ctx.fillText(session.title, screenX + padding + 36, sessionY);
+                
+                // Play button on right
+                ctx.strokeStyle = textSecondary;
+                ctx.fillStyle = textSecondary;
+                ctx.lineWidth = 1.5;
+                const playX = screenX + screenWidth - padding - 12;
+                const playR = screenWidth * 0.025;
+                ctx.beginPath();
+                ctx.arc(playX, sessionY, playR, 0, Math.PI * 2);
+                ctx.stroke();
+                // Play triangle
+                ctx.beginPath();
+                ctx.moveTo(playX - 3, sessionY - 5);
+                ctx.lineTo(playX - 3, sessionY + 5);
+                ctx.lineTo(playX + 5, sessionY);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Session description
+                ctx.font = `400 ${screenWidth * 0.033}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textTertiary;
+                const descY = sessionY + sessionHeight * 0.35;
+                
+                // Truncate description if needed
+                let desc = session.desc;
+                const descMaxWidth = screenWidth - padding * 2 - 50;
+                while (ctx.measureText(desc).width > descMaxWidth && desc.length > 10) {
+                    desc = desc.slice(0, -4) + '...';
+                }
+                ctx.fillText(desc, screenX + padding + 36, descY);
+                
+                currentY += sessionHeight;
+            });
+            
+            // Bottom border after last session
+            ctx.strokeStyle = borderSubtle;
+            ctx.beginPath();
+            ctx.moveTo(screenX + padding, currentY);
+            ctx.lineTo(screenX + screenWidth - padding, currentY);
+            ctx.stroke();
+            
+            currentY += screenHeight * 0.04;
+            
+            // "Continue to Session 1" button
+            ctx.font = `400 ${screenWidth * 0.045}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Continue to Session 1', centerX, currentY);
+            
+            currentY += screenHeight * 0.035;
+            
+            // Progress text
+            ctx.font = `400 ${screenWidth * 0.033}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textTertiary;
+            ctx.fillText(`${completedSessions} of ${sessionCount} sessions completed`, centerX, currentY);
+            
+            // Tab bar at bottom (Learn active)
+            drawLearnTabBar(screenX, screenY, screenWidth, screenHeight, scale);
+            
+            // Home indicator bar
+            const homeBarY = screenY + screenHeight - screenHeight * 0.025;
+            const homeBarW = screenWidth * 0.35;
+            const homeBarH = 5;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.beginPath();
+            ctx.roundRect(centerX - homeBarW/2, homeBarY, homeBarW, homeBarH, homeBarH/2);
+            ctx.fill();
+        }
+
         // Draw Whitespace-style screen content (circle UI)
         function drawWhitespaceScreen(screenX, screenY, phoneWidth, phoneHeight, scale) {
             // Dark gradient background for screen
@@ -2608,6 +3097,11 @@
                 return;
             }
             
+            // Feature graphic layout: handled entirely in drawPhoneMockup
+            if (state.layout === 'feature-graphic') {
+                return; // Skip - logo is drawn in the feature-graphic layout code
+            }
+            
             if (!state.showLogo || !state.logo) return;
             
             const logo = state.logo;
@@ -2638,7 +3132,7 @@
 
         // Draw a single phone at specified position with optional rotation
         // Based on iPhone 17 Air SVG proportions (856x1760)
-        function drawSinglePhone(phoneX, phoneY, rotation = 0, clipFromBottom = 0) {
+        function drawSinglePhone(phoneX, phoneY, rotation = 0, clipFromBottom = 0, useSecondaryScreen = false) {
             const scale = state.phoneScale;
             const isIPad = state.deviceName.includes('iPad');
             
@@ -2832,10 +3326,13 @@
             ctx.clip();
 
             // Determine which screen content to draw based on screenType
-            const effectiveScreenType = state.appScreenshot ? 'uploaded' : state.screenType;
+            // Use secondary screen settings if useSecondaryScreen is true
+            const currentScreenType = useSecondaryScreen ? state.screenType2 : state.screenType;
+            const currentScreenshot = useSecondaryScreen ? state.appScreenshot2 : state.appScreenshot;
+            const effectiveScreenType = currentScreenshot ? 'uploaded' : currentScreenType;
             
-            if (effectiveScreenType === 'uploaded' && state.appScreenshot) {
-                const img = state.appScreenshot;
+            if (effectiveScreenType === 'uploaded' && currentScreenshot) {
+                const img = currentScreenshot;
                 
                 // Apply crop to source image
                 const srcX = 0;
@@ -2902,6 +3399,9 @@
                     creditsRemaining: state.creditsRemaining,
                     showTabBar: state.showTabBar
                 });
+            } else if (effectiveScreenType === 'program-preview') {
+                // Draw Program Preview Screen
+                drawProgramPreviewScreen(screenX, screenY, screenWidth, screenHeight, scale);
             } else {
                 // Default: Circle UI
                 drawWhitespaceScreen(screenX, screenY, screenWidth, screenHeight, scale);
@@ -3111,6 +3611,8 @@
                 drawPlayerScreenToContext(targetCtx, x, y, width, height);
             } else if (state.screenType === 'generation-complete') {
                 drawGenerationCompleteScreenToContext(targetCtx, x, y, width, height);
+            } else if (state.screenType === 'program-preview') {
+                drawProgramPreviewScreenToContext(targetCtx, x, y, width, height);
             } else if (state.screenType === 'uploaded' && state.appScreenshot) {
                 drawUploadedScreenToContext(targetCtx, x, y, width, height);
             } else {
@@ -3517,6 +4019,80 @@
             targetCtx.fill();
         }
         
+        function drawProgramPreviewScreenToContext(targetCtx, x, y, w, h) {
+            // Simplified version of program preview for 3D frame
+            const centerX = x + w / 2;
+            const padding = w * 0.06;
+            let currentY = y + h * 0.08;  // Start below Dynamic Island
+            
+            // Program title
+            targetCtx.font = `400 ${w * 0.065}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            targetCtx.textAlign = 'left';
+            targetCtx.fillText('The One Hour Focus', x + padding, currentY);
+            currentY += h * 0.04;
+            targetCtx.fillText('Method', x + padding, currentY);
+            currentY += h * 0.06;
+            
+            // Stats row
+            targetCtx.font = `400 ${w * 0.032}px Inter`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            targetCtx.fillText('5 sessions  ·  ~50 min  ·  10 credits', x + padding, currentY);
+            currentY += h * 0.06;
+            
+            // SESSION OUTLINE
+            targetCtx.font = `500 ${w * 0.026}px Inter`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            targetCtx.fillText('SESSION OUTLINE', x + padding, currentY);
+            currentY += h * 0.04;
+            
+            // Session list (simplified)
+            const sessions = ['Clearing Mental Space', 'The Flow Formula', 'The Three-Phase Rhythm', 'Project-Centered Vision', 'Embracing Uncertainty'];
+            targetCtx.font = `500 ${w * 0.038}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            
+            sessions.forEach((title, i) => {
+                // Border
+                targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                targetCtx.lineWidth = 1;
+                targetCtx.beginPath();
+                targetCtx.moveTo(x + padding, currentY);
+                targetCtx.lineTo(x + w - padding, currentY);
+                targetCtx.stroke();
+                currentY += h * 0.025;
+                
+                // Number or check
+                if (i === 0) {
+                    targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+                    targetCtx.lineWidth = 1.5;
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(x + padding + 2, currentY + 3);
+                    targetCtx.lineTo(x + padding + 6, currentY + 7);
+                    targetCtx.lineTo(x + padding + 13, currentY - 1);
+                    targetCtx.stroke();
+                } else {
+                    targetCtx.font = `400 ${w * 0.035}px Crimson Pro`;
+                    targetCtx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+                    targetCtx.fillText(`${i + 1}`, x + padding + 4, currentY + 4);
+                }
+                
+                // Title
+                targetCtx.font = `500 ${w * 0.038}px Crimson Pro`;
+                targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                targetCtx.fillText(title, x + padding + 32, currentY + 5);
+                
+                currentY += h * 0.055;
+            });
+            
+            // Home indicator
+            const homeBarY2 = y + h - h * 0.025;
+            const homeBarW2 = w * 0.35;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            targetCtx.beginPath();
+            targetCtx.roundRect(centerX - homeBarW2/2, homeBarY2, homeBarW2, 5, 2.5);
+            targetCtx.fill();
+        }
+        
         function drawUploadedScreenToContext(targetCtx, x, y, w, h) {
             if (!state.appScreenshot) return;
             
@@ -3581,11 +4157,19 @@
                 return;
             }
             
-            // Layout: Bottom peek - phone peeking from bottom
+            // Layout: Bottom peek - two phones: one peeking from bottom, one peeking from top
             if (state.layout === 'bottom-peek') {
-                const phoneX = (state.width - frameWidth) / 2;
-                const phoneY = state.height - frameHeight * 0.55;
-                drawSinglePhone(phoneX, phoneY, 0);
+                // Phone 1: Bottom phone peeking up (uses primary screen content)
+                const phone1X = (state.width - frameWidth) / 2;
+                const phone1Y = state.height - frameHeight * 0.55;
+                drawSinglePhone(phone1X, phone1Y, 0);
+                
+                // Phone 2: Top phone showing only bottom portion (~250px visible)
+                // Position it so most is above canvas, only bottom part visible
+                const visibleAmount = 250 * state.phoneScale; // Amount of phone visible at top
+                const phone2X = (state.width - frameWidth) / 2;
+                const phone2Y = visibleAmount - frameHeight; // Negative Y to hide most of phone
+                drawSinglePhone(phone2X, phone2Y, 0, 0, true); // useSecondaryScreen = true
                 return;
             }
 
@@ -3629,6 +4213,105 @@
                 const phoneY = baseY + (state.splitPhoneY / 100) * state.height;
                 drawSinglePhone(phoneX, phoneY, angle);
                 return;
+            }
+
+            // Layout: Feature Graphic - Google Play style (2048x1000)
+            // Completely dedicated rendering with adjustable controls
+            if (state.layout === 'feature-graphic') {
+                // === PHONE RENDERING (adjustable) ===
+                const targetPhoneHeight = state.featurePhoneHeight;
+                const phoneAspectRatio = 0.486;
+                const targetPhoneWidth = targetPhoneHeight * phoneAspectRatio;
+                
+                // Calculate scale factor
+                const baseFrameHeight = state.height * 0.78;
+                const featureScale = targetPhoneHeight / baseFrameHeight;
+                
+                // Position from state
+                const phoneX = state.width * (state.featurePhoneX / 100) - targetPhoneWidth / 2;
+                const phoneY = state.height * (state.featurePhoneY / 100);
+                
+                const originalScale = state.phoneScale;
+                state.phoneScale = featureScale;
+                drawSinglePhone(phoneX, phoneY, 0);
+                state.phoneScale = originalScale;
+                
+                // === TEXT RENDERING (adjustable) ===
+                const headline = state.headline;
+                const fontSize = state.featureTextSize;
+                const lineHeight = fontSize * 1.3;
+                const textCenterX = state.width * (state.featureTextX / 100);
+                const textStartY = state.height * (state.featureTextY / 100);
+                
+                if (headline) {
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                    ctx.shadowBlur = 20;
+                    ctx.shadowOffsetY = 4;
+                    
+                    // Split headline into lines (handle both literal \n and actual newlines from textarea)
+                    const rawText = headline.replace(/\\n/g, '\n');
+                    const lines = rawText.split(/\r?\n/);
+                    
+                    lines.forEach((line, lineIndex) => {
+                        const y = textStartY + lineIndex * lineHeight;
+                        
+                        // Parse emphasis in line
+                        const parts = line.split(/(\*[^*]+\*)/g);
+                        
+                        // Measure full line width first
+                        let lineWidth = 0;
+                        parts.forEach(part => {
+                            if (!part) return;
+                            const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                            const text = isEmphasis ? part.slice(1, -1) : part;
+                            ctx.font = isEmphasis ? 
+                                `600 ${fontSize}px "Crimson Pro", Georgia, serif` :
+                                `300 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                            lineWidth += ctx.measureText(text).width;
+                        });
+                        
+                        // Draw centered
+                        let x = textCenterX - lineWidth / 2;
+                        parts.forEach(part => {
+                            if (!part) return;
+                            const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                            const text = isEmphasis ? part.slice(1, -1) : part;
+                            
+                            ctx.font = isEmphasis ? 
+                                `600 ${fontSize}px "Crimson Pro", Georgia, serif` :
+                                `300 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                            ctx.textAlign = 'left';
+                            ctx.textBaseline = 'top';
+                            ctx.fillText(text, x, y);
+                            x += ctx.measureText(text).width;
+                        });
+                    });
+                    
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                }
+                
+                // === LOGO RENDERING (uses logoScale from main settings) ===
+                if (state.logo) {
+                    const maxLogoWidth = state.width * 0.18 * state.logoScale;
+                    const maxLogoHeight = state.height * 0.30 * state.logoScale;
+                    
+                    let logoWidth = state.logo.width;
+                    let logoHeight = state.logo.height;
+                    const ratio = Math.min(maxLogoWidth / logoWidth, maxLogoHeight / logoHeight);
+                    logoWidth *= ratio;
+                    logoHeight *= ratio;
+                    
+                    // Center logo under text - count actual lines
+                    const logoX = textCenterX - logoWidth / 2;
+                    const numLines = headline ? headline.replace(/\\n/g, '\n').split(/\r?\n/).length : 0;
+                    const logoY = textStartY + numLines * lineHeight + state.height * 0.06;
+                    
+                    ctx.drawImage(state.logo, logoX, logoY, logoWidth, logoHeight);
+                }
+                
+                return; // Skip normal rendering
             }
 
             // Default centered layout - single phone, text at top
@@ -3767,6 +4450,9 @@
                 textY = state.height * 0.72;
                 textAlign = 'right';
                 textX = state.width * 0.92;
+            } else if (state.layout === 'feature-graphic') {
+                // Text handled entirely in drawPhoneMockup for feature-graphic
+                return;
             } else if (state.textPosition === 'top') {
                 textY = state.showLogo ? state.height * 0.16 : state.height * 0.06;
             } else if (state.textPosition === 'bottom') {
@@ -3959,6 +4645,35 @@
                     splitControls.style.display = 'none';
                 }
                 
+                // Show/hide feature controls based on layout
+                const featureControls = document.getElementById('feature-controls');
+                if (state.layout === 'feature-graphic') {
+                    featureControls.style.display = 'block';
+                } else {
+                    featureControls.style.display = 'none';
+                }
+                
+                // Show/hide second screenshot section based on layout
+                const screenshot2Section = document.getElementById('screenshot2-section');
+                if (state.layout === 'bottom-peek' || state.layout === 'dual-phones') {
+                    screenshot2Section.style.display = 'block';
+                } else {
+                    screenshot2Section.style.display = 'none';
+                }
+                
+                // Auto-switch to 2048x1000 for feature-graphic layout (2x for quality, resize to 1024x500 after)
+                if (state.layout === 'feature-graphic') {
+                    state.width = 2048;
+                    state.height = 1000;
+                    state.deviceName = 'Google Play Feature';
+                    canvas.width = state.width;
+                    canvas.height = state.height;
+                    // Update size options UI
+                    document.querySelectorAll('.size-option').forEach(opt => {
+                        opt.classList.toggle('active', opt.dataset.width === '2048' && opt.dataset.height === '1000');
+                    });
+                }
+                
                 render();
             });
         });
@@ -3979,6 +4694,38 @@
         document.getElementById('split-phone-angle').addEventListener('input', (e) => {
             state.splitPhoneAngle = parseInt(e.target.value);
             document.getElementById('split-angle-value').textContent = state.splitPhoneAngle + '°';
+            render();
+        });
+
+        // Feature graphic controls
+        document.getElementById('feature-text-x').addEventListener('input', (e) => {
+            state.featureTextX = parseInt(e.target.value);
+            document.getElementById('feature-text-x-value').textContent = state.featureTextX + '%';
+            render();
+        });
+        document.getElementById('feature-text-y').addEventListener('input', (e) => {
+            state.featureTextY = parseInt(e.target.value);
+            document.getElementById('feature-text-y-value').textContent = state.featureTextY + '%';
+            render();
+        });
+        document.getElementById('feature-text-size').addEventListener('input', (e) => {
+            state.featureTextSize = parseInt(e.target.value);
+            document.getElementById('feature-text-size-value').textContent = state.featureTextSize + 'px';
+            render();
+        });
+        document.getElementById('feature-phone-x').addEventListener('input', (e) => {
+            state.featurePhoneX = parseInt(e.target.value);
+            document.getElementById('feature-phone-x-value').textContent = state.featurePhoneX + '%';
+            render();
+        });
+        document.getElementById('feature-phone-y').addEventListener('input', (e) => {
+            state.featurePhoneY = parseInt(e.target.value);
+            document.getElementById('feature-phone-y-value').textContent = state.featurePhoneY + '%';
+            render();
+        });
+        document.getElementById('feature-phone-height').addEventListener('input', (e) => {
+            state.featurePhoneHeight = parseInt(e.target.value);
+            document.getElementById('feature-phone-height-value').textContent = state.featurePhoneHeight + 'px';
             render();
         });
 
@@ -4096,9 +4843,11 @@
             render();
         });
 
-        // Screen type selector
+        // Screen type selector (in Phone Mockup section)
         document.getElementById('screen-type').addEventListener('change', (e) => {
             state.screenType = e.target.value;
+            // Sync with screen-type-1 dropdown
+            document.getElementById('screen-type-1').value = e.target.value;
             
             // Show/hide relevant settings panels
             document.getElementById('circle-settings').style.display = 
@@ -4359,6 +5108,7 @@
                         // Switch to uploaded screen type
                         state.screenType = 'uploaded';
                         document.getElementById('screen-type').value = 'uploaded';
+                        document.getElementById('screen-type-1').value = 'uploaded';
                         document.getElementById('circle-settings').style.display = 'none';
                         document.getElementById('goal-input-settings').style.display = 'none';
                         
@@ -4368,11 +5118,12 @@
                         thumb.className = 'thumbnail active';
                         thumb.innerHTML = `<img src="${event.target.result}" alt="Screenshot">`;
                         thumb.addEventListener('click', () => {
-                            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                            document.querySelectorAll('#thumbnail-strip .thumbnail').forEach(t => t.classList.remove('active'));
                             thumb.classList.add('active');
                             state.appScreenshot = img;
                             state.screenType = 'uploaded';
                             document.getElementById('screen-type').value = 'uploaded';
+                            document.getElementById('screen-type-1').value = 'uploaded';
                             render();
                         });
                         strip.appendChild(thumb);
@@ -4383,6 +5134,74 @@
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Second screenshot upload (for dual-phone layouts)
+        document.getElementById('screenshot-input-2').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        state.appScreenshot2 = img;
+                        state.screenType2 = 'uploaded';
+                        document.getElementById('screen-type-2').value = 'uploaded';
+                        
+                        // Add thumbnail
+                        const strip = document.getElementById('thumbnail-strip-2');
+                        const thumb = document.createElement('div');
+                        thumb.className = 'thumbnail active';
+                        thumb.innerHTML = `<img src="${event.target.result}" alt="Screenshot 2">`;
+                        thumb.addEventListener('click', () => {
+                            document.querySelectorAll('#thumbnail-strip-2 .thumbnail').forEach(t => t.classList.remove('active'));
+                            thumb.classList.add('active');
+                            state.appScreenshot2 = img;
+                            state.screenType2 = 'uploaded';
+                            document.getElementById('screen-type-2').value = 'uploaded';
+                            render();
+                        });
+                        strip.appendChild(thumb);
+                        
+                        render();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // First phone screen type dropdown (in screenshot section)
+        document.getElementById('screen-type-1').addEventListener('change', (e) => {
+            state.screenType = e.target.value;
+            // Sync with other screen-type dropdown
+            document.getElementById('screen-type').value = e.target.value;
+            
+            // Show/hide relevant settings panels
+            document.getElementById('circle-settings').style.display = 
+                e.target.value === 'circle' ? 'block' : 'none';
+            document.getElementById('goal-input-settings').style.display = 
+                e.target.value === 'goal-input' ? 'block' : 'none';
+            document.getElementById('learn-input-settings').style.display = 
+                e.target.value === 'learn-input' ? 'block' : 'none';
+            document.getElementById('player-settings').style.display = 
+                e.target.value === 'player' ? 'block' : 'none';
+            document.getElementById('generation-complete-settings').style.display = 
+                e.target.value === 'generation-complete' ? 'block' : 'none';
+            
+            if (e.target.value !== 'uploaded') {
+                state.appScreenshot = null;
+            }
+            render();
+        });
+
+        // Second phone screen type dropdown
+        document.getElementById('screen-type-2').addEventListener('change', (e) => {
+            state.screenType2 = e.target.value;
+            if (e.target.value !== 'uploaded') {
+                state.appScreenshot2 = null;
+            }
+            render();
         });
 
         document.getElementById('download-btn').addEventListener('click', () => downloadPNG());
