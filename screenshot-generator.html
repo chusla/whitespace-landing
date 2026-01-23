@@ -1,0 +1,4414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitespace App Store Screenshot Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #111118;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 300;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .size-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .size-option {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .size-option:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .size-option.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .size-option .device {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .size-option .dims {
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .color-picker-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 2px;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #3b82f6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .file-upload {
+            position: relative;
+            border: 2px dashed rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .file-upload:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.03);
+        }
+
+        .file-upload input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .file-upload-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .file-upload-text strong {
+            color: #3b82f6;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            margin-top: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        /* Main Canvas Area */
+        .canvas-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: #0d0d12;
+            overflow: auto;
+        }
+
+        .preview-wrapper {
+            position: relative;
+        }
+
+        .preview-info {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        #preview-container {
+            background: #1a1a24;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* Screenshot Canvas - will be scaled for preview */
+        #screenshot-canvas {
+            transform-origin: top left;
+        }
+
+        /* Phone Mockup Styles */
+        .phone-frame {
+            position: absolute;
+            background: #1a1a1e;
+            border-radius: 60px;
+            padding: 12px;
+            box-shadow: 
+                0 0 0 1px rgba(255,255,255,0.1),
+                0 20px 60px rgba(0,0,0,0.5),
+                inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
+
+        .phone-screen {
+            border-radius: 50px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 34px;
+            background: #1a1a1e;
+            border-radius: 0 0 24px 24px;
+            z-index: 10;
+        }
+
+        .phone-notch::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: #2a2a32;
+            border-radius: 50%;
+        }
+
+        /* Checkbox styles */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #3b82f6;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .text-position-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .position-btn {
+            padding: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .position-btn:hover {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .position-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        /* Download status */
+        .download-status {
+            text-align: center;
+            padding: 8px;
+            margin-top: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .download-status.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .download-status.loading {
+            display: block;
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        /* Thumbnails */
+        .thumbnail-strip {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            width: 48px;
+            height: 48px;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .thumbnail:hover {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .thumbnail.active {
+            border-color: #3b82f6;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Preset grid */
+        .preset-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .preset-btn {
+            flex: 1 1 calc(50% - 3px);
+            min-width: calc(50% - 3px);
+            padding: 10px 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.7);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .preset-btn:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .preset-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        /* Circle UI toggle */
+        .circle-settings {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* Layout grid */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .layout-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: rgba(255,255,255,0.7);
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .layout-btn:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .layout-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .layout-icon {
+            font-size: 18px;
+        }
+
+        .layout-name {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Color toggle */
+        .color-toggle {
+            display: flex;
+            gap: 6px;
+        }
+
+        .color-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .color-btn:hover {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .color-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">W</div>
+                <div class="logo-text">
+                    <h1>Screenshot Generator</h1>
+                    <span>App Store Connect</span>
+                </div>
+            </div>
+
+            <!-- Device Size Section -->
+            <div class="section">
+                <div class="section-title">Device Size</div>
+                <div class="size-grid">
+                    <div class="size-option" data-width="1290" data-height="2796" data-name="iPhone 6.7&quot;">
+                        <div class="device">iPhone 6.7"</div>
+                        <div class="dims">1290 × 2796</div>
+                    </div>
+                    <div class="size-option active" data-width="1242" data-height="2688" data-name="iPhone 6.5&quot;">
+                        <div class="device">iPhone 6.5"</div>
+                        <div class="dims">1242 × 2688</div>
+                    </div>
+                    <div class="size-option" data-width="1179" data-height="2556" data-name="iPhone 6.1&quot;">
+                        <div class="device">iPhone 6.1"</div>
+                        <div class="dims">1179 × 2556</div>
+                    </div>
+                    <div class="size-option" data-width="1242" data-height="2208" data-name="iPhone 5.5&quot;">
+                        <div class="device">iPhone 5.5"</div>
+                        <div class="dims">1242 × 2208</div>
+                    </div>
+                    <div class="size-option" data-width="2048" data-height="2732" data-name="iPad 12.9&quot;">
+                        <div class="device">iPad 12.9"</div>
+                        <div class="dims">2048 × 2732</div>
+                    </div>
+                    <div class="size-option" data-width="1668" data-height="2388" data-name="iPad 11&quot;">
+                        <div class="device">iPad 11"</div>
+                        <div class="dims">1668 × 2388</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Layout Selection (matches App Store screenshot styles) -->
+            <div class="section">
+                <div class="section-title">Layout Style</div>
+                <div class="layout-grid" id="layout-grid">
+                    <button class="layout-btn" data-layout="logo-hero">
+                        <div class="layout-icon">✦</div>
+                        <div class="layout-name">Logo Hero</div>
+                    </button>
+                    <button class="layout-btn" data-layout="diagonal-bottom-text">
+                        <div class="layout-icon">↘️</div>
+                        <div class="layout-name">Diagonal</div>
+                    </button>
+                    <button class="layout-btn" data-layout="dual-phones">
+                        <div class="layout-icon">📱📱</div>
+                        <div class="layout-name">Dual</div>
+                    </button>
+                    <button class="layout-btn active" data-layout="centered">
+                        <div class="layout-icon">📱</div>
+                        <div class="layout-name">Centered</div>
+                    </button>
+                    <button class="layout-btn" data-layout="bottom-peek">
+                        <div class="layout-icon">⬆️</div>
+                        <div class="layout-name">Bottom</div>
+                    </button>
+                    <button class="layout-btn" data-layout="tilted-right">
+                        <div class="layout-icon">↗️</div>
+                        <div class="layout-name">Tilt Right</div>
+                    </button>
+                    <button class="layout-btn" data-layout="tilted-left">
+                        <div class="layout-icon">↖️</div>
+                        <div class="layout-name">Tilt Left</div>
+                    </button>
+                    <button class="layout-btn" data-layout="split-left">
+                        <div class="layout-icon">◧</div>
+                        <div class="layout-name">Split Left</div>
+                    </button>
+                    <button class="layout-btn" data-layout="split-right">
+                        <div class="layout-icon">◨</div>
+                        <div class="layout-name">Split Right</div>
+                    </button>
+                </div>
+                
+                <div class="split-controls" id="split-controls" style="display: none; margin-top: 12px;">
+                    <div class="form-group">
+                        <label for="split-phone-x">Split Phone X Position</label>
+                        <input type="range" id="split-phone-x" min="-100" max="100" step="1" value="39">
+                        <div class="slider-labels"><span>← Left</span><span id="split-x-value">39</span><span>Right →</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="split-phone-y">Split Phone Y Position</label>
+                        <input type="range" id="split-phone-y" min="-50" max="50" step="1" value="0">
+                        <div class="slider-labels"><span>↑ Up</span><span id="split-y-value">0</span><span>Down ↓</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="split-phone-angle">Split Phone Angle</label>
+                        <input type="range" id="split-phone-angle" min="20" max="60" step="1" value="38">
+                        <div class="slider-labels"><span>20°</span><span id="split-angle-value">38°</span><span>60°</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logo Upload -->
+            <div class="section">
+                <div class="section-title">Logo</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-logo">
+                    <label for="show-logo">Show logo</label>
+                </div>
+                <div class="form-group">
+                    <label for="logo-scale">Logo Size</label>
+                    <input type="range" id="logo-scale" min="0.5" max="2" step="0.05" value="1">
+                </div>
+                <div class="file-upload" id="logo-upload">
+                    <input type="file" accept="image/*" id="logo-input">
+                    <div class="file-upload-icon">✦</div>
+                    <div class="file-upload-text">
+                        <strong>Upload logo</strong><br>
+                        PNG with transparency recommended
+                    </div>
+                </div>
+                <div class="thumbnail-strip" id="logo-thumbnail"></div>
+            </div>
+
+            <!-- Preset Templates (matching App Store screenshots) -->
+            <div class="section">
+                <div class="section-title">Screenshot Presets</div>
+                <div class="preset-grid" id="preset-grid">
+                    <button class="preset-btn" data-preset="logo-hero">1. Logo Hero</button>
+                    <button class="preset-btn active" data-preset="make-space-focus">2. Make space</button>
+                    <button class="preset-btn" data-preset="personalize-calm">3. Personalize</button>
+                    <button class="preset-btn" data-preset="sleep-better">4. Sleep Better</button>
+                    <button class="preset-btn" data-preset="focus-today">5. Focus Today</button>
+                    <button class="preset-btn" data-preset="just-for-you">6. Just for You</button>
+                    <button class="preset-btn" data-preset="find-center">7. Find Center</button>
+                    <button class="preset-btn" data-preset="ground-mind">8. Ground Mind</button>
+                    <button class="preset-btn" data-preset="customized-for-you">9. Customized</button>
+                    <button class="preset-btn" data-preset="custom">Custom</button>
+                </div>
+            </div>
+
+            <!-- Text Content Section -->
+            <div class="section">
+                <div class="section-title">Text Content</div>
+                <div class="form-group">
+                    <label for="headline">Headline <span style="color: rgba(255,255,255,0.4); font-weight: 400;">(use *word* for emphasis)</span></label>
+                    <input type="text" id="headline" value="Make *space*" placeholder="Enter headline">
+                </div>
+                <div class="form-group">
+                    <label for="subheadline">Subheadline</label>
+                    <textarea id="subheadline" placeholder="Enter subheadline (optional)">for yourself to *focus*</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Text Position</label>
+                    <div class="text-position-grid">
+                        <button class="position-btn active" data-position="top">Top</button>
+                        <button class="position-btn" data-position="center">Center</button>
+                        <button class="position-btn" data-position="bottom">Bottom</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text-offset-y">Text Vertical Offset</label>
+                    <input type="range" id="text-offset-y" min="-300" max="300" step="10" value="0">
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px;">
+                        <span>↑ Up</span>
+                        <span id="text-offset-value">0px</span>
+                        <span>Down ↓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Screenshot Section -->
+            <div class="section">
+                <div class="section-title">App Screenshot</div>
+                <div class="file-upload" id="screenshot-upload">
+                    <input type="file" accept="image/*" id="screenshot-input">
+                    <div class="file-upload-icon">📱</div>
+                    <div class="file-upload-text">
+                        <strong>Click to upload</strong> or drag & drop<br>
+                        PNG, JPG up to 10MB
+                    </div>
+                </div>
+                <div class="thumbnail-strip" id="thumbnail-strip"></div>
+                
+                <!-- Screenshot Crop Controls -->
+                <div class="crop-controls" style="margin-top: 12px;">
+                    <div class="form-group">
+                        <label for="crop-top">Crop from top (px)</label>
+                        <input type="number" id="crop-top" value="0" min="0" max="500" style="width: 100%;">
+                    </div>
+                    <div class="form-group">
+                        <label for="crop-bottom">Crop from bottom (px)</label>
+                        <input type="number" id="crop-bottom" value="0" min="0" max="500" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone Mockup Settings -->
+            <div class="section">
+                <div class="section-title">Phone Mockup</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-phone" checked>
+                    <label for="show-phone">Show phone frame</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-notch" checked>
+                    <label for="show-notch">Show dynamic island</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-status-bar" checked>
+                    <label for="show-status-bar">Show status bar</label>
+                </div>
+                <div class="form-group">
+                    <label for="phone-scale">Phone Size</label>
+                    <input type="range" id="phone-scale" min="0.7" max="2.0" step="0.02" value="1.5">
+                </div>
+                <div class="form-group">
+                    <label for="perspective-x">3D Perspective X</label>
+                    <input type="range" id="perspective-x" min="-0.5" max="0.5" step="0.02" value="0">
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px;">
+                        <span>← Left</span>
+                        <span id="perspective-x-value">0</span>
+                        <span>Right →</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="perspective-y">3D Perspective Y</label>
+                    <input type="range" id="perspective-y" min="-0.3" max="0.3" step="0.02" value="0">
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px;">
+                        <span>↑ Up</span>
+                        <span id="perspective-y-value">0</span>
+                        <span>Down ↓</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Frame Color</label>
+                    <div class="color-toggle">
+                        <button class="color-btn active" data-color="dark">Dark</button>
+                        <button class="color-btn" data-color="silver">Silver</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone-phosphene-intensity">Screen Phosphene Intensity</label>
+                    <input type="range" id="phone-phosphene-intensity" min="0.5" max="3" step="0.1" value="2.2">
+                </div>
+                <div class="form-group">
+                    <label for="phone-phosphene-brightness">Screen Phosphene Brightness</label>
+                    <input type="range" id="phone-phosphene-brightness" min="0.5" max="2" step="0.1" value="1.4">
+                </div>
+                
+                <div class="form-group">
+                    <label for="screen-type">Screen Content</label>
+                    <select id="screen-type">
+                        <option value="circle">Circle UI (Default)</option>
+                        <option value="goal-input">Focus - Goal Input</option>
+                        <option value="learn-input">Learn - Content Input</option>
+                        <option value="player">Audio Player</option>
+                        <option value="generation-complete">Generation Complete</option>
+                        <option value="uploaded">Uploaded Screenshot</option>
+                    </select>
+                </div>
+                
+                <div class="circle-settings" id="circle-settings">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-circle" checked>
+                        <label for="show-circle">Show circle UI element</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="circle-text">Circle caption text</label>
+                        <input type="text" id="circle-text" value="Your space is ready for you." placeholder="Text below circle">
+                    </div>
+                </div>
+                
+                <div class="goal-input-settings" id="goal-input-settings" style="display: none;">
+                    <div class="form-group">
+                        <label for="goal-placeholder">Placeholder text</label>
+                        <input type="text" id="goal-placeholder" value="feel confident before my presentation" placeholder="Cycling placeholder text">
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-input-text">Input text (leave empty for placeholder)</label>
+                        <input type="text" id="goal-input-text" value="" placeholder="User input text">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-goal-buttons">
+                        <label for="show-goal-buttons">Show action buttons</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-recent" checked>
+                        <label for="show-recent">Show "Recent" section</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-tab-bar" checked>
+                        <label for="show-tab-bar">Show tab bar</label>
+                    </div>
+                </div>
+                
+                <div class="learn-input-settings" id="learn-input-settings" style="display: none;">
+                    <div class="form-group">
+                        <label for="learn-placeholder">Placeholder text</label>
+                        <input type="text" id="learn-placeholder" value="https://twitter.com/user/status/123..." placeholder="URL placeholder">
+                    </div>
+                    <div class="form-group">
+                        <label for="learn-input-text">Input text (leave empty for placeholder)</label>
+                        <input type="text" id="learn-input-text" value="" placeholder="User input text">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-upload-button" checked>
+                        <label for="show-upload-button">Show "Upload PDF" button</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-learn-recent" checked>
+                        <label for="show-learn-recent">Show "Recent" section</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-back-button" checked>
+                        <label for="show-back-button">Show back button</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-learn-tab-bar" checked>
+                        <label for="show-learn-tab-bar">Show tab bar</label>
+                    </div>
+                </div>
+                
+                <div class="player-settings" id="player-settings" style="display: none;">
+                    <div class="form-group">
+                        <label for="player-title">Session Title</label>
+                        <input type="text" id="player-title" value="Clearing Mental Space" placeholder="Session title">
+                    </div>
+                    <div class="form-group">
+                        <label for="player-duration">Duration (minutes)</label>
+                        <input type="number" id="player-duration" value="11" min="1" max="60">
+                    </div>
+                    <div class="form-group">
+                        <label for="player-current-time">Current Time (seconds)</label>
+                        <input type="number" id="player-current-time" value="6" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="player-total-time">Total Time (seconds)</label>
+                        <input type="number" id="player-total-time" value="636" min="1">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="player-is-playing">
+                        <label for="player-is-playing">Show playing state (pause icon)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="player-show-transcript" checked>
+                        <label for="player-show-transcript">Show "Transcript" button</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="player-show-reflection" checked>
+                        <label for="player-show-reflection">Show "Reflection" button</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="player-show-practice" checked>
+                        <label for="player-show-practice">Show "Practice Again" button</label>
+                    </div>
+                </div>
+                
+                <div class="generation-complete-settings" id="generation-complete-settings" style="display: none;">
+                    <div class="form-group">
+                        <label for="completion-message">Completion Message</label>
+                        <input type="text" id="completion-message" value="We can begin." placeholder="Message text">
+                    </div>
+                    <div class="form-group">
+                        <label for="credits-used">Credits Used</label>
+                        <input type="number" id="credits-used" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="credits-remaining">Credits Remaining</label>
+                        <input type="number" id="credits-remaining" value="17" min="0">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-complete-tab-bar" checked>
+                        <label for="show-complete-tab-bar">Show tab bar</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3D Frame Overlay Section -->
+            <div class="section">
+                <div class="section-title">3D Frame Overlay</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="use-3d-frame">
+                    <label for="use-3d-frame">Use 3D frame overlay</label>
+                </div>
+                <div class="file-upload" id="frame3d-upload">
+                    <input type="file" accept="image/*" id="frame3d-input">
+                    <div class="file-upload-icon">📐</div>
+                    <div class="file-upload-text">
+                        <strong>Upload 3D frame</strong><br>
+                        PNG with transparent screen area
+                    </div>
+                </div>
+                <div class="thumbnail-strip" id="frame3d-thumbnail"></div>
+                
+                <div class="frame3d-corners" id="frame3d-corners" style="display: none; margin-top: 12px;">
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 8px;">
+                        Screen corners (% of image)
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Top-Left X</label>
+                            <input type="number" id="corner-tl-x" value="17.5" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Top-Left Y</label>
+                            <input type="number" id="corner-tl-y" value="5.2" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Top-Right X</label>
+                            <input type="number" id="corner-tr-x" value="79" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Top-Right Y</label>
+                            <input type="number" id="corner-tr-y" value="9.2" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Bottom-Right X</label>
+                            <input type="number" id="corner-br-x" value="81.5" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Bottom-Right Y</label>
+                            <input type="number" id="corner-br-y" value="89.5" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Bottom-Left X</label>
+                            <input type="number" id="corner-bl-x" value="13.5" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label style="font-size: 11px;">Bottom-Left Y</label>
+                            <input type="number" id="corner-bl-y" value="93.5" min="0" max="100" step="0.5" style="width: 100%;">
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" id="preview-corners" style="margin-top: 4px; font-size: 12px; padding: 6px 10px;">
+                        👁️ Preview Corners
+                    </button>
+                </div>
+            </div>
+
+            <!-- Background Settings -->
+            <div class="section">
+                <div class="section-title">Phosphene Background</div>
+                <div class="form-group">
+                    <label for="phosphene-count">Phosphene Density</label>
+                    <input type="range" id="phosphene-count" min="40" max="200" value="120">
+                </div>
+                <div class="form-group">
+                    <label for="phosphene-intensity">Intensity</label>
+                    <input type="range" id="phosphene-intensity" min="0.3" max="2" step="0.1" value="1">
+                </div>
+                <div class="form-group">
+                    <label>Color Tones</label>
+                    <div class="color-picker-group">
+                        <input type="color" id="color1" value="#2a4a7a">
+                        <input type="color" id="color2" value="#3d3a6d">
+                        <input type="color" id="color3" value="#1e3a5f">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-secondary" id="randomize-phosphenes" style="margin-top: 8px;">
+                        🎲 Randomize
+                    </button>
+                </div>
+            </div>
+
+            <!-- Export Section -->
+            <div class="section">
+                <button class="btn btn-primary" id="download-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Download PNG
+                </button>
+                <button class="btn btn-secondary" id="download-all-btn">
+                    Download All Sizes
+                </button>
+                <div class="download-status" id="download-status"></div>
+            </div>
+        </aside>
+
+        <main class="canvas-area">
+            <div class="preview-wrapper">
+                <div class="preview-info" id="preview-info">iPhone 6.7" — 1290 × 2796px</div>
+                <div id="preview-container">
+                    <canvas id="screenshot-canvas"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // =====================================================
+        // WHITESPACE APP STORE SCREENSHOT GENERATOR
+        // High-quality phosphene backgrounds without banding
+        // =====================================================
+
+        const canvas = document.getElementById('screenshot-canvas');
+        const ctx = canvas.getContext('2d', { 
+            alpha: false,
+            willReadFrequently: false
+        });
+
+        // Preset templates matching existing Whitespace App Store screenshots
+        const PRESETS = {
+            'logo-hero': {
+                headline: '',
+                subheadline: '',
+                layout: 'logo-hero',
+                showCircle: true,
+                circleText: 'Your space is ready for you.'
+            },
+            'make-space-focus': {
+                headline: 'Make *space*',
+                subheadline: 'for yourself to *focus*',
+                layout: 'diagonal-bottom-text',
+                showCircle: true,
+                circleText: ''
+            },
+            'personalize-calm': {
+                headline: 'Personalize Your',
+                subheadline: 'Calm',
+                layout: 'dual-phones',
+                showCircle: false
+            },
+            'sleep-better': {
+                headline: 'Sleep Better Tonight',
+                subheadline: '',
+                layout: 'centered',
+                showCircle: true,
+                circleText: 'Your space is ready for you.'
+            },
+            'focus-today': {
+                headline: 'Focus on Today',
+                subheadline: '',
+                layout: 'bottom-peek',
+                showCircle: false
+            },
+            'just-for-you': {
+                headline: 'Just for You',
+                subheadline: '',
+                layout: 'centered',
+                showCircle: false
+            },
+            'find-center': {
+                headline: 'Find Your Center',
+                subheadline: '',
+                layout: 'tilted-right',
+                showCircle: false
+            },
+            'ground-mind': {
+                headline: 'Ground Your Mind',
+                subheadline: '',
+                layout: 'tilted-left',
+                showCircle: false
+            },
+            'customized-for-you': {
+                headline: 'Customized For You',
+                subheadline: '',
+                layout: 'bottom-peek',
+                showCircle: false
+            },
+            'custom': {
+                headline: '',
+                subheadline: '',
+                layout: 'centered',
+                showCircle: false
+            }
+        };
+
+        // State
+        let state = {
+            width: 1242,
+            height: 2688,
+            deviceName: 'iPhone 6.5"',
+            headline: 'Make *space*',
+            subheadline: 'for yourself to *focus*',
+            textPosition: 'top',
+            textOffsetY: 0, // vertical offset for text position (pixels)
+            showPhone: true,
+            showNotch: true,
+            showStatusBar: true,
+            phoneScale: 1.5,
+            perspectiveX: 0, // -0.5 to 0.5 for left/right tilt
+            perspectiveY: 0, // -0.3 to 0.3 for up/down tilt
+            phoneColor: 'dark', // 'dark' or 'silver'
+            phospheneCount: 100,
+            phospheneIntensity: 1,
+            colors: ['#2a4a7a', '#3d3a6d', '#1e3a5f'],
+            appScreenshot: null,
+            cropTop: 0, // pixels to crop from top of uploaded screenshot
+            cropBottom: 0, // pixels to crop from bottom of uploaded screenshot
+            phosphenes: [],
+            showCircleUI: true,
+            circleText: 'Your space is ready for you.',
+            selectedPreset: 'make-space-focus',
+            layout: 'centered',
+            logo: null,
+            showLogo: false,
+            logoScale: 1,
+            // Screen content type: 'circle', 'goal-input', 'uploaded'
+            screenType: 'circle',
+            // Goal input page options
+            goalPlaceholder: 'feel confident before my presentation',
+            goalInputText: '',
+            showGoalButtons: false,
+            showRecent: true,
+            showTabBar: true,
+            // Learn input page options
+            learnPlaceholder: 'https://twitter.com/user/status/123...',
+            learnInputText: '',
+            showUploadButton: true,
+            showLearnRecent: true,
+            showBackButton: true,
+            showLearnTabBar: true,
+            // Player modal options
+            playerTitle: 'Clearing Mental Space',
+            playerDuration: 11,
+            playerCurrentTime: 6,
+            playerTotalTime: 636,
+            playerIsPlaying: true,
+            playerShowTranscript: true,
+            playerShowReflection: true,
+            playerShowPractice: true,
+            // Generation complete options
+            completionMessage: 'We can begin.',
+            creditsUsed: 0,
+            creditsRemaining: 17,
+            showTabBar: true,
+            // Phone screen phosphene settings
+            phonePhospheneIntensity: 2.2,  // 0.5 to 3.0
+            phonePhospheneBrightness: 1.4, // 0.5 to 2.0
+            // Split layout positioning
+            splitPhoneX: 39,   // -100 to 100 (percentage offset) - default for split-left
+            splitPhoneY: 0,    // -50 to 50 (percentage offset)
+            splitPhoneAngle: 38, // rotation angle for split layouts
+            // 3D Frame overlay
+            frame3D: null,
+            use3DFrame: false,
+            // Screen quad corners (relative to frame image size, as percentages 0-1)
+            // Order: top-left, top-right, bottom-right, bottom-left
+            screenCorners: {
+                tl: { x: 0.175, y: 0.052 },   // top-left
+                tr: { x: 0.79, y: 0.092 },    // top-right (shifted due to perspective)
+                br: { x: 0.815, y: 0.895 },   // bottom-right
+                bl: { x: 0.135, y: 0.935 }    // bottom-left
+            },
+            previewCorners: false
+        };
+
+        // Layout options matching App Store screenshot styles
+        const LAYOUTS = {
+            'logo-hero': { name: 'Logo Hero', description: 'Logo + brand name + diagonal phone', icon: '✦' },
+            'diagonal-bottom-text': { name: 'Diagonal', description: 'Tilted phone, text at bottom', icon: '↘️' },
+            'dual-phones': { name: 'Dual Phones', description: 'Two phones at angles', icon: '📱📱' },
+            'centered': { name: 'Centered', description: 'Single phone, text at top', icon: '📱' },
+            'bottom-peek': { name: 'Bottom Peek', description: 'Phone peeking from bottom', icon: '⬆️' },
+            'tilted-right': { name: 'Tilted Right', description: 'Slight right tilt', icon: '↗️' },
+            'tilted-left': { name: 'Tilted Left', description: 'Slight left tilt', icon: '↖️' },
+            'split-left': { name: 'Split Left', description: 'Left half of split phone pair', icon: '◧' },
+            'split-right': { name: 'Split Right', description: 'Right half of split phone pair', icon: '◨' }
+        };
+
+        // Device-specific phone dimensions (~70% of canvas height)
+        // Based on iPhone 17 Air SVG proportions (856x1760 = 0.486 aspect ratio)
+        const PHONE_CONFIGS = {
+            'iPhone 6.7"': { phoneWidth: 680, phoneHeight: 1400 },  // 0.486 ratio
+            'iPhone 6.5"': { phoneWidth: 655, phoneHeight: 1350 },
+            'iPhone 6.1"': { phoneWidth: 620, phoneHeight: 1275 },
+            'iPhone 5.5"': { phoneWidth: 600, phoneHeight: 1065 },  // Older ratio
+            // iPad proportions from SVG: 1128x1468 frame, bezel ~4.4%, corner radius ~6.6%
+            'iPad 12.9"': { phoneWidth: 1100, phoneHeight: 1430 },
+            'iPad 11"': { phoneWidth: 920, phoneHeight: 1196 }
+        };
+
+        // Preview scale calculation
+        function getPreviewScale() {
+            const maxWidth = window.innerWidth - 480; // sidebar + padding
+            const maxHeight = window.innerHeight - 160;
+            const scaleX = Math.min(maxWidth / state.width, 0.35);
+            const scaleY = Math.min(maxHeight / state.height, 0.35);
+            return Math.min(scaleX, scaleY, 0.3);
+        }
+
+        // Parse hex color to RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : { r: 59, g: 89, b: 152 };
+        }
+
+        // Generate HSL color from base colors
+        function generatePhospheneColor(baseColors, intensity) {
+            const baseColor = baseColors[Math.floor(Math.random() * baseColors.length)];
+            const rgb = hexToRgb(baseColor);
+            
+            // Convert to HSL for more control
+            const r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+                    case g: h = ((b - r) / d + 2) / 6; break;
+                    case b: h = ((r - g) / d + 4) / 6; break;
+                }
+            }
+
+            // Add variation
+            const hueVariation = (Math.random() - 0.5) * 0.08;
+            const satVariation = (Math.random() - 0.5) * 0.2;
+            const lightVariation = (Math.random() - 0.5) * 0.15;
+
+            return {
+                h: ((h + hueVariation) * 360 + 360) % 360,
+                s: Math.max(20, Math.min(60, (s + satVariation) * 100)),
+                l: Math.max(35, Math.min(65, (l + lightVariation) * 100))
+            };
+        }
+
+        // Create phosphene particles
+        function createPhosphenes() {
+            state.phosphenes = [];
+            const count = state.phospheneCount;
+            
+            for (let i = 0; i < count; i++) {
+                const color = generatePhospheneColor(state.colors, state.phospheneIntensity);
+                state.phosphenes.push({
+                    x: Math.random() * state.width,
+                    y: Math.random() * state.height,
+                    radius: Math.random() * 300 + 150,
+                    opacity: (Math.random() * 0.04 + 0.015) * state.phospheneIntensity,
+                    hue: color.h,
+                    saturation: color.s,
+                    lightness: color.l,
+                    pulsePhase: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        // Draw phosphene background with dithering to prevent banding
+        function drawPhospheneBackground() {
+            // Dark base
+            ctx.fillStyle = 'rgb(10, 10, 15)';
+            ctx.fillRect(0, 0, state.width, state.height);
+
+            // Draw phosphenes with radial gradients using multiple color stops for smoother transitions
+            state.phosphenes.forEach(p => {
+                const pulse = Math.sin(p.pulsePhase);
+                const radius = p.radius + pulse * 50;
+                const opacity = p.opacity + pulse * 0.015 * state.phospheneIntensity;
+
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius);
+                
+                // More color stops for smoother gradient (reduces banding)
+                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${opacity})`);
+                gradient.addColorStop(0.15, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${opacity * 0.85})`);
+                gradient.addColorStop(0.3, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${opacity * 0.65})`);
+                gradient.addColorStop(0.5, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${opacity * 0.4})`);
+                gradient.addColorStop(0.7, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${opacity * 0.2})`);
+                gradient.addColorStop(0.85, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${opacity * 0.08})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Apply blue-noise style dithering to prevent banding
+            // Using a pattern-based approach for more uniform noise
+            const imageData = ctx.getImageData(0, 0, state.width, state.height);
+            const data = imageData.data;
+            const noiseIntensity = 4;
+            
+            for (let y = 0; y < state.height; y++) {
+                for (let x = 0; x < state.width; x++) {
+                    const i = (y * state.width + x) * 4;
+                    
+                    // Triangular probability distribution noise (better than uniform)
+                    const u1 = Math.random();
+                    const u2 = Math.random();
+                    const noise = (u1 + u2 - 1) * noiseIntensity;
+                    
+                    data[i] = Math.max(0, Math.min(255, data[i] + noise));
+                    data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
+                    data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
+                }
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        // Draw iOS status bar (time, signal, wifi, battery)
+        // Aligned with Dynamic Island / camera area
+        function drawStatusBar(screenX, screenY, screenWidth, screenHeight, scale, isIPad = false) {
+            ctx.save();
+            
+            // Position elements to align with Dynamic Island center
+            // Dynamic Island: top at screenY + screenHeight * 0.027, height is screenHeight * 0.038
+            // So center is at screenY + screenHeight * 0.046
+            const diCenterY = screenY + screenHeight * 0.046;
+            const elementY = diCenterY;
+            
+            // Padding from screen edges
+            const padding = screenWidth * 0.06;
+            
+            // Font size based on screen height (matching iOS proportions)
+            const fontSize = screenHeight * 0.018;
+            
+            // Time on the left (e.g., "9:41")
+            ctx.font = `600 ${fontSize}px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif`;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('9:41', screenX + padding, elementY);
+            
+            // Right side elements - start from the right edge
+            let rightX = screenX + screenWidth - padding;
+            
+            // Battery (rightmost)
+            const batteryWidth = screenWidth * 0.06;
+            const batteryHeight = fontSize * 0.65;
+            const batteryX = rightX - batteryWidth;
+            const batteryY = elementY - batteryHeight / 2;
+            
+            // Battery outline
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+            ctx.lineWidth = 1.2 * scale;
+            ctx.beginPath();
+            ctx.roundRect(batteryX, batteryY, batteryWidth - 3 * scale, batteryHeight, 2.5 * scale);
+            ctx.stroke();
+            
+            // Battery cap (nub on right)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.beginPath();
+            ctx.roundRect(batteryX + batteryWidth - 3 * scale, batteryY + batteryHeight * 0.25, 2.5 * scale, batteryHeight * 0.5, [0, 1 * scale, 1 * scale, 0]);
+            ctx.fill();
+            
+            // Battery fill (full)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.beginPath();
+            ctx.roundRect(batteryX + 2 * scale, batteryY + 2 * scale, (batteryWidth - 8 * scale) * 0.9, batteryHeight - 4 * scale, 1.5 * scale);
+            ctx.fill();
+            
+            rightX = batteryX - screenWidth * 0.02;
+            
+            // WiFi icon
+            const wifiSize = fontSize * 0.9;
+            const wifiX = rightX - wifiSize * 0.5;
+            const wifiCenterY = elementY + wifiSize * 0.15; // Offset down slightly since arcs go up
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+            
+            // Draw WiFi arcs
+            for (let i = 0; i < 3; i++) {
+                const arcRadius = wifiSize * (0.25 + i * 0.22);
+                const arcThickness = wifiSize * 0.14;
+                ctx.beginPath();
+                ctx.arc(wifiX, wifiCenterY, arcRadius, -Math.PI * 0.75, -Math.PI * 0.25);
+                ctx.lineWidth = arcThickness;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+            // WiFi dot at bottom
+            ctx.beginPath();
+            ctx.arc(wifiX, wifiCenterY, wifiSize * 0.12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.lineCap = 'butt';
+            
+            rightX = wifiX - wifiSize * 0.5 - screenWidth * 0.02;
+            
+            // Signal bars (cellular) - 4 bars
+            const barWidth = screenWidth * 0.0075;
+            const barSpacing = screenWidth * 0.004;
+            const maxBarHeight = fontSize * 0.7;
+            const totalBarsWidth = barWidth * 4 + barSpacing * 3;
+            const barsStartX = rightX - totalBarsWidth;
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            for (let i = 0; i < 4; i++) {
+                const barHeight = maxBarHeight * (0.4 + i * 0.2);
+                const barX = barsStartX + i * (barWidth + barSpacing);
+                const barY = elementY + maxBarHeight / 2 - barHeight;
+                ctx.beginPath();
+                ctx.roundRect(barX, barY, barWidth, barHeight, 1 * scale);
+                ctx.fill();
+            }
+            
+            ctx.restore();
+        }
+
+        // Draw tab bar with Ionicon-style icons (Focus tab active)
+        function drawTabBar(sx, sy, sw, sh, s) {
+            const textPrimary = '#FFFFFF';
+            const tabBarHeight = sh * 0.085;
+            const tabBarY = sy + sh - tabBarHeight;
+            
+            // Tab bar background - solid color to avoid gradient banding
+            ctx.fillStyle = 'rgb(18, 19, 24)';
+            ctx.fillRect(sx, tabBarY, sw, tabBarHeight);
+            
+            // Add subtle noise dithering to prevent any banding
+            const tabBarImageData = ctx.getImageData(sx, tabBarY, sw, tabBarHeight);
+            const data = tabBarImageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const noise = (Math.random() - 0.5) * 3;
+                data[i] = Math.max(0, Math.min(255, data[i] + noise));
+                data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
+                data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
+            }
+            ctx.putImageData(tabBarImageData, sx, tabBarY);
+            
+            // Top border - simple solid line
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(sx, tabBarY);
+            ctx.lineTo(sx + sw, tabBarY);
+            ctx.stroke();
+            
+            const tabs = [
+                { icon: 'focus', label: 'Focus', active: true },
+                { icon: 'learn', label: 'Learn', active: false },
+                { icon: 'spaces', label: 'Spaces', active: false },
+                { icon: 'you', label: 'You', active: false },
+            ];
+            
+            const tabWidth = sw / tabs.length;
+            const iconSize = sw * 0.055;
+            const labelSize = sw * 0.031;
+            
+            tabs.forEach((tab, i) => {
+                const tabX = sx + tabWidth * i + tabWidth / 2;
+                const iconY = tabBarY + tabBarHeight * 0.32;
+                const labelY = tabBarY + tabBarHeight * 0.68;
+                
+                const color = tab.active ? textPrimary : 'rgba(255, 255, 255, 0.4)';
+                
+                ctx.fillStyle = color;
+                ctx.strokeStyle = color;
+                
+                if (tab.icon === 'focus') {
+                    const outerR = iconSize * 0.45;
+                    const innerR = iconSize * 0.25;
+                    ctx.lineWidth = 1.8;
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY, outerR, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY, innerR, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (tab.icon === 'learn') {
+                    const bw = iconSize * 0.45;
+                    const bh = iconSize * 0.4;
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.moveTo(tabX, iconY - bh);
+                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY - bh, tabX - bw, iconY - bh * 0.7);
+                    ctx.lineTo(tabX - bw, iconY + bh * 0.8);
+                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(tabX, iconY - bh);
+                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY - bh, tabX + bw, iconY - bh * 0.7);
+                    ctx.lineTo(tabX + bw, iconY + bh * 0.8);
+                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(tabX, iconY - bh);
+                    ctx.lineTo(tabX, iconY + bh * 0.7);
+                    ctx.stroke();
+                } else if (tab.icon === 'spaces') {
+                    const cw = iconSize * 0.5;
+                    const ch = iconSize * 0.35;
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.roundRect(tabX - cw * 0.7, iconY - ch * 0.9, cw * 1.4, ch * 0.5, 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.roundRect(tabX - cw * 0.8, iconY - ch * 0.3, cw * 1.6, ch * 0.7, 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.roundRect(tabX - cw * 0.9, iconY + ch * 0.15, cw * 1.8, ch * 0.8, 3);
+                    ctx.stroke();
+                } else if (tab.icon === 'you') {
+                    const r = iconSize * 0.48;
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY, r, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY - r * 0.25, r * 0.28, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(tabX, iconY + r * 0.9, r * 0.55, Math.PI * 1.2, Math.PI * 1.8);
+                    ctx.stroke();
+                }
+                
+                ctx.font = `400 ${labelSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = color;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText(tab.label, tabX, labelY);
+            });
+        }
+
+        // Draw GoalInputPage screen (Focus flow - "What would you like to focus on?")
+        function drawGoalInputScreen(screenX, screenY, screenWidth, screenHeight, scale, options = {}) {
+            const {
+                placeholderText = 'calm my racing thoughts',
+                showButtons = false,
+                inputText = '',
+                showRecent = true,
+                showTabBar = true,
+            } = options;
+            
+            // Colors from DesignSystem
+            const bgColor = '#0D0D0F';
+            const textPrimary = '#FFFFFF';
+            const textSecondary = 'rgba(255, 255, 255, 0.6)';
+            const textTertiary = 'rgba(255, 255, 255, 0.35)';
+            const textMuted = 'rgba(255, 255, 255, 0.4)';
+            const borderSubtle = 'rgba(255, 255, 255, 0.08)';
+            const inputBorder = 'rgba(255, 255, 255, 0.2)';
+            
+            // Fill dark background first
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(screenX, screenY, screenWidth, screenHeight);
+            
+            // Add phosphene background effect with configurable intensity/brightness
+            const phospheneCount = Math.floor(12 * state.phonePhospheneIntensity);
+            const brightness = state.phonePhospheneBrightness;
+            for (let i = 0; i < phospheneCount; i++) {
+                const px = screenX + Math.random() * screenWidth;
+                const py = screenY + Math.random() * screenHeight;
+                const pr = Math.random() * screenWidth * 0.4 + screenWidth * 0.15;
+                const hue = 215 + (Math.random() - 0.5) * 40;
+                const baseOpacity = 0.035 * brightness;
+                const gradient = ctx.createRadialGradient(px, py, 0, px, py, pr);
+                gradient.addColorStop(0, `hsla(${hue}, 35%, ${45 * brightness}%, ${baseOpacity})`);
+                gradient.addColorStop(0.5, `hsla(${hue}, 30%, ${40 * brightness}%, ${baseOpacity * 0.57})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            const centerX = screenX + screenWidth / 2;
+            const maxWidth = screenWidth * 0.82;
+            
+            // Heading positioned at ~38% from top (matching screenshot)
+            const headingY = screenY + screenHeight * 0.36;
+            const headingSize = screenWidth * 0.077; // ~28-30px relative to screen
+            const headingLineHeight = headingSize * 1.45;
+            
+            ctx.font = `400 ${headingSize}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('What would you like', centerX, headingY);
+            ctx.fillText('to focus on?', centerX, headingY + headingLineHeight);
+            
+            // Input area - positioned below heading with proper spacing
+            const inputY = headingY + headingLineHeight * 2 + screenHeight * 0.08;
+            const inputWidth = maxWidth;
+            const inputTextSize = screenWidth * 0.052; // ~20px relative
+            const inputPaddingV = screenHeight * 0.018;
+            
+            // Input text or placeholder
+            if (inputText) {
+                ctx.font = `300 ${inputTextSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textPrimary;
+            } else {
+                ctx.font = `400 ${inputTextSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textTertiary;
+            }
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(inputText || placeholderText, centerX, inputY);
+            
+            // Input underline
+            const underlineY = inputY + inputPaddingV + inputTextSize * 0.5;
+            ctx.strokeStyle = inputBorder;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(centerX - inputWidth / 2, underlineY);
+            ctx.lineTo(centerX + inputWidth / 2, underlineY);
+            ctx.stroke();
+            
+            // Buttons (shown when there's input text)
+            if (showButtons || inputText) {
+                const buttonY = underlineY + screenHeight * 0.06;
+                const buttonGap = screenHeight * 0.028;
+                
+                // Button 1: Create a Space
+                const btn1Y = buttonY;
+                drawOptionButton(
+                    centerX, btn1Y, inputWidth,
+                    'Create a Space',
+                    'Custom guided audio of 2-20 minutes',
+                    scale, textPrimary, textMuted, borderSubtle
+                );
+                
+                // Button 2: Generate a Mantra
+                const btn2Y = btn1Y + screenHeight * 0.065 + buttonGap;
+                drawOptionButton(
+                    centerX, btn2Y, inputWidth,
+                    'Generate a Mantra',
+                    'A short quote for reflection',
+                    scale, textPrimary, textMuted, borderSubtle
+                );
+            } else if (showRecent) {
+                // Show "Recent" section when no input
+                const recentY = underlineY + screenHeight * 0.045;
+                const recentSize = screenWidth * 0.038;
+                
+                ctx.font = `400 ${recentSize}px "Inter", -apple-system, sans-serif`;
+                ctx.fillStyle = textTertiary;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText('>  Recent', centerX, recentY);
+            }
+            
+            // Tab bar at bottom
+            if (showTabBar) {
+                drawTabBar(screenX, screenY, screenWidth, screenHeight, scale);
+            }
+            
+            // Helper function to draw option buttons
+            function drawOptionButton(x, y, width, title, subtitle, s, titleColor, subtitleColor, borderColor) {
+                const titleSize = screenWidth * 0.047;
+                const subtitleSize = screenWidth * 0.034;
+                
+                // Title
+                ctx.font = `400 ${titleSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = titleColor;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText(title, x, y);
+                
+                // Subtitle
+                ctx.font = `400 ${subtitleSize}px "Inter", -apple-system, sans-serif`;
+                ctx.fillStyle = subtitleColor;
+                ctx.fillText(subtitle, x, y + titleSize + screenHeight * 0.006);
+                
+                // Bottom border
+                const totalHeight = titleSize + screenHeight * 0.006 + subtitleSize + screenHeight * 0.02;
+                ctx.strokeStyle = borderColor;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(x - width / 2, y + totalHeight);
+                ctx.lineTo(x + width / 2, y + totalHeight);
+                ctx.stroke();
+            }
+        }
+
+        // Draw Learn Input Page ("What would you like to learn?")
+        function drawLearnInputScreen(screenX, screenY, screenWidth, screenHeight, scale, options = {}) {
+            const {
+                placeholderText = 'https://twitter.com/user/status/123...',
+                inputText = '',
+                showUploadButton = true,
+                showRecent = true,
+                showTabBar = true,
+                showBackButton = true,
+            } = options;
+            
+            // Colors from DesignSystem
+            const bgColor = '#0D0D0F';
+            const textPrimary = '#FFFFFF';
+            const textSecondary = 'rgba(255, 255, 255, 0.6)';
+            const textTertiary = 'rgba(255, 255, 255, 0.35)';
+            const textMuted = 'rgba(255, 255, 255, 0.4)';
+            const textDim = 'rgba(255, 255, 255, 0.5)';
+            const borderSubtle = 'rgba(255, 255, 255, 0.08)';
+            const inputBorder = 'rgba(255, 255, 255, 0.2)';
+            
+            // Fill dark background first
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(screenX, screenY, screenWidth, screenHeight);
+            
+            // Add phosphene background effect with configurable intensity/brightness
+            const phospheneCount = Math.floor(12 * state.phonePhospheneIntensity);
+            const brightness = state.phonePhospheneBrightness;
+            for (let i = 0; i < phospheneCount; i++) {
+                const px = screenX + Math.random() * screenWidth;
+                const py = screenY + Math.random() * screenHeight;
+                const pr = Math.random() * screenWidth * 0.4 + screenWidth * 0.15;
+                const hue = 215 + (Math.random() - 0.5) * 40;
+                const baseOpacity = 0.035 * brightness;
+                const gradient = ctx.createRadialGradient(px, py, 0, px, py, pr);
+                gradient.addColorStop(0, `hsla(${hue}, 35%, ${45 * brightness}%, ${baseOpacity})`);
+                gradient.addColorStop(0.5, `hsla(${hue}, 30%, ${40 * brightness}%, ${baseOpacity * 0.57})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            const centerX = screenX + screenWidth / 2;
+            const maxWidth = screenWidth * 0.82;
+            const padding = screenWidth * 0.06;
+            
+            // Back button (top left, below status bar)
+            if (showBackButton) {
+                const backY = screenY + screenHeight * 0.09;
+                const backX = screenX + padding;
+                const chevronSize = screenWidth * 0.06;
+                
+                ctx.strokeStyle = textMuted;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.beginPath();
+                ctx.moveTo(backX + chevronSize * 0.5, backY - chevronSize * 0.4);
+                ctx.lineTo(backX, backY);
+                ctx.lineTo(backX + chevronSize * 0.5, backY + chevronSize * 0.4);
+                ctx.stroke();
+                ctx.lineCap = 'butt';
+            }
+            
+            // Heading positioned at ~36% from top
+            const headingY = screenY + screenHeight * 0.36;
+            const headingSize = screenWidth * 0.077;
+            const headingLineHeight = headingSize * 1.45;
+            
+            ctx.font = `400 ${headingSize}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('What would you like', centerX, headingY);
+            ctx.fillText('to learn?', centerX, headingY + headingLineHeight);
+            
+            // Input area
+            const inputY = headingY + headingLineHeight * 2 + screenHeight * 0.08;
+            const inputWidth = maxWidth;
+            const inputTextSize = screenWidth * 0.052;
+            const inputPaddingV = screenHeight * 0.018;
+            
+            // Input text or placeholder
+            if (inputText) {
+                ctx.font = `300 ${inputTextSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textPrimary;
+            } else {
+                ctx.font = `400 ${inputTextSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textTertiary;
+            }
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(inputText || placeholderText, centerX, inputY);
+            
+            // Input underline
+            const underlineY = inputY + inputPaddingV + inputTextSize * 0.5;
+            ctx.strokeStyle = inputBorder;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(centerX - inputWidth / 2, underlineY);
+            ctx.lineTo(centerX + inputWidth / 2, underlineY);
+            ctx.stroke();
+            
+            // Show action button when there's input text
+            if (inputText) {
+                const buttonY = underlineY + screenHeight * 0.06;
+                const titleSize = screenWidth * 0.047;
+                const subtitleSize = screenWidth * 0.034;
+                
+                // Button title
+                ctx.font = `400 ${titleSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textPrimary;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText('Create Program', centerX, buttonY);
+                
+                // Button subtitle
+                ctx.font = `400 ${subtitleSize}px "Inter", -apple-system, sans-serif`;
+                ctx.fillStyle = textMuted;
+                ctx.fillText('Transform into learning sessions', centerX, buttonY + titleSize + screenHeight * 0.006);
+                
+                // Bottom border
+                const totalHeight = titleSize + screenHeight * 0.006 + subtitleSize + screenHeight * 0.02;
+                ctx.strokeStyle = borderSubtle;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(centerX - inputWidth / 2, buttonY + totalHeight);
+                ctx.lineTo(centerX + inputWidth / 2, buttonY + totalHeight);
+                ctx.stroke();
+            } else {
+                // Show upload button and recent when input is empty
+                let nextY = underlineY + screenHeight * 0.05;
+                
+                if (showUploadButton) {
+                    // Upload PDF button with attach icon
+                    const uploadSize = screenWidth * 0.036;
+                    const iconSize = uploadSize * 1.1;
+                    
+                    // Attach/paperclip icon
+                    ctx.strokeStyle = textDim;
+                    ctx.lineWidth = 1.5;
+                    ctx.lineCap = 'round';
+                    
+                    const iconX = centerX - screenWidth * 0.22;
+                    const iconY = nextY;
+                    
+                    // Draw paperclip shape
+                    ctx.beginPath();
+                    ctx.moveTo(iconX, iconY + iconSize * 0.3);
+                    ctx.lineTo(iconX, iconY - iconSize * 0.1);
+                    ctx.arc(iconX + iconSize * 0.15, iconY - iconSize * 0.1, iconSize * 0.15, Math.PI, 0, false);
+                    ctx.lineTo(iconX + iconSize * 0.3, iconY + iconSize * 0.2);
+                    ctx.arc(iconX + iconSize * 0.15, iconY + iconSize * 0.2, iconSize * 0.15, 0, Math.PI, false);
+                    ctx.stroke();
+                    ctx.lineCap = 'butt';
+                    
+                    // Upload text
+                    ctx.font = `400 ${uploadSize}px "Inter", -apple-system, sans-serif`;
+                    ctx.fillStyle = textDim;
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('Upload PDF or Document', iconX + iconSize * 0.5, nextY);
+                    
+                    nextY += screenHeight * 0.055;
+                }
+                
+                if (showRecent) {
+                    // "> Recent" section
+                    const recentSize = screenWidth * 0.034;
+                    
+                    ctx.font = `400 ${recentSize}px "Inter", -apple-system, sans-serif`;
+                    ctx.fillStyle = textMuted;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText('>  Recent', centerX, nextY);
+                }
+            }
+            
+            // Tab bar at bottom with Learn tab active
+            if (showTabBar) {
+                drawLearnTabBar(screenX, screenY, screenWidth, screenHeight, scale);
+            }
+            
+            // Draw tab bar with Learn tab active
+            function drawLearnTabBar(sx, sy, sw, sh, s) {
+                const textPrimary = '#FFFFFF';  // Define locally to avoid scope issues
+                const tabBarHeight = sh * 0.085;
+                const tabBarY = sy + sh - tabBarHeight;
+                
+                // Tab bar background
+                ctx.fillStyle = 'rgb(18, 19, 24)';
+                ctx.fillRect(sx, tabBarY, sw, tabBarHeight);
+                
+                // Add noise dithering
+                const tabBarImageData = ctx.getImageData(sx, tabBarY, sw, tabBarHeight);
+                const data = tabBarImageData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    const noise = (Math.random() - 0.5) * 3;
+                    data[i] = Math.max(0, Math.min(255, data[i] + noise));
+                    data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
+                    data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
+                }
+                ctx.putImageData(tabBarImageData, sx, tabBarY);
+                
+                // Top border
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(sx, tabBarY);
+                ctx.lineTo(sx + sw, tabBarY);
+                ctx.stroke();
+                
+                const tabs = [
+                    { icon: 'focus', label: 'Focus', active: false },
+                    { icon: 'learn', label: 'Learn', active: true },  // Learn is active
+                    { icon: 'spaces', label: 'Spaces', active: false },
+                    { icon: 'you', label: 'You', active: false },
+                ];
+                
+                const tabWidth = sw / tabs.length;
+                const iconSize = sw * 0.055;
+                const labelSize = sw * 0.031;
+                
+                tabs.forEach((tab, i) => {
+                    const tabX = sx + tabWidth * i + tabWidth / 2;
+                    const iconY = tabBarY + tabBarHeight * 0.32;
+                    const labelY = tabBarY + tabBarHeight * 0.68;
+                    
+                    const color = tab.active ? textPrimary : 'rgba(255, 255, 255, 0.4)';
+                    
+                    ctx.fillStyle = color;
+                    ctx.strokeStyle = color;
+                    
+                    if (tab.icon === 'focus') {
+                        const outerR = iconSize * 0.45;
+                        const innerR = iconSize * 0.25;
+                        ctx.lineWidth = 1.8;
+                        ctx.beginPath();
+                        ctx.arc(tabX, iconY, outerR, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(tabX, iconY, innerR, 0, Math.PI * 2);
+                        if (tab.active) ctx.fill(); else ctx.stroke();
+                    } else if (tab.icon === 'learn') {
+                        const bw = iconSize * 0.45;
+                        const bh = iconSize * 0.4;
+                        ctx.lineWidth = 1.6;
+                        ctx.beginPath();
+                        ctx.moveTo(tabX, iconY - bh);
+                        ctx.quadraticCurveTo(tabX - bw * 0.3, iconY - bh, tabX - bw, iconY - bh * 0.7);
+                        ctx.lineTo(tabX - bw, iconY + bh * 0.8);
+                        ctx.quadraticCurveTo(tabX - bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(tabX, iconY - bh);
+                        ctx.quadraticCurveTo(tabX + bw * 0.3, iconY - bh, tabX + bw, iconY - bh * 0.7);
+                        ctx.lineTo(tabX + bw, iconY + bh * 0.8);
+                        ctx.quadraticCurveTo(tabX + bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(tabX, iconY - bh);
+                        ctx.lineTo(tabX, iconY + bh * 0.7);
+                        ctx.stroke();
+                    } else if (tab.icon === 'spaces') {
+                        const cw = iconSize * 0.5;
+                        const ch = iconSize * 0.35;
+                        ctx.lineWidth = 1.6;
+                        ctx.beginPath();
+                        ctx.roundRect(tabX - cw * 0.7, iconY - ch * 0.9, cw * 1.4, ch * 0.5, 2);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.roundRect(tabX - cw * 0.8, iconY - ch * 0.3, cw * 1.6, ch * 0.7, 2);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.roundRect(tabX - cw * 0.9, iconY + ch * 0.15, cw * 1.8, ch * 0.8, 3);
+                        ctx.stroke();
+                    } else if (tab.icon === 'you') {
+                        const r = iconSize * 0.48;
+                        ctx.lineWidth = 1.6;
+                        ctx.beginPath();
+                        ctx.arc(tabX, iconY, r, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(tabX, iconY - r * 0.25, r * 0.28, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(tabX, iconY + r * 0.9, r * 0.55, Math.PI * 1.2, Math.PI * 1.8);
+                        ctx.stroke();
+                    }
+                    
+                    ctx.font = `400 ${labelSize}px "Crimson Pro", Georgia, serif`;
+                    ctx.fillStyle = color;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(tab.label, tabX, labelY);
+                });
+            }
+        }
+
+        // Draw Recent Prompts section
+        function drawRecentPromptsSection(screenX, screenY, screenWidth, screenHeight, scale, prompts = []) {
+            if (prompts.length === 0) return;
+            
+            const textSecondary = 'rgba(255, 255, 255, 0.6)';
+            const textTertiary = 'rgba(255, 255, 255, 0.35)';
+            const borderSubtle = 'rgba(255, 255, 255, 0.08)';
+            
+            const centerX = screenX + screenWidth / 2;
+            const sectionY = screenY + screenHeight * 0.65;
+            const maxWidth = Math.min(screenWidth * 0.85, 420 * scale);
+            
+            // "Recent" label with chevron
+            ctx.font = `400 ${12 * scale}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textTertiary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('▸  Recent', centerX, sectionY);
+            
+            // Recent prompt items
+            let itemY = sectionY + 32 * scale;
+            prompts.slice(0, 3).forEach((prompt, index) => {
+                ctx.font = `300 ${16 * scale}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textSecondary;
+                ctx.textAlign = 'center';
+                ctx.fillText(prompt, centerX, itemY);
+                
+                itemY += 40 * scale;
+            });
+        }
+
+        // Draw Audio Player screen (PlayerModalV2)
+        function drawPlayerScreen(screenX, screenY, screenWidth, screenHeight, scale, options = {}) {
+            const {
+                title = 'Clearing Mental Space',
+                durationMinutes = 11,
+                currentTime = 6,
+                totalTime = 636,
+                isPlaying = true,
+                showTranscript = true,
+                showReflection = true,
+                showPractice = true
+            } = options;
+            
+            // Colors from DesignSystem
+            const bgColor = '#0D0D0F';
+            const textPrimary = '#FFFFFF';
+            const textSecondary = 'rgba(255, 255, 255, 0.6)';
+            const textMuted = 'rgba(255, 255, 255, 0.4)';
+            const textDim = 'rgba(255, 255, 255, 0.35)';
+            const borderSubtle = 'rgba(255, 255, 255, 0.08)';
+            
+            // Fill dark background
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(screenX, screenY, screenWidth, screenHeight);
+            
+            // Add phosphene background effect with configurable intensity/brightness
+            const phospheneCount = Math.floor(12 * state.phonePhospheneIntensity);
+            const brightness = state.phonePhospheneBrightness;
+            for (let i = 0; i < phospheneCount; i++) {
+                const px = screenX + Math.random() * screenWidth;
+                const py = screenY + Math.random() * screenHeight;
+                const pr = Math.random() * screenWidth * 0.4 + screenWidth * 0.15;
+                const hue = 215 + (Math.random() - 0.5) * 40;
+                const baseOpacity = 0.035 * brightness;
+                const gradient = ctx.createRadialGradient(px, py, 0, px, py, pr);
+                gradient.addColorStop(0, `hsla(${hue}, 35%, ${45 * brightness}%, ${baseOpacity})`);
+                gradient.addColorStop(0.5, `hsla(${hue}, 30%, ${40 * brightness}%, ${baseOpacity * 0.57})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            const centerX = screenX + screenWidth / 2;
+            const padding = screenWidth * 0.08;
+            
+            // Header row (back, heart, close)
+            const headerY = screenY + screenHeight * 0.085;
+            
+            // Back chevron
+            const chevronSize = screenWidth * 0.055;
+            ctx.strokeStyle = textMuted;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(screenX + padding + chevronSize * 0.5, headerY - chevronSize * 0.35);
+            ctx.lineTo(screenX + padding, headerY);
+            ctx.lineTo(screenX + padding + chevronSize * 0.5, headerY + chevronSize * 0.35);
+            ctx.stroke();
+            
+            // Heart outline
+            const heartX = screenX + padding + chevronSize * 1.6;
+            const heartSize = screenWidth * 0.05;
+            ctx.strokeStyle = textMuted;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            // Simple heart shape
+            ctx.moveTo(heartX, headerY + heartSize * 0.3);
+            ctx.bezierCurveTo(heartX - heartSize * 0.5, headerY - heartSize * 0.2, 
+                              heartX - heartSize * 0.5, headerY - heartSize * 0.6,
+                              heartX, headerY - heartSize * 0.3);
+            ctx.bezierCurveTo(heartX + heartSize * 0.5, headerY - heartSize * 0.6, 
+                              heartX + heartSize * 0.5, headerY - heartSize * 0.2,
+                              heartX, headerY + heartSize * 0.3);
+            ctx.stroke();
+            ctx.lineCap = 'butt';
+            
+            // Close text
+            ctx.font = `400 ${screenWidth * 0.035}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textMuted;
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Close', screenX + screenWidth - padding, headerY);
+            
+            // Title - positioned at ~15% from top
+            const titleY = screenY + screenHeight * 0.155;
+            ctx.font = `400 ${screenWidth * 0.072}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText(title, centerX, titleY);
+            
+            // Duration subtitle - closer to title
+            const subtitleY = titleY + screenWidth * 0.085;
+            ctx.font = `400 ${screenWidth * 0.035}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textMuted;
+            ctx.fillText(`${durationMinutes} minutes`, centerX, subtitleY);
+            
+            // Breathing circle and play/pause button - higher position
+            const circleY = screenY + screenHeight * 0.365;
+            const circleRadius = screenWidth * 0.2;
+            
+            // Outer breathing circle only
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(centerX, circleY, circleRadius, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Play or Pause icon (no inner circle)
+            if (isPlaying) {
+                // Pause bars
+                const barW = screenWidth * 0.012;
+                const barH = screenWidth * 0.058;
+                const barGap = screenWidth * 0.018;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.fillRect(centerX - barGap - barW, circleY - barH/2, barW, barH);
+                ctx.fillRect(centerX + barGap, circleY - barH/2, barW, barH);
+            } else {
+                // Play triangle
+                const triSize = screenWidth * 0.04;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                ctx.moveTo(centerX - triSize * 0.4, circleY - triSize);
+                ctx.lineTo(centerX - triSize * 0.4, circleY + triSize);
+                ctx.lineTo(centerX + triSize * 0.8, circleY);
+                ctx.closePath();
+                ctx.fill();
+            }
+            
+            // Waveform visualization - lower position
+            const waveY = screenY + screenHeight * 0.56;
+            const waveWidth = screenWidth * 0.84;
+            const waveHeight = screenHeight * 0.04;
+            const waveX = centerX - waveWidth / 2;
+            const barCount = 60;
+            const barW = (waveWidth / barCount) * 0.7;
+            const barGap = (waveWidth / barCount) * 0.3;
+            
+            // Progress percentage
+            const progress = totalTime > 0 ? currentTime / totalTime : 0;
+            
+            // Draw waveform bars
+            for (let i = 0; i < barCount; i++) {
+                const barX = waveX + i * (barW + barGap);
+                const amplitude = 0.3 + Math.sin(i * 0.3) * 0.2 + Math.random() * 0.3;
+                const barHeight = waveHeight * amplitude;
+                const isActive = (i / barCount) <= progress;
+                
+                ctx.fillStyle = isActive ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.12)';
+                ctx.fillRect(barX, waveY + (waveHeight - barHeight) / 2, barW, barHeight);
+            }
+            
+            // Playhead
+            const playheadX = waveX + progress * waveWidth;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(playheadX - 1, waveY - 4, 2, waveHeight + 8);
+            
+            // Time display - more space below waveform
+            const timeY = waveY + waveHeight + screenHeight * 0.035;
+            const formatTime = (s) => {
+                const mins = Math.floor(s / 60);
+                const secs = Math.floor(s % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            };
+            ctx.font = `400 ${screenWidth * 0.033}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textDim;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText(`${formatTime(currentTime)} / ${formatTime(totalTime)}`, centerX, timeY);
+            
+            // Skip controls row - more space below time
+            const skipY = timeY + screenHeight * 0.075;
+            const skipSpacing = screenWidth * 0.25;
+            
+            // -15
+            ctx.font = `500 ${screenWidth * 0.038}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textMuted;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('−15', centerX - skipSpacing, skipY);
+            
+            // Replay circle button
+            const replayBtnR = screenWidth * 0.06;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(centerX, skipY, replayBtnR, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.fill();
+            
+            // Replay icon (circular arrow)
+            const arrowR = replayBtnR * 0.45;
+            ctx.strokeStyle = textMuted;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(centerX, skipY, arrowR, -Math.PI * 0.5, Math.PI * 1.2);
+            ctx.stroke();
+            // Arrow head
+            const arrowTipX = centerX + Math.cos(Math.PI * 1.2) * arrowR;
+            const arrowTipY = skipY + Math.sin(Math.PI * 1.2) * arrowR;
+            ctx.beginPath();
+            ctx.moveTo(arrowTipX + 4, arrowTipY - 2);
+            ctx.lineTo(arrowTipX, arrowTipY + 3);
+            ctx.lineTo(arrowTipX - 3, arrowTipY - 3);
+            ctx.stroke();
+            
+            // +15
+            ctx.fillStyle = textMuted;
+            ctx.textAlign = 'center';
+            ctx.fillText('+15', centerX + skipSpacing, skipY);
+            
+            // Divider - more space below skip controls
+            const dividerY = skipY + screenHeight * 0.065;
+            ctx.strokeStyle = borderSubtle;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(screenX + padding, dividerY);
+            ctx.lineTo(screenX + screenWidth - padding, dividerY);
+            ctx.stroke();
+            
+            // Action buttons row - more space below divider
+            const actionsY = dividerY + screenHeight * 0.055;
+            ctx.font = `400 ${screenWidth * 0.035}px "Inter", -apple-system, sans-serif`;
+            ctx.textBaseline = 'middle';
+            
+            // Calculate positions
+            const actionItems = [];
+            if (showTranscript) actionItems.push({ text: 'Transcript', icon: '↗' });
+            if (showReflection) actionItems.push({ text: 'Reflection', icon: '✦' });
+            if (showPractice) actionItems.push({ text: 'Practice Again', icon: '→' });
+            
+            if (actionItems.length > 0) {
+                const totalTextWidth = actionItems.reduce((acc, item) => {
+                    ctx.font = `400 ${screenWidth * 0.035}px "Inter", -apple-system, sans-serif`;
+                    return acc + ctx.measureText(item.text + ' ' + item.icon).width;
+                }, 0);
+                const gap = screenWidth * 0.08;
+                const totalWidth = totalTextWidth + gap * (actionItems.length - 1);
+                let actionX = centerX - totalWidth / 2;
+                
+                actionItems.forEach((item, idx) => {
+                    ctx.font = `400 ${screenWidth * 0.035}px "Inter", -apple-system, sans-serif`;
+                    const textW = ctx.measureText(item.text).width;
+                    const iconW = ctx.measureText(' ' + item.icon).width;
+                    
+                    ctx.fillStyle = textMuted;
+                    ctx.textAlign = 'left';
+                    ctx.fillText(item.text, actionX, actionsY);
+                    
+                    ctx.fillStyle = textDim;
+                    ctx.fillText(' ' + item.icon, actionX + textW, actionsY);
+                    
+                    actionX += textW + iconW + gap;
+                });
+            }
+            
+            // Home indicator bar at bottom
+            const homeBarY = screenY + screenHeight - screenHeight * 0.025;
+            const homeBarW = screenWidth * 0.35;
+            const homeBarH = 5;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.beginPath();
+            ctx.roundRect(centerX - homeBarW/2, homeBarY, homeBarW, homeBarH, homeBarH/2);
+            ctx.fill();
+        }
+
+        // Draw Generation Complete screen
+        function drawGenerationCompleteScreen(screenX, screenY, screenWidth, screenHeight, scale, options = {}) {
+            const {
+                message = 'We can begin.',
+                creditsUsed = 0,
+                creditsRemaining = 17,
+                showTabBar = true
+            } = options;
+            
+            // Colors
+            const bgColor = '#0D0D0F';
+            const textPrimary = '#FFFFFF';
+            const textSecondary = 'rgba(255, 255, 255, 0.6)';
+            const textMuted = 'rgba(255, 255, 255, 0.4)';
+            
+            // Fill dark background
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(screenX, screenY, screenWidth, screenHeight);
+            
+            // Add phosphene background effect
+            const phospheneCount = Math.floor(12 * state.phonePhospheneIntensity);
+            const brightness = state.phonePhospheneBrightness;
+            for (let i = 0; i < phospheneCount; i++) {
+                const px = screenX + Math.random() * screenWidth;
+                const py = screenY + Math.random() * screenHeight;
+                const pr = Math.random() * screenWidth * 0.4 + screenWidth * 0.15;
+                const hue = 215 + (Math.random() - 0.5) * 40;
+                const baseOpacity = 0.035 * brightness;
+                const gradient = ctx.createRadialGradient(px, py, 0, px, py, pr);
+                gradient.addColorStop(0, `hsla(${hue}, 35%, ${45 * brightness}%, ${baseOpacity})`);
+                gradient.addColorStop(0.5, `hsla(${hue}, 30%, ${40 * brightness}%, ${baseOpacity * 0.57})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            const centerX = screenX + screenWidth / 2;
+            
+            // Breathing circle - centered vertically (slightly above center)
+            const circleY = screenY + screenHeight * 0.38;
+            const circleRadius = screenWidth * 0.22;
+            
+            // Circle ring
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(centerX, circleY, circleRadius, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Completion message below circle
+            const messageY = circleY + circleRadius + screenHeight * 0.06;
+            ctx.font = `400 ${screenWidth * 0.062}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText(message, centerX, messageY);
+            
+            // Credits info below message
+            const creditsY = messageY + screenHeight * 0.055;
+            let creditsText;
+            if (creditsUsed > 0) {
+                creditsText = `${creditsUsed} ${creditsUsed === 1 ? 'credit' : 'credits'} used · ${creditsRemaining} remaining`;
+            } else {
+                creditsText = `Free preview · ${creditsRemaining} credits remaining`;
+            }
+            
+            // Credits pill background
+            ctx.font = `400 ${screenWidth * 0.033}px "Crimson Pro", Georgia, serif`;
+            const creditsWidth = ctx.measureText(creditsText).width + screenWidth * 0.06;
+            const creditsHeight = screenHeight * 0.032;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.beginPath();
+            ctx.roundRect(centerX - creditsWidth/2, creditsY, creditsWidth, creditsHeight, 6);
+            ctx.fill();
+            
+            // Credits text
+            ctx.fillStyle = textSecondary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(creditsText, centerX, creditsY + creditsHeight/2);
+            
+            // "Open your space →" button
+            const buttonY = screenY + screenHeight * 0.78;
+            ctx.font = `400 ${screenWidth * 0.046}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Open your space  →', centerX, buttonY);
+            
+            // "Refocus" link below
+            const refocusY = buttonY + screenHeight * 0.055;
+            ctx.font = `400 ${screenWidth * 0.04}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textSecondary;
+            ctx.fillText('Refocus', centerX, refocusY);
+            
+            // Tab bar at bottom
+            if (showTabBar) {
+                drawTabBar(screenX, screenY, screenWidth, screenHeight, scale);
+            }
+            
+            // Home indicator bar at bottom
+            const homeBarY = screenY + screenHeight - screenHeight * 0.025;
+            const homeBarW = screenWidth * 0.35;
+            const homeBarH = 5;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.beginPath();
+            ctx.roundRect(centerX - homeBarW/2, homeBarY, homeBarW, homeBarH, homeBarH/2);
+            ctx.fill();
+        }
+
+        // Draw Whitespace-style screen content (circle UI)
+        function drawWhitespaceScreen(screenX, screenY, phoneWidth, phoneHeight, scale) {
+            // Dark gradient background for screen
+            const screenGrad = ctx.createLinearGradient(screenX, screenY, screenX, screenY + phoneHeight);
+            screenGrad.addColorStop(0, '#0a0a0f');
+            screenGrad.addColorStop(1, '#0d0d14');
+            ctx.fillStyle = screenGrad;
+            ctx.fillRect(screenX, screenY, phoneWidth, phoneHeight);
+
+            // Add subtle phosphene effect inside screen
+            const screenPhosphenes = 15;
+            for (let i = 0; i < screenPhosphenes; i++) {
+                const px = screenX + Math.random() * phoneWidth;
+                const py = screenY + Math.random() * phoneHeight;
+                const pr = Math.random() * 80 + 40;
+                const gradient = ctx.createRadialGradient(px, py, 0, px, py, pr);
+                gradient.addColorStop(0, `hsla(${210 + Math.random() * 40}, 40%, 50%, ${0.03 * state.phospheneIntensity})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            if (state.showCircleUI) {
+                // Circle UI element (signature Whitespace design)
+                const circleRadius = phoneWidth * 0.3;
+                const circleCenterX = screenX + phoneWidth / 2;
+                const circleCenterY = screenY + phoneHeight * 0.4;
+
+                // Outer glow
+                const glowGrad = ctx.createRadialGradient(
+                    circleCenterX, circleCenterY, circleRadius * 0.8,
+                    circleCenterX, circleCenterY, circleRadius * 1.5
+                );
+                glowGrad.addColorStop(0, 'rgba(100, 140, 180, 0.1)');
+                glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = glowGrad;
+                ctx.beginPath();
+                ctx.arc(circleCenterX, circleCenterY, circleRadius * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Main circle ring
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.lineWidth = 4 * scale;
+                ctx.beginPath();
+                ctx.arc(circleCenterX, circleCenterY, circleRadius, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Inner subtle circle
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.lineWidth = 2 * scale;
+                ctx.beginPath();
+                ctx.arc(circleCenterX, circleCenterY, circleRadius * 0.85, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Progress arc (partial)
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.lineWidth = 4 * scale;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.arc(circleCenterX, circleCenterY, circleRadius, -Math.PI / 2, Math.PI * 0.8);
+                ctx.stroke();
+                ctx.lineCap = 'butt';
+
+                // Text below circle
+                if (state.circleText) {
+                    ctx.font = `300 ${20 * scale}px "Crimson Pro", Georgia, serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(state.circleText, circleCenterX, circleCenterY + circleRadius + 40 * scale);
+                }
+
+                // "Open your space →" button at bottom
+                const btnY = screenY + phoneHeight - 120 * scale;
+                const btnWidth = phoneWidth * 0.5;
+                const btnHeight = 56 * scale;
+                const btnX = circleCenterX - btnWidth / 2;
+
+                // Button background
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.beginPath();
+                ctx.roundRect(btnX, btnY, btnWidth, btnHeight, btnHeight / 2);
+                ctx.fill();
+
+                // Button border
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.roundRect(btnX, btnY, btnWidth, btnHeight, btnHeight / 2);
+                ctx.stroke();
+
+                // Button text
+                ctx.font = `300 ${18 * scale}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Open your space →', circleCenterX, btnY + btnHeight / 2);
+            }
+        }
+
+        // Draw logo and brand name
+        function drawLogo() {
+            if (state.layout === 'logo-hero') {
+                // Special logo-hero layout: just the logo (which already contains the wordmark)
+                // Reset any shadow state
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
+                
+                if (state.logo) {
+                    const logo = state.logo;
+                    // Draw logo larger and maintain aspect ratio
+                    const maxLogoWidth = state.width * 0.4 * state.logoScale;
+                    const maxLogoHeight = state.height * 0.25 * state.logoScale;
+                    
+                    let logoWidth = logo.width;
+                    let logoHeight = logo.height;
+                    const ratio = Math.min(maxLogoWidth / logoWidth, maxLogoHeight / logoHeight);
+                    logoWidth *= ratio;
+                    logoHeight *= ratio;
+                    
+                    const logoX = (state.width - logoWidth) / 2;
+                    const logoY = state.height * 0.10;
+                    
+                    ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+                }
+                // Return early - no other text should be drawn for logo-hero
+                return;
+            }
+            
+            // Split-left layout: logo in upper left corner
+            if (state.layout === 'split-left') {
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
+                
+                if (state.logo) {
+                    const logo = state.logo;
+                    // Draw logo in upper left
+                    const maxLogoWidth = state.width * 0.35 * state.logoScale;
+                    const maxLogoHeight = state.height * 0.15 * state.logoScale;
+                    
+                    let logoWidth = logo.width;
+                    let logoHeight = logo.height;
+                    const ratio = Math.min(maxLogoWidth / logoWidth, maxLogoHeight / logoHeight);
+                    logoWidth *= ratio;
+                    logoHeight *= ratio;
+                    
+                    const logoX = state.width * 0.06; // Left margin
+                    const logoY = state.height * 0.05; // Top margin
+                    
+                    ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+                }
+                return;
+            }
+            
+            // Split-right layout: no logo, just text (handled in drawTextContent)
+            if (state.layout === 'split-right') {
+                return;
+            }
+            
+            if (!state.showLogo || !state.logo) return;
+            
+            const logo = state.logo;
+            const baseMaxWidth = state.width * 0.25;
+            const baseMaxHeight = state.height * 0.08;
+            
+            // Apply logo scale
+            const maxWidth = baseMaxWidth * state.logoScale;
+            const maxHeight = baseMaxHeight * state.logoScale;
+            
+            let logoWidth = logo.width;
+            let logoHeight = logo.height;
+            
+            // Scale to fit within max bounds
+            const widthRatio = maxWidth / logoWidth;
+            const heightRatio = maxHeight / logoHeight;
+            const ratio = Math.min(widthRatio, heightRatio);
+            
+            logoWidth *= ratio;
+            logoHeight *= ratio;
+            
+            // Position based on layout
+            let logoX = (state.width - logoWidth) / 2;
+            let logoY = state.height * 0.05;
+            
+            ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+        }
+
+        // Draw a single phone at specified position with optional rotation
+        // Based on iPhone 17 Air SVG proportions (856x1760)
+        function drawSinglePhone(phoneX, phoneY, rotation = 0, clipFromBottom = 0) {
+            const scale = state.phoneScale;
+            const isIPad = state.deviceName.includes('iPad');
+            
+            const config = PHONE_CONFIGS[state.deviceName] || PHONE_CONFIGS['iPhone 6.7"'];
+            
+            const frameWidth = config.phoneWidth * scale;
+            const frameHeight = config.phoneHeight * scale;
+            
+            // Different proportions for iPad vs iPhone
+            // iPad SVG: 1128x1468, bezel ~44px (4.4%), corner radius ~74px (6.6%)
+            // iPhone SVG: 856x1760, bezel ~11px (1.3%), corner radius ~129px (15.1%)
+            const frameInset = isIPad ? frameWidth * 0.044 : frameWidth * 0.013;
+            const screenWidth = frameWidth - (frameInset * 2);
+            const screenHeight = frameHeight - (frameInset * 2);
+            
+            // Corner radii
+            const cornerRadius = isIPad ? frameWidth * 0.066 : frameWidth * 0.151;
+            const screenCornerRadius = isIPad ? frameWidth * 0.019 : frameWidth * 0.14;
+
+            ctx.save();
+            
+            // Calculate center point for transforms
+            const centerX = phoneX + frameWidth / 2;
+            const centerY = phoneY + frameHeight / 2;
+            
+            // Apply rotation if specified
+            if (rotation !== 0) {
+                ctx.translate(centerX, centerY);
+                ctx.rotate(rotation * Math.PI / 180);
+                ctx.translate(-centerX, -centerY);
+            }
+            
+            // Apply 3D perspective transform (skew-based simulation)
+            if (state.perspectiveX !== 0 || state.perspectiveY !== 0) {
+                ctx.translate(centerX, centerY);
+                
+                // Calculate perspective matrix components
+                // perspectiveX: positive = right side closer (rotate around Y axis)
+                // perspectiveY: positive = bottom closer (rotate around X axis)
+                const px = state.perspectiveX;
+                const py = state.perspectiveY;
+                
+                // Apply skew transform for perspective effect
+                // Matrix: [scaleX, skewY, skewX, scaleY, translateX, translateY]
+                const scaleX = 1 - Math.abs(px) * 0.15; // Slight compression on tilted axis
+                const scaleY = 1 - Math.abs(py) * 0.15;
+                const skewX = py * 0.3; // Horizontal skew from Y perspective
+                const skewY = px * 0.3; // Vertical skew from X perspective
+                
+                ctx.transform(scaleX, skewY, skewX, scaleY, 0, 0);
+                ctx.translate(-centerX, -centerY);
+            }
+
+            if (state.showPhone) {
+                // Frame colors based on selection
+                const frameColor = state.phoneColor === 'silver' ? '#5a5a62' : '#1a1a1e';
+                const frameBorderColor = state.phoneColor === 'silver' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.1)';
+                const frameHighlight = state.phoneColor === 'silver' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.05)';
+                
+                // Frame shadow
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 80 * scale;
+                ctx.shadowOffsetY = 30 * scale;
+
+                ctx.fillStyle = frameColor;
+                ctx.beginPath();
+                ctx.roundRect(phoneX, phoneY, frameWidth, frameHeight, cornerRadius);
+                ctx.fill();
+                ctx.restore();
+
+                // Frame outer border (subtle shine)
+                ctx.strokeStyle = frameBorderColor;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.roundRect(phoneX, phoneY, frameWidth, frameHeight, cornerRadius);
+                ctx.stroke();
+
+                // Inner frame edge highlight
+                ctx.strokeStyle = frameHighlight;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.roundRect(phoneX + 2, phoneY + 2, frameWidth - 4, frameHeight - 4, cornerRadius - 2);
+                ctx.stroke();
+
+                if (isIPad) {
+                    // iPad buttons are on the RIGHT side (volume) and TOP (power)
+                    // Volume buttons: ~7-15% from top, each ~3.5% height
+                    const volBtnH = frameHeight * 0.035;
+                    const volUp_Y = phoneY + frameHeight * 0.072;
+                    const volDown_Y = phoneY + frameHeight * 0.114;
+                    
+                    ctx.fillStyle = frameColor;
+                    // Volume Up
+                    ctx.beginPath();
+                    ctx.roundRect(phoneX + frameWidth - 3, volUp_Y, 5, volBtnH, 2);
+                    ctx.fill();
+                    ctx.strokeStyle = frameBorderColor;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                    
+                    // Volume Down
+                    ctx.beginPath();
+                    ctx.roundRect(phoneX + frameWidth - 3, volDown_Y, 5, volBtnH, 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    // Power button on top right (~88% from left)
+                    const powerX = phoneX + frameWidth * 0.88;
+                    const powerW = frameWidth * 0.055;
+                    ctx.beginPath();
+                    ctx.roundRect(powerX, phoneY - 3, powerW, 5, 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    // Smart Connector dots at top (decorative)
+                    const connectorX = phoneX + frameWidth * 0.33;
+                    const connectorY = phoneY + frameHeight * 0.003;
+                    ctx.fillStyle = '#878A8D';
+                    for (let i = 0; i < 2; i++) {
+                        ctx.beginPath();
+                        ctx.arc(connectorX + i * frameWidth * 0.28, connectorY, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                } else {
+                    // iPhone 17 Air buttons (from SVG reference)
+                    // Button dimensions relative to frame
+                    const btnWidth = 4 * scale;
+                    const btnRadius = 2 * scale;
+                    
+                    // Right side button (power) - ~30% to ~41% from top
+                    const powerBtnY = phoneY + frameHeight * 0.296;
+                    const powerBtnH = frameHeight * 0.11;
+                    ctx.fillStyle = frameColor;
+                    ctx.beginPath();
+                    ctx.roundRect(phoneX + frameWidth, powerBtnY, btnWidth, powerBtnH, [0, btnRadius, btnRadius, 0]);
+                    ctx.fill();
+                    ctx.strokeStyle = frameBorderColor;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+
+                    // Left side buttons (extend left from frame)
+                    // Action button - ~18% to ~22% from top
+                    const actionBtnY = phoneY + frameHeight * 0.179;
+                    const actionBtnH = frameHeight * 0.039;
+                    ctx.fillStyle = frameColor;
+                    ctx.beginPath();
+                    ctx.roundRect(phoneX - btnWidth, actionBtnY, btnWidth, actionBtnH, [btnRadius, 0, 0, btnRadius]);
+                    ctx.fill();
+                    ctx.strokeStyle = frameBorderColor;
+                    ctx.stroke();
+
+                    // Volume Up - ~25% to ~32% from top
+                    const volUpY = phoneY + frameHeight * 0.249;
+                    const volH = frameHeight * 0.07;
+                    ctx.beginPath();
+                    ctx.roundRect(phoneX - btnWidth, volUpY, btnWidth, volH, [btnRadius, 0, 0, btnRadius]);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Volume Down - ~34% to ~41% from top
+                    const volDownY = phoneY + frameHeight * 0.337;
+                    ctx.beginPath();
+                    ctx.roundRect(phoneX - btnWidth, volDownY, btnWidth, volH, [btnRadius, 0, 0, btnRadius]);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+            }
+
+            // Screen area
+            const screenX = phoneX + frameInset;
+            const screenY = phoneY + frameInset;
+
+            // Screen bezel (dark area around screen)
+            ctx.fillStyle = isIPad ? '#121212' : '#000000';
+            ctx.beginPath();
+            ctx.roundRect(screenX, screenY, screenWidth, screenHeight, screenCornerRadius);
+            ctx.fill();
+
+            // Thin border around screen edge
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.roundRect(screenX, screenY, screenWidth, screenHeight, screenCornerRadius);
+            ctx.stroke();
+
+            // Clip to screen for content
+            ctx.save();
+            ctx.beginPath();
+            ctx.roundRect(screenX, screenY, screenWidth, screenHeight, screenCornerRadius);
+            ctx.clip();
+
+            // Determine which screen content to draw based on screenType
+            const effectiveScreenType = state.appScreenshot ? 'uploaded' : state.screenType;
+            
+            if (effectiveScreenType === 'uploaded' && state.appScreenshot) {
+                const img = state.appScreenshot;
+                
+                // Apply crop to source image
+                const srcX = 0;
+                const srcY = state.cropTop;
+                const srcWidth = img.width;
+                const srcHeight = img.height - state.cropTop - state.cropBottom;
+                
+                // Calculate aspect ratio of cropped image
+                const imgAspect = srcWidth / srcHeight;
+                const screenAspect = screenWidth / screenHeight;
+                
+                let drawWidth, drawHeight, drawX, drawY;
+                
+                if (imgAspect > screenAspect) {
+                    drawHeight = screenHeight;
+                    drawWidth = screenHeight * imgAspect;
+                    drawX = screenX - (drawWidth - screenWidth) / 2;
+                    drawY = screenY;
+                } else {
+                    drawWidth = screenWidth;
+                    drawHeight = screenWidth / imgAspect;
+                    drawX = screenX;
+                    drawY = screenY - (drawHeight - screenHeight) / 2;
+                }
+                
+                // Draw cropped region of image
+                ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, drawX, drawY, drawWidth, drawHeight);
+            } else if (effectiveScreenType === 'goal-input') {
+                // Draw Goal Input Page
+                drawGoalInputScreen(screenX, screenY, screenWidth, screenHeight, scale, {
+                    placeholderText: state.goalPlaceholder,
+                    inputText: state.goalInputText,
+                    showButtons: state.showGoalButtons || state.goalInputText.length > 0,
+                    showRecent: state.showRecent && !state.goalInputText,
+                    showTabBar: state.showTabBar
+                });
+            } else if (effectiveScreenType === 'learn-input') {
+                // Draw Learn Input Page
+                drawLearnInputScreen(screenX, screenY, screenWidth, screenHeight, scale, {
+                    placeholderText: state.learnPlaceholder,
+                    inputText: state.learnInputText,
+                    showUploadButton: state.showUploadButton && !state.learnInputText,
+                    showRecent: state.showLearnRecent && !state.learnInputText,
+                    showTabBar: state.showLearnTabBar,
+                    showBackButton: state.showBackButton
+                });
+            } else if (effectiveScreenType === 'player') {
+                // Draw Audio Player Screen
+                drawPlayerScreen(screenX, screenY, screenWidth, screenHeight, scale, {
+                    title: state.playerTitle,
+                    durationMinutes: state.playerDuration,
+                    currentTime: state.playerCurrentTime,
+                    totalTime: state.playerTotalTime,
+                    isPlaying: state.playerIsPlaying,
+                    showTranscript: state.playerShowTranscript,
+                    showReflection: state.playerShowReflection,
+                    showPractice: state.playerShowPractice
+                });
+            } else if (effectiveScreenType === 'generation-complete') {
+                // Draw Generation Complete Screen
+                drawGenerationCompleteScreen(screenX, screenY, screenWidth, screenHeight, scale, {
+                    message: state.completionMessage,
+                    creditsUsed: state.creditsUsed,
+                    creditsRemaining: state.creditsRemaining,
+                    showTabBar: state.showTabBar
+                });
+            } else {
+                // Default: Circle UI
+                drawWhitespaceScreen(screenX, screenY, screenWidth, screenHeight, scale);
+            }
+
+            // Draw status bar (time, signal, wifi, battery) on top of screen content
+            if (state.showStatusBar) {
+                drawStatusBar(screenX, screenY, screenWidth, screenHeight, scale, isIPad);
+            }
+
+            ctx.restore();
+
+            // iPad camera cluster at top (no dynamic island)
+            if (state.showNotch && state.showPhone && isIPad) {
+                // iPad cameras: multiple small circles at top of bezel, ~1.8% from top
+                const camY = phoneY + frameHeight * 0.018;
+                const camRadius = frameWidth * 0.007;
+                
+                // Front camera (centered around 50% from left)
+                const camX = phoneX + frameWidth * 0.50;
+                
+                // Camera lens
+                const camGrad = ctx.createRadialGradient(camX, camY, 0, camX, camY, camRadius);
+                camGrad.addColorStop(0, '#1a1a2e');
+                camGrad.addColorStop(0.6, '#0a0a12');
+                camGrad.addColorStop(1, '#121416');
+                ctx.fillStyle = camGrad;
+                ctx.beginPath();
+                ctx.arc(camX, camY, camRadius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Small sensors on either side
+                ctx.fillStyle = '#000000';
+                ctx.beginPath();
+                ctx.arc(camX - frameWidth * 0.06, camY, camRadius * 0.8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(camX + frameWidth * 0.06, camY, camRadius * 0.8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(camX - frameWidth * 0.09, camY, camRadius * 0.8, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Dynamic Island (pill shape with camera) - iPhone only
+            if (state.showNotch && state.showPhone && !isIPad) {
+                // Dynamic Island: ~26.4% width, ~3.7% height, positioned ~3.2% from screen top
+                const diWidth = screenWidth * 0.275;
+                const diHeight = screenHeight * 0.038;
+                const diX = screenX + (screenWidth - diWidth) / 2;
+                const diY = screenY + screenHeight * 0.027;
+                const diRadius = diHeight / 2;
+
+                // Dynamic Island background
+                ctx.fillStyle = '#000000';
+                ctx.beginPath();
+                ctx.roundRect(diX, diY, diWidth, diHeight, diRadius);
+                ctx.fill();
+
+                // Camera lens (positioned right of center in the pill)
+                // Camera at ~59% from left edge of phone, radius ~2.1% of width
+                const cameraRadius = screenWidth * 0.022;
+                const cameraX = diX + diWidth * 0.72; // Right side of pill
+                const cameraY = diY + diHeight / 2;
+
+                // Camera outer ring
+                const cameraGrad = ctx.createRadialGradient(cameraX, cameraY, 0, cameraX, cameraY, cameraRadius);
+                cameraGrad.addColorStop(0, '#1a1a2e');
+                cameraGrad.addColorStop(0.6, '#0a0a12');
+                cameraGrad.addColorStop(1, '#000000');
+                ctx.fillStyle = cameraGrad;
+                ctx.beginPath();
+                ctx.arc(cameraX, cameraY, cameraRadius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Camera lens inner (dark with slight blue tint)
+                const lensRadius = cameraRadius * 0.6;
+                const lensGrad = ctx.createRadialGradient(cameraX, cameraY, 0, cameraX, cameraY, lensRadius);
+                lensGrad.addColorStop(0, '#050412');
+                lensGrad.addColorStop(0.5, '#0a0818');
+                lensGrad.addColorStop(1, '#050410');
+                ctx.fillStyle = lensGrad;
+                ctx.beginPath();
+                ctx.arc(cameraX, cameraY, lensRadius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Subtle lens reflection
+                ctx.fillStyle = 'rgba(100, 120, 180, 0.15)';
+                ctx.beginPath();
+                ctx.arc(cameraX - lensRadius * 0.3, cameraY - lensRadius * 0.3, lensRadius * 0.25, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            ctx.restore();
+            
+            return { frameWidth, frameHeight, screenWidth, screenHeight };
+        }
+
+        // Draw phone mockup based on layout
+        // Draw 3D frame with perspective-mapped screen content
+        function draw3DFrame() {
+            if (!state.frame3D) return;
+            
+            const frame = state.frame3D;
+            const frameW = frame.width;
+            const frameH = frame.height;
+            
+            // Calculate scale to fit frame in canvas
+            const maxFrameHeight = state.height * 0.85;
+            const maxFrameWidth = state.width * 0.9;
+            let scale = Math.min(maxFrameWidth / frameW, maxFrameHeight / frameH);
+            
+            // Apply phone scale on top
+            scale *= state.phoneScale;
+            
+            const scaledW = frameW * scale;
+            const scaledH = frameH * scale;
+            
+            // Center the frame in canvas
+            const frameX = (state.width - scaledW) / 2;
+            const frameY = (state.height - scaledH) / 2 + state.height * 0.05;
+            
+            // Get screen corners in canvas coordinates
+            const corners = state.screenCorners;
+            const screenQuad = {
+                tl: { x: frameX + corners.tl.x * scaledW, y: frameY + corners.tl.y * scaledH },
+                tr: { x: frameX + corners.tr.x * scaledW, y: frameY + corners.tr.y * scaledH },
+                br: { x: frameX + corners.br.x * scaledW, y: frameY + corners.br.y * scaledH },
+                bl: { x: frameX + corners.bl.x * scaledW, y: frameY + corners.bl.y * scaledH }
+            };
+            
+            // Create off-screen canvas for screen content
+            const screenCanvas = document.createElement('canvas');
+            const screenCtx = screenCanvas.getContext('2d');
+            
+            // Calculate screen dimensions based on quad
+            const screenWidth = Math.max(
+                Math.abs(screenQuad.tr.x - screenQuad.tl.x),
+                Math.abs(screenQuad.br.x - screenQuad.bl.x)
+            );
+            const screenHeight = Math.max(
+                Math.abs(screenQuad.bl.y - screenQuad.tl.y),
+                Math.abs(screenQuad.br.y - screenQuad.tr.y)
+            );
+            
+            // Use iPhone aspect ratio for content
+            const config = PHONE_CONFIGS['iPhone 6.7"'];
+            const contentW = config.phoneWidth * 0.97; // Screen width
+            const contentH = config.phoneHeight * 0.97; // Screen height
+            
+            screenCanvas.width = contentW;
+            screenCanvas.height = contentH;
+            
+            // Draw screen content to off-screen canvas
+            renderScreenContent(screenCtx, 0, 0, contentW, contentH);
+            
+            // Draw screen content with perspective using triangular mesh
+            drawPerspectiveQuad(ctx, screenCanvas, screenQuad);
+            
+            // Draw the 3D frame on top
+            ctx.drawImage(frame, frameX, frameY, scaledW, scaledH);
+            
+            // Draw corner markers if preview is active
+            if (state.previewCorners) {
+                ctx.fillStyle = '#ff0000';
+                Object.values(screenQuad).forEach(pt => {
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                // Draw quad outline
+                ctx.strokeStyle = '#00ff00';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(screenQuad.tl.x, screenQuad.tl.y);
+                ctx.lineTo(screenQuad.tr.x, screenQuad.tr.y);
+                ctx.lineTo(screenQuad.br.x, screenQuad.br.y);
+                ctx.lineTo(screenQuad.bl.x, screenQuad.bl.y);
+                ctx.closePath();
+                ctx.stroke();
+            }
+        }
+        
+        // Render screen content to a canvas context
+        function renderScreenContent(targetCtx, x, y, width, height) {
+            // Background
+            targetCtx.fillStyle = '#0a0a0f';
+            targetCtx.fillRect(x, y, width, height);
+            
+            // Draw phosphene-like background for screen
+            const gradient = targetCtx.createRadialGradient(
+                x + width/2, y + height/2, 0,
+                x + width/2, y + height/2, width * 0.8
+            );
+            gradient.addColorStop(0, 'rgba(30, 40, 60, 0.3)');
+            gradient.addColorStop(1, 'rgba(10, 10, 15, 0.1)');
+            targetCtx.fillStyle = gradient;
+            targetCtx.fillRect(x, y, width, height);
+            
+            // Render based on screen type
+            if (state.screenType === 'goal-input') {
+                drawGoalInputScreenToContext(targetCtx, x, y, width, height);
+            } else if (state.screenType === 'learn-input') {
+                drawLearnInputScreenToContext(targetCtx, x, y, width, height);
+            } else if (state.screenType === 'player') {
+                drawPlayerScreenToContext(targetCtx, x, y, width, height);
+            } else if (state.screenType === 'generation-complete') {
+                drawGenerationCompleteScreenToContext(targetCtx, x, y, width, height);
+            } else if (state.screenType === 'uploaded' && state.appScreenshot) {
+                drawUploadedScreenToContext(targetCtx, x, y, width, height);
+            } else {
+                drawCircleUIToContext(targetCtx, x, y, width, height);
+            }
+            
+            // Draw status bar if enabled
+            if (state.showStatusBar) {
+                drawStatusBarToContext(targetCtx, x, y, width, height);
+            }
+            
+            // Draw Dynamic Island if enabled
+            if (state.showNotch) {
+                drawDynamicIslandToContext(targetCtx, x, y, width, height);
+            }
+        }
+        
+        // Draw perspective-mapped quad using row-by-row slicing
+        // This method draws horizontal slices that interpolate between quad edges
+        function drawPerspectiveQuad(targetCtx, sourceCanvas, quad) {
+            const slices = 60; // Number of horizontal slices
+            const srcW = sourceCanvas.width;
+            const srcH = sourceCanvas.height;
+            
+            for (let i = 0; i < slices; i++) {
+                const t0 = i / slices;
+                const t1 = (i + 1) / slices;
+                
+                // Get left and right edge points for this slice
+                const left0 = {
+                    x: quad.tl.x + (quad.bl.x - quad.tl.x) * t0,
+                    y: quad.tl.y + (quad.bl.y - quad.tl.y) * t0
+                };
+                const right0 = {
+                    x: quad.tr.x + (quad.br.x - quad.tr.x) * t0,
+                    y: quad.tr.y + (quad.br.y - quad.tr.y) * t0
+                };
+                const left1 = {
+                    x: quad.tl.x + (quad.bl.x - quad.tl.x) * t1,
+                    y: quad.tl.y + (quad.bl.y - quad.tl.y) * t1
+                };
+                const right1 = {
+                    x: quad.tr.x + (quad.br.x - quad.tr.x) * t1,
+                    y: quad.tr.y + (quad.br.y - quad.tr.y) * t1
+                };
+                
+                // Source slice
+                const sy = t0 * srcH;
+                const sh = (t1 - t0) * srcH;
+                
+                // Draw this slice as a clipped trapezoid
+                targetCtx.save();
+                targetCtx.beginPath();
+                targetCtx.moveTo(left0.x, left0.y);
+                targetCtx.lineTo(right0.x, right0.y);
+                targetCtx.lineTo(right1.x, right1.y);
+                targetCtx.lineTo(left1.x, left1.y);
+                targetCtx.closePath();
+                targetCtx.clip();
+                
+                // Calculate bounds for this slice
+                const minX = Math.min(left0.x, left1.x);
+                const maxX = Math.max(right0.x, right1.x);
+                const minY = Math.min(left0.y, right0.y);
+                const maxY = Math.max(left1.y, right1.y);
+                const sliceW = maxX - minX;
+                const sliceH = maxY - minY;
+                
+                // Draw the source slice stretched to fit
+                if (sliceW > 0 && sliceH > 0 && sh > 0) {
+                    targetCtx.drawImage(
+                        sourceCanvas,
+                        0, sy, srcW, sh,  // source
+                        minX, minY, sliceW, sliceH  // dest
+                    );
+                }
+                
+                targetCtx.restore();
+            }
+        }
+        
+        // Helper functions to draw screen content to any context
+        function drawStatusBarToContext(targetCtx, x, y, w, h) {
+            const scale = h / 1400; // Relative to iPhone screen height
+            const statusBarHeight = h * 0.04;
+            const islandCenterY = y + statusBarHeight * 0.6;
+            
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            targetCtx.font = `600 ${Math.round(14 * scale * 10)}px SF Pro Display, -apple-system, system-ui`;
+            targetCtx.textAlign = 'left';
+            targetCtx.fillText('9:41', x + w * 0.08, islandCenterY + 5 * scale * 10);
+            
+            targetCtx.textAlign = 'right';
+            const rightX = x + w * 0.92;
+            
+            // Signal bars
+            const barW = 3 * scale * 10;
+            const barGap = 2 * scale * 10;
+            const barHeights = [6, 9, 12, 15];
+            let barX = rightX - 90 * scale * 10;
+            barHeights.forEach((bh, i) => {
+                targetCtx.fillStyle = i < 4 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)';
+                targetCtx.fillRect(barX, islandCenterY - bh * scale * 5, barW, bh * scale * 10);
+                barX += barW + barGap;
+            });
+            
+            // WiFi
+            const wifiX = rightX - 50 * scale * 10;
+            targetCtx.beginPath();
+            for (let i = 0; i < 3; i++) {
+                const r = (6 + i * 5) * scale * 10;
+                targetCtx.arc(wifiX, islandCenterY + 8 * scale * 10, r, -Math.PI * 0.75, -Math.PI * 0.25);
+            }
+            targetCtx.strokeStyle = 'rgba(255,255,255,0.9)';
+            targetCtx.lineWidth = 2 * scale * 10;
+            targetCtx.stroke();
+            
+            // Battery
+            const battW = 24 * scale * 10;
+            const battH = 11 * scale * 10;
+            const battX = rightX - battW - 2 * scale * 10;
+            const battY = islandCenterY - battH / 2;
+            targetCtx.strokeStyle = 'rgba(255,255,255,0.5)';
+            targetCtx.lineWidth = 1;
+            targetCtx.strokeRect(battX, battY, battW, battH);
+            targetCtx.fillStyle = 'rgba(255,255,255,0.9)';
+            targetCtx.fillRect(battX + 2, battY + 2, (battW - 4) * 0.8, battH - 4);
+            targetCtx.fillRect(battX + battW, battY + battH * 0.25, 2 * scale * 10, battH * 0.5);
+        }
+        
+        function drawDynamicIslandToContext(targetCtx, x, y, w, h) {
+            const islandW = w * 0.28;
+            const islandH = h * 0.025;
+            const islandX = x + (w - islandW) / 2;
+            const islandY = y + h * 0.012;
+            const islandRadius = islandH / 2;
+            
+            targetCtx.fillStyle = '#000000';
+            targetCtx.beginPath();
+            targetCtx.roundRect(islandX, islandY, islandW, islandH, islandRadius);
+            targetCtx.fill();
+        }
+        
+        function drawCircleUIToContext(targetCtx, x, y, w, h) {
+            if (!state.showCircleUI) return;
+            
+            const centerX = x + w / 2;
+            const centerY = y + h * 0.4;
+            const circleRadius = w * 0.28;
+            
+            // Outer glow
+            const glowGrad = targetCtx.createRadialGradient(centerX, centerY, circleRadius * 0.8, centerX, centerY, circleRadius * 1.3);
+            glowGrad.addColorStop(0, 'rgba(100, 130, 180, 0.15)');
+            glowGrad.addColorStop(1, 'rgba(100, 130, 180, 0)');
+            targetCtx.fillStyle = glowGrad;
+            targetCtx.beginPath();
+            targetCtx.arc(centerX, centerY, circleRadius * 1.3, 0, Math.PI * 2);
+            targetCtx.fill();
+            
+            // Main circle
+            targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            targetCtx.lineWidth = 2;
+            targetCtx.beginPath();
+            targetCtx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+            targetCtx.stroke();
+            
+            // Circle text
+            if (state.circleText) {
+                targetCtx.font = `300 ${w * 0.035}px Crimson Pro`;
+                targetCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                targetCtx.textAlign = 'center';
+                targetCtx.fillText(state.circleText, centerX, centerY + circleRadius + w * 0.08);
+            }
+        }
+        
+        function drawGoalInputScreenToContext(targetCtx, x, y, w, h) {
+            // Simplified version of goal input screen
+            const padding = w * 0.06;
+            
+            // Title
+            targetCtx.font = `300 ${w * 0.09}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText("What would you", x + w/2, y + h * 0.15);
+            targetCtx.fillText("like to focus on?", x + w/2, y + h * 0.20);
+            
+            // Input field
+            const inputY = y + h * 0.28;
+            const inputH = h * 0.06;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            targetCtx.beginPath();
+            targetCtx.roundRect(x + padding, inputY, w - padding * 2, inputH, 8);
+            targetCtx.fill();
+            
+            // Placeholder text
+            const displayText = state.goalInputText || state.goalPlaceholder;
+            targetCtx.font = `300 ${w * 0.04}px Crimson Pro`;
+            targetCtx.fillStyle = state.goalInputText ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
+            targetCtx.textAlign = 'left';
+            targetCtx.fillText(displayText, x + padding + 12, inputY + inputH * 0.65);
+            
+            // Tab bar
+            if (state.showTabBar) {
+                const tabBarY = y + h - h * 0.1;
+                targetCtx.fillStyle = 'rgb(18, 19, 24)';
+                targetCtx.fillRect(x, tabBarY, w, h * 0.1);
+                targetCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+                targetCtx.lineWidth = 1;
+                targetCtx.beginPath();
+                targetCtx.moveTo(x, tabBarY);
+                targetCtx.lineTo(x + w, tabBarY);
+                targetCtx.stroke();
+            }
+        }
+        
+        function drawLearnInputScreenToContext(targetCtx, x, y, w, h) {
+            // Simplified version of learn input screen
+            const padding = w * 0.06;
+            
+            // Title
+            targetCtx.font = `300 ${w * 0.09}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText("What would you", x + w/2, y + h * 0.15);
+            targetCtx.fillText("like to learn?", x + w/2, y + h * 0.20);
+            
+            // Input field
+            const inputY = y + h * 0.28;
+            const inputH = h * 0.06;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            targetCtx.beginPath();
+            targetCtx.roundRect(x + padding, inputY, w - padding * 2, inputH, 8);
+            targetCtx.fill();
+            
+            // Placeholder text
+            const displayText = state.learnInputText || state.learnPlaceholder;
+            targetCtx.font = `300 ${w * 0.035}px Inter`;
+            targetCtx.fillStyle = state.learnInputText ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
+            targetCtx.textAlign = 'left';
+            targetCtx.fillText(displayText, x + padding + 12, inputY + inputH * 0.65);
+            
+            // Tab bar
+            if (state.showLearnTabBar) {
+                const tabBarY = y + h - h * 0.1;
+                targetCtx.fillStyle = 'rgb(18, 19, 24)';
+                targetCtx.fillRect(x, tabBarY, w, h * 0.1);
+                targetCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+                targetCtx.lineWidth = 1;
+                targetCtx.beginPath();
+                targetCtx.moveTo(x, tabBarY);
+                targetCtx.lineTo(x + w, tabBarY);
+                targetCtx.stroke();
+            }
+        }
+        
+        function drawPlayerScreenToContext(targetCtx, x, y, w, h) {
+            // Simplified version of player screen for 3D frame
+            const centerX = x + w / 2;
+            const padding = w * 0.08;
+            
+            // Title - positioned at ~15.5% from top
+            targetCtx.font = `400 ${w * 0.072}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText(state.playerTitle, centerX, y + h * 0.155);
+            
+            // Duration - closer to title
+            targetCtx.font = `400 ${w * 0.035}px Inter`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            targetCtx.fillText(`${state.playerDuration} minutes`, centerX, y + h * 0.195);
+            
+            // Breathing circle (outer only, no inner button circle)
+            const circleY = y + h * 0.365;
+            const circleRadius = w * 0.2;
+            targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            targetCtx.lineWidth = 2;
+            targetCtx.beginPath();
+            targetCtx.arc(centerX, circleY, circleRadius, 0, Math.PI * 2);
+            targetCtx.stroke();
+            
+            // Pause/Play icon
+            if (state.playerIsPlaying) {
+                const barW = w * 0.012;
+                const barH = w * 0.055;
+                const barGap = w * 0.018;
+                targetCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                targetCtx.fillRect(centerX - barGap - barW, circleY - barH/2, barW, barH);
+                targetCtx.fillRect(centerX + barGap, circleY - barH/2, barW, barH);
+            } else {
+                const triSize = w * 0.04;
+                targetCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                targetCtx.beginPath();
+                targetCtx.moveTo(centerX - triSize * 0.4, circleY - triSize);
+                targetCtx.lineTo(centerX - triSize * 0.4, circleY + triSize);
+                targetCtx.lineTo(centerX + triSize * 0.8, circleY);
+                targetCtx.closePath();
+                targetCtx.fill();
+            }
+            
+            // Waveform - lower position
+            const waveY = y + h * 0.56;
+            const waveWidth = w * 0.84;
+            const waveHeight = h * 0.04;
+            const waveX = centerX - waveWidth / 2;
+            const barCount = 60;
+            const barW = (waveWidth / barCount) * 0.7;
+            const barGap = (waveWidth / barCount) * 0.3;
+            const progress = state.playerTotalTime > 0 ? state.playerCurrentTime / state.playerTotalTime : 0;
+            
+            for (let i = 0; i < barCount; i++) {
+                const bx = waveX + i * (barW + barGap);
+                const amplitude = 0.3 + Math.sin(i * 0.3) * 0.2 + Math.random() * 0.3;
+                const bh = waveHeight * amplitude;
+                const isActive = (i / barCount) <= progress;
+                targetCtx.fillStyle = isActive ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.12)';
+                targetCtx.fillRect(bx, waveY + (waveHeight - bh) / 2, barW, bh);
+            }
+            
+            // Playhead
+            const playheadX = waveX + progress * waveWidth;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            targetCtx.fillRect(playheadX - 1, waveY - 4, 2, waveHeight + 8);
+            
+            // Time - more space below waveform
+            const formatTime = (s) => {
+                const mins = Math.floor(s / 60);
+                const secs = Math.floor(s % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            };
+            targetCtx.font = `400 ${w * 0.033}px Inter`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText(`${formatTime(state.playerCurrentTime)} / ${formatTime(state.playerTotalTime)}`, centerX, waveY + waveHeight + h * 0.035);
+            
+            // Skip controls - more space below time
+            const skipY = waveY + waveHeight + h * 0.11;
+            targetCtx.font = `500 ${w * 0.038}px Inter`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            targetCtx.fillText('−15', centerX - w * 0.25, skipY);
+            targetCtx.fillText('+15', centerX + w * 0.25, skipY);
+            
+            // Replay button
+            targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            targetCtx.lineWidth = 1;
+            targetCtx.beginPath();
+            targetCtx.arc(centerX, skipY, w * 0.06, 0, Math.PI * 2);
+            targetCtx.stroke();
+            
+            // Home indicator
+            const homeBarY = y + h - h * 0.025;
+            const homeBarW = w * 0.35;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            targetCtx.beginPath();
+            targetCtx.roundRect(centerX - homeBarW/2, homeBarY, homeBarW, 5, 2.5);
+            targetCtx.fill();
+        }
+        
+        function drawGenerationCompleteScreenToContext(targetCtx, x, y, w, h) {
+            // Simplified version of generation complete screen for 3D frame
+            const centerX = x + w / 2;
+            
+            // Breathing circle
+            const circleY = y + h * 0.38;
+            const circleRadius = w * 0.22;
+            targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            targetCtx.lineWidth = 2;
+            targetCtx.beginPath();
+            targetCtx.arc(centerX, circleY, circleRadius, 0, Math.PI * 2);
+            targetCtx.stroke();
+            
+            // Completion message
+            targetCtx.font = `400 ${w * 0.062}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText(state.completionMessage, centerX, circleY + circleRadius + h * 0.06);
+            
+            // Credits text
+            let creditsText;
+            if (state.creditsUsed > 0) {
+                creditsText = `${state.creditsUsed} credits used · ${state.creditsRemaining} remaining`;
+            } else {
+                creditsText = `Free preview · ${state.creditsRemaining} credits remaining`;
+            }
+            targetCtx.font = `400 ${w * 0.033}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            targetCtx.fillText(creditsText, centerX, circleY + circleRadius + h * 0.12);
+            
+            // Open button
+            targetCtx.font = `400 ${w * 0.046}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            targetCtx.fillText('Open your space  →', centerX, y + h * 0.78);
+            
+            // Refocus link
+            targetCtx.font = `400 ${w * 0.04}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            targetCtx.fillText('Refocus', centerX, y + h * 0.835);
+            
+            // Home indicator
+            const homeBarY = y + h - h * 0.025;
+            const homeBarW = w * 0.35;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            targetCtx.beginPath();
+            targetCtx.roundRect(centerX - homeBarW/2, homeBarY, homeBarW, 5, 2.5);
+            targetCtx.fill();
+        }
+        
+        function drawUploadedScreenToContext(targetCtx, x, y, w, h) {
+            if (!state.appScreenshot) return;
+            
+            const img = state.appScreenshot;
+            const cropTop = state.cropTop || 0;
+            const cropBottom = state.cropBottom || 0;
+            
+            const srcY = cropTop;
+            const srcH = img.height - cropTop - cropBottom;
+            
+            targetCtx.drawImage(img, 0, srcY, img.width, srcH, x, y, w, h);
+        }
+
+        function drawPhoneMockup() {
+            // Check if we should use 3D frame mode
+            if (state.use3DFrame && state.frame3D) {
+                draw3DFrame();
+                return;
+            }
+            
+            const scale = state.phoneScale;
+            const isIPad = state.deviceName.includes('iPad');
+            
+            // Get device-specific dimensions (matching drawSinglePhone)
+            const config = PHONE_CONFIGS[state.deviceName] || PHONE_CONFIGS['iPhone 6.7"'];
+            const frameWidth = config.phoneWidth * scale;
+            const frameHeight = config.phoneHeight * scale;
+
+            // Layout: Logo Hero - diagonal phone in lower area, centered
+            if (state.layout === 'logo-hero') {
+                const phoneX = (state.width - frameWidth) / 2;
+                const phoneY = state.height * 0.40;
+                drawSinglePhone(phoneX, phoneY, -15);
+                return;
+            }
+
+            // Layout: Diagonal with bottom text - tilted phone, text at bottom
+            if (state.layout === 'diagonal-bottom-text') {
+                const phoneX = (state.width - frameWidth) / 2;
+                const phoneY = state.height * 0.06;
+                drawSinglePhone(phoneX, phoneY, -12);
+                return;
+            }
+
+            // Layout: Dual phones - two phones at angles, overlapping
+            if (state.layout === 'dual-phones') {
+                // Back phone (left, more tilted)
+                const phone1Scale = scale * 0.85;
+                const phone1X = state.width * 0.05;
+                const phone1Y = state.height * 0.28;
+                
+                ctx.save();
+                state.phoneScale = phone1Scale;
+                drawSinglePhone(phone1X, phone1Y, -8);
+                state.phoneScale = scale;
+                ctx.restore();
+                
+                // Front phone (right, less tilted, overlapping)
+                const phone2X = state.width * 0.32;
+                const phone2Y = state.height * 0.22;
+                drawSinglePhone(phone2X, phone2Y, 5);
+                return;
+            }
+            
+            // Layout: Bottom peek - phone peeking from bottom
+            if (state.layout === 'bottom-peek') {
+                const phoneX = (state.width - frameWidth) / 2;
+                const phoneY = state.height - frameHeight * 0.55;
+                drawSinglePhone(phoneX, phoneY, 0);
+                return;
+            }
+
+            // Layout: Tilted right - slight right angle tilt
+            if (state.layout === 'tilted-right') {
+                const phoneX = (state.width - frameWidth) / 2 + state.width * 0.05;
+                const phoneY = state.height * 0.18;
+                drawSinglePhone(phoneX, phoneY, 5);
+                return;
+            }
+
+            // Layout: Tilted left - slight left angle tilt
+            if (state.layout === 'tilted-left') {
+                const phoneX = (state.width - frameWidth) / 2 - state.width * 0.05;
+                const phoneY = state.height * 0.18;
+                drawSinglePhone(phoneX, phoneY, -5);
+                return;
+            }
+
+            // Layout: Split Left - left half of a split phone pair
+            // Phone is rotated to the RIGHT and positioned so it extends past right edge
+            if (state.layout === 'split-left') {
+                const angle = state.splitPhoneAngle;
+                // Base position + adjustable offset
+                const baseX = state.width * 0.25;
+                const baseY = state.height * 0.15;
+                const phoneX = baseX + (state.splitPhoneX / 100) * state.width;
+                const phoneY = baseY + (state.splitPhoneY / 100) * state.height;
+                drawSinglePhone(phoneX, phoneY, angle);
+                return;
+            }
+
+            // Layout: Split Right - right half of a split phone pair
+            // Same angle, positioned so it extends past the left edge
+            if (state.layout === 'split-right') {
+                const angle = state.splitPhoneAngle;
+                // Base position + adjustable offset (mirrored from split-left)
+                const baseX = -state.width * 0.55;
+                const baseY = state.height * 0.15;
+                const phoneX = baseX + (state.splitPhoneX / 100) * state.width;
+                const phoneY = baseY + (state.splitPhoneY / 100) * state.height;
+                drawSinglePhone(phoneX, phoneY, angle);
+                return;
+            }
+
+            // Default centered layout - single phone, text at top
+            let phoneX, phoneY;
+            if (state.textPosition === 'top') {
+                phoneX = (state.width - frameWidth) / 2;
+                phoneY = state.height - frameHeight - state.height * 0.02;
+            } else if (state.textPosition === 'bottom') {
+                phoneX = (state.width - frameWidth) / 2;
+                phoneY = state.height * 0.08;
+            } else {
+                phoneX = (state.width - frameWidth) / 2;
+                phoneY = (state.height - frameHeight) / 2 + state.height * 0.06;
+            }
+
+            drawSinglePhone(phoneX, phoneY, 0);
+        }
+
+        // Draw text with emphasis support (words in *asterisks* get styled differently)
+        function drawTextWithEmphasis(text, x, y, fontSize, normalFont, emphasisFont, normalColor, emphasisColor) {
+            const parts = text.split(/(\*[^*]+\*)/);
+            
+            // Calculate total width for centering
+            let totalWidth = 0;
+            parts.forEach(part => {
+                const cleanText = part.replace(/\*/g, '');
+                const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                ctx.font = isEmphasis ? emphasisFont : normalFont;
+                totalWidth += ctx.measureText(cleanText).width;
+            });
+
+            let xOffset = x - totalWidth / 2;
+
+            parts.forEach(part => {
+                const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                const cleanText = part.replace(/\*/g, '');
+                
+                if (isEmphasis) {
+                    ctx.font = emphasisFont;
+                    ctx.fillStyle = emphasisColor;
+                } else {
+                    ctx.font = normalFont;
+                    ctx.fillStyle = normalColor;
+                }
+                
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
+                ctx.fillText(cleanText, xOffset, y);
+                xOffset += ctx.measureText(cleanText).width;
+            });
+
+            return totalWidth;
+        }
+
+        // Draw text with emphasis and custom alignment (right, left, center)
+        function drawTextWithEmphasisAligned(text, x, y, fontSize, normalFont, emphasisFont, normalColor, emphasisColor, align) {
+            const parts = text.split(/(\*[^*]+\*)/);
+            
+            // Calculate total width
+            let totalWidth = 0;
+            parts.forEach(part => {
+                const cleanText = part.replace(/\*/g, '');
+                const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                ctx.font = isEmphasis ? emphasisFont : normalFont;
+                totalWidth += ctx.measureText(cleanText).width;
+            });
+
+            let xOffset;
+            if (align === 'right') {
+                xOffset = x - totalWidth;
+            } else if (align === 'left') {
+                xOffset = x;
+            } else {
+                xOffset = x - totalWidth / 2;
+            }
+
+            parts.forEach(part => {
+                const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                const cleanText = part.replace(/\*/g, '');
+                
+                if (isEmphasis) {
+                    ctx.font = emphasisFont;
+                    ctx.fillStyle = emphasisColor;
+                } else {
+                    ctx.font = normalFont;
+                    ctx.fillStyle = normalColor;
+                }
+                
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
+                ctx.fillText(cleanText, xOffset, y);
+                xOffset += ctx.measureText(cleanText).width;
+            });
+
+            return totalWidth;
+        }
+
+        // Draw text content
+        function drawTextContent() {
+            const headline = state.headline;
+            const subheadline = state.subheadline;
+            
+            if (!headline && !subheadline) return;
+
+            const scale = state.width / 1290; // Scale relative to base size
+            const fontSize = Math.round(95 * scale);
+            const lineHeight = 1.15;
+
+            // Calculate vertical position based on layout
+            let textY;
+            let textAlign = 'center';
+            let textX = state.width / 2;
+            
+            if (state.layout === 'logo-hero') {
+                // No headline/subheadline text for logo-hero (handled in drawLogo)
+                return;
+            } else if (state.layout === 'diagonal-bottom-text') {
+                // Text at bottom right for diagonal layout
+                textY = state.height * 0.72;
+                textAlign = 'right';
+                textX = state.width * 0.88;
+            } else if (state.layout === 'dual-phones') {
+                // Text at top center for dual phones
+                textY = state.height * 0.05;
+            } else if (state.layout === 'bottom-peek') {
+                // Text in middle area for bottom-peek layout
+                textY = state.height * 0.32;
+            } else if (state.layout === 'tilted-right' || state.layout === 'tilted-left') {
+                // Text at top for tilted layouts
+                textY = state.height * 0.06;
+            } else if (state.layout === 'split-left') {
+                // No text for split-left, just logo in upper left
+                return; // Skip text drawing for split-left
+            } else if (state.layout === 'split-right') {
+                // Text at bottom right for split-right
+                textY = state.height * 0.72;
+                textAlign = 'right';
+                textX = state.width * 0.92;
+            } else if (state.textPosition === 'top') {
+                textY = state.showLogo ? state.height * 0.16 : state.height * 0.06;
+            } else if (state.textPosition === 'bottom') {
+                textY = state.height * 0.72;
+            } else {
+                textY = state.height * 0.12;
+            }
+            
+            // Apply vertical offset (scaled to canvas size)
+            textY += state.textOffsetY * scale;
+
+            // Text shadow for readability
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+            ctx.shadowBlur = 30;
+            ctx.shadowOffsetY = 6;
+
+            // Draw headline with emphasis support (bold for emphasized words)
+            if (headline) {
+                const normalFont = `300 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                const emphasisFont = `600 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                const normalColor = 'rgba(255, 255, 255, 0.9)';
+                const emphasisColor = 'rgba(255, 255, 255, 1)';
+
+                if (textAlign === 'right') {
+                    drawTextWithEmphasisAligned(headline, textX, textY, fontSize, normalFont, emphasisFont, normalColor, emphasisColor, 'right');
+                } else {
+                    drawTextWithEmphasis(headline, textX, textY, fontSize, normalFont, emphasisFont, normalColor, emphasisColor);
+                }
+                
+                textY += fontSize * lineHeight;
+            }
+
+            // Draw subheadline with emphasis (semi-bold for emphasized words) - same font size
+            if (subheadline) {
+                const normalFont = `300 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                const emphasisFont = `600 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                const normalColor = 'rgba(255, 255, 255, 0.9)';
+                const emphasisColor = 'rgba(255, 255, 255, 1)';
+
+                if (textAlign === 'right') {
+                    drawTextWithEmphasisAligned(subheadline, textX, textY, fontSize, normalFont, emphasisFont, normalColor, emphasisColor, 'right');
+                } else {
+                    drawTextWithEmphasis(subheadline, textX, textY, fontSize, normalFont, emphasisFont, normalColor, emphasisColor);
+                }
+            }
+
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetY = 0;
+        }
+
+        // Main render function
+        function render() {
+            canvas.width = state.width;
+            canvas.height = state.height;
+
+            // Apply preview scale
+            const previewScale = getPreviewScale();
+            canvas.style.width = (state.width * previewScale) + 'px';
+            canvas.style.height = (state.height * previewScale) + 'px';
+
+            // Clear and draw
+            createPhosphenes();
+            drawPhospheneBackground();
+            drawPhoneMockup();
+            drawLogo();
+            drawTextContent();
+
+            // Update info
+            document.getElementById('preview-info').textContent = 
+                `${state.deviceName} — ${state.width} × ${state.height}px`;
+        }
+
+        // Download PNG with high quality
+        async function downloadPNG(filename = null) {
+            const status = document.getElementById('download-status');
+            status.className = 'download-status loading';
+            status.textContent = 'Generating high-quality image...';
+
+            // Re-render at full resolution
+            render();
+
+            await new Promise(resolve => setTimeout(resolve, 150));
+
+            // Generate descriptive filename
+            const headlineSlug = state.headline.replace(/\*/g, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 30);
+            const deviceSlug = state.deviceName.replace(/[^a-z0-9]/gi, '').toLowerCase();
+            
+            const link = document.createElement('a');
+            link.download = filename || `whitespace-${headlineSlug}-${deviceSlug}-${state.width}x${state.height}.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+
+            status.className = 'download-status success';
+            status.textContent = '✓ Downloaded successfully!';
+            setTimeout(() => { status.className = 'download-status'; }, 3000);
+        }
+
+        // Download all sizes
+        async function downloadAllSizes() {
+            const status = document.getElementById('download-status');
+            const sizes = [
+                { width: 1290, height: 2796, name: 'iPhone-6.7' },
+                { width: 1242, height: 2688, name: 'iPhone-6.5' },
+                { width: 1179, height: 2556, name: 'iPhone-6.1' },
+                { width: 1242, height: 2208, name: 'iPhone-5.5' },
+                { width: 2048, height: 2732, name: 'iPad-12.9' },
+                { width: 1668, height: 2388, name: 'iPad-11' }
+            ];
+
+            const originalWidth = state.width;
+            const originalHeight = state.height;
+            const originalName = state.deviceName;
+
+            for (let i = 0; i < sizes.length; i++) {
+                const size = sizes[i];
+                status.className = 'download-status loading';
+                status.textContent = `Generating ${size.name} (${i + 1}/${sizes.length})...`;
+
+                state.width = size.width;
+                state.height = size.height;
+                state.deviceName = size.name;
+                
+                render();
+                await new Promise(resolve => setTimeout(resolve, 200));
+                
+                const link = document.createElement('a');
+                link.download = `whitespace-${size.name}-${size.width}x${size.height}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+                
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+
+            // Restore original
+            state.width = originalWidth;
+            state.height = originalHeight;
+            state.deviceName = originalName;
+            render();
+
+            status.className = 'download-status success';
+            status.textContent = '✓ All sizes downloaded!';
+            setTimeout(() => { status.className = 'download-status'; }, 3000);
+        }
+
+        // Event Listeners
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.size-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                state.width = parseInt(option.dataset.width);
+                state.height = parseInt(option.dataset.height);
+                state.deviceName = option.dataset.name;
+                render();
+            });
+        });
+
+        document.querySelectorAll('.position-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.position-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.textPosition = btn.dataset.position;
+                render();
+            });
+        });
+
+        // Layout selection
+        document.querySelectorAll('.layout-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.layout-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.layout = btn.dataset.layout;
+                
+                // Show/hide split controls based on layout
+                const splitControls = document.getElementById('split-controls');
+                if (state.layout === 'split-left' || state.layout === 'split-right') {
+                    splitControls.style.display = 'block';
+                    
+                    // Set default X position for each split layout
+                    if (state.layout === 'split-left') {
+                        state.splitPhoneX = 39;
+                    } else if (state.layout === 'split-right') {
+                        state.splitPhoneX = 19;
+                    }
+                    // Update slider and display
+                    document.getElementById('split-phone-x').value = state.splitPhoneX;
+                    document.getElementById('split-x-value').textContent = state.splitPhoneX;
+                } else {
+                    splitControls.style.display = 'none';
+                }
+                
+                render();
+            });
+        });
+
+        // Split layout position controls
+        document.getElementById('split-phone-x').addEventListener('input', (e) => {
+            state.splitPhoneX = parseInt(e.target.value);
+            document.getElementById('split-x-value').textContent = state.splitPhoneX;
+            render();
+        });
+
+        document.getElementById('split-phone-y').addEventListener('input', (e) => {
+            state.splitPhoneY = parseInt(e.target.value);
+            document.getElementById('split-y-value').textContent = state.splitPhoneY;
+            render();
+        });
+
+        document.getElementById('split-phone-angle').addEventListener('input', (e) => {
+            state.splitPhoneAngle = parseInt(e.target.value);
+            document.getElementById('split-angle-value').textContent = state.splitPhoneAngle + '°';
+            render();
+        });
+
+        // Logo upload
+        document.getElementById('logo-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        state.logo = img;
+                        state.showLogo = true;
+                        document.getElementById('show-logo').checked = true;
+                        
+                        // Show thumbnail
+                        const thumbContainer = document.getElementById('logo-thumbnail');
+                        thumbContainer.innerHTML = `<div class="thumbnail active"><img src="${event.target.result}" alt="Logo"></div>`;
+                        
+                        render();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('show-logo').addEventListener('change', (e) => {
+            state.showLogo = e.target.checked;
+            render();
+        });
+
+        document.getElementById('logo-scale').addEventListener('input', (e) => {
+            state.logoScale = parseFloat(e.target.value);
+            render();
+        });
+
+        document.getElementById('headline').addEventListener('input', (e) => {
+            state.headline = e.target.value;
+            render();
+        });
+
+        document.getElementById('subheadline').addEventListener('input', (e) => {
+            state.subheadline = e.target.value;
+            render();
+        });
+
+        // Screenshot crop controls
+        document.getElementById('crop-top').addEventListener('input', (e) => {
+            state.cropTop = parseInt(e.target.value) || 0;
+            render();
+        });
+
+        document.getElementById('crop-bottom').addEventListener('input', (e) => {
+            state.cropBottom = parseInt(e.target.value) || 0;
+            render();
+        });
+
+        // Text vertical offset
+        document.getElementById('text-offset-y').addEventListener('input', (e) => {
+            state.textOffsetY = parseInt(e.target.value) || 0;
+            document.getElementById('text-offset-value').textContent = state.textOffsetY + 'px';
+            render();
+        });
+
+        document.getElementById('show-phone').addEventListener('change', (e) => {
+            state.showPhone = e.target.checked;
+            render();
+        });
+
+        document.getElementById('show-notch').addEventListener('change', (e) => {
+            state.showNotch = e.target.checked;
+            render();
+        });
+
+        document.getElementById('show-status-bar').addEventListener('change', (e) => {
+            state.showStatusBar = e.target.checked;
+            render();
+        });
+
+        document.getElementById('phone-scale').addEventListener('input', (e) => {
+            state.phoneScale = parseFloat(e.target.value);
+            render();
+        });
+
+        document.getElementById('perspective-x').addEventListener('input', (e) => {
+            state.perspectiveX = parseFloat(e.target.value);
+            document.getElementById('perspective-x-value').textContent = state.perspectiveX.toFixed(2);
+            render();
+        });
+
+        document.getElementById('perspective-y').addEventListener('input', (e) => {
+            state.perspectiveY = parseFloat(e.target.value);
+            document.getElementById('perspective-y-value').textContent = state.perspectiveY.toFixed(2);
+            render();
+        });
+
+        document.getElementById('show-circle').addEventListener('change', (e) => {
+            state.showCircleUI = e.target.checked;
+            render();
+        });
+
+        // Phone color buttons
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.phoneColor = btn.dataset.color;
+                render();
+            });
+        });
+
+        document.getElementById('circle-text').addEventListener('input', (e) => {
+            state.circleText = e.target.value;
+            render();
+        });
+
+        // Screen type selector
+        document.getElementById('screen-type').addEventListener('change', (e) => {
+            state.screenType = e.target.value;
+            
+            // Show/hide relevant settings panels
+            document.getElementById('circle-settings').style.display = 
+                e.target.value === 'circle' ? 'block' : 'none';
+            document.getElementById('goal-input-settings').style.display = 
+                e.target.value === 'goal-input' ? 'block' : 'none';
+            document.getElementById('learn-input-settings').style.display = 
+                e.target.value === 'learn-input' ? 'block' : 'none';
+            document.getElementById('player-settings').style.display = 
+                e.target.value === 'player' ? 'block' : 'none';
+            document.getElementById('generation-complete-settings').style.display = 
+                e.target.value === 'generation-complete' ? 'block' : 'none';
+            
+            // Clear uploaded screenshot if switching away from uploaded
+            if (e.target.value !== 'uploaded') {
+                state.appScreenshot = null;
+            }
+            
+            render();
+        });
+
+        // Goal input page settings
+        document.getElementById('goal-placeholder').addEventListener('input', (e) => {
+            state.goalPlaceholder = e.target.value;
+            render();
+        });
+
+        document.getElementById('goal-input-text').addEventListener('input', (e) => {
+            state.goalInputText = e.target.value;
+            render();
+        });
+
+        document.getElementById('show-goal-buttons').addEventListener('change', (e) => {
+            state.showGoalButtons = e.target.checked;
+            render();
+        });
+
+        document.getElementById('show-recent').addEventListener('change', (e) => {
+            state.showRecent = e.target.checked;
+            render();
+        });
+
+        document.getElementById('show-tab-bar').addEventListener('change', (e) => {
+            state.showTabBar = e.target.checked;
+            render();
+        });
+
+        // Learn input page settings
+        document.getElementById('learn-placeholder').addEventListener('input', (e) => {
+            state.learnPlaceholder = e.target.value;
+            render();
+        });
+
+        document.getElementById('learn-input-text').addEventListener('input', (e) => {
+            state.learnInputText = e.target.value;
+            render();
+        });
+
+        document.getElementById('show-upload-button').addEventListener('change', (e) => {
+            state.showUploadButton = e.target.checked;
+            render();
+        });
+
+        document.getElementById('show-learn-recent').addEventListener('change', (e) => {
+            state.showLearnRecent = e.target.checked;
+            render();
+        });
+
+        document.getElementById('show-back-button').addEventListener('change', (e) => {
+            state.showBackButton = e.target.checked;
+            render();
+        });
+
+        document.getElementById('show-learn-tab-bar').addEventListener('change', (e) => {
+            state.showLearnTabBar = e.target.checked;
+            render();
+        });
+
+        // Player modal settings
+        document.getElementById('player-title').addEventListener('input', (e) => {
+            state.playerTitle = e.target.value;
+            render();
+        });
+
+        document.getElementById('player-duration').addEventListener('input', (e) => {
+            state.playerDuration = parseInt(e.target.value) || 11;
+            render();
+        });
+
+        document.getElementById('player-current-time').addEventListener('input', (e) => {
+            state.playerCurrentTime = parseInt(e.target.value) || 0;
+            render();
+        });
+
+        document.getElementById('player-total-time').addEventListener('input', (e) => {
+            state.playerTotalTime = parseInt(e.target.value) || 636;
+            render();
+        });
+
+        document.getElementById('player-is-playing').addEventListener('change', (e) => {
+            state.playerIsPlaying = e.target.checked;
+            render();
+        });
+
+        document.getElementById('player-show-transcript').addEventListener('change', (e) => {
+            state.playerShowTranscript = e.target.checked;
+            render();
+        });
+
+        document.getElementById('player-show-reflection').addEventListener('change', (e) => {
+            state.playerShowReflection = e.target.checked;
+            render();
+        });
+
+        document.getElementById('player-show-practice').addEventListener('change', (e) => {
+            state.playerShowPractice = e.target.checked;
+            render();
+        });
+
+        document.getElementById('phone-phosphene-intensity').addEventListener('input', (e) => {
+            state.phonePhospheneIntensity = parseFloat(e.target.value);
+            render();
+        });
+
+        document.getElementById('phone-phosphene-brightness').addEventListener('input', (e) => {
+            state.phonePhospheneBrightness = parseFloat(e.target.value);
+            render();
+        });
+
+        // Generation complete settings
+        document.getElementById('completion-message').addEventListener('input', (e) => {
+            state.completionMessage = e.target.value;
+            render();
+        });
+
+        document.getElementById('credits-used').addEventListener('input', (e) => {
+            state.creditsUsed = parseInt(e.target.value) || 0;
+            render();
+        });
+
+        document.getElementById('credits-remaining').addEventListener('input', (e) => {
+            state.creditsRemaining = parseInt(e.target.value) || 0;
+            render();
+        });
+
+        document.getElementById('show-complete-tab-bar').addEventListener('change', (e) => {
+            state.showTabBar = e.target.checked;
+            render();
+        });
+
+        // 3D Frame upload and controls
+        document.getElementById('frame3d-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        state.frame3D = img;
+                        state.use3DFrame = true;
+                        document.getElementById('use-3d-frame').checked = true;
+                        document.getElementById('frame3d-corners').style.display = 'block';
+                        
+                        // Show thumbnail
+                        const thumbContainer = document.getElementById('frame3d-thumbnail');
+                        thumbContainer.innerHTML = `<div class="thumbnail active"><img src="${event.target.result}" alt="3D Frame"></div>`;
+                        
+                        render();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('use-3d-frame').addEventListener('change', (e) => {
+            state.use3DFrame = e.target.checked;
+            document.getElementById('frame3d-corners').style.display = e.target.checked && state.frame3D ? 'block' : 'none';
+            render();
+        });
+
+        // Screen corner inputs
+        ['tl', 'tr', 'br', 'bl'].forEach(corner => {
+            ['x', 'y'].forEach(axis => {
+                document.getElementById(`corner-${corner}-${axis}`).addEventListener('input', (e) => {
+                    state.screenCorners[corner][axis] = parseFloat(e.target.value) / 100;
+                    render();
+                });
+            });
+        });
+
+        // Preview corners button - draws corner markers
+        document.getElementById('preview-corners').addEventListener('click', () => {
+            state.previewCorners = !state.previewCorners;
+            document.getElementById('preview-corners').classList.toggle('active', state.previewCorners);
+            render();
+        });
+
+        // Preset buttons
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const presetName = btn.dataset.preset;
+                const preset = PRESETS[presetName];
+                
+                if (presetName !== 'custom') {
+                    state.headline = preset.headline;
+                    state.subheadline = preset.subheadline;
+                    state.layout = preset.layout || 'centered';
+                    state.showCircleUI = preset.showCircle !== false;
+                    state.circleText = preset.circleText || 'Your space is ready for you.';
+                    
+                    // Update UI
+                    document.getElementById('headline').value = preset.headline;
+                    document.getElementById('subheadline').value = preset.subheadline;
+                    document.getElementById('show-circle').checked = state.showCircleUI;
+                    document.getElementById('circle-text').value = state.circleText;
+                    
+                    // Update layout buttons
+                    document.querySelectorAll('.layout-btn').forEach(l => {
+                        l.classList.toggle('active', l.dataset.layout === state.layout);
+                    });
+                }
+                
+                state.selectedPreset = presetName;
+                render();
+            });
+        });
+
+        document.getElementById('phosphene-count').addEventListener('input', (e) => {
+            state.phospheneCount = parseInt(e.target.value);
+            render();
+        });
+
+        document.getElementById('phosphene-intensity').addEventListener('input', (e) => {
+            state.phospheneIntensity = parseFloat(e.target.value);
+            render();
+        });
+
+        ['color1', 'color2', 'color3'].forEach((id, i) => {
+            document.getElementById(id).addEventListener('input', (e) => {
+                state.colors[i] = e.target.value;
+                render();
+            });
+        });
+
+        document.getElementById('screenshot-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        state.appScreenshot = img;
+                        
+                        // Switch to uploaded screen type
+                        state.screenType = 'uploaded';
+                        document.getElementById('screen-type').value = 'uploaded';
+                        document.getElementById('circle-settings').style.display = 'none';
+                        document.getElementById('goal-input-settings').style.display = 'none';
+                        
+                        // Add thumbnail
+                        const strip = document.getElementById('thumbnail-strip');
+                        const thumb = document.createElement('div');
+                        thumb.className = 'thumbnail active';
+                        thumb.innerHTML = `<img src="${event.target.result}" alt="Screenshot">`;
+                        thumb.addEventListener('click', () => {
+                            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                            thumb.classList.add('active');
+                            state.appScreenshot = img;
+                            state.screenType = 'uploaded';
+                            document.getElementById('screen-type').value = 'uploaded';
+                            render();
+                        });
+                        strip.appendChild(thumb);
+                        
+                        render();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('download-btn').addEventListener('click', () => downloadPNG());
+        document.getElementById('download-all-btn').addEventListener('click', downloadAllSizes);
+
+        // Randomize phosphenes button
+        document.getElementById('randomize-phosphenes').addEventListener('click', () => {
+            createPhosphenes();
+            render();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', render);
+
+        // Try to load default Whitespace logo
+        const defaultLogo = new Image();
+        defaultLogo.onload = () => {
+            state.logo = defaultLogo;
+            const thumbContainer = document.getElementById('logo-thumbnail');
+            thumbContainer.innerHTML = `<div class="thumbnail active"><img src="${defaultLogo.src}" alt="Logo"></div>`;
+            render();
+        };
+        defaultLogo.src = 'src/assets/whitespace logo.png';
+
+        // Initial render
+        render();
+    </script>
+</body>
+</html>
