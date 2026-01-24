@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+out/
+dist/
+build/
+
+# Remotion
+.remotion/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

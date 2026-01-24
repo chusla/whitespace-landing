@@ -1,0 +1,25 @@
+{
+  "name": "whitespace-videos",
+  "version": "1.0.0",
+  "description": "Remotion videos for Whitespace meditation app",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.409",
+    "@remotion/bundler": "^4.0.409",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.409"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config": "^4.0.409",
+    "@types/react": "^18.3.18",
+    "@types/web": "^0.0.179",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  }
+}
