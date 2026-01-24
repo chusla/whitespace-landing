@@ -10,19 +10,36 @@ This project converts the high-fidelity app screens from `screenshot-generator.h
 
 #### App Screen Demos (From screenshot-generator.html)
 
-1. **AppScreenShowcase** (1080x1920) - Vertical iPhone mockup showcase featuring:
-   - Goal Input Screen with typing animation
-   - Player Screen with breathing meditation circle
-   - Phosphene background effects
-   - Smooth scene transitions
-   - Perfect for social media (Instagram Stories, TikTok, etc.)
+1. **FullAppShowcase** (1080x1920, 19 seconds) - Complete app demo featuring all 5 screens:
+   - **Goal Input Screen**: "What would you like to focus on?" with typing animation
+   - **Player Screen**: Meditation player with breathing circle animation
+   - **Learn Input Screen**: "What would you like to learn?" with document upload option
+   - **Generation Complete Screen**: Completion state with breathing circle
+   - **Program Preview Screen**: Session curriculum with scrolling list
+   - iPhone 15 Pro mockup with Dynamic Island
+   - Phosphene background effects throughout
+   - Smooth cross-fade transitions between scenes
+   - Perfect for comprehensive product demos
+
+2. **AppScreenShowcase** (1080x1920, 9 seconds) - Quick 2-screen demo:
+   - Goal Input + Player screens only
+   - Great for quick social media posts (Instagram Stories, TikTok, Reels)
+
+#### Individual Screen Components
+
+All screens available as reusable React components in `src/components/screens/`:
+- `GoalInputScreen.tsx` - Focus input with typing animation
+- `PlayerScreen.tsx` - Meditation player with progress bar
+- `LearnInputScreen.tsx` - Learning input with upload button
+- `GenerationCompleteScreen.tsx` - Completion state with credits display
+- `ProgramPreviewScreen.tsx` - Session curriculum browser
 
 #### Icon Gradients (From generate-images-subscriptions.html)
 
-2. **Flow** (1024x1024) - Summer night lake blue gradient with breathing animation
-3. **Elevate** (1024x1024) - Sky blue gradient with breathing animation
-4. **Immerse** (1024x1024) - Deep ocean blue gradient with breathing animation
-5. **AllThree** (1920x1080) - All three icons in sequence with fade transitions
+3. **Flow** (1024x1024) - Summer night lake blue gradient with breathing animation
+4. **Elevate** (1024x1024) - Sky blue gradient with breathing animation
+5. **Immerse** (1024x1024) - Deep ocean blue gradient with breathing animation
+6. **AllThree** (1920x1080) - All three icons in sequence with fade transitions
 
 ## Getting Started
 
@@ -42,7 +59,13 @@ This opens the Remotion Studio where you can preview and edit all compositions.
 
 ### Render Videos
 
-Render the app screen showcase (recommended for social media):
+Render the full app showcase (all 5 screens, ~19 seconds):
+
+```bash
+npx remotion render FullAppShowcase out/full-app-showcase.mp4
+```
+
+Render the quick 2-screen demo (recommended for social media):
 
 ```bash
 npx remotion render AppScreenShowcase out/app-showcase.mp4
@@ -120,17 +143,21 @@ Modify in `src/components/GradientSphere.tsx`
 videos/
 ├── src/
 │   ├── components/
-│   │   ├── PhoneMockup.tsx           # iPhone mockup & phosphene background
+│   │   ├── PhoneMockup.tsx           # iPhone 15 Pro mockup & phosphene background
 │   │   ├── GradientSphere.tsx        # Reusable gradient component
 │   │   └── screens/
-│   │       ├── GoalInputScreen.tsx   # App screen: Goal input
-│   │       └── PlayerScreen.tsx      # App screen: Meditation player
+│   │       ├── GoalInputScreen.tsx   # "What would you like to focus on?"
+│   │       ├── PlayerScreen.tsx      # Meditation player with breathing circle
+│   │       ├── LearnInputScreen.tsx  # "What would you like to learn?"
+│   │       ├── GenerationCompleteScreen.tsx  # Completion state with credits
+│   │       └── ProgramPreviewScreen.tsx      # Session curriculum view
 │   ├── compositions/
-│   │   ├── AppScreenShowcase.tsx     # Main app demo (from screenshot-generator)
+│   │   ├── FullAppShowcase.tsx       # Complete 5-screen app demo (19s)
+│   │   ├── AppScreenShowcase.tsx     # Quick 2-screen demo (9s)
 │   │   ├── FlowIcon.tsx              # Flow gradient
 │   │   ├── ElevateIcon.tsx           # Elevate gradient
 │   │   ├── ImmerseIcon.tsx           # Immerse gradient
-│   │   └── AllThreeIcons.tsx         # Sequential composition
+│   │   └── AllThreeIcons.tsx         # Sequential icon composition
 │   ├── Root.tsx                      # Composition registry
 │   └── index.ts                      # Entry point
 ├── public/

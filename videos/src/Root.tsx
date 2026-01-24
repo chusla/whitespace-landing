@@ -4,11 +4,22 @@ import {ElevateIcon} from './compositions/ElevateIcon';
 import {ImmerseIcon} from './compositions/ImmerseIcon';
 import {AllThreeIcons} from './compositions/AllThreeIcons';
 import {AppScreenShowcase} from './compositions/AppScreenShowcase';
+import {FullAppShowcase} from './compositions/FullAppShowcase';
 
 export const RemotionRoot: React.FC = () => {
 	return (
 		<>
-			{/* App Screen Showcase - Main Demo */}
+			{/* Full App Showcase - All 5 Screens */}
+			<Composition
+				id="FullAppShowcase"
+				component={FullAppShowcase}
+				durationInFrames={570}
+				fps={30}
+				width={1080}
+				height={1920}
+			/>
+
+			{/* App Screen Showcase - Quick Demo (2 screens) */}
 			<Composition
 				id="AppScreenShowcase"
 				component={AppScreenShowcase}
