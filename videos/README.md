@@ -4,14 +4,25 @@ Animated videos for the Whitespace meditation app, created with [Remotion](https
 
 ## What's Inside
 
-This project converts the canvas-based gradient designs from the main landing page into animated React videos using Remotion.
+This project converts the high-fidelity app screens from `screenshot-generator.html` and gradient designs into animated React videos using Remotion.
 
 ### Compositions
 
-1. **Flow** (1024x1024) - Summer night lake blue gradient with breathing animation
-2. **Elevate** (1024x1024) - Sky blue gradient with breathing animation
-3. **Immerse** (1024x1024) - Deep ocean blue gradient with breathing animation
-4. **AllThree** (1920x1080) - All three icons in sequence with fade transitions
+#### App Screen Demos (From screenshot-generator.html)
+
+1. **AppScreenShowcase** (1080x1920) - Vertical iPhone mockup showcase featuring:
+   - Goal Input Screen with typing animation
+   - Player Screen with breathing meditation circle
+   - Phosphene background effects
+   - Smooth scene transitions
+   - Perfect for social media (Instagram Stories, TikTok, etc.)
+
+#### Icon Gradients (From generate-images-subscriptions.html)
+
+2. **Flow** (1024x1024) - Summer night lake blue gradient with breathing animation
+3. **Elevate** (1024x1024) - Sky blue gradient with breathing animation
+4. **Immerse** (1024x1024) - Deep ocean blue gradient with breathing animation
+5. **AllThree** (1920x1080) - All three icons in sequence with fade transitions
 
 ## Getting Started
 
@@ -31,7 +42,13 @@ This opens the Remotion Studio where you can preview and edit all compositions.
 
 ### Render Videos
 
-Render a specific composition:
+Render the app screen showcase (recommended for social media):
+
+```bash
+npx remotion render AppScreenShowcase out/app-showcase.mp4
+```
+
+Render icon gradients:
 
 ```bash
 npx remotion render Flow out/flow.mp4
@@ -103,14 +120,19 @@ Modify in `src/components/GradientSphere.tsx`
 videos/
 ├── src/
 │   ├── components/
-│   │   └── GradientSphere.tsx    # Reusable gradient component
+│   │   ├── PhoneMockup.tsx           # iPhone mockup & phosphene background
+│   │   ├── GradientSphere.tsx        # Reusable gradient component
+│   │   └── screens/
+│   │       ├── GoalInputScreen.tsx   # App screen: Goal input
+│   │       └── PlayerScreen.tsx      # App screen: Meditation player
 │   ├── compositions/
-│   │   ├── FlowIcon.tsx           # Flow gradient
-│   │   ├── ElevateIcon.tsx        # Elevate gradient
-│   │   ├── ImmerseIcon.tsx        # Immerse gradient
-│   │   └── AllThreeIcons.tsx      # Sequential composition
-│   ├── Root.tsx                   # Composition registry
-│   └── index.ts                   # Entry point
+│   │   ├── AppScreenShowcase.tsx     # Main app demo (from screenshot-generator)
+│   │   ├── FlowIcon.tsx              # Flow gradient
+│   │   ├── ElevateIcon.tsx           # Elevate gradient
+│   │   ├── ImmerseIcon.tsx           # Immerse gradient
+│   │   └── AllThreeIcons.tsx         # Sequential composition
+│   ├── Root.tsx                      # Composition registry
+│   └── index.ts                      # Entry point
 ├── public/
 │   └── index.html
 ├── package.json
