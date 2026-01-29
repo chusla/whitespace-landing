@@ -412,6 +412,76 @@
             }
         }
 
+        /* App Store Buttons */
+        .app-store-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        @media (min-width: 480px) {
+            .app-store-buttons {
+                flex-direction: row;
+                gap: 20px;
+            }
+        }
+
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .app-store-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-store-btn:active {
+            transform: translateY(0);
+        }
+
+        .app-store-btn svg {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .app-store-btn .btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .app-store-btn .btn-text-small {
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.02em;
+        }
+
+        .app-store-btn .btn-text-large {
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
         .form-note {
             text-align: center;
             margin-top: 12px;
@@ -1795,11 +1865,29 @@
             <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
 
             <div class="fade-up visible fade-up-delay-8" style="margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
-                <a href="#waitlist" class="hero-cta-btn">
-                    Get Instant Beta Access
-                </a>
-                <div class="countdown-wrapper" id="heroCountdown">
-                    <span class="countdown-label">12 free sessions ends in</span>
+                <div class="app-store-buttons">
+                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                        <span class="btn-text">
+                            <span class="btn-text-small">Download on the</span>
+                            <span class="btn-text-large">App Store</span>
+                        </span>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
+                        </svg>
+                        <span class="btn-text">
+                            <span class="btn-text-small">Get it on</span>
+                            <span class="btn-text-large">Google Play</span>
+                        </span>
+                    </a>
+                </div>
+                <p class="inter" style="font-size: 14px; color: rgba(255, 255, 255, 0.4); margin-top: 8px;">Early Access Bonus: 12 free sessions</p>
+                <div class="countdown-wrapper" id="heroCountdown" style="margin-top: 8px;">
+                    <span class="countdown-label">Early access ends in</span>
                     <span class="countdown-timer" id="hero-timer">6d 05:32:18</span>
                 </div>
             </div>
@@ -2172,53 +2260,37 @@
         </div>
     </section>
 
-    <!-- Purchase / Final CTA Section -->
-    <section id="waitlist">
+    <!-- Download CTA Section -->
+    <section id="download">
         <div class="final-cta fade-up">
             <div class="cta-box">
                 <h2 class="crimson">Start 10x'ing from the inside out</h2>
+                <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Early Access Bonus: Download now and get 12 free sessions.</p>
                 
-                <form class="email-form" id="ctaEmailForm">
-                    <div class="form-row">
-                        <input 
-                            type="text" 
-                            class="form-input" 
-                            placeholder="First name" 
-                            required
-                            id="ctaNameInput"
-                            autocomplete="given-name"
-                        >
-                        <input 
-                            type="email" 
-                            class="form-input" 
-                            placeholder="your@email.com" 
-                            required
-                            id="ctaEmailInput"
-                            autocomplete="email"
-                        >
-                        <!-- Honeypot field -->
-                        <input 
-                            type="text" 
-                            name="company" 
-                            id="ctaCompanyInput"
-                            autocomplete="off"
-                            tabindex="-1"
-                            style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
-                        >
-                        <button type="submit" class="submit-btn phosphene-btn">Get Instant Beta Access</button>
-                    </div>
-                    <p class="form-note inter" style="margin-top: 12px;">12 free sessions · Instant access · No waitlist</p>
-                    <div class="countdown-wrapper" id="ctaCountdown" style="margin-top: 16px;">
-                        <span class="countdown-label">12 free sessions ends in</span>
-                        <span class="countdown-timer" id="cta-timer">6d 05:32:18</span>
-                    </div>
-                    <div class="success-message" id="ctaSuccessMessage">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
+                <div class="app-store-buttons" style="justify-content: center;">
+                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                         </svg>
-                        <span>Making space for you... check your inbox.</span>
-                    </div>
-                </form>
+                        <span class="btn-text">
+                            <span class="btn-text-small">Download on the</span>
+                            <span class="btn-text-large">App Store</span>
+                        </span>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
+                        </svg>
+                        <span class="btn-text">
+                            <span class="btn-text-small">Get it on</span>
+                            <span class="btn-text-large">Google Play</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="countdown-wrapper" id="ctaCountdown" style="margin-top: 24px;">
+                    <span class="countdown-label">Early access ends in</span>
+                    <span class="countdown-timer" id="cta-timer">6d 05:32:18</span>
+                </div>
             </div>
         </div>
     </section>
@@ -2284,14 +2356,14 @@
 
             <div class="faq-item fade-up">
                 <button class="faq-question">
-                    <span>Is the beta actually free?</span>
+                    <span>Is Whitespace free?</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>You get 2 free sessions to start. Beta members get an additional 10 sessions for a limited time. After that, you'll need a subscription — but beta members lock in founding member pricing and help shape what we build next.</p>
+                    <p>Whitespace is free to download. During early access, you get 12 free sessions to start. After that, you can choose a subscription plan based on how often you practice — Flow, Elevate, or Immerse.</p>
                 </div>
             </div>
 
@@ -2304,7 +2376,7 @@
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>iOS (via TestFlight) and Android (via Google Play). Sign up with your email and we'll send you direct links to download.</p>
+                    <p>iOS and Android. Download free from the <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" style="color: rgba(107, 140, 255, 0.9);">App Store</a> or <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" style="color: rgba(107, 140, 255, 0.9);">Google Play</a>.</p>
                 </div>
             </div>
 
@@ -2330,7 +2402,7 @@
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>Fair. The best way to find out is to try it. Beta members get 12 free sessions — no commitment. If it's not for you, no hard feelings.</p>
+                    <p>Fair. The best way to find out is to try it. Download the app and get 12 free sessions — no commitment. If it's not for you, no hard feelings.</p>
                 </div>
             </div>
 
@@ -2552,8 +2624,8 @@
         // Countdown Timer
         // ==========================================
         function initCountdown() {
-            // January 30, 2026 11:59:59 PM EST (UTC-5)
-            const endDate = new Date('2026-01-31T04:59:59Z').getTime();
+            // February 14, 2026 11:59:59 PM EST (UTC-5)
+            const endDate = new Date('2026-02-15T04:59:59Z').getTime();
             
             function updateCountdown() {
                 const now = new Date().getTime();
@@ -2561,7 +2633,7 @@
                 
                 if (distance < 0) {
                     document.querySelectorAll('.countdown-wrapper').forEach(wrapper => {
-                        wrapper.innerHTML = '<span class="countdown-label">Offer ended</span>';
+                        wrapper.innerHTML = '<span class="countdown-label">Early access ended</span>';
                     });
                     return;
                 }
@@ -2586,7 +2658,7 @@
         
         initCountdown();
 
-// ==========================================
+        // ==========================================
         // FAQ Accordion
         // ==========================================
         function initFAQ() {
@@ -2843,22 +2915,7 @@
             }
         }
 
-        // CTA Form (main signup form below the fold)
-        const ctaForm = document.getElementById('ctaEmailForm');
-        ctaForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            handleFormSubmit(
-                ctaForm,
-                document.getElementById('ctaNameInput'),
-                document.getElementById('ctaEmailInput'),
-                document.getElementById('ctaCompanyInput'),
-                ctaForm.querySelector('.submit-btn'),
-                document.getElementById('ctaSuccessMessage'),
-                null // CTA form doesn't have a form note
-            );
-        });
-
-        console.log('✅ Form handlers initialized');
+        console.log('✅ Page initialized');
 
         // ==========================================
         // Audio Sample Player with Breathing Circle
@@ -2917,15 +2974,6 @@
             updatePlayState(true);
         });
 
-        // Auto-focus on desktop only, with delay for headline animation
-        // Disabled on mobile to prevent layout shift from keyboard
-        if (window.innerWidth > 768) {
-            // Focus on CTA form name input after scrolling there
-            const ctaNameInput = document.getElementById('ctaNameInput');
-            if (ctaNameInput) {
-                // Don't auto-focus - let user scroll naturally
-            }
-        }
     </script>
     
     <!-- Vercel Analytics & Speed Insights -->
