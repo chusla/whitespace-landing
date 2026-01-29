@@ -412,74 +412,47 @@
             }
         }
 
-        /* App Store Buttons */
+        /* App Store Badges */
         .app-store-buttons {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            flex-direction: row;
+            gap: 0;
             align-items: center;
+            justify-content: center;
             margin-top: 8px;
         }
 
-        @media (min-width: 480px) {
-            .app-store-buttons {
-                flex-direction: row;
-                gap: 20px;
-            }
-        }
-
-        .app-store-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 28px;
-            background: rgba(255, 255, 255, 0.05);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            color: white;
-            text-decoration: none;
+        .app-store-badge {
+            display: inline-block;
             transition: all 0.3s ease;
-            min-width: 180px;
-            justify-content: center;
         }
 
-        .app-store-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
+        .app-store-badge:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
         }
 
-        .app-store-btn:active {
+        .app-store-badge:active {
             transform: translateY(0);
         }
 
-        .app-store-btn svg {
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0;
+        .app-store-badge img {
+            height: 40px;
+            width: auto;
         }
 
-        .app-store-btn .btn-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            line-height: 1.2;
+        .app-store-badge.google-play img {
+            height: 58px;
         }
 
-        .app-store-btn .btn-text-small {
-            font-size: 11px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 0.02em;
-        }
-
-        .app-store-btn .btn-text-large {
-            font-size: 18px;
-            font-weight: 500;
-            letter-spacing: -0.01em;
+        @media (min-width: 480px) {
+            .app-store-badge img {
+                height: 50px;
+            }
+            
+            .app-store-badge.google-play img {
+                height: 72px;
+            }
         }
 
         .form-note {
@@ -1866,28 +1839,16 @@
 
             <div class="fade-up visible fade-up-delay-8" style="margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
                 <div class="app-store-buttons">
-                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                        </svg>
-                        <span class="btn-text">
-                            <span class="btn-text-small">Download on the</span>
-                            <span class="btn-text-large">App Store</span>
-                        </span>
+                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-badge">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1737590400" alt="Download on the App Store">
                     </a>
-                    <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
-                        </svg>
-                        <span class="btn-text">
-                            <span class="btn-text-small">Get it on</span>
-                            <span class="btn-text-large">Google Play</span>
-                        </span>
+                    <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-badge google-play">
+                        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
                     </a>
                 </div>
-                <p class="inter" style="font-size: 14px; color: rgba(255, 255, 255, 0.4); margin-top: 8px;">Early Access Bonus: 12 free sessions</p>
+                <p class="inter" style="font-size: 14px; color: rgba(255, 255, 255, 0.4); margin-top: 8px;">Limited Time Early Access Bonus: 12 free sessions</p>
                 <div class="countdown-wrapper" id="heroCountdown" style="margin-top: 8px;">
-                    <span class="countdown-label">Early access ends in</span>
+                    <span class="countdown-label">Bonus ends in</span>
                     <span class="countdown-timer" id="hero-timer">6d 05:32:18</span>
                 </div>
             </div>
@@ -2265,30 +2226,18 @@
         <div class="final-cta fade-up">
             <div class="cta-box">
                 <h2 class="crimson">Start 10x'ing from the inside out</h2>
-                <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Early Access Bonus: Download now and get 12 free sessions.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Limited Time Early Access Bonus: Download now and get 12 free sessions.</p>
                 
                 <div class="app-store-buttons" style="justify-content: center;">
-                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                        </svg>
-                        <span class="btn-text">
-                            <span class="btn-text-small">Download on the</span>
-                            <span class="btn-text-large">App Store</span>
-                        </span>
+                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-badge">
+                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1737590400" alt="Download on the App Store">
                     </a>
-                    <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
-                        </svg>
-                        <span class="btn-text">
-                            <span class="btn-text-small">Get it on</span>
-                            <span class="btn-text-large">Google Play</span>
-                        </span>
+                    <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-badge google-play">
+                        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
                     </a>
                 </div>
                 <div class="countdown-wrapper" id="ctaCountdown" style="margin-top: 24px;">
-                    <span class="countdown-label">Early access ends in</span>
+                    <span class="countdown-label">Bonus ends in</span>
                     <span class="countdown-timer" id="cta-timer">6d 05:32:18</span>
                 </div>
             </div>
@@ -2363,7 +2312,7 @@
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>Whitespace is free to download. During early access, you get 12 free sessions to start. After that, you can choose a subscription plan based on how often you practice — Flow, Elevate, or Immerse.</p>
+                    <p>Whitespace is free to download. During our Limited Time Early Access Bonus, you get 12 free sessions to start. After that, you can choose a subscription plan based on how often you practice — Flow, Elevate, or Immerse.</p>
                 </div>
             </div>
 
@@ -2624,8 +2573,8 @@
         // Countdown Timer
         // ==========================================
         function initCountdown() {
-            // February 14, 2026 11:59:59 PM EST (UTC-5)
-            const endDate = new Date('2026-02-15T04:59:59Z').getTime();
+            // January 31, 2026 11:59:59 PM EST (UTC-5)
+            const endDate = new Date('2026-02-01T04:59:59Z').getTime();
             
             function updateCountdown() {
                 const now = new Date().getTime();
@@ -2633,7 +2582,7 @@
                 
                 if (distance < 0) {
                     document.querySelectorAll('.countdown-wrapper').forEach(wrapper => {
-                        wrapper.innerHTML = '<span class="countdown-label">Early access ended</span>';
+                        wrapper.innerHTML = '<span class="countdown-label">Bonus ended</span>';
                     });
                     return;
                 }
