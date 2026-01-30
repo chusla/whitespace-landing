@@ -1318,6 +1318,150 @@
             font-weight: 400;
         }
 
+        /* Category Pills */
+        .category-pills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .category-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .category-pill:hover {
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .category-pill.active {
+            color: rgba(255, 255, 255, 0.95);
+            background: rgba(107, 140, 255, 0.15);
+            border-color: rgba(107, 140, 255, 0.4);
+        }
+
+        .category-pill.more-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 10px 16px;
+        }
+
+        .category-pill.more-btn:hover {
+            color: rgba(255, 255, 255, 0.7);
+            background: transparent;
+        }
+
+        .more-btn-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .more-btn-row.hidden {
+            display: none;
+        }
+
+        .less-btn-row {
+            display: none;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .less-btn-row.show {
+            display: flex;
+        }
+
+        .expanded-pills {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .expanded-pills.show {
+            display: flex;
+        }
+
+        @media (max-width: 400px) {
+            .category-pills,
+            .expanded-pills {
+                gap: 8px;
+            }
+            
+            .category-pill {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+        }
+
+        /* Science Section */
+        .science-section {
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .science-quote-container {
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .science-quote {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .science-quote.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .science-quote-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .science-quote-source {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
+
         .scenario-tagline {
             font-family: 'Inter', sans-serif;
             font-size: clamp(1.125rem, 3vw, 1.375rem);
@@ -1871,24 +2015,37 @@
             <!-- Scenario Rotator -->
             <div class="scenario-rotator-wrapper fade-up fade-up-delay-3" style="margin-top: 72px;">
                 <div class="scenario-rotator" id="scenarioRotator">
-                    <span class="scenario">After doom-scrolling for 2 hours</span>
-                    <span class="scenario">Manifesting your first $10k MRR</span>
-                    <span class="scenario">Before the demo that could change everything</span>
-                    <span class="scenario">When your co-founder wants to pivot. Again.</span>
-                    <span class="scenario">Before asking for the raise you deserve</span>
-                    <span class="scenario">After bombing that client call</span>
-                    <span class="scenario">Your first day at the new job</span>
-                    <span class="scenario">Before your Saturday doubles match</span>
-                    <span class="scenario">Before your kid's championship game</span>
-                    <span class="scenario">When race day nerves hit at 5am</span>
-                    <span class="scenario">After your toddler's third meltdown</span>
-                    <span class="scenario">Before telling them how you really feel</span>
-                    <span class="scenario">When the 3am thoughts won't stop</span>
-                    <span class="scenario">Before boarding a 14-hour flight</span>
-                    <span class="scenario">When the creative block won't budge</span>
-                    <span class="scenario">After the VC said no</span>
+                    <!-- Scenarios will be populated by JavaScript based on selected category -->
                 </div>
-                <p class="scenario-subheader fade-up fade-up-delay-4">Choose your situation. We handle the rest.</p>
+                
+                <!-- Category Pills -->
+                <div class="category-pills" id="categoryPills">
+                    <button class="category-pill active" data-category="sleep">Sleep</button>
+                    <button class="category-pill" data-category="learning">Learning</button>
+                    <button class="category-pill" data-category="calm">Calm</button>
+                    <button class="category-pill" data-category="focus">Focus</button>
+                </div>
+                <div class="more-btn-row" id="moreBtnRow">
+                    <button class="category-pill more-btn" id="morePillsBtn">+ More</button>
+                </div>
+                <div class="expanded-pills" id="expandedPills">
+                    <button class="category-pill" data-category="stress">Stress</button>
+                    <button class="category-pill" data-category="anxiety">Anxiety</button>
+                    <button class="category-pill" data-category="performance">Performance</button>
+                    <button class="category-pill" data-category="motivation">Motivation</button>
+                    <button class="category-pill" data-category="creativity">Creativity</button>
+                    <button class="category-pill" data-category="mindfulness">Mindfulness</button>
+                    <button class="category-pill" data-category="self-compassion">Self-Compassion</button>
+                    <button class="category-pill" data-category="relationships">Relationships</button>
+                    <button class="category-pill" data-category="healing">Healing</button>
+                    <button class="category-pill" data-category="grief">Grief</button>
+                    <button class="category-pill" data-category="manifestation">Manifestation</button>
+                </div>
+                <div class="less-btn-row" id="lessBtnRow">
+                    <button class="category-pill more-btn" id="lessPillsBtn">− Less</button>
+                </div>
+                
+                <p class="scenario-subheader fade-up fade-up-delay-4">Choose your focus. We create the rest.</p>
             </div>
         </div>
     </section>
@@ -2080,6 +2237,18 @@
                         <span>2:29 PM · Jan 23, 2026</span>
                     </div>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Science Section -->
+    <section class="science-section">
+        <div class="section-container">
+            <div class="section-header fade-up">
+                <p>What Does the Science Say</p>
+            </div>
+            <div class="science-quote-container fade-up" id="scienceQuoteContainer">
+                <!-- Quotes will be populated by JavaScript -->
             </div>
         </div>
     </section>
@@ -2540,52 +2709,262 @@
         setTimeout(animateHeadline, 300);
 
         // ==========================================
-        // Scenario Rotator
+        // Category Scenarios Data
+        // ==========================================
+        const CATEGORY_SCENARIOS = {
+            sleep: [
+                "Help me fall asleep after a stressful day at work",
+                "Help me fall asleep when my mind won't stop racing",
+                "Help me fall asleep despite jet lag from traveling",
+                "Help me fall asleep with recurring anxious thoughts",
+                "Help me fall asleep after doom-scrolling for 2 hours",
+                "When the 3am thoughts won't stop"
+            ],
+            learning: [
+                "Help me learn from this article or document",
+                "Help me learn a new skill through practice",
+                "Help me retain information better",
+                "Help me learn complex material before an exam",
+                "Help me absorb what I just read",
+                "Help me prepare for tomorrow's presentation"
+            ],
+            calm: [
+                "Help me feel calm before a difficult conversation",
+                "Help me feel calm after receiving unexpected news",
+                "Help me feel calm when feeling overwhelmed by tasks",
+                "Help me feel calm during a busy and chaotic day",
+                "Help me feel calm after your toddler's third meltdown",
+                "Help me feel calm before telling them how you really feel"
+            ],
+            focus: [
+                "Help me focus on deep work without distractions",
+                "Help me focus before an important exam",
+                "Help me focus while working from home",
+                "Help me focus on a creative project",
+                "Help me focus when the creative block won't budge",
+                "Help me focus before the demo that could change everything"
+            ],
+            stress: [
+                "Help me release stress from work deadlines",
+                "Help me release stress about finances and money",
+                "Help me release stress from family responsibilities",
+                "Help me release stress about health concerns",
+                "Help me release stress after the VC said no",
+                "Help me release stress after bombing that client call"
+            ],
+            anxiety: [
+                "Help me ease anxiety before a public presentation",
+                "Help me ease anxiety about an upcoming event",
+                "Help me ease anxiety from social situations",
+                "Help me ease anxiety about the future",
+                "Help me ease anxiety when your co-founder wants to pivot. Again.",
+                "Help me ease anxiety before asking for the raise you deserve"
+            ],
+            performance: [
+                "Help me perform my best in an important meeting",
+                "Help me perform my best for an athletic competition",
+                "Help me perform my best during a job interview",
+                "Help me perform my best on stage or in front of others",
+                "Help me perform my best before your Saturday doubles match",
+                "Help me perform my best before your kid's championship game"
+            ],
+            motivation: [
+                "Help me find motivation to start a difficult project",
+                "Help me find motivation when feeling stuck",
+                "Help me find motivation to exercise regularly",
+                "Help me find motivation after a setback or failure",
+                "Help me find motivation for your first day at the new job",
+                "Help me find motivation when race day nerves hit at 5am"
+            ],
+            creativity: [
+                "Help me unlock creativity for a writing project",
+                "Help me unlock creativity when feeling artistically blocked",
+                "Help me unlock creativity to solve a problem differently",
+                "Help me unlock creativity for brainstorming new ideas"
+            ],
+            mindfulness: [
+                "Help me be present during everyday activities",
+                "Help me be present when feeling disconnected",
+                "Help me be present to appreciate simple moments",
+                "Help me be present while eating or walking"
+            ],
+            'self-compassion': [
+                "Help me be kind to myself after making a mistake",
+                "Help me be kind to myself when feeling not good enough",
+                "Help me be kind to myself during a difficult time",
+                "Help me be kind to myself about my body and appearance"
+            ],
+            relationships: [
+                "Help me connect better with my partner",
+                "Help me connect better after an argument or conflict",
+                "Help me connect better with a family member",
+                "Help me connect better in new social situations"
+            ],
+            healing: [
+                "Help me heal from a past relationship",
+                "Help me heal from childhood experiences",
+                "Help me heal from a recent loss",
+                "Help me heal from burnout"
+            ],
+            grief: [
+                "Help me process grief from losing a loved one",
+                "Help me process grief from the end of a relationship",
+                "Help me process grief from a major life change",
+                "Help me find peace during mourning"
+            ],
+            manifestation: [
+                "Help me manifest my first $10k MRR",
+                "Help me manifest career success",
+                "Help me manifest better relationships",
+                "Help me manifest health and vitality",
+                "Help me manifest financial abundance"
+            ]
+        };
+
+        // ==========================================
+        // Interactive Scenario Rotator with Pills
         // ==========================================
         function initScenarioRotator() {
             const rotator = document.getElementById('scenarioRotator');
-            if (!rotator) return;
+            const pillsContainer = document.getElementById('categoryPills');
+            const expandedPills = document.getElementById('expandedPills');
+            const moreBtnRow = document.getElementById('moreBtnRow');
+            const lessBtnRow = document.getElementById('lessBtnRow');
+            const morePillsBtn = document.getElementById('morePillsBtn');
+            const lessPillsBtn = document.getElementById('lessPillsBtn');
+            
+            if (!rotator || !pillsContainer) return;
 
-            const scenarios = rotator.querySelectorAll('.scenario');
-            if (scenarios.length === 0) return;
-
-            // Convert to array and shuffle
-            const scenarioArray = Array.from(scenarios);
-            for (let i = scenarioArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [scenarioArray[i], scenarioArray[j]] = [scenarioArray[j], scenarioArray[i]];
-            }
-
-            // Reorder in DOM
-            scenarioArray.forEach(s => rotator.appendChild(s));
-
+            let currentCategory = 'sleep';
             let currentIndex = 0;
+            let rotationInterval = null;
             let isPaused = false;
 
-            function showScenario() {
-                if (isPaused) return;
-                
-                scenarioArray.forEach((s, i) => {
-                    s.classList.toggle('active', i === currentIndex);
+            // Handle More/Less buttons
+            morePillsBtn.addEventListener('click', () => {
+                expandedPills.classList.add('show');
+                moreBtnRow.classList.add('hidden');
+                lessBtnRow.classList.add('show');
+            });
+
+            lessPillsBtn.addEventListener('click', () => {
+                expandedPills.classList.remove('show');
+                moreBtnRow.classList.remove('hidden');
+                lessBtnRow.classList.remove('show');
+            });
+
+            function loadCategory(category) {
+                const scenarios = CATEGORY_SCENARIOS[category];
+                if (!scenarios) return;
+
+                // Clear and populate rotator
+                rotator.innerHTML = '';
+                scenarios.forEach(text => {
+                    const span = document.createElement('span');
+                    span.className = 'scenario';
+                    span.textContent = text;
+                    rotator.appendChild(span);
                 });
-                
-                currentIndex = (currentIndex + 1) % scenarioArray.length;
+
+                currentCategory = category;
+                currentIndex = 0;
+
+                // Clear existing interval
+                if (rotationInterval) clearInterval(rotationInterval);
+
+                // Show first scenario
+                const allScenarios = rotator.querySelectorAll('.scenario');
+                if (allScenarios.length > 0) {
+                    allScenarios[0].classList.add('active');
+                }
+
+                // Start rotation
+                rotationInterval = setInterval(() => {
+                    if (isPaused) return;
+                    const allScenarios = rotator.querySelectorAll('.scenario');
+                    allScenarios[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % allScenarios.length;
+                    allScenarios[currentIndex].classList.add('active');
+                }, 5000);
             }
+
+            // Handle pill clicks
+            const allPills = document.querySelectorAll('.category-pill[data-category]');
+            allPills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    const category = pill.dataset.category;
+                    
+                    // Update active state
+                    allPills.forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    
+                    // Load new category scenarios
+                    loadCategory(category);
+                });
+            });
 
             // Pause on hover
             rotator.addEventListener('mouseenter', () => isPaused = true);
-            rotator.addEventListener('mouseleave', () => {
-                isPaused = false;
-            });
+            rotator.addEventListener('mouseleave', () => isPaused = false);
 
-            // Initial display
-            showScenario();
-
-            // Rotate every 5 seconds
-            setInterval(showScenario, 5000);
+            // Initialize with Sleep category (default)
+            loadCategory('sleep');
         }
 
         initScenarioRotator();
+
+        // ==========================================
+        // Science Quotes Rotator
+        // ==========================================
+        const SCIENCE_QUOTES = [
+            { quote: 'Just 4 days of meditation measurably enhances your ability to sustain attention.', source: 'Consciousness and Cognition, 2010' },
+            { quote: '13 minutes of daily meditation enhances attention, memory, and mood in 8 weeks.', source: 'Behavioural Brain Research, 2019' },
+            { quote: '5 days of meditation training significantly improves attention and decreases stress hormones.', source: 'PNAS / University of Oregon, 2007' },
+            { quote: 'Your mind wanders 47% of the time. Meditation trains it to stay present.', source: 'Science / Harvard University, 2010' },
+            { quote: '30 days of app-based meditation improves how quickly and accurately you direct your attention.', source: 'eNeuro / USC, 2025' },
+            { quote: 'Meditators get nearly 3x more deep sleep than non-meditators — even as they age.', source: 'Frontiers in Neurology, 2012' },
+            { quote: 'A meditation retreat can nearly double the percentage of people with good sleep quality.', source: 'Sleep and Vigilance, 2021' },
+            { quote: 'Meditators produce nearly 5 times more melatonin than non-meditators.', source: 'Frontiers in Neurology / NIMHANS, 2012' },
+            { quote: 'One 15-minute meditation session reduces mind-wandering by 22%.', source: 'Headspace Research Studies, 2018' },
+            { quote: 'A workplace meditation program reduced absenteeism by 85% and increased productivity by 120%.', source: 'Detroit Workplace Study' },
+            { quote: 'Employees in Aetna\'s mindfulness program gained an average of 62 minutes of productivity per week.', source: 'Harvard Business Review' },
+            { quote: 'Meditation significantly improves your ability to solve problems you previously couldn\'t.', source: 'Science China Life Sciences, 2011' },
+            { quote: 'Short-term meditation improves divergent thinking and creativity performance.', source: 'Behavioral and Brain Functions, 2014' },
+            { quote: '5 weeks of mindfulness training improves both endurance performance and cognitive function in athletes.', source: 'Evidence-Based Complementary Medicine, 2020' },
+            { quote: 'Meditation benefits persist for at least 7 years — and the more you practice, the better they hold.', source: 'Journal of Cognitive Enhancement, 2018' },
+            { quote: '3 weeks of meditation increases compassion by 23%.', source: 'Northeastern University Study, 2015' },
+            { quote: '8 weeks of compassion meditation improves your ability to read emotions by 4.6%.', source: 'Social Cognitive and Affective Neuroscience, 2012' },
+            { quote: 'One meditation session produces measurable calm within the hour.', source: 'American Physiological Society, 2018' },
+            { quote: '8 weeks of meditation measurably changes your brain.', source: 'Harvard / Mass General Hospital, 2011' },
+            { quote: 'The edge of sleep is where creative breakthroughs happen.', source: 'Science Advances / Paris Brain Institute, 2021' }
+        ];
+
+        function initScienceQuotes() {
+            const container = document.getElementById('scienceQuoteContainer');
+            if (!container) return;
+
+            // Create quote elements
+            SCIENCE_QUOTES.forEach((q, i) => {
+                const quoteDiv = document.createElement('div');
+                quoteDiv.className = 'science-quote' + (i === 0 ? ' active' : '');
+                quoteDiv.innerHTML = `
+                    <p class="science-quote-text">${q.quote}</p>
+                    <p class="science-quote-source">— ${q.source}</p>
+                `;
+                container.appendChild(quoteDiv);
+            });
+
+            let currentIndex = 0;
+            const quotes = container.querySelectorAll('.science-quote');
+
+            setInterval(() => {
+                quotes[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % quotes.length;
+                quotes[currentIndex].classList.add('active');
+            }, 8000);
+        }
+
+        initScienceQuotes();
 
         // ==========================================
         // Countdown Timer
