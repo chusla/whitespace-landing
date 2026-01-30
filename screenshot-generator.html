@@ -768,7 +768,7 @@ for yourself to *focus*</textarea>
                 </div>
                 <div class="form-group">
                     <label for="text-offset-y">Text Vertical Offset</label>
-                    <input type="range" id="text-offset-y" min="-300" max="300" step="10" value="0">
+                    <input type="range" id="text-offset-y" min="-500" max="800" step="10" value="0">
                     <div style="display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px;">
                         <span>↑ Up</span>
                         <span id="text-offset-value">0px</span>
@@ -784,6 +784,7 @@ for yourself to *focus*</textarea>
                     <label for="screen-type-1">Screen Content</label>
                     <select id="screen-type-1" style="width: 100%;">
                         <option value="circle">Circle UI (Default)</option>
+                        <option value="create-input">Create - Unified Input</option>
                         <option value="goal-input">Focus - Goal Input</option>
                         <option value="learn-input">Learn - Content Input</option>
                         <option value="player">Audio Player</option>
@@ -831,6 +832,7 @@ for yourself to *focus*</textarea>
                     <label for="screen-type-2">Screen Content</label>
                     <select id="screen-type-2" style="width: 100%;">
                         <option value="circle">Circle UI (Default)</option>
+                        <option value="create-input">Create - Unified Input</option>
                         <option value="goal-input">Focus - Goal Input</option>
                         <option value="learn-input">Learn - Content Input</option>
                         <option value="player">Audio Player</option>
@@ -899,6 +901,7 @@ for yourself to *focus*</textarea>
                     <label for="screen-type">Screen Content</label>
                     <select id="screen-type">
                         <option value="circle">Circle UI (Default)</option>
+                        <option value="create-input">Create - Unified Input</option>
                         <option value="goal-input">Focus - Goal Input</option>
                         <option value="learn-input">Learn - Content Input</option>
                         <option value="player">Audio Player</option>
@@ -916,6 +919,31 @@ for yourself to *focus*</textarea>
                     <div class="form-group">
                         <label for="circle-text">Circle caption text</label>
                         <input type="text" id="circle-text" value="Your space is ready for you." placeholder="Text below circle">
+                    </div>
+                </div>
+                
+                <div class="create-input-settings" id="create-input-settings" style="display: none;">
+                    <div class="form-group">
+                        <label for="create-placeholder">Placeholder text</label>
+                        <input type="text" id="create-placeholder" value="feel confident before my presentation" placeholder="Cycling placeholder text">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-input-text">Input text (leave empty for placeholder)</label>
+                        <input type="text" id="create-input-text" value="" placeholder="User input text">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-selected-category">Selected category</label>
+                        <select id="create-selected-category">
+                            <option value="">None (show all pills)</option>
+                            <option value="sleep">Sleep</option>
+                            <option value="calm">Calm</option>
+                            <option value="focus">Focus</option>
+                            <option value="learning">Learning</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-create-tab-bar" checked>
+                        <label for="show-create-tab-bar">Show tab bar</label>
                     </div>
                 </div>
                 
@@ -1265,6 +1293,11 @@ for yourself to *focus*</textarea>
             showLearnRecent: true,
             showBackButton: true,
             showLearnTabBar: true,
+            // Create input page options (Unified Create flow)
+            createPlaceholder: 'feel confident before my presentation',
+            createInputText: '',
+            createSelectedCategory: null, // 'sleep', 'calm', 'focus', 'learning', or null
+            showCreateTabBar: true,
             // Player modal options
             playerTitle: 'Clearing Mental Space',
             playerDuration: 11,
@@ -1558,8 +1591,8 @@ for yourself to *focus*</textarea>
             ctx.restore();
         }
 
-        // Draw tab bar with Ionicon-style icons (Focus tab active)
-        function drawTabBar(sx, sy, sw, sh, s) {
+        // Draw tab bar with new 4-tab navigation (Create, Spaces, Plan, You)
+        function drawTabBar(sx, sy, sw, sh, s, activeTab = 'create') {
             const textPrimary = '#FFFFFF';
             const tabBarHeight = sh * 0.085;
             const tabBarY = sy + sh - tabBarHeight;
@@ -1587,11 +1620,12 @@ for yourself to *focus*</textarea>
             ctx.lineTo(sx + sw, tabBarY);
             ctx.stroke();
             
+            // New 4-tab navigation: Create, Spaces, Plan, You
             const tabs = [
-                { icon: 'focus', label: 'Focus', active: true },
-                { icon: 'learn', label: 'Learn', active: false },
-                { icon: 'spaces', label: 'Spaces', active: false },
-                { icon: 'you', label: 'You', active: false },
+                { icon: 'create', label: 'Create', id: 'create' },
+                { icon: 'spaces', label: 'Spaces', id: 'spaces' },
+                { icon: 'plan', label: 'Plan', id: 'plan' },
+                { icon: 'you', label: 'You', id: 'you' },
             ];
             
             const tabWidth = sw / tabs.length;
@@ -1603,65 +1637,75 @@ for yourself to *focus*</textarea>
                 const iconY = tabBarY + tabBarHeight * 0.32;
                 const labelY = tabBarY + tabBarHeight * 0.68;
                 
-                const color = tab.active ? textPrimary : 'rgba(255, 255, 255, 0.4)';
+                const isActive = tab.id === activeTab;
+                const color = isActive ? textPrimary : 'rgba(255, 255, 255, 0.4)';
                 
                 ctx.fillStyle = color;
                 ctx.strokeStyle = color;
+                ctx.lineWidth = 1.6;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
                 
-                if (tab.icon === 'focus') {
-                    const outerR = iconSize * 0.45;
-                    const innerR = iconSize * 0.25;
-                    ctx.lineWidth = 1.8;
+                if (tab.icon === 'create') {
+                    // radio-button-on icon (filled circle with outline)
+                    const outerR = iconSize * 0.42;
+                    const innerR = iconSize * 0.22;
                     ctx.beginPath();
                     ctx.arc(tabX, iconY, outerR, 0, Math.PI * 2);
                     ctx.stroke();
                     ctx.beginPath();
                     ctx.arc(tabX, iconY, innerR, 0, Math.PI * 2);
                     ctx.fill();
-                } else if (tab.icon === 'learn') {
-                    const bw = iconSize * 0.45;
-                    const bh = iconSize * 0.4;
-                    ctx.lineWidth = 1.6;
-                    ctx.beginPath();
-                    ctx.moveTo(tabX, iconY - bh);
-                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY - bh, tabX - bw, iconY - bh * 0.7);
-                    ctx.lineTo(tabX - bw, iconY + bh * 0.8);
-                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.moveTo(tabX, iconY - bh);
-                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY - bh, tabX + bw, iconY - bh * 0.7);
-                    ctx.lineTo(tabX + bw, iconY + bh * 0.8);
-                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.moveTo(tabX, iconY - bh);
-                    ctx.lineTo(tabX, iconY + bh * 0.7);
-                    ctx.stroke();
                 } else if (tab.icon === 'spaces') {
-                    const cw = iconSize * 0.5;
-                    const ch = iconSize * 0.35;
-                    ctx.lineWidth = 1.6;
+                    // albums-outline icon (stacked rectangles)
+                    const cw = iconSize * 0.45;
+                    const ch = iconSize * 0.32;
                     ctx.beginPath();
-                    ctx.roundRect(tabX - cw * 0.7, iconY - ch * 0.9, cw * 1.4, ch * 0.5, 2);
+                    ctx.roundRect(tabX - cw * 0.65, iconY - ch * 0.8, cw * 1.3, ch * 0.5, 2);
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.roundRect(tabX - cw * 0.8, iconY - ch * 0.3, cw * 1.6, ch * 0.7, 2);
+                    ctx.roundRect(tabX - cw * 0.8, iconY - ch * 0.2, cw * 1.6, ch * 0.65, 2);
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.roundRect(tabX - cw * 0.9, iconY + ch * 0.15, cw * 1.8, ch * 0.8, 3);
+                    ctx.roundRect(tabX - cw * 0.95, iconY + ch * 0.3, cw * 1.9, ch * 0.75, 3);
+                    ctx.stroke();
+                } else if (tab.icon === 'plan') {
+                    // layers-outline icon (stacked parallelograms)
+                    const lw = iconSize * 0.45;
+                    const lh = iconSize * 0.15;
+                    // Top layer
+                    ctx.beginPath();
+                    ctx.moveTo(tabX, iconY - lh * 2.5);
+                    ctx.lineTo(tabX + lw, iconY - lh * 1.5);
+                    ctx.lineTo(tabX, iconY - lh * 0.5);
+                    ctx.lineTo(tabX - lw, iconY - lh * 1.5);
+                    ctx.closePath();
+                    ctx.stroke();
+                    // Middle layer
+                    ctx.beginPath();
+                    ctx.moveTo(tabX - lw, iconY - lh * 0.3);
+                    ctx.lineTo(tabX, iconY + lh * 0.7);
+                    ctx.lineTo(tabX + lw, iconY - lh * 0.3);
+                    ctx.stroke();
+                    // Bottom layer
+                    ctx.beginPath();
+                    ctx.moveTo(tabX - lw, iconY + lh * 0.9);
+                    ctx.lineTo(tabX, iconY + lh * 1.9);
+                    ctx.lineTo(tabX + lw, iconY + lh * 0.9);
                     ctx.stroke();
                 } else if (tab.icon === 'you') {
-                    const r = iconSize * 0.48;
-                    ctx.lineWidth = 1.6;
+                    // person-circle-outline icon
+                    const r = iconSize * 0.45;
                     ctx.beginPath();
                     ctx.arc(tabX, iconY, r, 0, Math.PI * 2);
                     ctx.stroke();
+                    // Head
                     ctx.beginPath();
-                    ctx.arc(tabX, iconY - r * 0.25, r * 0.28, 0, Math.PI * 2);
+                    ctx.arc(tabX, iconY - r * 0.2, r * 0.28, 0, Math.PI * 2);
                     ctx.stroke();
+                    // Body arc
                     ctx.beginPath();
-                    ctx.arc(tabX, iconY + r * 0.9, r * 0.55, Math.PI * 1.2, Math.PI * 1.8);
+                    ctx.arc(tabX, iconY + r * 0.85, r * 0.5, Math.PI * 1.2, Math.PI * 1.8);
                     ctx.stroke();
                 }
                 
@@ -1673,119 +1717,9 @@ for yourself to *focus*</textarea>
             });
         }
 
-        // Draw tab bar with Learn tab active (top-level function)
+        // Draw tab bar with Spaces tab active (for Learn screens - Learn merged into Spaces)
         function drawLearnTabBar(sx, sy, sw, sh, s) {
-            const textPrimary = '#FFFFFF';
-            const tabBarHeight = sh * 0.085;
-            const tabBarY = sy + sh - tabBarHeight;
-            
-            // Tab bar background
-            ctx.fillStyle = 'rgb(18, 19, 24)';
-            ctx.fillRect(sx, tabBarY, sw, tabBarHeight);
-            
-            // Add noise dithering
-            const tabBarImageData = ctx.getImageData(sx, tabBarY, sw, tabBarHeight);
-            const data = tabBarImageData.data;
-            for (let i = 0; i < data.length; i += 4) {
-                const noise = (Math.random() - 0.5) * 3;
-                data[i] = Math.max(0, Math.min(255, data[i] + noise));
-                data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
-                data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
-            }
-            ctx.putImageData(tabBarImageData, sx, tabBarY);
-            
-            // Top border
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(sx, tabBarY);
-            ctx.lineTo(sx + sw, tabBarY);
-            ctx.stroke();
-            
-            const tabs = [
-                { icon: 'focus', label: 'Focus', active: false },
-                { icon: 'learn', label: 'Learn', active: true },  // Learn is active
-                { icon: 'spaces', label: 'Spaces', active: false },
-                { icon: 'you', label: 'You', active: false },
-            ];
-            
-            const tabWidth = sw / tabs.length;
-            const iconSize = sw * 0.055;
-            const labelSize = sw * 0.031;
-            
-            tabs.forEach((tab, i) => {
-                const tabX = sx + tabWidth * i + tabWidth / 2;
-                const iconY = tabBarY + tabBarHeight * 0.32;
-                const labelY = tabBarY + tabBarHeight * 0.68;
-                
-                const color = tab.active ? textPrimary : 'rgba(255, 255, 255, 0.4)';
-                
-                ctx.fillStyle = color;
-                ctx.strokeStyle = color;
-                
-                if (tab.icon === 'focus') {
-                    const outerR = iconSize * 0.45;
-                    const innerR = iconSize * 0.25;
-                    ctx.lineWidth = 1.8;
-                    ctx.beginPath();
-                    ctx.arc(tabX, iconY, outerR, 0, Math.PI * 2);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(tabX, iconY, innerR, 0, Math.PI * 2);
-                    if (tab.active) ctx.fill(); else ctx.stroke();
-                } else if (tab.icon === 'learn') {
-                    const bw = iconSize * 0.45;
-                    const bh = iconSize * 0.4;
-                    ctx.lineWidth = 1.6;
-                    ctx.beginPath();
-                    ctx.moveTo(tabX, iconY - bh);
-                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY - bh, tabX - bw, iconY - bh * 0.7);
-                    ctx.lineTo(tabX - bw, iconY + bh * 0.8);
-                    ctx.quadraticCurveTo(tabX - bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.moveTo(tabX, iconY - bh);
-                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY - bh, tabX + bw, iconY - bh * 0.7);
-                    ctx.lineTo(tabX + bw, iconY + bh * 0.8);
-                    ctx.quadraticCurveTo(tabX + bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.moveTo(tabX, iconY - bh);
-                    ctx.lineTo(tabX, iconY + bh * 0.7);
-                    ctx.stroke();
-                } else if (tab.icon === 'spaces') {
-                    const cw = iconSize * 0.5;
-                    const ch = iconSize * 0.35;
-                    ctx.lineWidth = 1.6;
-                    ctx.beginPath();
-                    ctx.roundRect(tabX - cw * 0.7, iconY - ch * 0.9, cw * 1.4, ch * 0.5, 2);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.roundRect(tabX - cw * 0.8, iconY - ch * 0.3, cw * 1.6, ch * 0.7, 2);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.roundRect(tabX - cw * 0.9, iconY + ch * 0.15, cw * 1.8, ch * 0.8, 3);
-                    ctx.stroke();
-                } else if (tab.icon === 'you') {
-                    const r = iconSize * 0.48;
-                    ctx.lineWidth = 1.6;
-                    ctx.beginPath();
-                    ctx.arc(tabX, iconY, r, 0, Math.PI * 2);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(tabX, iconY - r * 0.25, r * 0.28, 0, Math.PI * 2);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(tabX, iconY + r * 0.9, r * 0.55, Math.PI * 1.2, Math.PI * 1.8);
-                    ctx.stroke();
-                }
-                
-                ctx.font = `400 ${labelSize}px "Crimson Pro", Georgia, serif`;
-                ctx.fillStyle = color;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'top';
-                ctx.fillText(tab.label, tabX, labelY);
-            });
+            drawTabBar(sx, sy, sw, sh, s, 'spaces');
         }
 
         // Draw GoalInputPage screen (Focus flow - "What would you like to focus on?")
@@ -1936,6 +1870,261 @@ for yourself to *focus*</textarea>
                 ctx.moveTo(x - width / 2, y + totalHeight);
                 ctx.lineTo(x + width / 2, y + totalHeight);
                 ctx.stroke();
+            }
+        }
+
+        // Helper: Draw Ionicon-style vector icons
+        function drawIonicon(ctx, iconName, x, y, size, color) {
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = size * 0.12;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            const s = size; // shorthand
+            const cx = x + s/2;
+            const cy = y + s/2;
+            
+            if (iconName === 'moon') {
+                // Moon outline (crescent)
+                ctx.beginPath();
+                ctx.arc(cx, cy, s * 0.4, 0, Math.PI * 2);
+                ctx.stroke();
+                // Cut out the inner part to make crescent
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(cx + s * 0.2, cy - s * 0.1, s * 0.32, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+            } else if (iconName === 'leaf') {
+                // Leaf outline
+                ctx.beginPath();
+                ctx.moveTo(cx - s * 0.3, cy + s * 0.3);
+                ctx.quadraticCurveTo(cx - s * 0.1, cy - s * 0.4, cx + s * 0.35, cy - s * 0.35);
+                ctx.quadraticCurveTo(cx + s * 0.1, cy + s * 0.1, cx - s * 0.3, cy + s * 0.3);
+                ctx.stroke();
+                // Stem
+                ctx.beginPath();
+                ctx.moveTo(cx - s * 0.1, cy + s * 0.1);
+                ctx.quadraticCurveTo(cx + s * 0.1, cy - s * 0.1, cx + s * 0.2, cy - s * 0.2);
+                ctx.stroke();
+            } else if (iconName === 'flash') {
+                // Lightning bolt
+                ctx.beginPath();
+                ctx.moveTo(cx + s * 0.1, cy - s * 0.4);
+                ctx.lineTo(cx - s * 0.2, cy + s * 0.05);
+                ctx.lineTo(cx + s * 0.05, cy + s * 0.05);
+                ctx.lineTo(cx - s * 0.1, cy + s * 0.4);
+                ctx.lineTo(cx + s * 0.25, cy - s * 0.1);
+                ctx.lineTo(cx, cy - s * 0.1);
+                ctx.closePath();
+                ctx.stroke();
+            } else if (iconName === 'book') {
+                // Book outline
+                ctx.beginPath();
+                // Left page
+                ctx.moveTo(cx, cy - s * 0.3);
+                ctx.lineTo(cx - s * 0.35, cy - s * 0.25);
+                ctx.lineTo(cx - s * 0.35, cy + s * 0.3);
+                ctx.lineTo(cx, cy + s * 0.35);
+                // Right page
+                ctx.moveTo(cx, cy - s * 0.3);
+                ctx.lineTo(cx + s * 0.35, cy - s * 0.25);
+                ctx.lineTo(cx + s * 0.35, cy + s * 0.3);
+                ctx.lineTo(cx, cy + s * 0.35);
+                // Spine
+                ctx.moveTo(cx, cy - s * 0.3);
+                ctx.lineTo(cx, cy + s * 0.35);
+                ctx.stroke();
+            } else if (iconName === 'attach') {
+                // Paperclip
+                ctx.beginPath();
+                ctx.moveTo(cx + s * 0.15, cy + s * 0.3);
+                ctx.lineTo(cx + s * 0.15, cy - s * 0.15);
+                ctx.arc(cx, cy - s * 0.15, s * 0.15, 0, Math.PI, true);
+                ctx.lineTo(cx - s * 0.15, cy + s * 0.1);
+                ctx.arc(cx - s * 0.05, cy + s * 0.1, s * 0.1, Math.PI, 0, true);
+                ctx.lineTo(cx + s * 0.05, cy - s * 0.1);
+                ctx.stroke();
+            }
+            
+            ctx.restore();
+        }
+        
+        // Draw Create Input Page ("What would you like to create a space for?") - New unified Create flow
+        function drawCreateInputScreen(screenX, screenY, screenWidth, screenHeight, scale, options = {}) {
+            const {
+                placeholderText = 'feel confident before my presentation',
+                inputText = '',
+                showTabBar = true,
+                selectedCategory = null, // 'sleep', 'calm', 'focus', 'learning', or null
+                showExpandedPills = false,
+            } = options;
+            
+            // Colors from DesignSystem
+            const bgColor = '#0D0D0F';
+            const textPrimary = '#FFFFFF';
+            const textSecondary = 'rgba(255, 255, 255, 0.6)';
+            const textTertiary = 'rgba(255, 255, 255, 0.35)';
+            const textMuted = 'rgba(255, 255, 255, 0.4)';
+            const borderSubtle = 'rgba(255, 255, 255, 0.08)';
+            const inputBorder = 'rgba(255, 255, 255, 0.25)';
+            const pillBg = 'rgba(255, 255, 255, 0.05)';
+            const pillBorder = 'rgba(255, 255, 255, 0.1)';
+            const pillActiveBg = 'rgba(107, 140, 255, 0.15)';
+            const pillActiveBorder = 'rgba(107, 140, 255, 0.4)';
+            
+            // Fill dark background first
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(screenX, screenY, screenWidth, screenHeight);
+            
+            // Add phosphene background effect
+            const phospheneCount = Math.floor(12 * state.phonePhospheneIntensity);
+            const brightness = state.phonePhospheneBrightness;
+            for (let i = 0; i < phospheneCount; i++) {
+                const px = screenX + Math.random() * screenWidth;
+                const py = screenY + Math.random() * screenHeight;
+                const pr = Math.random() * screenWidth * 0.4 + screenWidth * 0.15;
+                const hue = 215 + (Math.random() - 0.5) * 40;
+                const baseOpacity = 0.035 * brightness;
+                const gradient = ctx.createRadialGradient(px, py, 0, px, py, pr);
+                gradient.addColorStop(0, `hsla(${hue}, 35%, ${45 * brightness}%, ${baseOpacity})`);
+                gradient.addColorStop(0.5, `hsla(${hue}, 30%, ${40 * brightness}%, ${baseOpacity * 0.57})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            const centerX = screenX + screenWidth / 2;
+            const maxWidth = screenWidth * 0.82;
+            
+            // Heading positioned higher - at ~32% from top
+            const headingY = screenY + screenHeight * 0.32;
+            const headingSize = screenWidth * 0.068; // Slightly smaller to fit more text
+            const headingLineHeight = headingSize * 1.45;
+            
+            ctx.font = `400 ${headingSize}px "Crimson Pro", Georgia, serif`;
+            ctx.fillStyle = textPrimary;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('What would you like', centerX, headingY);
+            ctx.fillText('to create a space for?', centerX, headingY + headingLineHeight);
+            
+            // Input area - positioned below heading
+            const inputY = headingY + headingLineHeight * 2 + screenHeight * 0.06;
+            const inputWidth = maxWidth;
+            const inputTextSize = screenWidth * 0.052;
+            const inputPaddingV = screenHeight * 0.022;
+            
+            // Input text or placeholder
+            if (inputText) {
+                ctx.font = `300 ${inputTextSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textPrimary;
+            } else {
+                ctx.font = `400 ${inputTextSize}px "Crimson Pro", Georgia, serif`;
+                ctx.fillStyle = textTertiary;
+            }
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(inputText || placeholderText, centerX, inputY);
+            
+            // Input underline - more visible
+            const underlineY = inputY + inputPaddingV + inputTextSize * 0.4;
+            ctx.strokeStyle = inputBorder;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(centerX - inputWidth / 2, underlineY);
+            ctx.lineTo(centerX + inputWidth / 2, underlineY);
+            ctx.stroke();
+            
+            // Attach button below underline with vector icon
+            const attachY = underlineY + screenHeight * 0.04;
+            const attachSize = screenWidth * 0.033;
+            const attachIconSize = attachSize * 1.2;
+            
+            // Draw attach icon
+            const attachTextWidth = ctx.measureText('Attach a doc or paste a link').width;
+            const attachTotalWidth = attachIconSize + attachSize * 0.5 + attachTextWidth;
+            const attachStartX = centerX - attachTotalWidth / 2;
+            
+            drawIonicon(ctx, 'attach', attachStartX, attachY - attachIconSize * 0.3, attachIconSize, textTertiary);
+            
+            ctx.font = `400 ${attachSize}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textTertiary;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillText('Attach a doc or paste a link', attachStartX + attachIconSize + attachSize * 0.3, attachY);
+            
+            // Category Pills - Typographic style (no rounded backgrounds, just underline)
+            const pillsY = attachY + screenHeight * 0.065;
+            const pillGap = screenWidth * 0.06;
+            const pillFontSize = screenWidth * 0.036;
+            const iconSize = pillFontSize * 1.15;
+            const iconGap = screenWidth * 0.018;
+            
+            const categories = [
+                { id: 'sleep', label: 'Sleep', icon: 'moon' },
+                { id: 'calm', label: 'Calm', icon: 'leaf' },
+                { id: 'focus', label: 'Focus', icon: 'flash' },
+                { id: 'learning', label: 'Learning', icon: 'book' },
+            ];
+            
+            // Calculate total width of pills (typographic - icon + gap + label)
+            ctx.font = `400 ${pillFontSize}px "Inter", -apple-system, sans-serif`;
+            let totalPillsWidth = 0;
+            categories.forEach((cat, i) => {
+                const textWidth = ctx.measureText(cat.label).width;
+                totalPillsWidth += iconSize + iconGap + textWidth;
+                if (i < categories.length - 1) totalPillsWidth += pillGap;
+            });
+            
+            // Draw pills centered - typographic style
+            let pillX = centerX - totalPillsWidth / 2;
+            
+            categories.forEach((cat, i) => {
+                const textWidth = ctx.measureText(cat.label).width;
+                const itemWidth = iconSize + iconGap + textWidth;
+                const isActive = selectedCategory === cat.id;
+                
+                // Icon color
+                const iconColor = isActive ? textPrimary : textSecondary;
+                
+                // Draw vector icon
+                drawIonicon(ctx, cat.icon, pillX, pillsY - iconSize/2, iconSize, iconColor);
+                
+                // Label
+                ctx.font = `400 ${pillFontSize}px "Inter", -apple-system, sans-serif`;
+                ctx.fillStyle = isActive ? textPrimary : textSecondary;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(cat.label, pillX + iconSize + iconGap, pillsY);
+                
+                // Underline for active/hover state (subtle)
+                const underlineWidth = itemWidth;
+                ctx.strokeStyle = isActive ? textPrimary : 'rgba(255, 255, 255, 0.04)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(pillX, pillsY + pillFontSize * 0.7);
+                ctx.lineTo(pillX + underlineWidth, pillsY + pillFontSize * 0.7);
+                ctx.stroke();
+                
+                pillX += itemWidth + pillGap;
+            });
+            
+            // "+ More" button below pills
+            const moreY = pillsY + pillFontSize + screenHeight * 0.035;
+            ctx.font = `400 ${pillFontSize}px "Inter", -apple-system, sans-serif`;
+            ctx.fillStyle = textMuted;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('+ More', centerX, moreY);
+            
+            // Tab bar at bottom
+            if (showTabBar) {
+                drawTabBar(screenX, screenY, screenWidth, screenHeight, scale);
             }
         }
 
@@ -2119,124 +2308,9 @@ for yourself to *focus*</textarea>
                 }
             }
             
-            // Tab bar at bottom with Learn tab active
+            // Tab bar at bottom with Spaces tab active (Learn merged into Spaces)
             if (showTabBar) {
                 drawLearnTabBar(screenX, screenY, screenWidth, screenHeight, scale);
-            }
-            
-            // Draw tab bar with Learn tab active
-            function drawLearnTabBar(sx, sy, sw, sh, s) {
-                const textPrimary = '#FFFFFF';  // Define locally to avoid scope issues
-                const tabBarHeight = sh * 0.085;
-                const tabBarY = sy + sh - tabBarHeight;
-                
-                // Tab bar background
-                ctx.fillStyle = 'rgb(18, 19, 24)';
-                ctx.fillRect(sx, tabBarY, sw, tabBarHeight);
-                
-                // Add noise dithering
-                const tabBarImageData = ctx.getImageData(sx, tabBarY, sw, tabBarHeight);
-                const data = tabBarImageData.data;
-                for (let i = 0; i < data.length; i += 4) {
-                    const noise = (Math.random() - 0.5) * 3;
-                    data[i] = Math.max(0, Math.min(255, data[i] + noise));
-                    data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
-                    data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
-                }
-                ctx.putImageData(tabBarImageData, sx, tabBarY);
-                
-                // Top border
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(sx, tabBarY);
-                ctx.lineTo(sx + sw, tabBarY);
-                ctx.stroke();
-                
-                const tabs = [
-                    { icon: 'focus', label: 'Focus', active: false },
-                    { icon: 'learn', label: 'Learn', active: true },  // Learn is active
-                    { icon: 'spaces', label: 'Spaces', active: false },
-                    { icon: 'you', label: 'You', active: false },
-                ];
-                
-                const tabWidth = sw / tabs.length;
-                const iconSize = sw * 0.055;
-                const labelSize = sw * 0.031;
-                
-                tabs.forEach((tab, i) => {
-                    const tabX = sx + tabWidth * i + tabWidth / 2;
-                    const iconY = tabBarY + tabBarHeight * 0.32;
-                    const labelY = tabBarY + tabBarHeight * 0.68;
-                    
-                    const color = tab.active ? textPrimary : 'rgba(255, 255, 255, 0.4)';
-                    
-                    ctx.fillStyle = color;
-                    ctx.strokeStyle = color;
-                    
-                    if (tab.icon === 'focus') {
-                        const outerR = iconSize * 0.45;
-                        const innerR = iconSize * 0.25;
-                        ctx.lineWidth = 1.8;
-                        ctx.beginPath();
-                        ctx.arc(tabX, iconY, outerR, 0, Math.PI * 2);
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.arc(tabX, iconY, innerR, 0, Math.PI * 2);
-                        if (tab.active) ctx.fill(); else ctx.stroke();
-                    } else if (tab.icon === 'learn') {
-                        const bw = iconSize * 0.45;
-                        const bh = iconSize * 0.4;
-                        ctx.lineWidth = 1.6;
-                        ctx.beginPath();
-                        ctx.moveTo(tabX, iconY - bh);
-                        ctx.quadraticCurveTo(tabX - bw * 0.3, iconY - bh, tabX - bw, iconY - bh * 0.7);
-                        ctx.lineTo(tabX - bw, iconY + bh * 0.8);
-                        ctx.quadraticCurveTo(tabX - bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.moveTo(tabX, iconY - bh);
-                        ctx.quadraticCurveTo(tabX + bw * 0.3, iconY - bh, tabX + bw, iconY - bh * 0.7);
-                        ctx.lineTo(tabX + bw, iconY + bh * 0.8);
-                        ctx.quadraticCurveTo(tabX + bw * 0.3, iconY + bh * 0.6, tabX, iconY + bh * 0.7);
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.moveTo(tabX, iconY - bh);
-                        ctx.lineTo(tabX, iconY + bh * 0.7);
-                        ctx.stroke();
-                    } else if (tab.icon === 'spaces') {
-                        const cw = iconSize * 0.5;
-                        const ch = iconSize * 0.35;
-                        ctx.lineWidth = 1.6;
-                        ctx.beginPath();
-                        ctx.roundRect(tabX - cw * 0.7, iconY - ch * 0.9, cw * 1.4, ch * 0.5, 2);
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.roundRect(tabX - cw * 0.8, iconY - ch * 0.3, cw * 1.6, ch * 0.7, 2);
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.roundRect(tabX - cw * 0.9, iconY + ch * 0.15, cw * 1.8, ch * 0.8, 3);
-                        ctx.stroke();
-                    } else if (tab.icon === 'you') {
-                        const r = iconSize * 0.48;
-                        ctx.lineWidth = 1.6;
-                        ctx.beginPath();
-                        ctx.arc(tabX, iconY, r, 0, Math.PI * 2);
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.arc(tabX, iconY - r * 0.25, r * 0.28, 0, Math.PI * 2);
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.arc(tabX, iconY + r * 0.9, r * 0.55, Math.PI * 1.2, Math.PI * 1.8);
-                        ctx.stroke();
-                    }
-                    
-                    ctx.font = `400 ${labelSize}px "Crimson Pro", Georgia, serif`;
-                    ctx.fillStyle = color;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    ctx.fillText(tab.label, tabX, labelY);
-                });
             }
         }
 
@@ -3360,6 +3434,14 @@ for yourself to *focus*</textarea>
                 
                 // Draw cropped region of image
                 ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, drawX, drawY, drawWidth, drawHeight);
+            } else if (effectiveScreenType === 'create-input') {
+                // Draw Create Input Page (Unified Create flow)
+                drawCreateInputScreen(screenX, screenY, screenWidth, screenHeight, scale, {
+                    placeholderText: state.createPlaceholder || 'feel confident before my presentation',
+                    inputText: state.createInputText || '',
+                    showTabBar: state.showCreateTabBar !== false,
+                    selectedCategory: state.createSelectedCategory || null
+                });
             } else if (effectiveScreenType === 'goal-input') {
                 // Draw Goal Input Page
                 drawGoalInputScreen(screenX, screenY, screenWidth, screenHeight, scale, {
@@ -3603,7 +3685,9 @@ for yourself to *focus*</textarea>
             targetCtx.fillRect(x, y, width, height);
             
             // Render based on screen type
-            if (state.screenType === 'goal-input') {
+            if (state.screenType === 'create-input') {
+                drawCreateInputScreenToContext(targetCtx, x, y, width, height);
+            } else if (state.screenType === 'goal-input') {
                 drawGoalInputScreenToContext(targetCtx, x, y, width, height);
             } else if (state.screenType === 'learn-input') {
                 drawLearnInputScreenToContext(targetCtx, x, y, width, height);
@@ -3785,6 +3869,157 @@ for yourself to *focus*</textarea>
                 targetCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
                 targetCtx.textAlign = 'center';
                 targetCtx.fillText(state.circleText, centerX, centerY + circleRadius + w * 0.08);
+            }
+        }
+        
+        // Helper: Draw Ionicon to any context
+        function drawIoniconToCtx(targetCtx, iconName, x, y, size, color) {
+            targetCtx.save();
+            targetCtx.strokeStyle = color;
+            targetCtx.fillStyle = color;
+            targetCtx.lineWidth = size * 0.12;
+            targetCtx.lineCap = 'round';
+            targetCtx.lineJoin = 'round';
+            
+            const s = size;
+            const cx = x + s/2;
+            const cy = y + s/2;
+            
+            if (iconName === 'moon') {
+                targetCtx.beginPath();
+                targetCtx.arc(cx, cy, s * 0.4, 0, Math.PI * 2);
+                targetCtx.stroke();
+            } else if (iconName === 'leaf') {
+                targetCtx.beginPath();
+                targetCtx.moveTo(cx - s * 0.3, cy + s * 0.3);
+                targetCtx.quadraticCurveTo(cx - s * 0.1, cy - s * 0.4, cx + s * 0.35, cy - s * 0.35);
+                targetCtx.quadraticCurveTo(cx + s * 0.1, cy + s * 0.1, cx - s * 0.3, cy + s * 0.3);
+                targetCtx.stroke();
+            } else if (iconName === 'flash') {
+                targetCtx.beginPath();
+                targetCtx.moveTo(cx + s * 0.1, cy - s * 0.4);
+                targetCtx.lineTo(cx - s * 0.2, cy + s * 0.05);
+                targetCtx.lineTo(cx + s * 0.05, cy + s * 0.05);
+                targetCtx.lineTo(cx - s * 0.1, cy + s * 0.4);
+                targetCtx.stroke();
+            } else if (iconName === 'book') {
+                targetCtx.beginPath();
+                targetCtx.moveTo(cx, cy - s * 0.3);
+                targetCtx.lineTo(cx - s * 0.35, cy - s * 0.25);
+                targetCtx.lineTo(cx - s * 0.35, cy + s * 0.3);
+                targetCtx.lineTo(cx, cy + s * 0.35);
+                targetCtx.moveTo(cx, cy - s * 0.3);
+                targetCtx.lineTo(cx + s * 0.35, cy - s * 0.25);
+                targetCtx.lineTo(cx + s * 0.35, cy + s * 0.3);
+                targetCtx.lineTo(cx, cy + s * 0.35);
+                targetCtx.moveTo(cx, cy - s * 0.3);
+                targetCtx.lineTo(cx, cy + s * 0.35);
+                targetCtx.stroke();
+            }
+            
+            targetCtx.restore();
+        }
+        
+        function drawCreateInputScreenToContext(targetCtx, x, y, w, h) {
+            // Simplified version of create input screen for 3D phone
+            const padding = w * 0.06;
+            
+            // Title
+            targetCtx.font = `300 ${w * 0.075}px Crimson Pro`;
+            targetCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText("What would you like", x + w/2, y + h * 0.13);
+            targetCtx.fillText("to create a space for?", x + w/2, y + h * 0.18);
+            
+            // Input line with placeholder
+            const inputY = y + h * 0.26;
+            const displayText = state.createInputText || state.createPlaceholder || 'feel confident before my presentation';
+            targetCtx.font = `300 ${w * 0.04}px Crimson Pro`;
+            targetCtx.fillStyle = state.createInputText ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText(displayText, x + w/2, inputY);
+            
+            // Input underline - more visible
+            targetCtx.strokeStyle = 'rgba(255,255,255,0.25)';
+            targetCtx.lineWidth = 1.5;
+            targetCtx.beginPath();
+            targetCtx.moveTo(x + padding, inputY + h * 0.025);
+            targetCtx.lineTo(x + w - padding, inputY + h * 0.025);
+            targetCtx.stroke();
+            
+            // Attach button text with icon placeholder (simplified for context)
+            targetCtx.font = `400 ${w * 0.03}px Inter`;
+            targetCtx.fillStyle = 'rgba(255,255,255,0.35)';
+            targetCtx.fillText('Attach a doc or paste a link', x + w/2, inputY + h * 0.06);
+            
+            // Category pills - Typographic style (no backgrounds, just underline)
+            const pillsY = inputY + h * 0.12;
+            const pillGap = w * 0.05;
+            const pillFontSize = w * 0.028;
+            const iconSize = pillFontSize * 1.15;
+            const iconGap = w * 0.015;
+            
+            const categories = [
+                { id: 'sleep', label: 'Sleep', icon: 'moon' },
+                { id: 'calm', label: 'Calm', icon: 'leaf' },
+                { id: 'focus', label: 'Focus', icon: 'flash' },
+                { id: 'learning', label: 'Learning', icon: 'book' },
+            ];
+            
+            // Calculate total width (typographic - icon + gap + label)
+            targetCtx.font = `400 ${pillFontSize}px Inter`;
+            let totalW = 0;
+            categories.forEach((cat, i) => {
+                const textWidth = targetCtx.measureText(cat.label).width;
+                totalW += iconSize + iconGap + textWidth;
+                if (i < categories.length - 1) totalW += pillGap;
+            });
+            
+            let pillX = x + (w - totalW) / 2;
+            categories.forEach((cat, i) => {
+                const textWidth = targetCtx.measureText(cat.label).width;
+                const itemWidth = iconSize + iconGap + textWidth;
+                const isActive = state.createSelectedCategory === cat.id;
+                
+                // Vector icon
+                const iconColor = isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)';
+                drawIoniconToCtx(targetCtx, cat.icon, pillX, pillsY - iconSize/2, iconSize, iconColor);
+                
+                // Label
+                targetCtx.font = `400 ${pillFontSize}px Inter`;
+                targetCtx.fillStyle = isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)';
+                targetCtx.textAlign = 'left';
+                targetCtx.textBaseline = 'middle';
+                targetCtx.fillText(cat.label, pillX + iconSize + iconGap, pillsY);
+                
+                // Underline for active/hover state
+                targetCtx.strokeStyle = isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.04)';
+                targetCtx.lineWidth = 1;
+                targetCtx.beginPath();
+                targetCtx.moveTo(pillX, pillsY + pillFontSize * 0.6);
+                targetCtx.lineTo(pillX + itemWidth, pillsY + pillFontSize * 0.6);
+                targetCtx.stroke();
+                
+                pillX += itemWidth + pillGap;
+            });
+            
+            // "+ More" text
+            targetCtx.font = `400 ${pillFontSize}px Inter`;
+            targetCtx.fillStyle = 'rgba(255,255,255,0.4)';
+            targetCtx.textAlign = 'center';
+            targetCtx.fillText('+ More', x + w/2, pillsY + h * 0.05);
+            
+            // Tab bar
+            if (state.showCreateTabBar !== false) {
+                const tabBarY = y + h - h * 0.1;
+                targetCtx.fillStyle = 'rgb(18, 19, 24)';
+                targetCtx.fillRect(x, tabBarY, w, h * 0.1);
+                targetCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+                targetCtx.lineWidth = 1;
+                targetCtx.beginPath();
+                targetCtx.moveTo(x, tabBarY);
+                targetCtx.lineTo(x + w, tabBarY);
+                targetCtx.stroke();
             }
         }
         
@@ -4139,21 +4374,21 @@ for yourself to *focus*</textarea>
 
             // Layout: Dual phones - two phones at angles, overlapping
             if (state.layout === 'dual-phones') {
-                // Back phone (left, more tilted)
+                // Back phone (left, more tilted) - uses secondary screen content
                 const phone1Scale = scale * 0.85;
                 const phone1X = state.width * 0.05;
                 const phone1Y = state.height * 0.28;
                 
                 ctx.save();
                 state.phoneScale = phone1Scale;
-                drawSinglePhone(phone1X, phone1Y, -8);
+                drawSinglePhone(phone1X, phone1Y, -8, 0, true); // useSecondaryScreen = true for back phone
                 state.phoneScale = scale;
                 ctx.restore();
                 
-                // Front phone (right, less tilted, overlapping)
+                // Front phone (right, less tilted, overlapping) - uses primary screen content
                 const phone2X = state.width * 0.32;
                 const phone2Y = state.height * 0.22;
-                drawSinglePhone(phone2X, phone2Y, 5);
+                drawSinglePhone(phone2X, phone2Y, 5, 0, false); // useSecondaryScreen = false for front phone
                 return;
             }
             
@@ -4852,6 +5087,8 @@ for yourself to *focus*</textarea>
             // Show/hide relevant settings panels
             document.getElementById('circle-settings').style.display = 
                 e.target.value === 'circle' ? 'block' : 'none';
+            document.getElementById('create-input-settings').style.display = 
+                e.target.value === 'create-input' ? 'block' : 'none';
             document.getElementById('goal-input-settings').style.display = 
                 e.target.value === 'goal-input' ? 'block' : 'none';
             document.getElementById('learn-input-settings').style.display = 
@@ -4866,6 +5103,27 @@ for yourself to *focus*</textarea>
                 state.appScreenshot = null;
             }
             
+            render();
+        });
+
+        // Create input page settings
+        document.getElementById('create-placeholder').addEventListener('input', (e) => {
+            state.createPlaceholder = e.target.value;
+            render();
+        });
+
+        document.getElementById('create-input-text').addEventListener('input', (e) => {
+            state.createInputText = e.target.value;
+            render();
+        });
+
+        document.getElementById('create-selected-category').addEventListener('change', (e) => {
+            state.createSelectedCategory = e.target.value || null;
+            render();
+        });
+
+        document.getElementById('show-create-tab-bar').addEventListener('change', (e) => {
+            state.showCreateTabBar = e.target.checked;
             render();
         });
 
@@ -5110,6 +5368,7 @@ for yourself to *focus*</textarea>
                         document.getElementById('screen-type').value = 'uploaded';
                         document.getElementById('screen-type-1').value = 'uploaded';
                         document.getElementById('circle-settings').style.display = 'none';
+                        document.getElementById('create-input-settings').style.display = 'none';
                         document.getElementById('goal-input-settings').style.display = 'none';
                         
                         // Add thumbnail
@@ -5180,6 +5439,8 @@ for yourself to *focus*</textarea>
             // Show/hide relevant settings panels
             document.getElementById('circle-settings').style.display = 
                 e.target.value === 'circle' ? 'block' : 'none';
+            document.getElementById('create-input-settings').style.display = 
+                e.target.value === 'create-input' ? 'block' : 'none';
             document.getElementById('goal-input-settings').style.display = 
                 e.target.value === 'goal-input' ? 'block' : 'none';
             document.getElementById('learn-input-settings').style.display = 
