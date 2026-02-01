@@ -182,6 +182,67 @@
             }
         }
 
+        /* Hero Social Proof */
+        .hero-social-proof {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            max-width: 600px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .hero-social-proof:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-social-x-logo {
+            width: 14px;
+            height: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+        }
+
+        .hero-social-quote {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        .hero-social-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(107, 140, 255, 0.8);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 600px) {
+            .hero-social-proof {
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
+                padding: 14px 16px;
+            }
+
+            .hero-social-x-logo {
+                display: none;
+            }
+
+            .hero-social-quote {
+                font-size: 13px;
+            }
+        }
+
         /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
@@ -2013,6 +2074,12 @@
             </h1>
 
             <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
+
+            <a href="https://x.com/yusukelp/status/2016767347097583928" target="_blank" rel="noopener" class="hero-social-proof fade-up visible fade-up-delay-7" style="transition-delay: 0.85s;">
+                <svg class="hero-social-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <span class="hero-social-quote">"This is actually insane. You paste a tweet link and it instantly turns it into a custom learning program."</span>
+                <span class="hero-social-author">— @yusukelp</span>
+            </a>
 
             <div class="fade-up visible fade-up-delay-8" style="margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
                 <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" class="hero-cta-btn" target="_blank" rel="noopener noreferrer">
