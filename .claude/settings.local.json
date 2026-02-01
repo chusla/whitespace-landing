@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx http-server:*)",
+      "Bash(timeout:*)",
+      "Bash(start:*)",
+      "Bash(taskkill:*)",
+      "Bash(npx serve:*)",
+      "Bash(ping:*)",
+      "Bash(python -m http.server:*)"
+    ]
+  }
+}
