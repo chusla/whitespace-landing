@@ -556,19 +556,60 @@
         }
 
         /* Hero CTA Section - Consolidated */
-        .hero-cta-section {
+        .hero-cta-box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            padding: 24px 32px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
         }
 
-        .hero-limited-offer {
+        .hero-cta-headline {
             font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
             margin: 0;
+        }
+
+        .hero-cta-headline strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .hero-cta-timer-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-cta-timer-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-cta-box .countdown-timer {
+            font-size: 14px;
+        }
+
+        .hero-cta-box .app-store-buttons {
+            margin-top: 4px;
+        }
+
+        @media (max-width: 500px) {
+            .hero-cta-box {
+                padding: 20px 20px;
+                margin: 32px 8px 0;
+                border-radius: 16px;
+            }
+
+            .hero-cta-headline {
+                font-size: 16px;
+            }
         }
 
         .hero-dual-buttons {
@@ -2224,9 +2265,10 @@
 
             <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
 
-            <div class="hero-cta-section fade-up visible fade-up-delay-8" style="margin-top: 32px;">
-                <p class="hero-limited-offer">Download now to claim your 12 free sessions</p>
-                <div class="countdown-wrapper" id="heroCountdown">
+            <div class="hero-cta-box fade-up visible fade-up-delay-8" style="margin-top: 32px;">
+                <p class="hero-cta-headline">Get <strong>12 free sessions</strong> when you download</p>
+                <div class="hero-cta-timer-row">
+                    <span class="hero-cta-timer-label">Offer ends in</span>
                     <span class="countdown-timer" id="hero-timer">1d 23:59:59</span>
                 </div>
                 <div class="app-store-buttons">
