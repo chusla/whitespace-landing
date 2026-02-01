@@ -182,6 +182,80 @@
             }
         }
 
+        /* Hero Use Cases Rotator */
+        .hero-use-cases {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .hero-use-cases.visible {
+            opacity: 1;
+        }
+
+        .hero-use-case-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-use-case-rotator {
+            position: relative;
+            height: 1.4em;
+            min-width: 200px;
+        }
+
+        .hero-use-case {
+            position: absolute;
+            left: 0;
+            white-space: nowrap;
+            font-family: 'Crimson Pro', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0;
+            filter: blur(8px);
+            transform: translateY(4px);
+            transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease;
+        }
+
+        .hero-use-case.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .hero-use-cases {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .hero-use-case-label {
+                font-size: 14px;
+            }
+
+            .hero-use-case-rotator {
+                min-width: unset;
+                text-align: center;
+                width: 100%;
+            }
+
+            .hero-use-case {
+                left: 50%;
+                transform: translateX(-50%) translateY(4px);
+                font-size: 17px;
+            }
+
+            .hero-use-case.active {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
         /* Hero Tweet Card */
         .hero-tweet-wrapper {
             display: flex;
@@ -2265,6 +2339,22 @@
 
             <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
 
+            <div class="hero-use-cases" id="heroUseCases">
+                <span class="hero-use-case-label">Whether you want to</span>
+                <span class="hero-use-case-rotator" id="heroUseCaseRotator">
+                    <span class="hero-use-case">fall asleep faster</span>
+                    <span class="hero-use-case">learn Japanese</span>
+                    <span class="hero-use-case">calm pre-meeting anxiety</span>
+                    <span class="hero-use-case">prepare for a big pitch</span>
+                    <span class="hero-use-case">process a difficult conversation</span>
+                    <span class="hero-use-case">find focus for deep work</span>
+                    <span class="hero-use-case">build confidence before a date</span>
+                    <span class="hero-use-case">work through grief</span>
+                    <span class="hero-use-case">visualize your goals</span>
+                    <span class="hero-use-case">decompress after a long day</span>
+                </span>
+            </div>
+
             <div class="hero-cta-box fade-up visible fade-up-delay-8" style="margin-top: 32px;">
                 <p class="hero-cta-headline">Get <strong>12 free sessions</strong> when you download</p>
                 <div class="hero-cta-timer-row">
@@ -2282,16 +2372,16 @@
             </div>
 
             <div class="hero-tweet-wrapper fade-up visible fade-up-delay-9" style="margin-top: 32px;">
-                <a href="https://x.com/yusukelp/status/2016767347097583928" target="_blank" rel="noopener" class="hero-tweet-card">
+                <a href="https://x.com/Lolasasfi/status/2010321044066730439" target="_blank" rel="noopener" class="hero-tweet-card">
                     <div class="hero-tweet-header">
-                        <img src="https://unavatar.io/twitter/yusukelp" alt="" class="hero-tweet-avatar">
+                        <img src="https://unavatar.io/twitter/Lolasasfi" alt="" class="hero-tweet-avatar">
                         <div class="hero-tweet-author-info">
-                            <span class="hero-tweet-name">Yusuke</span>
-                            <span class="hero-tweet-handle">@yusukelp</span>
+                            <span class="hero-tweet-name">Lola</span>
+                            <span class="hero-tweet-handle">@Lolasasfi</span>
                         </div>
                         <svg class="hero-tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </div>
-                    <p class="hero-tweet-content">"This is actually insane. You paste a tweet link and it instantly turns it into a custom learning program."</p>
+                    <p class="hero-tweet-content">"wait you're using sleep meditations to manifest mrr targets? lowkey fascinating"</p>
                 </a>
                 <a href="#testimonials" class="hero-more-testimonials">
                     See more reviews
@@ -3214,6 +3304,35 @@
         }
 
         initScenarioRotator();
+
+        // ==========================================
+        // Hero Use Cases Rotator
+        // ==========================================
+        function initHeroUseCases() {
+            const container = document.getElementById('heroUseCases');
+            const rotator = document.getElementById('heroUseCaseRotator');
+            if (!container || !rotator) return;
+
+            const useCases = rotator.querySelectorAll('.hero-use-case');
+            if (useCases.length === 0) return;
+
+            let currentIndex = 0;
+
+            // Wait for hero animation to complete (approx 2s after page load)
+            setTimeout(() => {
+                container.classList.add('visible');
+                useCases[0].classList.add('active');
+
+                // Start rotation
+                setInterval(() => {
+                    useCases[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % useCases.length;
+                    useCases[currentIndex].classList.add('active');
+                }, 3000);
+            }, 2000);
+        }
+
+        initHeroUseCases();
 
         // ==========================================
         // Science Quotes Rotator
