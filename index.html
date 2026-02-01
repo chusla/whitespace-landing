@@ -256,130 +256,90 @@
             }
         }
 
-        /* Hero Tweet Card */
-        .hero-tweet-wrapper {
+        /* Hero Inline Quotes */
+        .hero-quotes {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            margin-top: 28px;
+            margin-top: 24px;
         }
 
-        .hero-tweet-card {
-            display: block;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 16px 20px;
-            max-width: 480px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .hero-tweet-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .hero-tweet-header {
+        .hero-quotes-row {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
+            max-width: 700px;
         }
 
-        .hero-tweet-avatar {
-            width: 40px;
-            height: 40px;
+        .hero-quote {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .hero-quote:hover {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .hero-quote-avatar {
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .hero-tweet-author-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            flex: 1;
-            min-width: 0;
+        .hero-quote-text {
+            font-style: italic;
         }
 
-        .hero-tweet-name {
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.95);
-            line-height: 1.3;
-        }
-
-        .hero-tweet-handle {
-            font-family: 'Inter', sans-serif;
+        .hero-quote-author {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: normal;
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.3;
         }
 
-        .hero-tweet-x-logo {
-            width: 18px;
-            height: 18px;
-            color: rgba(255, 255, 255, 0.5);
-            flex-shrink: 0;
-        }
-
-        .hero-tweet-content {
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.5;
-            margin: 0;
-            text-align: left;
-        }
-
-        .hero-more-testimonials {
+        .hero-more-reviews {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             font-family: 'Inter', sans-serif;
             font-size: 13px;
-            color: rgba(107, 140, 255, 0.8);
+            color: rgba(107, 140, 255, 0.7);
             text-decoration: none;
             transition: all 0.2s ease;
+            margin-top: 4px;
         }
 
-        .hero-more-testimonials:hover {
+        .hero-more-reviews:hover {
             color: rgba(107, 140, 255, 1);
         }
 
-        .hero-more-testimonials svg {
+        .hero-more-reviews svg {
             transition: transform 0.2s ease;
         }
 
-        .hero-more-testimonials:hover svg {
+        .hero-more-reviews:hover svg {
             transform: translateY(2px);
         }
 
-        @media (max-width: 500px) {
-            .hero-tweet-card {
-                padding: 14px 16px;
-                margin: 0 16px;
+        @media (max-width: 600px) {
+            .hero-quotes-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
             }
 
-            .hero-tweet-avatar {
-                width: 36px;
-                height: 36px;
-            }
-
-            .hero-tweet-name {
+            .hero-quote {
                 font-size: 13px;
-            }
-
-            .hero-tweet-handle {
-                font-size: 12px;
-            }
-
-            .hero-tweet-content {
-                font-size: 14px;
             }
         }
 
@@ -2350,19 +2310,25 @@
             <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
             <p class="hero-use-cases-static fade-up visible fade-up-delay-7">For sleep, calm, focus — or nearly anything.</p>
 
-            <div class="hero-tweet-wrapper fade-up visible fade-up-delay-8" style="margin-top: 28px;">
-                <a href="https://x.com/jalaal_tweets/status/2012295279110697101" target="_blank" rel="noopener" class="hero-tweet-card">
-                    <div class="hero-tweet-header">
-                        <img src="https://unavatar.io/twitter/jalaal_tweets" alt="" class="hero-tweet-avatar">
-                        <div class="hero-tweet-author-info">
-                            <span class="hero-tweet-name">Jalaal</span>
-                            <span class="hero-tweet-handle">@jalaal_tweets</span>
-                        </div>
-                        <svg class="hero-tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </div>
-                    <p class="hero-tweet-content">"For someone who learns more by listening or watching, this would actually help as I enjoy meditation before going to bed"</p>
-                </a>
-                <a href="#testimonials" class="hero-more-testimonials">
+            <div class="hero-quotes fade-up visible fade-up-delay-8" style="margin-top: 20px;">
+                <div class="hero-quotes-row">
+                    <a href="https://x.com/jalaal_tweets/status/2012295279110697101" target="_blank" rel="noopener" class="hero-quote">
+                        <img src="https://unavatar.io/twitter/jalaal_tweets" alt="" class="hero-quote-avatar">
+                        <span class="hero-quote-text">"I enjoy meditation before going to bed"</span>
+                        <span class="hero-quote-author">— Jalaal</span>
+                    </a>
+                    <a href="https://x.com/Lolasasfi/status/2010321044066730439" target="_blank" rel="noopener" class="hero-quote">
+                        <img src="https://unavatar.io/twitter/Lolasasfi" alt="" class="hero-quote-avatar">
+                        <span class="hero-quote-text">"sleep meditations to manifest goals?"</span>
+                        <span class="hero-quote-author">— Lola</span>
+                    </a>
+                    <a href="https://x.com/choraria/status/2010429436919984195" target="_blank" rel="noopener" class="hero-quote">
+                        <img src="https://unavatar.io/twitter/choraria" alt="" class="hero-quote-avatar">
+                        <span class="hero-quote-text">"My wife might actually love this"</span>
+                        <span class="hero-quote-author">— Sourabh</span>
+                    </a>
+                </div>
+                <a href="#testimonials" class="hero-more-reviews">
                     See more reviews
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </a>
