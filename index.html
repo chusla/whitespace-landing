@@ -182,64 +182,123 @@
             }
         }
 
-        /* Hero Social Proof */
-        .hero-social-proof {
+        /* Hero Tweet Card */
+        .hero-tweet-wrapper {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 24px;
-            padding: 12px 20px;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .hero-tweet-card {
+            display: block;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px 20px;
+            max-width: 480px;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        .hero-social-proof:hover {
+        .hero-tweet-card:hover {
             background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
         }
 
-        .hero-social-x-logo {
-            width: 14px;
-            height: 14px;
-            color: rgba(255, 255, 255, 0.4);
-            flex-shrink: 0;
+        .hero-tweet-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
-        .hero-social-quote {
+        .hero-tweet-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .hero-tweet-author-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .hero-tweet-name {
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.5;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
         }
 
-        .hero-social-author {
+        .hero-tweet-handle {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-tweet-x-logo {
+            width: 18px;
+            height: 18px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-tweet-content {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .hero-more-testimonials {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             font-family: 'Inter', sans-serif;
             font-size: 13px;
             color: rgba(107, 140, 255, 0.8);
-            white-space: nowrap;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
 
-        @media (max-width: 600px) {
-            .hero-social-proof {
-                flex-direction: column;
-                gap: 6px;
-                text-align: center;
+        .hero-more-testimonials:hover {
+            color: rgba(107, 140, 255, 1);
+        }
+
+        .hero-more-testimonials svg {
+            transition: transform 0.2s ease;
+        }
+
+        .hero-more-testimonials:hover svg {
+            transform: translateY(2px);
+        }
+
+        @media (max-width: 500px) {
+            .hero-tweet-card {
                 padding: 14px 16px;
+                margin: 0 16px;
             }
 
-            .hero-social-x-logo {
-                display: none;
+            .hero-tweet-avatar {
+                width: 36px;
+                height: 36px;
             }
 
-            .hero-social-quote {
+            .hero-tweet-name {
                 font-size: 13px;
+            }
+
+            .hero-tweet-handle {
+                font-size: 12px;
+            }
+
+            .hero-tweet-content {
+                font-size: 14px;
             }
         }
 
@@ -2075,11 +2134,23 @@
 
             <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
 
-            <a href="https://x.com/yusukelp/status/2016767347097583928" target="_blank" rel="noopener" class="hero-social-proof fade-up visible fade-up-delay-7" style="transition-delay: 0.85s;">
-                <svg class="hero-social-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                <span class="hero-social-quote">"This is actually insane. You paste a tweet link and it instantly turns it into a custom learning program."</span>
-                <span class="hero-social-author">— @yusukelp</span>
-            </a>
+            <div class="hero-tweet-wrapper fade-up visible fade-up-delay-7" style="transition-delay: 0.85s;">
+                <a href="https://x.com/yusukelp/status/2016767347097583928" target="_blank" rel="noopener" class="hero-tweet-card">
+                    <div class="hero-tweet-header">
+                        <img src="https://unavatar.io/twitter/yusukelp" alt="" class="hero-tweet-avatar">
+                        <div class="hero-tweet-author-info">
+                            <span class="hero-tweet-name">Yusuke</span>
+                            <span class="hero-tweet-handle">@yusukelp</span>
+                        </div>
+                        <svg class="hero-tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <p class="hero-tweet-content">"This is actually insane. You paste a tweet link and it instantly turns it into a custom learning program."</p>
+                </a>
+                <a href="#testimonials" class="hero-more-testimonials">
+                    See more reviews
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </a>
+            </div>
 
             <div class="fade-up visible fade-up-delay-8" style="margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
                 <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" class="hero-cta-btn" target="_blank" rel="noopener noreferrer">
@@ -2154,7 +2225,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials-section">
+    <section class="testimonials-section" id="testimonials">
         <div class="section-container">
             <div class="section-header fade-up">
                 <p>What People Are Saying</p>
