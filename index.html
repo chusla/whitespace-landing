@@ -220,12 +220,15 @@
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
+            flex-shrink: 0;
         }
 
         .hero-tweet-author-info {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             flex: 1;
+            min-width: 0;
         }
 
         .hero-tweet-name {
@@ -233,18 +236,21 @@
             font-size: 14px;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.95);
+            line-height: 1.3;
         }
 
         .hero-tweet-handle {
             font-family: 'Inter', sans-serif;
             font-size: 13px;
             color: rgba(255, 255, 255, 0.5);
+            line-height: 1.3;
         }
 
         .hero-tweet-x-logo {
             width: 18px;
             height: 18px;
             color: rgba(255, 255, 255, 0.5);
+            flex-shrink: 0;
         }
 
         .hero-tweet-content {
@@ -253,6 +259,7 @@
             color: rgba(255, 255, 255, 0.85);
             line-height: 1.5;
             margin: 0;
+            text-align: left;
         }
 
         .hero-more-testimonials {
