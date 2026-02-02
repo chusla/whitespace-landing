@@ -8,7 +8,11 @@
       "Bash(npx serve:*)",
       "Bash(ping:*)",
       "Bash(python -m http.server:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(del \"\\\\?\\\\C:\\\\EXPO\\\\whitespace-landing\\\\nul\")",
+      "Bash(cmd.exe /c \"del \\\\?\\\\C:\\\\EXPO\\\\whitespace-landing\\\\nul\")",
+      "Bash(cmd.exe /c \"dir C:\\\\EXPO\\\\whitespace-landing\\\\index.html\")",
+      "Bash(du:*)"
     ]
   }
 }
