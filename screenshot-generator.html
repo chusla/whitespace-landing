@@ -605,6 +605,10 @@
                         <div class="device">GP Feature</div>
                         <div class="dims">2048 × 1000</div>
                     </div>
+                    <div class="size-option" data-width="3000" data-height="1000" data-name="Promo Banner Wide">
+                        <div class="device">Promo 3:1</div>
+                        <div class="dims">3000 × 1000</div>
+                    </div>
                 </div>
             </div>
 
@@ -651,6 +655,10 @@
                     <button class="layout-btn" data-layout="feature-graphic">
                         <div class="layout-icon">🎬</div>
                         <div class="layout-name">Feature</div>
+                    </button>
+                    <button class="layout-btn" data-layout="promo-banner-wide">
+                        <div class="layout-icon">🎞️</div>
+                        <div class="layout-name">Promo 3:1</div>
                     </button>
                 </div>
                 
@@ -703,6 +711,40 @@
                         <label for="feature-phone-height">Phone Height</label>
                         <input type="range" id="feature-phone-height" min="400" max="1200" step="20" value="800">
                         <div class="slider-labels"><span>Small</span><span id="feature-phone-height-value">800px</span><span>Large</span></div>
+                    </div>
+                </div>
+                
+                <!-- Promo Banner Wide Controls -->
+                <div class="promo-controls" id="promo-controls" style="display: none; margin-top: 12px;">
+                    <div class="form-group">
+                        <label for="promo-text-x">Text X Position</label>
+                        <input type="range" id="promo-text-x" min="5" max="45" step="1" value="20">
+                        <div class="slider-labels"><span>Left</span><span id="promo-text-x-value">20%</span><span>Right</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-text-y">Text Y Position</label>
+                        <input type="range" id="promo-text-y" min="10" max="60" step="1" value="30">
+                        <div class="slider-labels"><span>Top</span><span id="promo-text-y-value">30%</span><span>Bottom</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-text-size">Text Size</label>
+                        <input type="range" id="promo-text-size" min="40" max="120" step="2" value="72">
+                        <div class="slider-labels"><span>Small</span><span id="promo-text-size-value">72px</span><span>Large</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-phone-x">Phone X Position</label>
+                        <input type="range" id="promo-phone-x" min="55" max="95" step="1" value="78">
+                        <div class="slider-labels"><span>Left</span><span id="promo-phone-x-value">78%</span><span>Right</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-phone-y">Phone Y Position</label>
+                        <input type="range" id="promo-phone-y" min="-20" max="40" step="1" value="10">
+                        <div class="slider-labels"><span>Up</span><span id="promo-phone-y-value">10%</span><span>Down</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-phone-height">Phone Height</label>
+                        <input type="range" id="promo-phone-height" min="400" max="1200" step="20" value="850">
+                        <div class="slider-labels"><span>Small</span><span id="promo-phone-height-value">850px</span><span>Large</span></div>
                     </div>
                 </div>
             </div>
@@ -1326,6 +1368,13 @@ for yourself to *focus*</textarea>
             featurePhoneX: 72,     // percentage from left
             featurePhoneY: 12,     // percentage from top
             featurePhoneHeight: 800, // phone height in pixels
+            // Promo banner wide positioning (3:1 ratio)
+            promoTextX: 20,        // percentage from left (more left for wider canvas)
+            promoTextY: 30,        // percentage from top
+            promoTextSize: 72,     // font size in pixels
+            promoPhoneX: 78,       // percentage from left (more right for wider canvas)
+            promoPhoneY: 10,       // percentage from top
+            promoPhoneHeight: 850, // phone height in pixels
             // 3D Frame overlay
             frame3D: null,
             use3DFrame: false,
@@ -1351,7 +1400,8 @@ for yourself to *focus*</textarea>
             'tilted-left': { name: 'Tilted Left', description: 'Slight left tilt', icon: '↖️' },
             'split-left': { name: 'Split Left', description: 'Left half of split phone pair', icon: '◧' },
             'split-right': { name: 'Split Right', description: 'Right half of split phone pair', icon: '◨' },
-            'feature-graphic': { name: 'Feature Graphic', description: 'Google Play feature graphic (1024x500)', icon: '🎬' }
+            'feature-graphic': { name: 'Feature Graphic', description: 'Google Play feature graphic (1024x500)', icon: '🎬' },
+            'promo-banner-wide': { name: 'Promo Wide', description: 'Wide promo banner 3:1 ratio (3000x1000)', icon: '🎞️' }
         };
 
         // Device-specific phone dimensions (~70% of canvas height)
@@ -3171,9 +3221,9 @@ for yourself to *focus*</textarea>
                 return;
             }
             
-            // Feature graphic layout: handled entirely in drawPhoneMockup
-            if (state.layout === 'feature-graphic') {
-                return; // Skip - logo is drawn in the feature-graphic layout code
+            // Feature graphic and promo banner layouts: handled entirely in drawPhoneMockup
+            if (state.layout === 'feature-graphic' || state.layout === 'promo-banner-wide') {
+                return; // Skip - logo is drawn in the layout code
             }
             
             if (!state.showLogo || !state.logo) return;
@@ -4549,6 +4599,105 @@ for yourself to *focus*</textarea>
                 return; // Skip normal rendering
             }
 
+            // Layout: Promo Banner Wide - 3:1 ratio (3000x1000)
+            // Similar to feature-graphic but optimized for wider aspect ratio
+            if (state.layout === 'promo-banner-wide') {
+                // === PHONE RENDERING (adjustable) ===
+                const targetPhoneHeight = state.promoPhoneHeight;
+                const phoneAspectRatio = 0.486;
+                const targetPhoneWidth = targetPhoneHeight * phoneAspectRatio;
+                
+                // Calculate scale factor
+                const baseFrameHeight = state.height * 0.78;
+                const promoScale = targetPhoneHeight / baseFrameHeight;
+                
+                // Position from state
+                const phoneX = state.width * (state.promoPhoneX / 100) - targetPhoneWidth / 2;
+                const phoneY = state.height * (state.promoPhoneY / 100);
+                
+                const originalScale = state.phoneScale;
+                state.phoneScale = promoScale;
+                drawSinglePhone(phoneX, phoneY, 0);
+                state.phoneScale = originalScale;
+                
+                // === TEXT RENDERING (adjustable) ===
+                const headline = state.headline;
+                const fontSize = state.promoTextSize;
+                const lineHeight = fontSize * 1.3;
+                const textCenterX = state.width * (state.promoTextX / 100);
+                const textStartY = state.height * (state.promoTextY / 100);
+                
+                if (headline) {
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                    ctx.shadowBlur = 20;
+                    ctx.shadowOffsetY = 4;
+                    
+                    // Split headline into lines (handle both literal \n and actual newlines from textarea)
+                    const rawText = headline.replace(/\\n/g, '\n');
+                    const lines = rawText.split(/\r?\n/);
+                    
+                    lines.forEach((line, lineIndex) => {
+                        const y = textStartY + lineIndex * lineHeight;
+                        
+                        // Parse emphasis in line
+                        const parts = line.split(/(\*[^*]+\*)/g);
+                        
+                        // Measure full line width first
+                        let lineWidth = 0;
+                        parts.forEach(part => {
+                            if (!part) return;
+                            const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                            const text = isEmphasis ? part.slice(1, -1) : part;
+                            ctx.font = isEmphasis ? 
+                                `600 ${fontSize}px "Crimson Pro", Georgia, serif` :
+                                `300 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                            lineWidth += ctx.measureText(text).width;
+                        });
+                        
+                        // Draw centered on textCenterX
+                        let x = textCenterX - lineWidth / 2;
+                        parts.forEach(part => {
+                            if (!part) return;
+                            const isEmphasis = part.startsWith('*') && part.endsWith('*');
+                            const text = isEmphasis ? part.slice(1, -1) : part;
+                            
+                            ctx.font = isEmphasis ? 
+                                `600 ${fontSize}px "Crimson Pro", Georgia, serif` :
+                                `300 ${fontSize}px "Crimson Pro", Georgia, serif`;
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                            ctx.textAlign = 'left';
+                            ctx.textBaseline = 'top';
+                            ctx.fillText(text, x, y);
+                            x += ctx.measureText(text).width;
+                        });
+                    });
+                    
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                }
+                
+                // === LOGO RENDERING (uses logoScale from main settings) ===
+                if (state.logo) {
+                    const maxLogoWidth = state.width * 0.12 * state.logoScale;
+                    const maxLogoHeight = state.height * 0.25 * state.logoScale;
+                    
+                    let logoWidth = state.logo.width;
+                    let logoHeight = state.logo.height;
+                    const ratio = Math.min(maxLogoWidth / logoWidth, maxLogoHeight / logoHeight);
+                    logoWidth *= ratio;
+                    logoHeight *= ratio;
+                    
+                    // Center logo under text - count actual lines
+                    const logoX = textCenterX - logoWidth / 2;
+                    const numLines = headline ? headline.replace(/\\n/g, '\n').split(/\r?\n/).length : 0;
+                    const logoY = textStartY + numLines * lineHeight + state.height * 0.05;
+                    
+                    ctx.drawImage(state.logo, logoX, logoY, logoWidth, logoHeight);
+                }
+                
+                return; // Skip normal rendering
+            }
+
             // Default centered layout - single phone, text at top
             let phoneX, phoneY;
             if (state.textPosition === 'top') {
@@ -4685,8 +4834,8 @@ for yourself to *focus*</textarea>
                 textY = state.height * 0.72;
                 textAlign = 'right';
                 textX = state.width * 0.92;
-            } else if (state.layout === 'feature-graphic') {
-                // Text handled entirely in drawPhoneMockup for feature-graphic
+            } else if (state.layout === 'feature-graphic' || state.layout === 'promo-banner-wide') {
+                // Text handled entirely in drawPhoneMockup for feature-graphic and promo-banner-wide
                 return;
             } else if (state.textPosition === 'top') {
                 textY = state.showLogo ? state.height * 0.16 : state.height * 0.06;
@@ -4882,10 +5031,16 @@ for yourself to *focus*</textarea>
                 
                 // Show/hide feature controls based on layout
                 const featureControls = document.getElementById('feature-controls');
+                const promoControls = document.getElementById('promo-controls');
                 if (state.layout === 'feature-graphic') {
                     featureControls.style.display = 'block';
+                    if (promoControls) promoControls.style.display = 'none';
+                } else if (state.layout === 'promo-banner-wide') {
+                    featureControls.style.display = 'none';
+                    if (promoControls) promoControls.style.display = 'block';
                 } else {
                     featureControls.style.display = 'none';
+                    if (promoControls) promoControls.style.display = 'none';
                 }
                 
                 // Show/hide second screenshot section based on layout
@@ -4906,6 +5061,19 @@ for yourself to *focus*</textarea>
                     // Update size options UI
                     document.querySelectorAll('.size-option').forEach(opt => {
                         opt.classList.toggle('active', opt.dataset.width === '2048' && opt.dataset.height === '1000');
+                    });
+                }
+                
+                // Auto-switch to 3000x1000 for promo-banner-wide layout
+                if (state.layout === 'promo-banner-wide') {
+                    state.width = 3000;
+                    state.height = 1000;
+                    state.deviceName = 'Promo Banner Wide';
+                    canvas.width = state.width;
+                    canvas.height = state.height;
+                    // Update size options UI
+                    document.querySelectorAll('.size-option').forEach(opt => {
+                        opt.classList.toggle('active', opt.dataset.width === '3000' && opt.dataset.height === '1000');
                     });
                 }
                 
@@ -4961,6 +5129,38 @@ for yourself to *focus*</textarea>
         document.getElementById('feature-phone-height').addEventListener('input', (e) => {
             state.featurePhoneHeight = parseInt(e.target.value);
             document.getElementById('feature-phone-height-value').textContent = state.featurePhoneHeight + 'px';
+            render();
+        });
+
+        // Promo banner wide controls
+        document.getElementById('promo-text-x').addEventListener('input', (e) => {
+            state.promoTextX = parseInt(e.target.value);
+            document.getElementById('promo-text-x-value').textContent = state.promoTextX + '%';
+            render();
+        });
+        document.getElementById('promo-text-y').addEventListener('input', (e) => {
+            state.promoTextY = parseInt(e.target.value);
+            document.getElementById('promo-text-y-value').textContent = state.promoTextY + '%';
+            render();
+        });
+        document.getElementById('promo-text-size').addEventListener('input', (e) => {
+            state.promoTextSize = parseInt(e.target.value);
+            document.getElementById('promo-text-size-value').textContent = state.promoTextSize + 'px';
+            render();
+        });
+        document.getElementById('promo-phone-x').addEventListener('input', (e) => {
+            state.promoPhoneX = parseInt(e.target.value);
+            document.getElementById('promo-phone-x-value').textContent = state.promoPhoneX + '%';
+            render();
+        });
+        document.getElementById('promo-phone-y').addEventListener('input', (e) => {
+            state.promoPhoneY = parseInt(e.target.value);
+            document.getElementById('promo-phone-y-value').textContent = state.promoPhoneY + '%';
+            render();
+        });
+        document.getElementById('promo-phone-height').addEventListener('input', (e) => {
+            state.promoPhoneHeight = parseInt(e.target.value);
+            document.getElementById('promo-phone-height-value').textContent = state.promoPhoneHeight + 'px';
             render();
         });
 
