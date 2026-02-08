@@ -684,13 +684,13 @@
                 <div class="feature-controls" id="feature-controls" style="display: none; margin-top: 12px;">
                     <div class="form-group">
                         <label for="feature-text-x">Text X Position</label>
-                        <input type="range" id="feature-text-x" min="10" max="50" step="1" value="26">
-                        <div class="slider-labels"><span>Left</span><span id="feature-text-x-value">26%</span><span>Right</span></div>
+                        <input type="range" id="feature-text-x" min="10" max="50" step="1" value="31">
+                        <div class="slider-labels"><span>Left</span><span id="feature-text-x-value">31%</span><span>Right</span></div>
                     </div>
                     <div class="form-group">
                         <label for="feature-text-y">Text Y Position</label>
-                        <input type="range" id="feature-text-y" min="10" max="60" step="1" value="30">
-                        <div class="slider-labels"><span>Top</span><span id="feature-text-y-value">30%</span><span>Bottom</span></div>
+                        <input type="range" id="feature-text-y" min="10" max="60" step="1" value="17">
+                        <div class="slider-labels"><span>Top</span><span id="feature-text-y-value">17%</span><span>Bottom</span></div>
                     </div>
                     <div class="form-group">
                         <label for="feature-text-size">Text Size</label>
@@ -704,8 +704,8 @@
                     </div>
                     <div class="form-group">
                         <label for="feature-phone-y">Phone Y Position</label>
-                        <input type="range" id="feature-phone-y" min="-20" max="40" step="1" value="12">
-                        <div class="slider-labels"><span>Up</span><span id="feature-phone-y-value">12%</span><span>Down</span></div>
+                        <input type="range" id="feature-phone-y" min="-20" max="40" step="1" value="3">
+                        <div class="slider-labels"><span>Up</span><span id="feature-phone-y-value">3%</span><span>Down</span></div>
                     </div>
                     <div class="form-group">
                         <label for="feature-phone-height">Phone Height</label>
@@ -1396,11 +1396,11 @@ for yourself to *focus*</textarea>
             splitPhoneY: 0,    // -50 to 50 (percentage offset)
             splitPhoneAngle: 38, // rotation angle for split layouts
             // Feature graphic positioning
-            featureTextX: 26,      // percentage from left
-            featureTextY: 30,      // percentage from top
+            featureTextX: 31,      // percentage from left
+            featureTextY: 17,      // percentage from top
             featureTextSize: 78,   // font size in pixels
             featurePhoneX: 72,     // percentage from left
-            featurePhoneY: 12,     // percentage from top
+            featurePhoneY: 3,      // percentage from top
             featurePhoneHeight: 800, // phone height in pixels
             // Promo banner wide positioning (3:1 ratio)
             promoTextX: 20,        // percentage from left (more left for wider canvas)
@@ -4620,6 +4620,8 @@ for yourself to *focus*</textarea>
                 }
                 
                 // === LOGO RENDERING (uses logoScale from main settings) ===
+                let logoCenterX = textCenterX;
+                let logoBottomY = 0;
                 if (state.logo) {
                     const maxLogoWidth = state.width * 0.18 * state.logoScale;
                     const maxLogoHeight = state.height * 0.30 * state.logoScale;
@@ -4630,12 +4632,130 @@ for yourself to *focus*</textarea>
                     logoWidth *= ratio;
                     logoHeight *= ratio;
                     
-                    // Center logo under text - count actual lines
+                    // Center logo under text - count actual lines, shifted up to make room for badges
                     const logoX = textCenterX - logoWidth / 2;
                     const numLines = headline ? headline.replace(/\\n/g, '\n').split(/\r?\n/).length : 0;
-                    const logoY = textStartY + numLines * lineHeight + state.height * 0.06;
+                    const verticalGap = state.height * 0.035; // Even spacing between elements
+                    const logoY = textStartY + numLines * lineHeight + verticalGap;
                     
                     ctx.drawImage(state.logo, logoX, logoY, logoWidth, logoHeight);
+                    logoCenterX = logoX + logoWidth / 2;
+                    logoBottomY = logoY + logoHeight;
+                }
+                
+                // === BADGES ROW: #1 Product of the Day · ★★★★★ on the App Store ===
+                {
+                    const badgeFontSize = state.width * 0.015;
+                    const starFontSize = badgeFontSize * 0.9;
+                    const rowGap = badgeFontSize * 0.8;
+                    const dotGap = badgeFontSize * 0.6;
+                    const badgeY = logoBottomY + state.height * 0.035; // Same gap as text-to-logo
+                    
+                    ctx.save();
+                    ctx.textBaseline = 'middle';
+                    
+                    // Measure all parts to center the whole row
+                    const uneedLogoSize = badgeFontSize * 1.3;
+                    const uneedGap = badgeFontSize * 0.4;
+                    const potdText = '#1 Product of the Day';
+                    ctx.font = `500 ${badgeFontSize}px Inter, system-ui, sans-serif`;
+                    const potdWidth = ctx.measureText(potdText).width;
+                    
+                    const starSize = starFontSize * 1.1;
+                    const starSpacingCalc = starSize * 0.15;
+                    const starWidth = (starSize + starSpacingCalc) * 5 - starSpacingCalc;
+                    
+                    const appStoreText = 'on the App Store';
+                    ctx.font = `400 ${badgeFontSize * 0.9}px Inter, system-ui, sans-serif`;
+                    const appStoreWidth = ctx.measureText(appStoreText).width;
+                    const starGap = badgeFontSize * 0.35;
+                    
+                    ctx.font = `300 ${badgeFontSize}px Inter, system-ui, sans-serif`;
+                    const dotText = '·';
+                    const dotWidth = ctx.measureText(dotText).width;
+                    
+                    const totalWidth = uneedLogoSize + uneedGap + potdWidth + dotGap + dotWidth + dotGap + starWidth + starGap + appStoreWidth;
+                    let x = logoCenterX - totalWidth / 2;
+                    const centerY = badgeY + badgeFontSize * 0.65;
+                    
+                    // Draw Uneed logo (circular)
+                    if (state.badgeLogo) {
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(x + uneedLogoSize / 2, centerY, uneedLogoSize / 2, 0, Math.PI * 2);
+                        ctx.clip();
+                        ctx.drawImage(state.badgeLogo, x, centerY - uneedLogoSize / 2, uneedLogoSize, uneedLogoSize);
+                        ctx.restore();
+                    }
+                    x += uneedLogoSize + uneedGap;
+                    
+                    // Draw "#1 Product of the Day" text
+                    ctx.font = `500 ${badgeFontSize}px Inter, system-ui, sans-serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(potdText, x, centerY);
+                    x += potdWidth + dotGap;
+                    
+                    // Draw dot separator
+                    ctx.font = `300 ${badgeFontSize}px Inter, system-ui, sans-serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctx.fillText(dotText, x, centerY);
+                    x += dotWidth + dotGap;
+                    
+                    // Draw 5 monochrome vector stars
+                    const starSpacing = starSize * 0.15;
+                    for (let i = 0; i < 5; i++) {
+                        const cx = x + starSize / 2;
+                        const cy = centerY;
+                        drawStar(ctx, cx, cy, starSize / 2, starSize / 4.5, 5, 'rgba(255, 255, 255, 0.8)');
+                        x += starSize + starSpacing;
+                    }
+                    x += starGap - starSpacing;
+                    
+                    // Draw "on the App Store"
+                    ctx.font = `400 ${badgeFontSize * 0.9}px Inter, system-ui, sans-serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+                    ctx.fillText(appStoreText, x, centerY);
+                    
+                    ctx.restore();
+                }
+                
+                // === "Available on App Stores now" text below badges ===
+                {
+                    const liveFontSize = state.width * 0.013;
+                    const lineGap = liveFontSize * 1.6;
+                    const liveY = logoBottomY + state.height * 0.035 + state.width * 0.015 * 1.8 + state.height * 0.03;
+                    
+                    ctx.save();
+                    ctx.textBaseline = 'middle';
+                    ctx.textAlign = 'center';
+                    
+                    // Line 1: "Available on App Stores now"
+                    ctx.font = `300 ${liveFontSize}px Inter, system-ui, sans-serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+                    ctx.fillText('Available on App Stores now', logoCenterX, liveY);
+                    
+                    // Line 2: Search "Whitespace: Sleep Learn Focus"
+                    ctx.font = `300 ${liveFontSize}px Inter, system-ui, sans-serif`;
+                    const searchLabel = 'Search ';
+                    const appName = '"Whitespace: Sleep Learn Focus"';
+                    const searchWidth = ctx.measureText(searchLabel).width;
+                    ctx.font = `500 ${liveFontSize}px Inter, system-ui, sans-serif`;
+                    const appNameWidth = ctx.measureText(appName).width;
+                    const totalLine2 = searchWidth + appNameWidth;
+                    let x2 = logoCenterX - totalLine2 / 2;
+                    
+                    ctx.font = `300 ${liveFontSize}px Inter, system-ui, sans-serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(searchLabel, x2, liveY + lineGap);
+                    x2 += searchWidth;
+                    
+                    ctx.font = `500 ${liveFontSize}px Inter, system-ui, sans-serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.fillText(appName, x2, liveY + lineGap);
+                    
+                    ctx.restore();
                 }
                 
                 return; // Skip normal rendering
@@ -4931,6 +5051,24 @@ for yourself to *focus*</textarea>
             ctx.shadowOffsetY = 0;
         }
 
+        // Draw a 5-pointed star (vector)
+        function drawStar(ctx, cx, cy, outerR, innerR, points, fillColor) {
+            ctx.save();
+            ctx.beginPath();
+            for (let i = 0; i < points * 2; i++) {
+                const r = i % 2 === 0 ? outerR : innerR;
+                const angle = (Math.PI / 2 * -1) + (Math.PI / points) * i;
+                const px = cx + r * Math.cos(angle);
+                const py = cy + r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fillStyle = fillColor;
+            ctx.fill();
+            ctx.restore();
+        }
+
         // Draw badge overlay with phosphene glow
         function drawBadge() {
             if (!state.showBadge || !state.badgeLogo) return;
@@ -5195,6 +5333,13 @@ for yourself to *focus*</textarea>
                     state.deviceName = 'Google Play Feature';
                     canvas.width = state.width;
                     canvas.height = state.height;
+                    // Set default headline for Feature layout
+                    state.headline = 'Meditation made for *you*.\nEvery time.';
+                    document.getElementById('headline').value = 'Meditation made for *you*.\nEvery time.';
+                    // Set default screen content to Create
+                    state.screenType = 'create-input';
+                    document.getElementById('screen-type-1').value = 'create-input';
+                    document.getElementById('screen-type').value = 'create-input';
                     // Update size options UI
                     document.querySelectorAll('.size-option').forEach(opt => {
                         opt.classList.toggle('active', opt.dataset.width === '2048' && opt.dataset.height === '1000');
