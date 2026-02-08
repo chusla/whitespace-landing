@@ -96,7 +96,7 @@
 
         @media (min-width: 768px) {
             .hero {
-                padding: 60px 24px 180px;
+                padding: 32px 24px 60px;
             }
         }
 
@@ -107,12 +107,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 0;
+            padding: 12px 0;
         }
 
         @media (min-width: 768px) {
             .hero-content {
-                padding: 40px 0;
+                padding: 16px 0;
             }
         }
 
@@ -125,7 +125,7 @@
 
         @media (min-width: 768px) {
             .logo {
-                width: 240px;
+                width: 200px;
                 margin-bottom: 0;
             }
         }
@@ -261,10 +261,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
-            margin-top: 40px;
-            margin-bottom: 16px;
-            padding: 32px 24px;
+            gap: 12px;
+            margin-top: 28px;
+            margin-bottom: 8px;
+            padding: 24px 24px;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
             max-width: 800px;
@@ -360,7 +360,7 @@
         /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
-            bottom: 100px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
             display: none;
@@ -940,7 +940,8 @@
             pointer-events: none;
         }
 
-        .screenshot-img {
+        .screenshot-img,
+        .screenshot-canvas {
             width: 100%;
             height: auto;
             display: block;
@@ -962,6 +963,7 @@
             text-align: center;
             line-height: 1.6;
             margin-bottom: 24px;
+            min-height: 45px; /* fixed height so all 3 columns align */
         }
 
         /* Differentiator Section */
@@ -1958,7 +1960,7 @@
         }
 
         /* ==========================================
-           Testimonials - Twitter/X Style Cards
+           Testimonials - Unified Review Cards
            ========================================== */
         .testimonials-section {
             padding: 64px 24px;
@@ -1976,7 +1978,7 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        .tweets-grid {
+        .reviews-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
@@ -1986,106 +1988,138 @@
         }
 
         @media (max-width: 950px) {
-            .tweets-grid {
+            .reviews-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 600px) {
-            .tweets-grid {
+            .reviews-grid {
                 grid-template-columns: 1fr;
                 max-width: 450px;
             }
         }
 
-        .tweet-card {
+        .review-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            padding: 16px;
+            padding: 20px;
             text-decoration: none;
             display: block;
             transition: all 0.3s ease;
         }
 
-        .tweet-card:hover {
+        .review-card:hover {
             background: rgba(107, 140, 255, 0.06);
             border-color: rgba(107, 140, 255, 0.2);
             box-shadow: 0 0 20px rgba(107, 140, 255, 0.1);
         }
 
-        .tweet-header {
+        .review-stars {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 2px;
             margin-bottom: 12px;
         }
 
-        .tweet-avatar {
-            width: 44px;
-            height: 44px;
+        .review-stars .star {
+            color: #f5a623;
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        .review-content {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.55;
+            margin: 0 0 16px 0;
+        }
+
+        .review-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .review-avatar {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .tweet-author-info {
-            flex: 1;
+        .review-avatar-placeholder {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background: rgba(107, 140, 255, 0.15);
+            border: 1px solid rgba(107, 140, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: rgba(107, 140, 255, 0.8);
+        }
+
+        .review-author-info {
             min-width: 0;
         }
 
-        .tweet-name-row {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .tweet-name {
+        .review-name {
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.3;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .tweet-handle {
+        .review-date {
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
             line-height: 1.3;
         }
 
-        .tweet-x-logo {
-            width: 20px;
-            height: 20px;
-            color: rgba(255, 255, 255, 0.3);
+        .review-source {
             flex-shrink: 0;
-            margin-left: auto;
-        }
-
-        .tweet-card:hover .tweet-x-logo {
-            color: rgba(107, 140, 255, 0.6);
-        }
-
-        .tweet-content {
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.75);
-            line-height: 1.5;
-            margin: 0 0 12px 0;
-        }
-
-        .tweet-meta {
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.35);
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .review-source svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .review-card:hover .review-source {
+            color: rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         /* ==========================================
@@ -2349,40 +2383,40 @@
 
             <div class="hero-quotes fade-up visible fade-up-delay-8">
                 <div class="hero-quotes-row">
-                    <a href="https://x.com/yusukelp" target="_blank" rel="noopener" class="hero-quote">
-                        <img src="https://unavatar.io/twitter/yusukelp" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"This is insane. It blew my mind"</span>
-                        <span class="hero-quote-author">— Yusuke</span>
-                    </a>
-                    <a href="https://x.com/choraria" target="_blank" rel="noopener" class="hero-quote">
-                        <img src="https://unavatar.io/twitter/choraria" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"Man, this is amazing!"</span>
-                        <span class="hero-quote-author">— Sourabh</span>
-                    </a>
-                    <a href="https://x.com/Lolasasfi" target="_blank" rel="noopener" class="hero-quote">
-                        <img src="https://unavatar.io/twitter/Lolasasfi" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"lowkey fascinating"</span>
-                        <span class="hero-quote-author">— Lola</span>
+                    <a href="#testimonials" class="hero-quote">
+                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="hero-quote-text">"The best in the world"</span>
+                        <span class="hero-quote-author">— Rich To Dust</span>
                     </a>
                     <a href="https://x.com/lifeofchar1ie/status/2018350092588048641" target="_blank" rel="noopener" class="hero-quote">
                         <img src="https://unavatar.io/twitter/lifeofchar1ie" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"Clear, elegant, and personal—exactly what you want"</span>
+                        <span class="hero-quote-text">"Clear, elegant, and personal"</span>
                         <span class="hero-quote-author">— Charlie</span>
+                    </a>
+                    <a href="#testimonials" class="hero-quote">
+                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="hero-quote-text">"Modern/futuristic meditation app"</span>
+                        <span class="hero-quote-author">— Zid Kim</span>
                     </a>
                     <a href="https://x.com/HiEllenNg" target="_blank" rel="noopener" class="hero-quote">
                         <img src="https://unavatar.io/twitter/HiEllenNg" alt="" class="hero-quote-avatar">
                         <span class="hero-quote-text">"I actually dozed off in the middle of it 😂"</span>
                         <span class="hero-quote-author">— Ellen</span>
                     </a>
-                    <a href="https://www.instagram.com/kellyhu_hui/" target="_blank" rel="noopener" class="hero-quote">
-                        <img src="kelly-avatar.jpg" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"Just had a session, really good!! Love it"</span>
-                        <span class="hero-quote-author">— Kelly</span>
+                    <a href="#testimonials" class="hero-quote">
+                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="hero-quote-text">"More personal than those commercial apps"</span>
+                        <span class="hero-quote-author">— R O</span>
+                    </a>
+                    <a href="https://x.com/yusukelp" target="_blank" rel="noopener" class="hero-quote">
+                        <img src="https://unavatar.io/twitter/yusukelp" alt="" class="hero-quote-avatar">
+                        <span class="hero-quote-text">"This is insane. It blew my mind"</span>
+                        <span class="hero-quote-author">— Yusuke</span>
                     </a>
                 </div>
             </div>
 
-            <div class="hero-cta-box fade-up visible fade-up-delay-9" style="margin-top: 36px;">
+            <div class="hero-cta-box fade-up visible fade-up-delay-9" style="margin-top: 20px;">
                 <p class="hero-cta-headline">Get <strong>5 free sessions</strong> when you download</p>
                 <div class="hero-cta-timer-row">
                     <span class="hero-cta-timer-label">Offer ends in</span>
@@ -2465,186 +2499,246 @@
                 <p>What People Are Saying</p>
             </div>
 
-            <div class="tweets-grid fade-up">
-                <!-- Tweet 1 - Yusuke -->
-                <a href="https://x.com/yusukelp/status/2016767347097583928" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/yusukelp" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Yusuke</span>
-                            </div>
-                            <span class="tweet-handle">@yusukelp</span>
-                        </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <div class="reviews-grid fade-up">
+                <!-- Review 1 - Rich To Dust (Google Play) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
                     </div>
-                    <p class="tweet-content">This is actually insane. You paste a tweet link and it instantly turns it into a custom learning program. I just tried it and it blew my mind. Huge respect for building this!</p>
-                    <div class="tweet-meta">
-                        <span>8:56 PM · Jan 28, 2026</span>
+                    <p class="review-content">This is very undervalued and the best in the world.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">R</div>
+                            <div class="review-author-info">
+                                <div class="review-name">Rich To Dust</div>
+                                <div class="review-date">Feb 3, 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.585 1.493a1 1 0 0 1 0 1.4l-2.585 1.493-2.543-2.543 2.543-2.843zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                            Google Play
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 - Charlie (X) -->
+                <a href="https://x.com/lifeofchar1ie/status/2018350092588048641" target="_blank" rel="noopener" class="review-card">
+                    <p class="review-content">Calm and Headspace are very chaotic/busy and rather generic. Whitespace is clear, has elegant aesthetics, and is personal -- exactly what you want from a meditation app without being overwhelmed.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <img src="https://unavatar.io/twitter/lifeofchar1ie" alt="" class="review-avatar">
+                            <div class="review-author-info">
+                                <div class="review-name">Charlie</div>
+                                <div class="review-date">Feb 2, 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            X
+                        </div>
                     </div>
                 </a>
 
-                <!-- Tweet 2 - Sourabh Choraria -->
-                <a href="https://x.com/choraria/status/2010429436919984195" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/choraria" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Sourabh Choraria</span>
-                            </div>
-                            <span class="tweet-handle">@choraria</span>
-                        </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <!-- Review 3 - Zid Kim (Google Play) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
                     </div>
-                    <p class="tweet-content">Man, this is amazing! My wife might actually love this. Sending her a ping to try it.</p>
-                    <div class="tweet-meta">
-                        <span>10:42 AM · Jan 8, 2026</span>
+                    <p class="review-content">Never tried a meditation app before but this was top. Pretty much what I imagine from a modern/futuristic meditation app. Pretty app as well.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">Z</div>
+                            <div class="review-author-info">
+                                <div class="review-name">Zid Kim</div>
+                                <div class="review-date">Feb 3, 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.585 1.493a1 1 0 0 1 0 1.4l-2.585 1.493-2.543-2.543 2.543-2.843zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                            Google Play
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 4 - Yusuke (X) -->
+                <a href="https://x.com/yusukelp/status/2016767347097583928" target="_blank" rel="noopener" class="review-card">
+                    <p class="review-content">This is actually insane. I just tried it and it blew my mind. Huge respect for building this!</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <img src="https://unavatar.io/twitter/yusukelp" alt="" class="review-avatar">
+                            <div class="review-author-info">
+                                <div class="review-name">Yusuke</div>
+                                <div class="review-date">Jan 28, 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            X
+                        </div>
                     </div>
                 </a>
 
-                <!-- Tweet 2 - Lola -->
-                <a href="https://x.com/Lolasasfi/status/2010321044066730439" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/Lolasasfi" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Lola</span>
-                            </div>
-                            <span class="tweet-handle">@Lolasasfi</span>
-                        </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <!-- Review 5 - R O (Google Play) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
                     </div>
-                    <p class="tweet-content">wait you're using sleep meditations to manifest mrr targets? lowkey fascinating</p>
-                    <div class="tweet-meta">
-                        <span>3:28 PM · Jan 7, 2026</span>
+                    <p class="review-content">Very cool app. Way more personal and easy to use than those commercial apps.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">R</div>
+                            <div class="review-author-info">
+                                <div class="review-name">R O</div>
+                                <div class="review-date">Feb 3, 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.585 1.493a1 1 0 0 1 0 1.4l-2.585 1.493-2.543-2.543 2.543-2.843zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                            Google Play
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 6 - MS (Google Play) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
+                    </div>
+                    <p class="review-content">This app helped me a lot to manage my stress during my studies. I recommend it.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">M</div>
+                            <div class="review-author-info">
+                                <div class="review-name">MS</div>
+                                <div class="review-date">Feb 3, 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.585 1.493a1 1 0 0 1 0 1.4l-2.585 1.493-2.543-2.543 2.543-2.843zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                            Google Play
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 7 - Ellen (X) -->
+                <a href="https://x.com/HiEllenNg" target="_blank" rel="noopener" class="review-card">
+                    <p class="review-content">I actually dozed off in the middle of it 😂 That's how relaxing it was!</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <img src="https://unavatar.io/twitter/HiEllenNg" alt="" class="review-avatar">
+                            <div class="review-author-info">
+                                <div class="review-name">Ellen</div>
+                                <div class="review-date">Jan 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            X
+                        </div>
                     </div>
                 </a>
 
-                <!-- Tweet 3 - D.R. -->
-                <a href="https://x.com/dmitryrechkin/status/2010578699360551098" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/dmitryrechkin" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">D.R.</span>
-                            </div>
-                            <span class="tweet-handle">@dmitryrechkin</span>
-                        </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <!-- Review 8 - Hajimu San (Google Play) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
                     </div>
-                    <p class="tweet-content">That shared sample is very cool actually. Nice combo.</p>
-                    <div class="tweet-meta">
-                        <span>8:15 PM · Jan 8, 2026</span>
+                    <p class="review-content">The UI is sleek. It guides you step by step on how to find balance and calmness amidst chaos. Definitely a good app.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">H</div>
+                            <div class="review-author-info">
+                                <div class="review-name">Hajimu San</div>
+                                <div class="review-date">Feb 1, 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.585 1.493a1 1 0 0 1 0 1.4l-2.585 1.493-2.543-2.543 2.543-2.843zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                            Google Play
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 9 - Kelly (Instagram) -->
+                <a href="https://www.instagram.com/kellyhu_hui/" target="_blank" rel="noopener" class="review-card">
+                    <p class="review-content">Just had a session, really good!! Love it. The personalization makes such a difference.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <img src="kelly-avatar.jpg" alt="" class="review-avatar">
+                            <div class="review-author-info">
+                                <div class="review-name">Kelly</div>
+                                <div class="review-date">Jan 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                            Instagram
+                        </div>
                     </div>
                 </a>
 
-                <!-- Tweet 4 - Charlie -->
-                <a href="https://x.com/lifeofchar1ie/status/2018350092588048641" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/lifeofchar1ie" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Charlie</span>
+                <!-- Review 10 - ZAHEMEN AULUGH (Google Play) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
+                    </div>
+                    <p class="review-content">App is very easy to navigate. No ads like some other apps. Keep building and improving.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">Z</div>
+                            <div class="review-author-info">
+                                <div class="review-name">Zahemen Aulugh</div>
+                                <div class="review-date">Feb 1, 2026</div>
                             </div>
-                            <span class="tweet-handle">@lifeofchar1ie</span>
                         </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.585 1.493a1 1 0 0 1 0 1.4l-2.585 1.493-2.543-2.543 2.543-2.843zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                            Google Play
+                        </div>
                     </div>
-                    <p class="tweet-content">Calm and Headspace are very chaotic/busy and rather generic. Whitespace is clear, has elegant aesthetics, and is personal—exactly what you want from a meditation app without being overwhelmed. I certainly will be using it again!</p>
-                    <div class="tweet-meta">
-                        <span>5:45 AM · Feb 2, 2026</span>
-                    </div>
-                </a>
+                </div>
 
-                <!-- Tweet 5 - Ellen -->
-                <a href="https://x.com/HiEllenNg" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/HiEllenNg" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Ellen</span>
+                <!-- Review 11 - ThatChapCharlie (App Store) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
+                    </div>
+                    <p class="review-content">Very elegant, less generic than Headspace and Calm, much more intimate and personal. Really enjoyed my sessions!</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">T</div>
+                            <div class="review-author-info">
+                                <div class="review-name">ThatChapCharlie</div>
+                                <div class="review-date">Feb 1, 2026</div>
                             </div>
-                            <span class="tweet-handle">@HiEllenNg</span>
                         </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                            App Store
+                        </div>
                     </div>
-                    <p class="tweet-content">I actually dozed off in the middle of it 😂 That's how relaxing it was!</p>
-                    <div class="tweet-meta">
-                        <span>Jan 2026</span>
-                    </div>
-                </a>
+                </div>
 
-                <!-- Tweet 6 - Kelly -->
-                <a href="https://www.instagram.com/kellyhu_hui/" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="kelly-avatar.jpg" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Kelly</span>
+                <!-- Review 12 - Kellyhu50 (App Store) -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
+                    </div>
+                    <p class="review-content">I used this to create some sleep meditations for things on my mind and it spoke directly to them. I've also used it to boost my confidence. Would highly recommend.</p>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar-placeholder">K</div>
+                            <div class="review-author-info">
+                                <div class="review-name">Kellyhu50</div>
+                                <div class="review-date">Jan 31, 2026</div>
                             </div>
-                            <span class="tweet-handle">@kellyhu_hui</span>
                         </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                    </div>
-                    <p class="tweet-content">Just had a session, really good!! Love it. The personalization makes such a difference.</p>
-                    <div class="tweet-meta">
-                        <span>Jan 2026</span>
-                    </div>
-                </a>
-
-                <!-- Tweet 7 - Jalaal -->
-                <a href="https://x.com/jalaal_tweets/status/2012295279110697101" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/jalaal_tweets" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Jalaal</span>
-                            </div>
-                            <span class="tweet-handle">@jalaal_tweets</span>
+                        <div class="review-source">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                            App Store
                         </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </div>
-                    <p class="tweet-content">For someone who learns more by listening or watching, this would actually help asi enjoy meditation before going to bed</p>
-                    <div class="tweet-meta">
-                        <span>12:45 PM · Jan 16, 2026</span>
-                    </div>
-                </a>
-
-                <!-- Tweet 8 - Yuto -->
-                <a href="https://x.com/yuto_samurai_ai/status/2015668233869906336" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/yuto_samurai_ai" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">Yuto</span>
-                            </div>
-                            <span class="tweet-handle">@yuto_samurai_ai</span>
-                        </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </div>
-                    <p class="tweet-content">This is interesting! Does it help you learn languages and sleep well?</p>
-                    <div class="tweet-meta">
-                        <span>8:08 PM · Jan 25, 2026</span>
-                    </div>
-                </a>
-
-                <!-- Tweet 9 - Elijah -->
-                <a href="https://x.com/iamelijahkhan/status/2014858080538763770" target="_blank" rel="noopener" class="tweet-card">
-                    <div class="tweet-header">
-                        <img src="https://unavatar.io/twitter/iamelijahkhan" alt="" class="tweet-avatar">
-                        <div class="tweet-author-info">
-                            <div class="tweet-name-row">
-                                <span class="tweet-name">E L I J A H</span>
-                            </div>
-                            <span class="tweet-handle">@iamelijahkhan</span>
-                        </div>
-                        <svg class="tweet-x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </div>
-                    <p class="tweet-content">Amazing - just signed up. It does "offer ended" though FYI</p>
-                    <div class="tweet-meta">
-                        <span>2:29 PM · Jan 23, 2026</span>
-                    </div>
-                </a>
+                </div>
             </div>
         </div>
     </section>
@@ -2696,25 +2790,25 @@
             <div class="screenshots-grid">
                 <div class="screenshot-card fade-up fade-up-delay-1">
                     <h3>Set Your Intention</h3>
-                    <p class="inter">Tell us what you're facing right now. Pre-pitch nerves? Post-launch exhaustion? Just say it.</p>
+                    <p class="inter">Tell us what you need right now. We'll craft something just for you.</p>
                     <div class="screenshot-frame">
-                        <img src="src/assets/step 1.png" alt="Set your intention screen" class="screenshot-img">
+                        <canvas id="step-canvas-1" class="screenshot-canvas" width="660" height="1400"></canvas>
                     </div>
                 </div>
 
                 <div class="screenshot-card fade-up fade-up-delay-2">
-                    <h3>We Generate Your Space</h3>
-                    <p class="inter">A session is created for your exact moment — fresh guidance, personalized soundscape.</p>
+                    <h3>Choose a Space</h3>
+                    <p class="inter">Pick from a full Program — a guided series designed around your goals.</p>
                     <div class="screenshot-frame">
-                        <img src="src/assets/step 2.png" alt="Generating your session" class="screenshot-img">
+                        <canvas id="step-canvas-2" class="screenshot-canvas" width="660" height="1400"></canvas>
                     </div>
                 </div>
 
                 <div class="screenshot-card fade-up fade-up-delay-3">
                     <h3>Press Play</h3>
-                    <p class="inter">Immersive audio with binaural frequencies. Let go and let it work.</p>
+                    <p class="inter">Immersive, personalized audio. Let go and let it work.</p>
                     <div class="screenshot-frame">
-                        <img src="src/assets/step 3.png" alt="Immersive playback experience" class="screenshot-img">
+                        <canvas id="step-canvas-3" class="screenshot-canvas" width="660" height="1400"></canvas>
                     </div>
                 </div>
             </div>
@@ -3759,6 +3853,893 @@
         sampleAudio.addEventListener('play', () => {
             updatePlayState(true);
         });
+
+        // =====================================================
+        // LIVE SCREEN RENDERERS — How It Works Section
+        // Ported from screenshot-generator.html
+        // =====================================================
+        (function() {
+            const c1 = document.getElementById('step-canvas-1');
+            const c2 = document.getElementById('step-canvas-2');
+            const c3 = document.getElementById('step-canvas-3');
+            if (!c1 || !c2 || !c3) return;
+
+            const ctx1 = c1.getContext('2d');
+            const ctx2 = c2.getContext('2d');
+            const ctx3 = c3.getContext('2d');
+
+            // --- Shared helpers ---
+            function drawScreenBg(ctx, x, y, w, h) {
+                ctx.fillStyle = '#0a0a0f';
+                ctx.fillRect(x, y, w, h);
+                const g = ctx.createRadialGradient(x+w/2, y+h/2, 0, x+w/2, y+h/2, w*0.8);
+                g.addColorStop(0, 'rgba(30,40,60,0.3)');
+                g.addColorStop(1, 'rgba(10,10,15,0.1)');
+                ctx.fillStyle = g;
+                ctx.fillRect(x, y, w, h);
+            }
+
+            function drawStatusBar(ctx, x, y, w, h) {
+                const s = w / 390; // scale relative to iPhone logical width (390pt)
+                const sbH = 54 * s;
+                const cy = y + sbH * 0.55;
+                // Time
+                ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                ctx.font = `600 ${Math.round(17*s)}px -apple-system, system-ui, sans-serif`;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('9:41', x + w*0.075, cy);
+                // Right side icons
+                const rx = x + w*0.925;
+                // Signal bars (bottom-aligned)
+                const bw = 3*s, bg = 1.5*s;
+                const barStartX = rx - 80*s;
+                const barHeights = [5, 7.5, 10, 13];
+                const barBaseline = cy + barHeights[barHeights.length-1]*s/2; // bottom edge of tallest bar
+                barHeights.forEach((bh,i) => {
+                    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                    ctx.fillRect(barStartX + i*(bw+bg), barBaseline - bh*s, bw, bh*s);
+                });
+                // WiFi (simplified arc)
+                const wifiX = rx - 48*s;
+                ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+                ctx.lineWidth = 1.5*s;
+                for (let i = 0; i < 3; i++) {
+                    const r = (3 + i*3)*s;
+                    ctx.beginPath();
+                    ctx.arc(wifiX, cy + 4*s, r, -Math.PI*0.75, -Math.PI*0.25);
+                    ctx.stroke();
+                }
+                // Battery
+                const battW = 25*s, battH = 12*s;
+                const bx = rx - battW, by = cy - battH/2;
+                ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(bx, by, battW, battH);
+                ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                ctx.fillRect(bx+1.5, by+1.5, (battW-3)*0.75, battH-3);
+                ctx.fillRect(bx+battW, by+battH*0.25, 2*s, battH*0.5);
+            }
+
+            function drawDynamicIsland(ctx, x, y, w, h) {
+                const s = w / 390;
+                const iw = 126*s, ih = 37*s;
+                const ix = x + (w-iw)/2, iy = y + 11*s;
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.roundRect(ix, iy, iw, ih, ih/2);
+                ctx.fill();
+            }
+
+            function drawIonicon(ctx, name, x, y, size, color) {
+                ctx.save();
+                ctx.strokeStyle = color; ctx.fillStyle = color;
+                ctx.lineWidth = size*0.12; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+                const s = size, cx = x+s/2, cy = y+s/2;
+                if (name === 'moon') { ctx.beginPath(); ctx.arc(cx,cy,s*0.4,0,Math.PI*2); ctx.stroke(); }
+                else if (name === 'leaf') { ctx.beginPath(); ctx.moveTo(cx-s*0.3,cy+s*0.3); ctx.quadraticCurveTo(cx-s*0.1,cy-s*0.4,cx+s*0.35,cy-s*0.35); ctx.quadraticCurveTo(cx+s*0.1,cy+s*0.1,cx-s*0.3,cy+s*0.3); ctx.stroke(); }
+                else if (name === 'flash') { ctx.beginPath(); ctx.moveTo(cx+s*0.1,cy-s*0.4); ctx.lineTo(cx-s*0.2,cy+s*0.05); ctx.lineTo(cx+s*0.05,cy+s*0.05); ctx.lineTo(cx-s*0.1,cy+s*0.4); ctx.stroke(); }
+                else if (name === 'book') { ctx.beginPath(); ctx.moveTo(cx,cy-s*0.3); ctx.lineTo(cx-s*0.35,cy-s*0.25); ctx.lineTo(cx-s*0.35,cy+s*0.3); ctx.lineTo(cx,cy+s*0.35); ctx.moveTo(cx,cy-s*0.3); ctx.lineTo(cx+s*0.35,cy-s*0.25); ctx.lineTo(cx+s*0.35,cy+s*0.3); ctx.lineTo(cx,cy+s*0.35); ctx.moveTo(cx,cy-s*0.3); ctx.lineTo(cx,cy+s*0.35); ctx.stroke(); }
+                ctx.restore();
+            }
+
+            // --- Screen 1: Create Input (typing animation) ---
+            const intentions = [
+                'feel confident before my presentation',
+                'sleep deeply tonight',
+                'stay focused during my exam',
+                'calm my anxiety before the flight',
+                'find motivation to start my project'
+            ];
+            let intentionIdx = 0, charIdx = 0, typingForward = true, typingPause = 0;
+            let activeCategory = null;
+            const categories = [
+                {id:'sleep',label:'Sleep',icon:'moon'},
+                {id:'calm',label:'Calm',icon:'leaf'},
+                {id:'focus',label:'Focus',icon:'flash'},
+                {id:'learning',label:'Learning',icon:'book'}
+            ];
+
+            // Safe area: below Dynamic Island + status bar
+            const SAFE_TOP_RATIO = 0.075;
+
+            // --- Shared chrome: tab bar + home bar (consistent across all screens) ---
+            function drawTabBar(ctx, w, h, s, activeIdx) {
+                const tbY = h - 78*s; // tab bar top
+                const hbY = h - 14*s; // home gesture bar
+                // Tab bar background
+                ctx.fillStyle = 'rgb(14,15,19)';
+                ctx.fillRect(0, tbY, w, h - tbY);
+                ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(0, tbY); ctx.lineTo(w, tbY); ctx.stroke();
+                const tabs = [
+                    { label: 'Create', icon: 'circle' },
+                    { label: 'Spaces', icon: 'grid' },
+                    { label: 'Plan', icon: 'calendar' },
+                    { label: 'You', icon: 'user' }
+                ];
+                const tabW = w / tabs.length;
+                const tabCY = tbY + 24*s;
+                tabs.forEach((tab, i) => {
+                    const tx = tabW * i + tabW / 2;
+                    const isActive = i === (activeIdx || 0);
+                    ctx.fillStyle = isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
+                    const iconY = tabCY - 8*s;
+                    if (tab.icon === 'circle') {
+                        ctx.beginPath(); ctx.arc(tx, iconY, 5*s, 0, Math.PI*2);
+                        if (isActive) { ctx.fill(); } else { ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s; ctx.stroke(); }
+                    } else if (tab.icon === 'grid') {
+                        ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s;
+                        ctx.strokeRect(tx - 5*s, iconY - 5*s, 4*s, 4*s);
+                        ctx.strokeRect(tx + 1*s, iconY - 5*s, 4*s, 4*s);
+                        ctx.strokeRect(tx - 5*s, iconY + 1*s, 4*s, 4*s);
+                        ctx.strokeRect(tx + 1*s, iconY + 1*s, 4*s, 4*s);
+                    } else if (tab.icon === 'calendar') {
+                        ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s;
+                        ctx.strokeRect(tx - 5*s, iconY - 4*s, 10*s, 9*s);
+                        ctx.beginPath(); ctx.moveTo(tx - 5*s, iconY); ctx.lineTo(tx + 5*s, iconY); ctx.stroke();
+                    } else if (tab.icon === 'user') {
+                        ctx.beginPath(); ctx.arc(tx, iconY - 3*s, 3.5*s, 0, Math.PI*2);
+                        ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s; ctx.stroke();
+                        ctx.beginPath(); ctx.arc(tx, iconY + 10*s, 6*s, Math.PI + 0.4, -0.4); ctx.stroke();
+                    }
+                    ctx.font = `${isActive ? 600 : 400} ${9*s}px Inter, sans-serif`;
+                    ctx.fillStyle = isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+                    ctx.fillText(tab.label, tx, tabCY + 12*s);
+                });
+                // Home gesture bar
+                const hbW = w*0.35;
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.beginPath(); ctx.roundRect(w/2 - hbW/2, hbY, hbW, 4, 2); ctx.fill();
+            }
+
+            function drawHomeBar(ctx, w, h, s) {
+                const hbY = h - 14*s, hbW = w*0.35;
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.beginPath(); ctx.roundRect(w/2 - hbW/2, hbY, hbW, 4, 2); ctx.fill();
+            }
+
+            // Draw all persistent chrome for a screen
+            function drawChrome(ctx, w, h, hasTabBar, tabActiveIdx) {
+                drawScreenBg(ctx, 0, 0, w, h);
+                const s = w / 390;
+                drawStatusBar(ctx, 0, 0, w, h);
+                drawDynamicIsland(ctx, 0, 0, w, h);
+                if (hasTabBar) {
+                    drawTabBar(ctx, w, h, s, tabActiveIdx);
+                } else {
+                    drawHomeBar(ctx, w, h, s);
+                }
+            }
+
+            // Per-element stagger helper: returns alpha for element at given index
+            // progress: 0..1 overall content progress; idx: element index
+            function elA(progress, idx) {
+                const stagger = 0.055; // 5.5% delay between elements
+                const dur = 0.28;      // each element takes 28% of range to fully appear
+                const start = idx * stagger;
+                return Math.max(0, Math.min(1, (progress - start) / dur));
+            }
+
+            function drawCreateScreen(ctx, w, h, displayText, selectedCat, contentAlpha) {
+                const a = contentAlpha != null ? contentAlpha : 1;
+                drawChrome(ctx, w, h, true, 0);
+                if (a <= 0.01) return;
+                ctx.save();
+                const pad = w*0.06;
+                const s = w / 390;
+                const titleLineH = w*0.075 * 1.2;
+                const contentH = titleLineH*2 + h*0.08 + h*0.015 + h*0.035 + h*0.06 + h*0.05;
+                const topBound = h * SAFE_TOP_RATIO;
+                const botBound = h - 82*s;
+                const startY = topBound + (botBound - topBound - contentH) / 2;
+
+                // Element 0: Title
+                ctx.globalAlpha = elA(a, 0);
+                ctx.font = `300 ${w*0.075}px Crimson Pro, serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.95)';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+                ctx.fillText('What would you like', w/2, startY + titleLineH);
+                ctx.fillText('to create a space for?', w/2, startY + titleLineH*2);
+
+                // Element 1: Input + cursor + underline
+                ctx.globalAlpha = elA(a, 1);
+                const inputY = startY + titleLineH*2 + h*0.08;
+                ctx.font = `300 ${w*0.04}px Crimson Pro, serif`;
+                ctx.fillStyle = displayText ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
+                ctx.textAlign = 'center';
+                ctx.fillText(displayText || 'feel confident before my presentation', w/2, inputY);
+                if (displayText) {
+                    const tw = ctx.measureText(displayText).width;
+                    const cursorVisible = (Date.now() % 1000) < 500;
+                    if (cursorVisible) {
+                        ctx.fillStyle = 'rgba(107,140,255,0.8)';
+                        ctx.fillRect(w/2 + tw/2 + 2, inputY - w*0.03, 2, w*0.04);
+                    }
+                }
+                ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.moveTo(pad, inputY + h*0.015); ctx.lineTo(w-pad, inputY + h*0.015); ctx.stroke();
+
+                // Element 2: Attach hint
+                ctx.globalAlpha = elA(a, 2);
+                ctx.font = `400 ${w*0.03}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.35)'; ctx.textAlign = 'center';
+                ctx.fillText('Attach a doc or paste a link', w/2, inputY + h*0.05);
+
+                // Element 3: Category pills
+                ctx.globalAlpha = elA(a, 3);
+                const pillsY = inputY + h*0.11, pillGap = w*0.05, pfs = w*0.028, iconSz = pfs*1.15, iconGap = w*0.015;
+                ctx.font = `400 ${pfs}px Inter, sans-serif`;
+                let totalW = 0;
+                categories.forEach((c,i) => { totalW += iconSz + iconGap + ctx.measureText(c.label).width; if(i<categories.length-1) totalW += pillGap; });
+                let px = (w - totalW)/2;
+                categories.forEach((cat) => {
+                    const tw2 = ctx.measureText(cat.label).width;
+                    const itemW = iconSz + iconGap + tw2;
+                    const isActive = selectedCat === cat.id;
+                    drawIonicon(ctx, cat.icon, px, pillsY - iconSz/2, iconSz, isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)');
+                    ctx.font = `400 ${pfs}px Inter, sans-serif`;
+                    ctx.fillStyle = isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)';
+                    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+                    ctx.fillText(cat.label, px + iconSz + iconGap, pillsY);
+                    ctx.strokeStyle = isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.04)';
+                    ctx.lineWidth = 1; ctx.beginPath();
+                    ctx.moveTo(px, pillsY + pfs*0.6); ctx.lineTo(px + itemW, pillsY + pfs*0.6); ctx.stroke();
+                    px += itemW + pillGap;
+                });
+
+                // Element 4: + More
+                ctx.globalAlpha = elA(a, 4);
+                ctx.font = `400 ${pfs}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+                ctx.fillText('+ More', w/2, pillsY + h*0.05);
+                ctx.restore();
+            }
+
+            // --- Screen 2: Program Preview (rich layout matching real app) ---
+            const programs = [
+                {
+                    title: "Founder's Night:\nDigital Dreams",
+                    desc: 'When innovation meets rest, your mind needs a gentle landing strip. Transition from electric excitement to deep, restorative sleep.',
+                    stats: { sessions: 2, duration: '~12 min', credits: 2 },
+                    sessions: [
+                        { title: "Founder's Mind Meets Rest", dur: '~2 min', desc: 'A quick glimpse into how passionate innovators can transform electric excitement into deep, regenerative sleep.', done: true },
+                        { title: 'Coding Dreams, Finding Calm', dur: '7:04', desc: 'Navigate the surge of entrepreneurial energy after a breakthrough moment, gently guiding your web3-charge...', done: false }
+                    ]
+                },
+                {
+                    title: 'The One Hour\nFocus Method',
+                    desc: 'A structured program to sharpen your focus, clear mental clutter, and build sustainable concentration habits.',
+                    stats: { sessions: 5, duration: '~50 min', credits: 10 },
+                    sessions: [
+                        { title: 'Clearing Mental Space', dur: '~8 min', desc: 'Release the noise of your day and create a blank canvas for deep work to begin.', done: true },
+                        { title: 'The Flow Formula', dur: '~10 min', desc: 'Learn to access your flow state through progressive relaxation and intention setting.', done: false },
+                        { title: 'The Three-Phase Rhythm', dur: '~12 min', desc: 'Build a sustainable focus rhythm that keeps your mind sharp without burnout.', done: false }
+                    ]
+                },
+                {
+                    title: 'Confidence\nBuilder',
+                    desc: 'Reprogram self-doubt into quiet confidence. Each session builds on the last to create lasting inner strength.',
+                    stats: { sessions: 4, duration: '~35 min', credits: 7 },
+                    sessions: [
+                        { title: 'Grounding Your Presence', dur: '~7 min', desc: 'Connect with your physical self and establish a foundation of calm, steady confidence.', done: true },
+                        { title: 'Inner Strength', dur: '~9 min', desc: 'Tap into memories of past success and let them amplify your sense of capability.', done: false },
+                        { title: 'Owning Your Voice', dur: '~10 min', desc: 'Practice speaking your truth with clarity and conviction, free from self-doubt.', done: false }
+                    ]
+                }
+            ];
+            let programIdx = 0, programTimer = 0;
+
+            // Word-wrap helper for canvas
+            function wrapText(ctx, text, maxWidth) {
+                const words = text.split(' ');
+                const lines = [];
+                let line = '';
+                words.forEach(word => {
+                    const test = line ? line + ' ' + word : word;
+                    if (ctx.measureText(test).width > maxWidth && line) {
+                        lines.push(line);
+                        line = word;
+                    } else {
+                        line = test;
+                    }
+                });
+                if (line) lines.push(line);
+                return lines;
+            }
+
+            // Vector sparkle icon for "Create All" button
+            function drawSparkleIcon(ctx, x, y, size, color) {
+                ctx.save();
+                ctx.fillStyle = color;
+                // 4-point star sparkle
+                const r = size * 0.5;
+                const ir = r * 0.28;
+                ctx.beginPath();
+                for (let i = 0; i < 8; i++) {
+                    const angle = (Math.PI * 2 * i) / 8 - Math.PI/2;
+                    const radius = i % 2 === 0 ? r : ir;
+                    const px = x + Math.cos(angle) * radius;
+                    const py = y + Math.sin(angle) * radius;
+                    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                ctx.fill();
+                // Small secondary sparkle
+                const sr = r * 0.35, sir = sr * 0.28;
+                const sx = x + r * 0.7, sy = y - r * 0.6;
+                ctx.beginPath();
+                for (let i = 0; i < 8; i++) {
+                    const angle = (Math.PI * 2 * i) / 8 - Math.PI/2;
+                    const radius = i % 2 === 0 ? sr : sir;
+                    const px = sx + Math.cos(angle) * radius;
+                    const py = sy + Math.sin(angle) * radius;
+                    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function drawProgramScreen(ctx, w, h, prog, contentAlpha) {
+                const a = contentAlpha != null ? contentAlpha : 1;
+                drawChrome(ctx, w, h, true, 0);
+                if (a <= 0.01) return;
+                ctx.save();
+                const pad = w * 0.06;
+                const contentW = w - pad * 2;
+                const s = w / 390;
+                let curY = h * SAFE_TOP_RATIO + 20*s;
+                let ei = 0; // element index for stagger
+
+                // Element 0: Header
+                ctx.globalAlpha = elA(a, ei++);
+                ctx.fillStyle = 'rgba(255,255,255,0.55)';
+                ctx.font = `400 ${15*s}px Inter, sans-serif`;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+                ctx.fillText('Program Preview', w/2, curY);
+                ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+                ctx.lineWidth = 1.8*s;
+                ctx.beginPath();
+                ctx.moveTo(pad + 8*s, curY - 3*s);
+                ctx.lineTo(pad + 2*s, curY - 9*s);
+                ctx.lineTo(pad + 8*s, curY - 15*s);
+                ctx.stroke();
+                curY += 34*s;
+
+                // Element 1: Title
+                ctx.globalAlpha = elA(a, ei++);
+                ctx.font = `400 ${24*s}px Crimson Pro, serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.95)';
+                ctx.textAlign = 'left';
+                prog.title.split('\n').forEach(line => {
+                    ctx.fillText(line, pad, curY);
+                    curY += 30*s;
+                });
+                curY += 12*s;
+
+                // Element 2: Description
+                ctx.globalAlpha = elA(a, ei++);
+                ctx.font = `300 ${12.5*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.45)';
+                const descLines = wrapText(ctx, prog.desc, contentW);
+                descLines.forEach(line => {
+                    ctx.fillText(line, pad, curY);
+                    curY += 17*s;
+                });
+                curY += 18*s;
+
+                // Element 3: Stats row
+                ctx.globalAlpha = elA(a, ei++);
+                ctx.font = `400 ${11.5*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.45)';
+                const siX = pad, siY = curY - 4*s;
+                ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 1;
+                ctx.strokeRect(siX, siY - 4*s, 4*s, 4*s);
+                ctx.strokeRect(siX + 5*s, siY - 4*s, 4*s, 4*s);
+                ctx.strokeRect(siX, siY + 1*s, 4*s, 4*s);
+                ctx.strokeRect(siX + 5*s, siY + 1*s, 4*s, 4*s);
+                ctx.textAlign = 'left';
+                const statsStr = `${prog.stats.sessions} sessions  ·  ${prog.stats.duration}  ·  ${prog.stats.credits} credits`;
+                ctx.fillText(statsStr, pad + 14*s, curY);
+                const statsW = ctx.measureText(statsStr).width;
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.font = `${13*s}px sans-serif`;
+                ctx.fillText('\u2661', pad + 14*s + statsW + 10*s, curY + 1*s);
+                curY += 28*s;
+
+                // Element 4: Create All + Customize
+                ctx.globalAlpha = elA(a, ei++);
+                drawSparkleIcon(ctx, pad + 8*s, curY - 1*s, 14*s, 'rgba(255,255,255,0.85)');
+                ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                ctx.font = `500 ${14*s}px Inter, sans-serif`;
+                ctx.textAlign = 'left';
+                ctx.fillText('Create All', pad + 20*s, curY + 4*s);
+                curY += 28*s;
+                ctx.font = `400 ${11*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.textAlign = 'left';
+                ctx.fillText('\u2261  Customize length, voice, background & more', pad, curY);
+                curY += 34*s;
+
+                // Element 5: SESSION OUTLINE header
+                ctx.globalAlpha = elA(a, ei++);
+                ctx.font = `500 ${9.5*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.4)';
+                ctx.letterSpacing = '1.5px';
+                ctx.fillText('SESSION OUTLINE', pad, curY);
+                curY += 18*s;
+                ctx.font = `400 ${11*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.25)';
+                ctx.fillText('Tap a session to create or play', pad, curY);
+                curY += 22*s;
+
+                // Each session card gets its own element index
+                prog.sessions.forEach((session, i) => {
+                    ctx.globalAlpha = elA(a, ei++);
+                    // Divider
+                    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(pad, curY); ctx.lineTo(w - pad, curY); ctx.stroke();
+                    curY += 16*s;
+
+                    const numX = pad + 2*s;
+                    const titleX = pad + 24*s;
+
+                    if (session.done) {
+                        ctx.strokeStyle = 'rgba(255,255,255,0.55)'; ctx.lineWidth = 1.5*s;
+                        ctx.beginPath();
+                        ctx.moveTo(numX, curY + 5*s);
+                        ctx.lineTo(numX + 4*s, curY + 9*s);
+                        ctx.lineTo(numX + 11*s, curY + 1*s);
+                        ctx.stroke();
+                    } else {
+                        ctx.font = `400 ${13*s}px Crimson Pro, serif`;
+                        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(`${i}`, numX + 2*s, curY + 8*s);
+                    }
+
+                    ctx.font = `600 ${13*s}px Inter, sans-serif`;
+                    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                    ctx.textAlign = 'left';
+                    const titleLines = wrapText(ctx, session.title, contentW - 70*s);
+                    titleLines.forEach(line => {
+                        ctx.fillText(line, titleX, curY + 8*s);
+                        curY += 17*s;
+                    });
+
+                    ctx.font = `400 ${10.5*s}px Inter, sans-serif`;
+                    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                    ctx.textAlign = 'right';
+                    ctx.fillText(session.dur, w - pad - (session.done ? 0 : 16*s), curY - 17*s + 8*s);
+                    if (!session.done) {
+                        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+                        ctx.beginPath();
+                        const bpx = w - pad - 6*s, bpy = curY - 17*s + 4*s;
+                        ctx.moveTo(bpx, bpy); ctx.lineTo(bpx, bpy + 8*s); ctx.lineTo(bpx + 7*s, bpy + 4*s);
+                        ctx.closePath(); ctx.fill();
+                    }
+
+                    curY += 4*s;
+                    ctx.font = `300 ${10.5*s}px Inter, sans-serif`;
+                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                    ctx.textAlign = 'left';
+                    const sessionDescLines = wrapText(ctx, session.desc, contentW - 28*s);
+                    sessionDescLines.slice(0, 2).forEach(line => {
+                        ctx.fillText(line, titleX, curY + 2*s);
+                        curY += 15*s;
+                    });
+                    curY += 14*s;
+                });
+
+                // Element N: Bottom section (Add Sessions, Begin, pricing)
+                ctx.globalAlpha = elA(a, ei++);
+                curY += 6*s;
+                ctx.font = `400 ${12*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                ctx.textAlign = 'center';
+                ctx.fillText('+ Add Sessions', w/2, curY);
+                curY += 30*s;
+                ctx.font = `600 ${14*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                ctx.textAlign = 'center';
+                ctx.fillText('Begin with Preview', w/2, curY);
+                curY += 18*s;
+                ctx.font = `400 ${10*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.fillText('1 credit per 5 min session  ·  Replay free forever', w/2, curY);
+                curY += 16*s;
+                ctx.fillStyle = 'rgba(107,140,255,0.6)';
+                ctx.fillText('Save 21% now, get 12 credits for $18.99', w/2, curY);
+                ctx.restore();
+            }
+
+            // --- Screen 3: Player (animated progress, synced to active program) ---
+            let playerTime = 0;
+            const playerTotal = 636;
+            // Player title/duration sync to current program's first completed session
+            function getPlayerInfo() {
+                const prog = programs[programIdx];
+                const done = prog.sessions.find(s => s.done);
+                return {
+                    title: done ? done.title : prog.sessions[0].title,
+                    duration: done ? done.dur : prog.sessions[0].dur
+                };
+            }
+            let playerDuration = 11;
+            // Stable waveform bars (seeded once)
+            const waveAmplitudes = [];
+            for (let i = 0; i < 60; i++) waveAmplitudes.push(0.3 + Math.sin(i*0.3)*0.2 + (Math.sin(i*7.3)*0.5+0.5)*0.3);
+
+            function drawPlayerScreen(ctx, w, h, currentTime, contentAlpha) {
+                const a = contentAlpha != null ? contentAlpha : 1;
+                drawChrome(ctx, w, h, false, 0);
+                if (a <= 0.01) return;
+                ctx.save();
+                const cx = w/2, pad = w*0.08;
+                const s = w / 390;
+                let ei = 0;
+
+                // Element 0: Top nav
+                ctx.globalAlpha = elA(a, ei++);
+                const navY = h * SAFE_TOP_RATIO + 16*s;
+                ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 1.5*s;
+                ctx.beginPath();
+                ctx.moveTo(pad + 6*s, navY - 2*s);
+                ctx.lineTo(pad, navY - 8*s);
+                ctx.lineTo(pad + 6*s, navY - 14*s);
+                ctx.stroke();
+                ctx.font = `${14*s}px sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.4)';
+                ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+                ctx.fillText('\u2661', pad + 20*s, navY);
+                ctx.font = `400 ${13*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.4)';
+                ctx.textAlign = 'right';
+                ctx.fillText('Close', w - pad, navY);
+
+                const footerY = h - 50*s;
+                const contentTop = navY + 20*s;
+                const contentBot = footerY - 16*s;
+
+                // Element 1: Title + duration
+                ctx.globalAlpha = elA(a, ei++);
+                const pInfo = getPlayerInfo();
+                ctx.font = `400 ${w*0.06}px Crimson Pro, serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.95)';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+                const titleLines = wrapText(ctx, pInfo.title, w * 0.8);
+                let titleY = contentTop + 14*s;
+                titleLines.forEach(line => {
+                    ctx.fillText(line, cx, titleY);
+                    titleY += w * 0.065;
+                });
+                ctx.font = `400 ${w*0.033}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.4)';
+                ctx.fillText(pInfo.duration.replace('~', '') + (pInfo.duration.includes('min') ? '' : ' minutes'), cx, titleY + 8*s);
+
+                // Element 2: Breathing circle
+                ctx.globalAlpha = elA(a, ei++);
+                const circleZoneTop = titleY + 20*s;
+                const circleZoneBot = contentBot - h*0.22;
+                const circleY = (circleZoneTop + circleZoneBot) / 2;
+                const pulse = 1 + Math.sin(Date.now()/1200)*0.03;
+                const circleR = w*0.18 * pulse;
+                ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(cx, circleY, circleR, 0, Math.PI*2); ctx.stroke();
+                ctx.strokeStyle = 'rgba(107,140,255,0.08)'; ctx.lineWidth = 8;
+                ctx.beginPath(); ctx.arc(cx, circleY, circleR + 6, 0, Math.PI*2); ctx.stroke();
+                const barW2 = w*0.012, barH2 = w*0.055, barGap2 = w*0.018;
+                ctx.fillStyle = 'rgba(255,255,255,0.8)';
+                ctx.fillRect(cx - barGap2 - barW2, circleY - barH2/2, barW2, barH2);
+                ctx.fillRect(cx + barGap2, circleY - barH2/2, barW2, barH2);
+
+                // Element 3: Waveform + time
+                ctx.globalAlpha = elA(a, ei++);
+                const waveY = circleY + circleR + 40*s;
+                const waveW = w*0.84, waveH = h*0.035;
+                const waveX = cx - waveW/2;
+                const barCnt = 60, bw = (waveW/barCnt)*0.7, bGap = (waveW/barCnt)*0.3;
+                const progress = playerTotal > 0 ? currentTime/playerTotal : 0;
+                for (let i = 0; i < barCnt; i++) {
+                    const bx = waveX + i*(bw+bGap);
+                    const amp = waveAmplitudes[i];
+                    const bh = waveH*amp;
+                    ctx.fillStyle = (i/barCnt) <= progress ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.12)';
+                    ctx.fillRect(bx, waveY + (waveH-bh)/2, bw, bh);
+                }
+                const phX = waveX + progress*waveW;
+                ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                ctx.fillRect(phX - 1, waveY - 4, 2, waveH + 8);
+                const fmt = (sec) => { const m = Math.floor(sec/60), se = Math.floor(sec%60); return `${m}:${se.toString().padStart(2,'0')}`; };
+                ctx.font = `400 ${w*0.033}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.35)'; ctx.textAlign = 'center';
+                ctx.fillText(`${fmt(currentTime)} / ${fmt(playerTotal)}`, cx, waveY + waveH + 24*s);
+
+                // Element 4: Skip controls
+                ctx.globalAlpha = elA(a, ei++);
+                const skipY = waveY + waveH + 60*s;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.font = `500 ${14*s}px Inter, sans-serif`;
+                ctx.fillStyle = 'rgba(255,255,255,0.45)';
+                ctx.fillText('\u221215', cx - w*0.22, skipY);
+                ctx.fillText('+15', cx + w*0.22, skipY);
+                const restartR = w*0.055;
+                ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 1.5*s;
+                ctx.beginPath(); ctx.arc(cx, skipY, restartR, 0, Math.PI*2); ctx.stroke();
+                const arcR = restartR * 0.48;
+                const arcStart = -Math.PI * 0.85;
+                const arcEnd = Math.PI * 0.55;
+                ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 2*s;
+                ctx.beginPath(); ctx.arc(cx, skipY, arcR, arcStart, arcEnd); ctx.stroke();
+                const tipAngle = arcEnd;
+                const tipX = cx + Math.cos(tipAngle) * arcR;
+                const tipY2 = skipY + Math.sin(tipAngle) * arcR;
+                const tangent = tipAngle + Math.PI/2;
+                const aLen = 4.5*s;
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.beginPath();
+                ctx.moveTo(tipX, tipY2);
+                ctx.lineTo(tipX + Math.cos(tangent + 2.5) * aLen, tipY2 + Math.sin(tangent + 2.5) * aLen);
+                ctx.lineTo(tipX + Math.cos(tangent - 2.5) * aLen, tipY2 + Math.sin(tangent - 2.5) * aLen);
+                ctx.closePath(); ctx.fill();
+
+                // Element 5: Footer links
+                ctx.globalAlpha = elA(a, ei++);
+                ctx.font = `400 ${12*s}px Inter, sans-serif`;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+                ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                ctx.fillText('\u2190 To Program', cx - w*0.28, footerY);
+                ctx.fillStyle = 'rgba(255,255,255,0.45)';
+                ctx.fillText('Transcript \u203A', cx, footerY);
+                ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                ctx.fillText('Reflections \u2726', cx + w*0.28, footerY);
+                ctx.restore();
+            }
+
+            // --- Waterfall animation with fade-in/up (matching real app) ---
+            // Timing inspired by create.tsx: 600ms fade+slide, ease-out, staggered
+            const W = 660, H = 1400;
+
+            // Canvas wrapper elements for CSS opacity/transform transitions
+            const frame1 = c1.closest('.screenshot-card');
+            const frame2 = c2.closest('.screenshot-card');
+            const frame3 = c3.closest('.screenshot-card');
+
+            // Easing: ease-out cubic
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+            // --- Phase timings (ms) ---
+            const FADE_DURATION     = 1400;   // fade-in per screen (longer for per-element stagger)
+            const SLIDE_PX          = 20;     // pixels to slide up (canvas-space)
+            const PHASE_STAGGER     = 800;    // delay between each screen appearing
+            const TYPING_SPEED      = 55;    // ms per char (slower, more natural)
+            const TYPING_HOLD       = 3000;  // hold completed text before erase
+            const ERASE_SPEED       = 30;    // ms per char erase
+            const CONTENT_DISPLAY   = 8000;  // how long content shows per cycle
+            const REST_BEAT         = 1500;  // rest between full cycles
+            const PROGRAM_HOLD      = 8000;  // how long each program shows
+
+            // Category mapping per intention
+            const intentionCats = [null, 'sleep', 'focus', 'calm', null];
+
+            // --- State machine ---
+            // Phases: 'fadein-1', 'fadein-2', 'fadein-3', 'content', 'fadeout', 'rest'
+            let phase = 'waiting';
+            let phaseTime = 0;
+            let lastFrame = 0;
+            let cycleCount = 0;
+
+            // Per-screen opacity & translateY (0-1 for fade progress)
+            let screenAlpha = [0, 0, 0];
+            let screenSlide = [SLIDE_PX, SLIDE_PX, SLIDE_PX]; // current slide offset
+
+            // Typing state
+            let typingTimer = 0, erasing = false;
+
+            // Player
+            const PLAYER_SPEED = 6;
+
+            function setScreenVisuals(idx, alpha, slideY) {
+                screenAlpha[idx] = alpha;
+                screenSlide[idx] = slideY;
+            }
+
+            function animate(ts) {
+                if (!lastFrame) lastFrame = ts;
+                const dt = Math.min(ts - lastFrame, 50); // cap delta
+                lastFrame = ts;
+                phaseTime += dt;
+
+                // --- Phase state machine ---
+                if (phase === 'fadein-1') {
+                    // Screen 1 fading in
+                    const t = Math.min(phaseTime / FADE_DURATION, 1);
+                    const e = easeOutCubic(t);
+                    setScreenVisuals(0, e, SLIDE_PX * (1 - e));
+                    if (phaseTime >= PHASE_STAGGER) {
+                        phase = 'fadein-2';
+                        phaseTime = phaseTime - PHASE_STAGGER; // carry over
+                    }
+                } else if (phase === 'fadein-2') {
+                    // Screen 1 continues fading, screen 2 starts
+                    const t1 = Math.min((phaseTime + PHASE_STAGGER) / FADE_DURATION, 1);
+                    const e1 = easeOutCubic(t1);
+                    setScreenVisuals(0, e1, SLIDE_PX * (1 - e1));
+
+                    const t2 = Math.min(phaseTime / FADE_DURATION, 1);
+                    const e2 = easeOutCubic(t2);
+                    setScreenVisuals(1, e2, SLIDE_PX * (1 - e2));
+
+                    if (phaseTime >= PHASE_STAGGER) {
+                        phase = 'fadein-3';
+                        phaseTime = phaseTime - PHASE_STAGGER;
+                    }
+                } else if (phase === 'fadein-3') {
+                    // All 3 fading in
+                    const elapsed = phaseTime + PHASE_STAGGER * 2;
+                    const t1 = Math.min(elapsed / FADE_DURATION, 1);
+                    setScreenVisuals(0, easeOutCubic(t1), SLIDE_PX * (1 - easeOutCubic(t1)));
+
+                    const t2 = Math.min((phaseTime + PHASE_STAGGER) / FADE_DURATION, 1);
+                    setScreenVisuals(1, easeOutCubic(t2), SLIDE_PX * (1 - easeOutCubic(t2)));
+
+                    const t3 = Math.min(phaseTime / FADE_DURATION, 1);
+                    const e3 = easeOutCubic(t3);
+                    setScreenVisuals(2, e3, SLIDE_PX * (1 - e3));
+
+                    if (t3 >= 1) {
+                        // All fully visible — enter content phase
+                        phase = 'content';
+                        phaseTime = 0;
+                        setScreenVisuals(0, 1, 0);
+                        setScreenVisuals(1, 1, 0);
+                        setScreenVisuals(2, 1, 0);
+                    }
+                } else if (phase === 'content') {
+                    // All screens visible, content animating
+                    setScreenVisuals(0, 1, 0);
+                    setScreenVisuals(1, 1, 0);
+                    setScreenVisuals(2, 1, 0);
+
+                    if (phaseTime >= CONTENT_DISPLAY) {
+                        phase = 'fadeout';
+                        phaseTime = 0;
+                    }
+                } else if (phase === 'fadeout') {
+                    // Reverse waterfall: player fades first, then program, then create
+                    const fo = FADE_DURATION * 0.8; // slightly faster fadeout
+                    const stagger = PHASE_STAGGER * 0.7;
+
+                    // Screen 3 (player) fades first
+                    const t3 = Math.min(phaseTime / fo, 1);
+                    setScreenVisuals(2, 1 - easeOutCubic(t3), -SLIDE_PX * 0.3 * easeOutCubic(t3));
+
+                    // Screen 2 (program) after stagger
+                    const t2 = Math.max(0, Math.min((phaseTime - stagger) / fo, 1));
+                    setScreenVisuals(1, 1 - easeOutCubic(t2), -SLIDE_PX * 0.3 * easeOutCubic(t2));
+
+                    // Screen 1 (create) last
+                    const t1 = Math.max(0, Math.min((phaseTime - stagger * 2) / fo, 1));
+                    setScreenVisuals(0, 1 - easeOutCubic(t1), -SLIDE_PX * 0.3 * easeOutCubic(t1));
+
+                    if (t1 >= 1) {
+                        phase = 'rest';
+                        phaseTime = 0;
+                        // Advance to next content set
+                        cycleCount++;
+                        intentionIdx = (intentionIdx + 1) % intentions.length;
+                        activeCategory = intentionCats[intentionIdx];
+                        charIdx = 0;
+                        erasing = false;
+                        typingTimer = 0;
+                        programIdx = (programIdx + 1) % programs.length;
+                        programTimer = 0;
+                        playerTime = 0;
+                    }
+                } else if (phase === 'rest') {
+                    setScreenVisuals(0, 0, SLIDE_PX);
+                    setScreenVisuals(1, 0, SLIDE_PX);
+                    setScreenVisuals(2, 0, SLIDE_PX);
+
+                    if (phaseTime >= REST_BEAT) {
+                        phase = 'fadein-1';
+                        phaseTime = 0;
+                    }
+                }
+
+                // --- Update content state ---
+                // Typing (only during content + fadein phases when screen 1 visible)
+                if (screenAlpha[0] > 0.1) {
+                    typingTimer += dt;
+                    const currentIntention = intentions[intentionIdx];
+                    if (!erasing) {
+                        if (charIdx < currentIntention.length) {
+                            if (typingTimer > TYPING_SPEED) {
+                                charIdx++;
+                                typingTimer = 0;
+                            }
+                        } else {
+                            if (typingTimer > TYPING_HOLD) {
+                                erasing = true;
+                                typingTimer = 0;
+                            }
+                        }
+                    } else {
+                        if (charIdx > 0) {
+                            if (typingTimer > ERASE_SPEED) {
+                                charIdx--;
+                                typingTimer = 0;
+                            }
+                        } else {
+                            // Don't auto-advance intention here; that happens in fadeout
+                            erasing = false;
+                            typingTimer = 0;
+                        }
+                    }
+                }
+
+                // Player time
+                if (screenAlpha[2] > 0.1) {
+                    playerTime += PLAYER_SPEED * (dt / 1000) * 10;
+                    if (playerTime > playerTotal) playerTime = 0;
+                }
+
+                // --- Draw all 3 screens (chrome always visible, content fades) ---
+                const typedText = intentions[intentionIdx].substring(0, charIdx);
+                drawCreateScreen(ctx1, W, H, typedText, activeCategory, screenAlpha[0]);
+                drawProgramScreen(ctx2, W, H, programs[programIdx], screenAlpha[1]);
+                drawPlayerScreen(ctx3, W, H, playerTime, screenAlpha[2]);
+
+                requestAnimationFrame(animate);
+            }
+
+            // Start when section is near viewport
+            let animationStarted = false;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !animationStarted) {
+                        animationStarted = true;
+                        // Start with all screens invisible
+                        setScreenVisuals(0, 0, SLIDE_PX);
+                        setScreenVisuals(1, 0, SLIDE_PX);
+                        setScreenVisuals(2, 0, SLIDE_PX);
+                        // Draw initial screens (chrome visible, content hidden)
+                        drawCreateScreen(ctx1, W, H, '', null, 0);
+                        drawProgramScreen(ctx2, W, H, programs[0], 0);
+                        drawPlayerScreen(ctx3, W, H, 0, 0);
+                        // Begin waterfall fade-in
+                        phase = 'fadein-1';
+                        phaseTime = 0;
+                        requestAnimationFrame(animate);
+                    }
+                });
+            }, { threshold: 0.1 });
+            observer.observe(c1.closest('.screenshots-grid'));
+        })();
 
     </script>
     
