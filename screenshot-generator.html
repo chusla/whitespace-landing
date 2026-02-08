@@ -1181,6 +1181,40 @@ for yourself to *focus*</textarea>
                 </div>
             </div>
 
+            <!-- Badge Overlay Section -->
+            <div class="section">
+                <div class="section-title">Badge Overlay</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-badge">
+                    <label for="show-badge">Show award badge</label>
+                </div>
+                <div id="badge-controls" style="display: none; margin-top: 12px;">
+                    <div class="form-group">
+                        <label for="badge-variant">Badge Variant</label>
+                        <select id="badge-variant">
+                            <option value="POTD1A">POTD #1 (Dark)</option>
+                            <option value="POTD1">POTD #1 (Light)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>X Position <span id="badge-x-value" style="color: rgba(255,255,255,0.4); float: right;">50%</span></label>
+                        <input type="range" id="badge-x" min="0" max="100" value="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Y Position <span id="badge-y-value" style="color: rgba(255,255,255,0.4); float: right;">85%</span></label>
+                        <input type="range" id="badge-y" min="0" max="100" value="85">
+                    </div>
+                    <div class="form-group">
+                        <label>Scale <span id="badge-scale-value" style="color: rgba(255,255,255,0.4); float: right;">1.0x</span></label>
+                        <input type="range" id="badge-scale" min="0.3" max="3" step="0.1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Phosphene Glow <span id="badge-glow-value" style="color: rgba(255,255,255,0.4); float: right;">1.0</span></label>
+                        <input type="range" id="badge-glow" min="0" max="2" step="0.1" value="1">
+                    </div>
+                </div>
+            </div>
+
             <!-- Export Section -->
             <div class="section">
                 <button class="btn btn-primary" id="download-btn">
@@ -1386,7 +1420,15 @@ for yourself to *focus*</textarea>
                 br: { x: 0.815, y: 0.895 },   // bottom-right
                 bl: { x: 0.135, y: 0.935 }    // bottom-left
             },
-            previewCorners: false
+            previewCorners: false,
+            // Badge overlay
+            showBadge: false,
+            badgeVariant: 'POTD1A', // 'POTD1' or 'POTD1A'
+            badgeX: 50,   // percentage of canvas width
+            badgeY: 85,   // percentage of canvas height
+            badgeScale: 1.0,
+            badgeGlow: 1.0, // 0 = off, 1 = default, 2 = strong
+            badgeImage: null
         };
 
         // Layout options matching App Store screenshot styles
@@ -4889,6 +4931,54 @@ for yourself to *focus*</textarea>
             ctx.shadowOffsetY = 0;
         }
 
+        // Draw badge overlay with phosphene glow
+        function drawBadge() {
+            if (!state.showBadge || !state.badgeImage) return;
+
+            const img = state.badgeImage;
+            // Base badge width ~18% of canvas width, scaled by user
+            const baseWidth = state.width * 0.18 * state.badgeScale;
+            const aspect = img.naturalHeight / img.naturalWidth;
+            const badgeW = baseWidth;
+            const badgeH = baseWidth * aspect;
+
+            // Position: percentage-based, centered on the point
+            const badgeX = (state.badgeX / 100) * state.width - badgeW / 2;
+            const badgeY = (state.badgeY / 100) * state.height - badgeH / 2;
+
+            ctx.save();
+
+            // Phosphene glow effect (multi-layered)
+            if (state.badgeGlow > 0) {
+                const glowColor1 = state.colors[0] || '#2a4a7a';
+                const glowColor2 = state.colors[1] || '#3d3a6d';
+                const glowAlpha = Math.min(state.badgeGlow * 0.35, 0.7);
+                const innerAlpha = Math.min(state.badgeGlow * 0.5, 1.0);
+
+                // Outer soft glow pass
+                ctx.shadowColor = glowColor1;
+                ctx.shadowBlur = 50 * state.badgeGlow;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.globalAlpha = glowAlpha;
+                ctx.drawImage(img, badgeX, badgeY, badgeW, badgeH);
+
+                // Inner tighter glow pass
+                ctx.shadowColor = glowColor2;
+                ctx.shadowBlur = 20 * state.badgeGlow;
+                ctx.globalAlpha = innerAlpha;
+                ctx.drawImage(img, badgeX, badgeY, badgeW, badgeH);
+            }
+
+            // Draw the actual badge crisp on top
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1.0;
+            ctx.drawImage(img, badgeX, badgeY, badgeW, badgeH);
+
+            ctx.restore();
+        }
+
         // Main render function
         function render() {
             canvas.width = state.width;
@@ -4905,6 +4995,7 @@ for yourself to *focus*</textarea>
             drawPhoneMockup();
             drawLogo();
             drawTextContent();
+            drawBadge();
 
             // Update info
             document.getElementById('preview-info').textContent = 
@@ -5686,6 +5777,63 @@ for yourself to *focus*</textarea>
             render();
         };
         defaultLogo.src = 'src/assets/whitespace logo.png';
+
+        // Pre-load badge images
+        const badgeImages = {};
+        ['POTD1', 'POTD1A'].forEach(variant => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                badgeImages[variant] = img;
+                // Set default badge if this is the current variant
+                if (variant === state.badgeVariant) {
+                    state.badgeImage = img;
+                }
+            };
+            img.src = `https://www.uneed.best/${variant}.png`;
+        });
+
+        // Badge overlay controls
+        document.getElementById('show-badge').addEventListener('change', (e) => {
+            state.showBadge = e.target.checked;
+            document.getElementById('badge-controls').style.display = e.target.checked ? 'block' : 'none';
+            if (e.target.checked && !state.badgeImage && badgeImages[state.badgeVariant]) {
+                state.badgeImage = badgeImages[state.badgeVariant];
+            }
+            render();
+        });
+
+        document.getElementById('badge-variant').addEventListener('change', (e) => {
+            state.badgeVariant = e.target.value;
+            if (badgeImages[e.target.value]) {
+                state.badgeImage = badgeImages[e.target.value];
+            }
+            render();
+        });
+
+        document.getElementById('badge-x').addEventListener('input', (e) => {
+            state.badgeX = parseInt(e.target.value);
+            document.getElementById('badge-x-value').textContent = state.badgeX + '%';
+            render();
+        });
+
+        document.getElementById('badge-y').addEventListener('input', (e) => {
+            state.badgeY = parseInt(e.target.value);
+            document.getElementById('badge-y-value').textContent = state.badgeY + '%';
+            render();
+        });
+
+        document.getElementById('badge-scale').addEventListener('input', (e) => {
+            state.badgeScale = parseFloat(e.target.value);
+            document.getElementById('badge-scale-value').textContent = state.badgeScale.toFixed(1) + 'x';
+            render();
+        });
+
+        document.getElementById('badge-glow').addEventListener('input', (e) => {
+            state.badgeGlow = parseFloat(e.target.value);
+            document.getElementById('badge-glow-value').textContent = state.badgeGlow.toFixed(1);
+            render();
+        });
 
         // Initial render
         render();
