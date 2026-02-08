@@ -689,13 +689,13 @@
                     </div>
                     <div class="form-group">
                         <label for="feature-text-y">Text Y Position</label>
-                        <input type="range" id="feature-text-y" min="10" max="60" step="1" value="17">
-                        <div class="slider-labels"><span>Top</span><span id="feature-text-y-value">17%</span><span>Bottom</span></div>
+                        <input type="range" id="feature-text-y" min="10" max="60" step="1" value="16">
+                        <div class="slider-labels"><span>Top</span><span id="feature-text-y-value">16%</span><span>Bottom</span></div>
                     </div>
                     <div class="form-group">
                         <label for="feature-text-size">Text Size</label>
-                        <input type="range" id="feature-text-size" min="40" max="120" step="2" value="78">
-                        <div class="slider-labels"><span>Small</span><span id="feature-text-size-value">78px</span><span>Large</span></div>
+                        <input type="range" id="feature-text-size" min="40" max="120" step="2" value="72">
+                        <div class="slider-labels"><span>Small</span><span id="feature-text-size-value">72px</span><span>Large</span></div>
                     </div>
                     <div class="form-group">
                         <label for="feature-phone-x">Phone X Position</label>
@@ -704,8 +704,8 @@
                     </div>
                     <div class="form-group">
                         <label for="feature-phone-y">Phone Y Position</label>
-                        <input type="range" id="feature-phone-y" min="-20" max="40" step="1" value="3">
-                        <div class="slider-labels"><span>Up</span><span id="feature-phone-y-value">3%</span><span>Down</span></div>
+                        <input type="range" id="feature-phone-y" min="-20" max="40" step="1" value="1">
+                        <div class="slider-labels"><span>Up</span><span id="feature-phone-y-value">1%</span><span>Down</span></div>
                     </div>
                     <div class="form-group">
                         <label for="feature-phone-height">Phone Height</label>
@@ -1397,10 +1397,10 @@ for yourself to *focus*</textarea>
             splitPhoneAngle: 38, // rotation angle for split layouts
             // Feature graphic positioning
             featureTextX: 31,      // percentage from left
-            featureTextY: 17,      // percentage from top
-            featureTextSize: 78,   // font size in pixels
+            featureTextY: 16,      // percentage from top
+            featureTextSize: 72,   // font size in pixels
             featurePhoneX: 72,     // percentage from left
-            featurePhoneY: 3,      // percentage from top
+            featurePhoneY: 1,      // percentage from top
             featurePhoneHeight: 800, // phone height in pixels
             // Promo banner wide positioning (3:1 ratio)
             promoTextX: 20,        // percentage from left (more left for wider canvas)
@@ -1428,7 +1428,9 @@ for yourself to *focus*</textarea>
             badgeY: 85,   // percentage of canvas height
             badgeScale: 1.0,
             badgeGlow: 1.0, // 0 = off, 1 = default, 2 = strong
-            badgeLogo: null // Uneed logo image
+            badgeLogo: null, // Uneed logo image
+            appleBadge: null, // Apple App Store badge
+            googleBadge: null // Google Play badge
         };
 
         // Layout options matching App Store screenshot styles
@@ -4720,40 +4722,40 @@ for yourself to *focus*</textarea>
                     ctx.restore();
                 }
                 
-                // === "Available on App Stores now" text below badges ===
+                // === App Store badges below the reviews row ===
                 {
-                    const liveFontSize = state.width * 0.013;
-                    const lineGap = liveFontSize * 1.6;
-                    const liveY = logoBottomY + state.height * 0.035 + state.width * 0.015 * 1.8 + state.height * 0.03;
+                    // Position badges below the 5-star/POTD row with breathing room
+                    const badgeRowY = logoBottomY + state.height * 0.035 + state.width * 0.015 * 1.8 + state.height * 0.045;
+                    
+                    // Apple badge sizing (base reference)
+                    const appleBadgeHeight = state.height * 0.055;
+                    // Google badge is 1.44x taller to compensate for internal padding (matches landing page ratio)
+                    const googleBadgeHeight = appleBadgeHeight * 1.44;
+                    const badgeGap = state.width * 0.012;
                     
                     ctx.save();
-                    ctx.textBaseline = 'middle';
-                    ctx.textAlign = 'center';
+                    ctx.globalAlpha = 0.85;
                     
-                    // Line 1: "Available on App Stores now"
-                    ctx.font = `300 ${liveFontSize}px Inter, system-ui, sans-serif`;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
-                    ctx.fillText('Available on App Stores now', logoCenterX, liveY);
-                    
-                    // Line 2: Search "Whitespace: Sleep Learn Focus"
-                    ctx.font = `300 ${liveFontSize}px Inter, system-ui, sans-serif`;
-                    const searchLabel = 'Search ';
-                    const appName = '"Whitespace: Sleep Learn Focus"';
-                    const searchWidth = ctx.measureText(searchLabel).width;
-                    ctx.font = `500 ${liveFontSize}px Inter, system-ui, sans-serif`;
-                    const appNameWidth = ctx.measureText(appName).width;
-                    const totalLine2 = searchWidth + appNameWidth;
-                    let x2 = logoCenterX - totalLine2 / 2;
-                    
-                    ctx.font = `300 ${liveFontSize}px Inter, system-ui, sans-serif`;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
-                    ctx.textAlign = 'left';
-                    ctx.fillText(searchLabel, x2, liveY + lineGap);
-                    x2 += searchWidth;
-                    
-                    ctx.font = `500 ${liveFontSize}px Inter, system-ui, sans-serif`;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                    ctx.fillText(appName, x2, liveY + lineGap);
+                    if (state.appleBadge && state.googleBadge) {
+                        // Calculate widths from aspect ratios
+                        const appleAR = state.appleBadge.width / state.appleBadge.height;
+                        const googleAR = state.googleBadge.width / state.googleBadge.height;
+                        const appleBadgeWidth = appleBadgeHeight * appleAR;
+                        const googleBadgeWidth = googleBadgeHeight * googleAR;
+                        
+                        const totalWidth = appleBadgeWidth + badgeGap + googleBadgeWidth;
+                        let bx = logoCenterX - totalWidth / 2;
+                        
+                        // Vertically align both badges by their visual centers
+                        // Google badge has internal padding so we align by center
+                        const maxH = Math.max(appleBadgeHeight, googleBadgeHeight);
+                        const appleBadgeY = badgeRowY + (maxH - appleBadgeHeight) / 2;
+                        const googleBadgeY = badgeRowY + (maxH - googleBadgeHeight) / 2;
+                        
+                        ctx.drawImage(state.appleBadge, bx, appleBadgeY, appleBadgeWidth, appleBadgeHeight);
+                        bx += appleBadgeWidth + badgeGap;
+                        ctx.drawImage(state.googleBadge, bx, googleBadgeY, googleBadgeWidth, googleBadgeHeight);
+                    }
                     
                     ctx.restore();
                 }
@@ -5338,8 +5340,10 @@ for yourself to *focus*</textarea>
                     document.getElementById('headline').value = 'Meditation made for *you*.\nEvery time.';
                     // Set default screen content to Create
                     state.screenType = 'create-input';
-                    document.getElementById('screen-type-1').value = 'create-input';
-                    document.getElementById('screen-type').value = 'create-input';
+                    const st1 = document.getElementById('screen-type-1');
+                    if (st1) st1.value = 'create-input';
+                    const st = document.getElementById('screen-type');
+                    if (st) st.value = 'create-input';
                     // Update size options UI
                     document.querySelectorAll('.size-option').forEach(opt => {
                         opt.classList.toggle('active', opt.dataset.width === '2048' && opt.dataset.height === '1000');
@@ -5976,6 +5980,22 @@ for yourself to *focus*</textarea>
             state.badgeLogo = uneedLogo;
         };
         uneedLogo.src = 'src/assets/uneed-logo.avif';
+
+        // Pre-load Apple App Store badge (local SVG)
+        const appleBadgeImg = new Image();
+        appleBadgeImg.onload = () => {
+            state.appleBadge = appleBadgeImg;
+            render();
+        };
+        appleBadgeImg.src = 'src/assets/en-us.svg';
+
+        // Pre-load Google Play badge (local copy)
+        const googleBadgeImg = new Image();
+        googleBadgeImg.onload = () => {
+            state.googleBadge = googleBadgeImg;
+            render();
+        };
+        googleBadgeImg.src = 'src/assets/google-play-badge.png';
 
         // Badge overlay controls
         document.getElementById('show-badge').addEventListener('change', (e) => {
