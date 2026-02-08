@@ -338,22 +338,31 @@
 
         @media (max-width: 600px) {
             .hero-quotes {
-                padding: 24px 20px;
+                padding: 24px 24px;
                 margin-top: 32px;
             }
 
             .hero-quotes-row {
                 flex-direction: column;
-                align-items: center;
-                gap: 14px;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 0 8px;
             }
 
             .hero-quote {
-                font-size: 15px;
+                font-size: 14px;
+                text-align: left;
+                max-width: 100%;
+            }
+
+            .hero-quote-text {
+                white-space: normal;
+                word-break: break-word;
             }
 
             .hero-quote-author {
-                font-size: 13px;
+                font-size: 12px;
+                flex-shrink: 0;
             }
         }
 
@@ -912,6 +921,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        .screenshot-card p {
+            flex-grow: 1;
         }
 
         .screenshot-frame {
@@ -2200,7 +2213,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: rgba(107, 140, 255, 0.9);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 50%;
             top: 3px;
             left: 3px;
@@ -2233,19 +2246,19 @@
             text-align: center;
             position: relative;
             transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(107, 140, 255, 0.03);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
         }
 
         .tier-card:hover {
-            border-color: rgba(107, 140, 255, 0.15);
-            box-shadow: 0 0 40px rgba(107, 140, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
         }
 
         .tier-card.popular {
-            border-color: rgba(107, 140, 255, 0.25);
-            background: rgba(107, 140, 255, 0.04);
-            box-shadow: 0 0 40px rgba(107, 140, 255, 0.1),
-                        0 0 80px rgba(107, 140, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05),
+                        0 0 80px rgba(255, 255, 255, 0.02);
         }
 
         .tier-badge {
@@ -2253,8 +2266,8 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(107, 140, 255, 0.9);
-            color: white;
+            background: rgba(255, 255, 255, 0.85);
+            color: #0a0a0f;
             font-family: 'Inter', sans-serif;
             font-size: 10px;
             font-weight: 600;
@@ -2299,8 +2312,17 @@
         .tier-detail svg {
             width: 14px;
             height: 14px;
-            color: rgba(107, 140, 255, 0.7);
+            color: rgba(255, 255, 255, 0.45);
             flex-shrink: 0;
+        }
+
+        .tier-detail.annual-highlight {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+        }
+
+        .tier-detail.annual-highlight svg {
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .tier-price {
@@ -2461,11 +2483,6 @@
 
             <div class="hero-quotes fade-up visible fade-up-delay-8">
                 <div class="hero-quotes-row">
-                    <a href="#testimonials" class="hero-quote">
-                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                        <span class="hero-quote-text">"The best in the world"</span>
-                        <span class="hero-quote-author">— Rich To Dust</span>
-                    </a>
                     <a href="https://x.com/lifeofchar1ie/status/2018350092588048641" target="_blank" rel="noopener" class="hero-quote">
                         <img src="https://unavatar.io/twitter/lifeofchar1ie" alt="" class="hero-quote-avatar">
                         <span class="hero-quote-text">"Clear, elegant, and personal"</span>
@@ -2490,6 +2507,11 @@
                         <img src="https://unavatar.io/twitter/yusukelp" alt="" class="hero-quote-avatar">
                         <span class="hero-quote-text">"This is insane. It blew my mind"</span>
                         <span class="hero-quote-author">— Yusuke</span>
+                    </a>
+                    <a href="#testimonials" class="hero-quote">
+                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="hero-quote-text">"The best in the world"</span>
+                        <span class="hero-quote-author">— Rich To Dust</span>
                     </a>
                 </div>
             </div>
@@ -2830,30 +2852,6 @@
         </div>
     </section>
 
-    <!-- Audio Sample Section -->
-    <section id="audio-sample" style="padding: 48px 24px;">
-        <div style="max-width: 500px; margin: 0 auto;">
-            <div class="audio-sample fade-up">
-                <p class="audio-sample-label inter">Sample Session</p>
-                
-                <p class="audio-title">Steady Ground</p>
-                <p class="audio-duration inter">2 minutes</p>
-
-                <!-- Play Button Wrapper with Breathing Circle -->
-                <div class="play-button-wrapper">
-                    <div class="breathing-circle" id="breathingCircle"></div>
-                    <div class="play-button-container" id="playButtonContainer">
-                        <button class="play-btn" id="playBtn">
-                            <div class="play-icon" id="playIcon"></div>
-                        </button>
-                    </div>
-                </div>
-
-                <audio id="sampleAudio" src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766135607508x869146036860977800/Steady%20Ground.mp3" preload="metadata"></audio>
-            </div>
-        </div>
-    </section>
-
     <!-- How It Works Section -->
     <section>
         <div class="section-container">
@@ -2890,6 +2888,30 @@
         </div>
     </section>
 
+    <!-- Audio Sample Section -->
+    <section id="audio-sample" style="padding: 48px 24px;">
+        <div style="max-width: 500px; margin: 0 auto;">
+            <div class="audio-sample fade-up">
+                <p class="audio-sample-label inter">Sample Session</p>
+                
+                <p class="audio-title">Steady Ground</p>
+                <p class="audio-duration inter">2 minutes</p>
+
+                <!-- Play Button Wrapper with Breathing Circle -->
+                <div class="play-button-wrapper">
+                    <div class="breathing-circle" id="breathingCircle"></div>
+                    <div class="play-button-container" id="playButtonContainer">
+                        <button class="play-btn" id="playBtn">
+                            <div class="play-icon" id="playIcon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <audio id="sampleAudio" src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766135607508x869146036860977800/Steady%20Ground.mp3" preload="metadata"></audio>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section class="pricing-section" id="pricing">
         <div class="section-container">
@@ -2901,7 +2923,7 @@
             <div class="pricing-toggle fade-up">
                 <span class="pricing-toggle-label active" data-period="monthly">Monthly</span>
                 <div class="pricing-toggle-switch" id="pricingToggle"></div>
-                <span class="pricing-toggle-label" data-period="annual">Annual <em style="color: rgba(107, 140, 255, 0.8); font-style: normal;">(save up to 38%)</em></span>
+                <span class="pricing-toggle-label" data-period="annual">Annual <em style="color: rgba(255, 255, 255, 0.6); font-style: normal;">(save up to 38%)</em></span>
             </div>
 
             <div class="tier-grid fade-up">
@@ -2910,9 +2932,9 @@
                     <p class="tier-description">For regular practice</p>
                     <div class="tier-price">
                         <span class="monthly-credits">$7.99<small>/month</small></span>
-                        <span class="annual-credits" style="display: none;">$59.99<small>/year</small></span>
+                        <span class="annual-credits" style="display: none;">$4.99<small>/month</small></span>
                     </div>
-                    <div class="tier-price-note annual-credits" style="display: none;">~$4.99/mo</div>
+                    <div class="tier-price-note annual-credits" style="display: none;">$59.99/year, paid annually</div>
                     <div class="tier-details">
                         <div class="tier-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -2927,7 +2949,7 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Full Space Library</span>
                         </div>
-                        <div class="tier-detail annual-only" style="display: none;">
+                        <div class="tier-detail annual-only annual-highlight" style="display: none;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Credits roll over</span>
                         </div>
@@ -2940,9 +2962,9 @@
                     <p class="tier-description">For deeper immersion</p>
                     <div class="tier-price">
                         <span class="monthly-credits">$14.99<small>/month</small></span>
-                        <span class="annual-credits" style="display: none;">$119.99<small>/year</small></span>
+                        <span class="annual-credits" style="display: none;">$9.99<small>/month</small></span>
                     </div>
-                    <div class="tier-price-note annual-credits" style="display: none;">~$9.99/mo</div>
+                    <div class="tier-price-note annual-credits" style="display: none;">$119.99/year, paid annually</div>
                     <div class="tier-details">
                         <div class="tier-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -2957,7 +2979,7 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Priority generation</span>
                         </div>
-                        <div class="tier-detail annual-only" style="display: none;">
+                        <div class="tier-detail annual-only annual-highlight" style="display: none;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Credits roll over</span>
                         </div>
@@ -2986,7 +3008,6 @@
             </div>
 
             <div class="pricing-note fade-up">
-                <p>Pricing details coming soon.</p>
             </div>
         </div>
     </section>
@@ -2995,7 +3016,12 @@
     <section id="download">
         <div class="final-cta fade-up">
             <div class="cta-box">
+                <img src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" alt="Whitespace" style="width: 64px; height: auto; margin-bottom: 16px; opacity: 0.85;">
                 <h2 class="crimson">Start 10x'ing from the inside out</h2>
+                <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none; margin-bottom: 24px;">
+                    <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
+                    <span>#1 Product of the Day</span>
+                </a>
                 <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Limited Time Early Access Bonus: Download now and get 5 free sessions.</p>
                 
                 <div class="app-store-buttons" style="justify-content: center;">
@@ -4022,12 +4048,11 @@
             }
 
             // --- Screen 1: Create Input (typing animation) ---
+            // Intentions are paired 1:1 with programs below for sync across all 3 steps
             const intentions = [
                 'feel confident before my presentation',
                 'sleep deeply tonight',
-                'stay focused during my exam',
-                'calm my anxiety before the flight',
-                'find motivation to start my project'
+                'stay focused during my exam'
             ];
             let intentionIdx = 0, charIdx = 0, typingForward = true, typingPause = 0;
             let activeCategory = null;
@@ -4197,7 +4222,21 @@
             }
 
             // --- Screen 2: Program Preview (rich layout matching real app) ---
+            // Programs are ordered to match intentions 1:1:
+            //   0: "feel confident before my presentation" → Confidence Builder
+            //   1: "sleep deeply tonight"                  → Founder's Night
+            //   2: "stay focused during my exam"           → The One Hour Focus Method
             const programs = [
+                {
+                    title: 'Confidence\nBuilder',
+                    desc: 'Reprogram self-doubt into quiet confidence. Each session builds on the last to create lasting inner strength.',
+                    stats: { sessions: 4, duration: '~35 min', credits: 7 },
+                    sessions: [
+                        { title: 'Grounding Your Presence', dur: '~7 min', desc: 'Connect with your physical self and establish a foundation of calm, steady confidence.', done: true },
+                        { title: 'Inner Strength', dur: '~9 min', desc: 'Tap into memories of past success and let them amplify your sense of capability.', done: false },
+                        { title: 'Owning Your Voice', dur: '~10 min', desc: 'Practice speaking your truth with clarity and conviction, free from self-doubt.', done: false }
+                    ]
+                },
                 {
                     title: "Founder's Night:\nDigital Dreams",
                     desc: 'When innovation meets rest, your mind needs a gentle landing strip. Transition from electric excitement to deep, restorative sleep.',
@@ -4215,16 +4254,6 @@
                         { title: 'Clearing Mental Space', dur: '~8 min', desc: 'Release the noise of your day and create a blank canvas for deep work to begin.', done: true },
                         { title: 'The Flow Formula', dur: '~10 min', desc: 'Learn to access your flow state through progressive relaxation and intention setting.', done: false },
                         { title: 'The Three-Phase Rhythm', dur: '~12 min', desc: 'Build a sustainable focus rhythm that keeps your mind sharp without burnout.', done: false }
-                    ]
-                },
-                {
-                    title: 'Confidence\nBuilder',
-                    desc: 'Reprogram self-doubt into quiet confidence. Each session builds on the last to create lasting inner strength.',
-                    stats: { sessions: 4, duration: '~35 min', credits: 7 },
-                    sessions: [
-                        { title: 'Grounding Your Presence', dur: '~7 min', desc: 'Connect with your physical self and establish a foundation of calm, steady confidence.', done: true },
-                        { title: 'Inner Strength', dur: '~9 min', desc: 'Tap into memories of past success and let them amplify your sense of capability.', done: false },
-                        { title: 'Owning Your Voice', dur: '~10 min', desc: 'Practice speaking your truth with clarity and conviction, free from self-doubt.', done: false }
                     ]
                 }
             ];
@@ -4621,8 +4650,8 @@
             const REST_BEAT         = 1500;  // rest between full cycles
             const PROGRAM_HOLD      = 8000;  // how long each program shows
 
-            // Category mapping per intention
-            const intentionCats = [null, 'sleep', 'focus', 'calm', null];
+            // Category mapping per intention (synced with intentions array)
+            const intentionCats = [null, 'sleep', 'focus'];
 
             // --- State machine ---
             // Phases: 'fadein-1', 'fadein-2', 'fadein-3', 'content', 'fadeout', 'rest'
@@ -4640,6 +4669,80 @@
 
             // Player
             const PLAYER_SPEED = 6;
+
+            // --- Touch phosphene animation ---
+            // Glowing phosphene dot that brightens on "tap" (mobile-appropriate)
+            const TOUCH_DELAY_S2      = 3000;  // ms into content phase before touch appears on step 2
+            const TOUCH_MOVE_DUR      = 700;   // ms to glide touch to target
+            const TOUCH_TAP_AT        = 3800;  // ms into content when tap happens on step 2
+            const TOUCH_RIPPLE_DUR    = 500;   // ms for tap ripple expansion
+            const TOUCH_DELAY_S3      = 5200;  // ms into content phase before touch appears on step 3
+            const TOUCH_TAP_S3        = 6000;  // ms into content when tap happens on step 3
+
+            // Target positions in canvas-space (660x1400)
+            // Step 2: tap on the first session (completed one that plays in step 3)
+            const TOUCH_S2_START  = { x: 500, y: 600 };
+            const TOUCH_S2_TARGET = { x: 420, y: 700 };
+            // Step 3: tap on the play/pause button (center circle)
+            const TOUCH_S3_START  = { x: 500, y: 550 };
+            const TOUCH_S3_TARGET = { x: 330, y: 640 };
+
+            function drawTouchPhosphene(ctx, x, y, alpha, tapProgress) {
+                if (alpha <= 0.01) return;
+                ctx.save();
+
+                const isTapping = tapProgress > 0 && tapProgress <= 1;
+                // Glow intensity: idle = subtle, tapping = bright burst
+                const glowIntensity = isTapping ? 0.7 + 0.3 * (1 - tapProgress) : 0.35;
+                const coreAlpha = alpha * glowIntensity;
+
+                // Outer glow halo (soft radial gradient)
+                const glowR = isTapping ? 28 + 18 * tapProgress : 20;
+                const glow = ctx.createRadialGradient(x, y, 0, x, y, glowR);
+                glow.addColorStop(0, `rgba(107,140,255,${coreAlpha * 0.6})`);
+                glow.addColorStop(0.4, `rgba(107,140,255,${coreAlpha * 0.25})`);
+                glow.addColorStop(1, 'rgba(107,140,255,0)');
+                ctx.fillStyle = glow;
+                ctx.beginPath();
+                ctx.arc(x, y, glowR, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Core phosphene dot
+                const coreR = isTapping ? 7 + 2 * Math.sin(tapProgress * Math.PI) : 5;
+                const core = ctx.createRadialGradient(x, y, 0, x, y, coreR);
+                core.addColorStop(0, `rgba(220,230,255,${coreAlpha})`);
+                core.addColorStop(0.5, `rgba(107,140,255,${coreAlpha * 0.7})`);
+                core.addColorStop(1, `rgba(107,140,255,0)`);
+                ctx.fillStyle = core;
+                ctx.beginPath();
+                ctx.arc(x, y, coreR, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Tap ripple ring — expands outward and fades
+                if (isTapping) {
+                    const rippleR = 10 + 30 * tapProgress;
+                    const rippleFade = 1 - tapProgress;
+                    ctx.strokeStyle = `rgba(107,140,255,${alpha * 0.45 * rippleFade})`;
+                    ctx.lineWidth = 2 * rippleFade + 0.5;
+                    ctx.beginPath();
+                    ctx.arc(x, y, rippleR, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                    // Second, faster inner ripple
+                    const innerT = Math.min(1, tapProgress * 1.5);
+                    const innerR = 6 + 16 * innerT;
+                    ctx.strokeStyle = `rgba(180,200,255,${alpha * 0.3 * (1 - innerT)})`;
+                    ctx.lineWidth = 1.5 * (1 - innerT) + 0.5;
+                    ctx.beginPath();
+                    ctx.arc(x, y, innerR, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+
+            // Lerp helper
+            function lerp(a, b, t) { return a + (b - a) * t; }
 
             function setScreenVisuals(idx, alpha, slideY) {
                 screenAlpha[idx] = alpha;
@@ -4727,14 +4830,14 @@
                     if (t1 >= 1) {
                         phase = 'rest';
                         phaseTime = 0;
-                        // Advance to next content set
+                        // Advance to next content set (synced 1:1)
                         cycleCount++;
                         intentionIdx = (intentionIdx + 1) % intentions.length;
+                        programIdx = intentionIdx; // keep program synced with intention
                         activeCategory = intentionCats[intentionIdx];
                         charIdx = 0;
                         erasing = false;
                         typingTimer = 0;
-                        programIdx = (programIdx + 1) % programs.length;
                         programTimer = 0;
                         playerTime = 0;
                     }
@@ -4791,6 +4894,40 @@
                 drawCreateScreen(ctx1, W, H, typedText, activeCategory, screenAlpha[0]);
                 drawProgramScreen(ctx2, W, H, programs[programIdx], screenAlpha[1]);
                 drawPlayerScreen(ctx3, W, H, playerTime, screenAlpha[2]);
+
+                // --- Draw touch phosphene on steps 2 & 3 during content phase ---
+                if (phase === 'content') {
+                    const ct = phaseTime;
+
+                    // Step 2 touch: appears, glides to session, taps
+                    if (ct >= TOUCH_DELAY_S2 && ct < TOUCH_TAP_AT + TOUCH_RIPPLE_DUR + 800) {
+                        const moveT = Math.min(1, Math.max(0, (ct - TOUCH_DELAY_S2) / TOUCH_MOVE_DUR));
+                        const eased = easeOutCubic(moveT);
+                        const tx = lerp(TOUCH_S2_START.x, TOUCH_S2_TARGET.x, eased);
+                        const ty = lerp(TOUCH_S2_START.y, TOUCH_S2_TARGET.y, eased);
+                        // Fade in softly
+                        const fadeIn = Math.min(1, (ct - TOUCH_DELAY_S2) / 300);
+                        // Fade out after tap ripple
+                        const fadeOut = ct > TOUCH_TAP_AT + TOUCH_RIPPLE_DUR ? Math.max(0, 1 - (ct - TOUCH_TAP_AT - TOUCH_RIPPLE_DUR) / 500) : 1;
+                        const alpha = fadeIn * fadeOut;
+                        // Tap ripple progress
+                        const tapP = ct >= TOUCH_TAP_AT ? Math.min(1, (ct - TOUCH_TAP_AT) / TOUCH_RIPPLE_DUR) : 0;
+                        drawTouchPhosphene(ctx2, tx, ty, alpha, tapP);
+                    }
+
+                    // Step 3 touch: appears, glides to play button, taps
+                    if (ct >= TOUCH_DELAY_S3 && ct < TOUCH_TAP_S3 + TOUCH_RIPPLE_DUR + 800) {
+                        const moveT = Math.min(1, Math.max(0, (ct - TOUCH_DELAY_S3) / TOUCH_MOVE_DUR));
+                        const eased = easeOutCubic(moveT);
+                        const tx = lerp(TOUCH_S3_START.x, TOUCH_S3_TARGET.x, eased);
+                        const ty = lerp(TOUCH_S3_START.y, TOUCH_S3_TARGET.y, eased);
+                        const fadeIn = Math.min(1, (ct - TOUCH_DELAY_S3) / 300);
+                        const fadeOut = ct > TOUCH_TAP_S3 + TOUCH_RIPPLE_DUR ? Math.max(0, 1 - (ct - TOUCH_TAP_S3 - TOUCH_RIPPLE_DUR) / 500) : 1;
+                        const alpha = fadeIn * fadeOut;
+                        const tapP = ct >= TOUCH_TAP_S3 ? Math.min(1, (ct - TOUCH_TAP_S3) / TOUCH_RIPPLE_DUR) : 0;
+                        drawTouchPhosphene(ctx3, tx, ty, alpha, tapP);
+                    }
+                }
 
                 requestAnimationFrame(animate);
             }
