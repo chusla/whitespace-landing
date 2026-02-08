@@ -1190,10 +1190,10 @@ for yourself to *focus*</textarea>
                 </div>
                 <div id="badge-controls" style="display: none; margin-top: 12px;">
                     <div class="form-group">
-                        <label for="badge-variant">Badge Variant</label>
+                        <label for="badge-variant">Style</label>
                         <select id="badge-variant">
-                            <option value="POTD1A">POTD #1 (Dark)</option>
-                            <option value="POTD1">POTD #1 (Light)</option>
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1423,12 +1423,12 @@ for yourself to *focus*</textarea>
             previewCorners: false,
             // Badge overlay
             showBadge: false,
-            badgeVariant: 'POTD1A', // 'POTD1' or 'POTD1A'
+            badgeVariant: 'dark', // 'dark' or 'light'
             badgeX: 50,   // percentage of canvas width
             badgeY: 85,   // percentage of canvas height
             badgeScale: 1.0,
             badgeGlow: 1.0, // 0 = off, 1 = default, 2 = strong
-            badgeImage: null
+            badgeLogo: null // Uneed logo image
         };
 
         // Layout options matching App Store screenshot styles
@@ -4933,48 +4933,94 @@ for yourself to *focus*</textarea>
 
         // Draw badge overlay with phosphene glow
         function drawBadge() {
-            if (!state.showBadge || !state.badgeImage) return;
+            if (!state.showBadge || !state.badgeLogo) return;
 
-            const img = state.badgeImage;
-            // Base badge width ~18% of canvas width, scaled by user
-            const baseWidth = state.width * 0.18 * state.badgeScale;
-            const aspect = img.naturalHeight / img.naturalWidth;
-            const badgeW = baseWidth;
-            const badgeH = baseWidth * aspect;
+            const logo = state.badgeLogo;
+            const isDark = state.badgeVariant === 'dark';
 
-            // Position: percentage-based, centered on the point
+            // Sizing relative to canvas
+            const baseFontSize = state.width * 0.026 * state.badgeScale;
+            const logoSize = baseFontSize * 1.6;
+            const paddingH = baseFontSize * 1.0;
+            const paddingV = baseFontSize * 0.6;
+            const gap = baseFontSize * 0.5;
+
+            // Measure text
+            const labelText = '#1 Product of the Day';
+            ctx.font = `600 ${baseFontSize}px Inter, system-ui, sans-serif`;
+            const textMetrics = ctx.measureText(labelText);
+            const textW = textMetrics.width;
+
+            // Badge dimensions
+            const badgeW = paddingH + logoSize + gap + textW + paddingH;
+            const badgeH = paddingV + Math.max(logoSize, baseFontSize * 1.3) + paddingV;
+            const radius = badgeH / 2;
+
+            // Position: percentage-based, centered
             const badgeX = (state.badgeX / 100) * state.width - badgeW / 2;
             const badgeY = (state.badgeY / 100) * state.height - badgeH / 2;
 
             ctx.save();
 
-            // Phosphene glow effect (multi-layered)
+            // Phosphene glow behind the badge
             if (state.badgeGlow > 0) {
                 const glowColor1 = state.colors[0] || '#2a4a7a';
                 const glowColor2 = state.colors[1] || '#3d3a6d';
-                const glowAlpha = Math.min(state.badgeGlow * 0.35, 0.7);
-                const innerAlpha = Math.min(state.badgeGlow * 0.5, 1.0);
 
-                // Outer soft glow pass
                 ctx.shadowColor = glowColor1;
                 ctx.shadowBlur = 50 * state.badgeGlow;
                 ctx.shadowOffsetX = 0;
                 ctx.shadowOffsetY = 0;
-                ctx.globalAlpha = glowAlpha;
-                ctx.drawImage(img, badgeX, badgeY, badgeW, badgeH);
+                ctx.globalAlpha = Math.min(state.badgeGlow * 0.35, 0.7);
 
-                // Inner tighter glow pass
+                // Draw glow shape (pill)
+                ctx.beginPath();
+                ctx.roundRect(badgeX, badgeY, badgeW, badgeH, radius);
+                ctx.fillStyle = isDark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.6)';
+                ctx.fill();
+
                 ctx.shadowColor = glowColor2;
                 ctx.shadowBlur = 20 * state.badgeGlow;
-                ctx.globalAlpha = innerAlpha;
-                ctx.drawImage(img, badgeX, badgeY, badgeW, badgeH);
+                ctx.globalAlpha = Math.min(state.badgeGlow * 0.5, 1.0);
+                ctx.fill();
             }
 
-            // Draw the actual badge crisp on top
+            // Draw crisp badge on top
             ctx.shadowColor = 'transparent';
             ctx.shadowBlur = 0;
             ctx.globalAlpha = 1.0;
-            ctx.drawImage(img, badgeX, badgeY, badgeW, badgeH);
+
+            // Pill background
+            ctx.beginPath();
+            ctx.roundRect(badgeX, badgeY, badgeW, badgeH, radius);
+            if (isDark) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+            } else {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+            }
+            ctx.fill();
+            ctx.lineWidth = Math.max(1, state.width * 0.001);
+            ctx.stroke();
+
+            // Uneed logo (circular, centered vertically)
+            const logoX = badgeX + paddingH;
+            const logoY = badgeY + (badgeH - logoSize) / 2;
+
+            // Clip logo to circle
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2, 0, Math.PI * 2);
+            ctx.clip();
+            ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+            ctx.restore();
+
+            // Text
+            ctx.font = `600 ${baseFontSize}px Inter, system-ui, sans-serif`;
+            ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.85)';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(labelText, logoX + logoSize + gap, badgeY + badgeH / 2);
 
             ctx.restore();
         }
@@ -5778,36 +5824,23 @@ for yourself to *focus*</textarea>
         };
         defaultLogo.src = 'src/assets/whitespace logo.png';
 
-        // Pre-load badge images
-        const badgeImages = {};
-        ['POTD1', 'POTD1A'].forEach(variant => {
-            const img = new Image();
-            img.crossOrigin = 'anonymous';
-            img.onload = () => {
-                badgeImages[variant] = img;
-                // Set default badge if this is the current variant
-                if (variant === state.badgeVariant) {
-                    state.badgeImage = img;
-                }
-            };
-            img.src = `src/assets/${variant}.png`;
-        });
+        // Pre-load Uneed logo
+        const uneedLogo = new Image();
+        uneedLogo.crossOrigin = 'anonymous';
+        uneedLogo.onload = () => {
+            state.badgeLogo = uneedLogo;
+        };
+        uneedLogo.src = 'src/assets/uneed-logo.avif';
 
         // Badge overlay controls
         document.getElementById('show-badge').addEventListener('change', (e) => {
             state.showBadge = e.target.checked;
             document.getElementById('badge-controls').style.display = e.target.checked ? 'block' : 'none';
-            if (e.target.checked && !state.badgeImage && badgeImages[state.badgeVariant]) {
-                state.badgeImage = badgeImages[state.badgeVariant];
-            }
             render();
         });
 
         document.getElementById('badge-variant').addEventListener('change', (e) => {
             state.badgeVariant = e.target.value;
-            if (badgeImages[e.target.value]) {
-                state.badgeImage = badgeImages[e.target.value];
-            }
             render();
         });
 
