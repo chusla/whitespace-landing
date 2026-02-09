@@ -1394,8 +1394,14 @@
 
         /* Final CTA */
         .final-cta {
-            max-width: 800px;
+            max-width: 860px;
             margin: 0 auto;
+        }
+
+        .final-cta .hero-badges-row {
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            font-size: 0.9em;
         }
 
         .cta-box {
@@ -2513,21 +2519,89 @@
             margin-bottom: 4px;
         }
 
-        /* Bundles card variant */
-        .tier-card.bundles-card {
+        /* Free card variant */
+        .tier-card.free-card {
             border-style: dashed;
-            border-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.10);
             background: rgba(255, 255, 255, 0.01);
         }
 
-        .tier-card.bundles-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
+        .tier-card.free-card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
         }
 
-        .tier-card.bundles-card .tier-price {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.7);
+        /* Best Value card variant */
+        .tier-card.best-value {
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.03);
+        }
+
+        .tier-card.best-value:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Bundles row */
+        .bundles-row {
+            max-width: 960px;
+            margin: 32px auto 0;
+        }
+
+        .bundles-inline {
+            background: none;
+            border: none;
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .bundles-inline-header {
+            text-align: left;
+            min-width: 180px;
+        }
+
+        .bundles-inline-items {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .bundle-chip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 8px 16px;
+        }
+
+        .bundle-chip-credits {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .bundle-chip-price {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 2px;
+        }
+
+        .bundles-inline-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+            margin: 0;
+            width: 100%;
+            text-align: center;
         }
 
         .pricing-note {
@@ -2676,9 +2750,9 @@
                 </div>
 
                 <div class="hero-cta-box fade-up visible fade-up-delay-8" style="margin-top: 32px;">
-                    <p class="hero-cta-headline">Get <strong>4 free sessions</strong> when you download</p>
+                    <p class="hero-cta-headline">Download free + get <strong>4 bonus sessions</strong></p>
                     <div class="hero-cta-timer-row">
-                        <span class="hero-cta-timer-label">Offer ends in</span>
+                        <span class="hero-cta-timer-label">Limited time. Offer ends in</span>
                         <span class="countdown-timer" id="hero-timer">1d 23:59:59</span>
                     </div>
                     <div class="app-store-buttons">
@@ -3114,25 +3188,21 @@
             </div>
 
             <div class="pricing-toggle fade-up">
-                <span class="pricing-toggle-label active" data-period="monthly">Monthly</span>
-                <div class="pricing-toggle-switch" id="pricingToggle"></div>
-                <span class="pricing-toggle-label" data-period="annual">Annual <em style="color: rgba(255, 255, 255, 0.6); font-style: normal;">(save up to 38%)</em></span>
+                <span class="pricing-toggle-label" data-period="monthly">Monthly</span>
+                <div class="pricing-toggle-switch annual" id="pricingToggle"></div>
+                <span class="pricing-toggle-label active" data-period="annual">Annual <em style="color: rgba(255, 255, 255, 0.6); font-style: normal;">(save up to 38%)</em></span>
             </div>
 
             <div class="tier-grid fade-up">
-                <div class="tier-card">
-                    <h3 class="tier-name">Flow</h3>
-                    <p class="tier-description">For regular practice</p>
-                    <div class="tier-price">
-                        <span class="monthly-credits">$7.99<small>/month</small></span>
-                        <span class="annual-credits" style="display: none;">$4.99<small>/month</small></span>
-                    </div>
-                    <div class="tier-price-note annual-credits" style="display: none;">$59.99/year, paid annually</div>
+                <div class="tier-card free-card">
+                    <h3 class="tier-name">Free</h3>
+                    <p class="tier-description">Start exploring</p>
+                    <div class="tier-price">$0</div>
+                    <div class="tier-price-note" style="color: rgba(255,255,255,0.45);">Always free to download. No ads.</div>
                     <div class="tier-details">
                         <div class="tier-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span class="monthly-credits">Up to 8 sessions/mo</span>
-                            <span class="annual-credits" style="display: none;">Up to 6 sessions/mo</span>
+                            <span>4 bonus sessions</span>
                         </div>
                         <div class="tier-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -3142,27 +3212,63 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Full Space Library</span>
                         </div>
-                        <div class="tier-detail annual-only annual-highlight" style="display: none;">
+                        <div class="tier-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>Credits roll over</span>
+                            <span>Keep your spaces forever</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="tier-card popular">
                     <span class="tier-badge">Most Popular</span>
+                    <h3 class="tier-name">Flow</h3>
+                    <p class="tier-description">For regular practice</p>
+                    <div class="tier-price">
+                        <span class="monthly-credits">$7.99<small>/month</small></span>
+                        <span class="annual-credits">$4.99<small>/month</small></span>
+                    </div>
+                    <div class="tier-price-note annual-credits">$59.99/year, paid annually</div>
+                    <div class="tier-price-note monthly-credits">Auto-renews monthly.</div>
+                    <div class="tier-details">
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span class="monthly-credits">Up to 8 sessions/mo</span>
+                            <span class="annual-credits">Up to 6 sessions/mo</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>All session lengths</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Full Space Library</span>
+                        </div>
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Keep your spaces forever</span>
+                        </div>
+                        <div class="tier-detail annual-only annual-highlight">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Credits roll over</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tier-card best-value">
+                    <span class="tier-badge">Best Value</span>
                     <h3 class="tier-name">Elevate</h3>
                     <p class="tier-description">For deeper immersion</p>
                     <div class="tier-price">
                         <span class="monthly-credits">$14.99<small>/month</small></span>
-                        <span class="annual-credits" style="display: none;">$9.99<small>/month</small></span>
+                        <span class="annual-credits">$9.99<small>/month</small></span>
                     </div>
-                    <div class="tier-price-note annual-credits" style="display: none;">$119.99/year, paid annually</div>
+                    <div class="tier-price-note annual-credits">$119.99/year, paid annually</div>
+                    <div class="tier-price-note monthly-credits">Auto-renews monthly.</div>
                     <div class="tier-details">
                         <div class="tier-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span class="monthly-credits">Up to 16 sessions/mo</span>
-                            <span class="annual-credits" style="display: none;">Up to 12 sessions/mo</span>
+                            <span class="annual-credits">Up to 12 sessions/mo</span>
                         </div>
                         <div class="tier-detail">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -3172,31 +3278,39 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Priority generation</span>
                         </div>
-                        <div class="tier-detail annual-only annual-highlight" style="display: none;">
+                        <div class="tier-detail">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Keep your spaces forever</span>
+                        </div>
+                        <div class="tier-detail annual-only annual-highlight">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Credits roll over</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="tier-card bundles-card">
-                    <h3 class="tier-name">Credit Bundles</h3>
-                    <p class="tier-description">Top up anytime, use at your pace</p>
-                    <div class="tier-price">From $5.99</div>
-                    <div class="tier-details">
-                        <div class="tier-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>3, 6, or 12 credits</span>
+            <div class="bundles-row fade-up">
+                <div class="bundles-inline">
+                    <div class="bundles-inline-header">
+                        <h3 class="tier-name" style="margin-bottom: 0;">Credit Bundles</h3>
+                        <p class="tier-description" style="margin-bottom: 0;">Top up anytime, use at your pace</p>
+                    </div>
+                    <div class="bundles-inline-items">
+                        <div class="bundle-chip">
+                            <span class="bundle-chip-credits">3 credits</span>
+                            <span class="bundle-chip-price">$5.99</span>
                         </div>
-                        <div class="tier-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>One-time purchase</span>
+                        <div class="bundle-chip">
+                            <span class="bundle-chip-credits">6 credits</span>
+                            <span class="bundle-chip-price">$9.99</span>
                         </div>
-                        <div class="tier-detail">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>Credits never expire</span>
+                        <div class="bundle-chip">
+                            <span class="bundle-chip-credits">12 credits</span>
+                            <span class="bundle-chip-price">$17.99</span>
                         </div>
                     </div>
+                    <p class="bundles-inline-note">One-time purchase. Credits never expire.</p>
                 </div>
             </div>
 
@@ -3209,7 +3323,7 @@
     <section id="download">
         <div class="final-cta fade-up">
             <div class="cta-box">
-                <img src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" alt="Whitespace" style="width: 64px; height: auto; margin-bottom: 16px; opacity: 0.85;">
+                <img src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" alt="Whitespace" style="width: 88px; height: auto; margin-bottom: 20px; opacity: 0.85;">
                 <h2 class="crimson">Start 10x'ing from the inside out</h2>
                 <div class="hero-badges-row" style="margin-bottom: 24px;">
                     <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
@@ -3227,7 +3341,7 @@
                         <span>on the App Store</span>
                     </a>
                 </div>
-                <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Limited Time Early Access Bonus: Download now and get 4 free sessions.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Download free today and get <strong style="color: rgba(255,255,255,0.85);">4 bonus sessions</strong>. Limited time only.</p>
                 
                 <div class="app-store-buttons" style="justify-content: center;">
                     <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-badge">
@@ -3313,7 +3427,7 @@
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>Whitespace is free to download. During our Limited Time Early Access Bonus, you get 4 free sessions to start. After that, you can choose a subscription plan based on how often you practice — Flow, Elevate, or Immerse.</p>
+                    <p>Whitespace is free to download. During our limited-time early access bonus, you get 4 additional sessions to start. After that, you can choose a subscription plan based on how often you practice — Flow, Elevate, or Immerse.</p>
                 </div>
             </div>
 
@@ -3352,7 +3466,7 @@
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>Fair. The best way to find out is to try it. Download the app and get 4 free sessions — no commitment. If it's not for you, no hard feelings.</p>
+                    <p>Fair. The best way to find out is to try it. Download free and get 4 bonus sessions. No commitment. If it's not for you, no hard feelings.</p>
                 </div>
             </div>
 
@@ -3931,7 +4045,7 @@
 
             if (!toggle) return;
 
-            let isAnnual = false;
+            let isAnnual = true;
 
             function updateDisplay() {
                 toggle.classList.toggle('annual', isAnnual);
@@ -3960,6 +4074,9 @@
                     updateDisplay();
                 });
             });
+
+            // Set initial display state
+            updateDisplay();
         }
 
         initPricingToggle();
