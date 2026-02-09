@@ -4375,8 +4375,8 @@
                     ctx.fillStyle = 'rgba(255,255,255,0.9)';
                     ctx.fillRect(barStartX + i*(bw+bg), barBaseline - bh*s, bw, bh*s);
                 });
-                // WiFi (simplified arc)
-                const wifiX = rx - 48*s;
+                // WiFi (simplified arc) — centered between signal bars and battery
+                const wifiX = rx - 44*s;
                 ctx.strokeStyle = 'rgba(255,255,255,0.9)';
                 ctx.lineWidth = 1.5*s;
                 for (let i = 0; i < 3; i++) {
