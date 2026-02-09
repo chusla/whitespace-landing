@@ -239,7 +239,7 @@
         @media (min-width: 900px) {
             .hero-right {
                 display: flex;
-                flex: 0 0 320px;
+                flex: 0 0 420px;
                 align-items: center;
                 justify-content: center;
                 max-height: calc(100vh - 120px);
@@ -248,7 +248,7 @@
         }
 
         .hero-phone-frame {
-            width: 260px;
+            width: 360px;
             position: relative;
             padding: 8px;
             background: linear-gradient(145deg, rgba(40, 42, 54, 0.8), rgba(20, 22, 30, 0.9));
@@ -4448,35 +4448,62 @@
                 ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.moveTo(0, tbY); ctx.lineTo(w, tbY); ctx.stroke();
                 const tabs = [
-                    { label: 'Create', icon: 'circle' },
-                    { label: 'Spaces', icon: 'grid' },
-                    { label: 'Plan', icon: 'calendar' },
-                    { label: 'You', icon: 'user' }
+                    { label: 'Create', icon: 'radio-button-on' },
+                    { label: 'Spaces', icon: 'albums-outline' },
+                    { label: 'Concierge', icon: 'layers-outline' },
+                    { label: 'You', icon: 'person-circle-outline' }
                 ];
                 const tabW = w / tabs.length;
                 const tabCY = tbY + 24*s;
                 tabs.forEach((tab, i) => {
                     const tx = tabW * i + tabW / 2;
                     const isActive = i === (activeIdx || 0);
-                    ctx.fillStyle = isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
+                    const col = isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
+                    ctx.fillStyle = col;
+                    ctx.strokeStyle = col;
+                    ctx.lineWidth = 1.2*s;
                     const iconY = tabCY - 8*s;
-                    if (tab.icon === 'circle') {
-                        ctx.beginPath(); ctx.arc(tx, iconY, 5*s, 0, Math.PI*2);
-                        if (isActive) { ctx.fill(); } else { ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s; ctx.stroke(); }
-                    } else if (tab.icon === 'grid') {
-                        ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s;
-                        ctx.strokeRect(tx - 5*s, iconY - 5*s, 4*s, 4*s);
-                        ctx.strokeRect(tx + 1*s, iconY - 5*s, 4*s, 4*s);
-                        ctx.strokeRect(tx - 5*s, iconY + 1*s, 4*s, 4*s);
-                        ctx.strokeRect(tx + 1*s, iconY + 1*s, 4*s, 4*s);
-                    } else if (tab.icon === 'calendar') {
-                        ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s;
-                        ctx.strokeRect(tx - 5*s, iconY - 4*s, 10*s, 9*s);
-                        ctx.beginPath(); ctx.moveTo(tx - 5*s, iconY); ctx.lineTo(tx + 5*s, iconY); ctx.stroke();
-                    } else if (tab.icon === 'user') {
-                        ctx.beginPath(); ctx.arc(tx, iconY - 3*s, 3.5*s, 0, Math.PI*2);
-                        ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 1.2*s; ctx.stroke();
-                        ctx.beginPath(); ctx.arc(tx, iconY + 10*s, 6*s, Math.PI + 0.4, -0.4); ctx.stroke();
+                    if (tab.icon === 'radio-button-on') {
+                        // Ionicons radio-button-on: outer ring + filled inner dot
+                        ctx.beginPath(); ctx.arc(tx, iconY, 6*s, 0, Math.PI*2);
+                        ctx.strokeStyle = col; ctx.lineWidth = 1.4*s; ctx.stroke();
+                        ctx.beginPath(); ctx.arc(tx, iconY, 3*s, 0, Math.PI*2);
+                        ctx.fillStyle = col; ctx.fill();
+                    } else if (tab.icon === 'albums-outline') {
+                        // Ionicons albums-outline: stacked rounded rectangles
+                        const rw = 8*s, rh = 6*s;
+                        ctx.strokeStyle = col; ctx.lineWidth = 1.2*s;
+                        // Back card (smallest, top)
+                        ctx.beginPath(); ctx.roundRect(tx - rw*0.55, iconY - 5*s, rw*1.1, rh*0.6, 1.5*s); ctx.stroke();
+                        // Middle card
+                        ctx.beginPath(); ctx.roundRect(tx - rw*0.7, iconY - 2.5*s, rw*1.4, rh*0.7, 1.5*s); ctx.stroke();
+                        // Front card (largest, bottom)
+                        ctx.beginPath(); ctx.roundRect(tx - rw*0.85, iconY + 0.5*s, rw*1.7, rh*0.9, 2*s); ctx.stroke();
+                    } else if (tab.icon === 'layers-outline') {
+                        // Ionicons layers-outline: stacked diamond/parallelogram layers
+                        ctx.strokeStyle = col; ctx.lineWidth = 1.2*s;
+                        // Top layer
+                        ctx.beginPath();
+                        ctx.moveTo(tx, iconY - 6*s);
+                        ctx.lineTo(tx + 8*s, iconY - 1.5*s);
+                        ctx.lineTo(tx, iconY + 3*s);
+                        ctx.lineTo(tx - 8*s, iconY - 1.5*s);
+                        ctx.closePath(); ctx.stroke();
+                        // Bottom layer (offset down)
+                        ctx.beginPath();
+                        ctx.moveTo(tx - 8*s, iconY + 1*s);
+                        ctx.lineTo(tx, iconY + 5.5*s);
+                        ctx.lineTo(tx + 8*s, iconY + 1*s);
+                        ctx.stroke();
+                    } else if (tab.icon === 'person-circle-outline') {
+                        // Ionicons person-circle-outline: person silhouette inside a circle
+                        ctx.strokeStyle = col; ctx.lineWidth = 1.2*s;
+                        // Outer circle
+                        ctx.beginPath(); ctx.arc(tx, iconY, 7*s, 0, Math.PI*2); ctx.stroke();
+                        // Head
+                        ctx.beginPath(); ctx.arc(tx, iconY - 2.5*s, 2.2*s, 0, Math.PI*2); ctx.stroke();
+                        // Shoulders (arc clipped inside circle)
+                        ctx.beginPath(); ctx.arc(tx, iconY + 6*s, 4.5*s, Math.PI + 0.5, -0.5); ctx.stroke();
                     }
                     ctx.font = `${isActive ? 600 : 400} ${9*s}px Inter, sans-serif`;
                     ctx.fillStyle = isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
@@ -4517,9 +4544,9 @@
                 return Math.max(0, Math.min(1, (progress - start) / dur));
             }
 
-            function drawCreateScreen(ctx, w, h, displayText, selectedCat, contentAlpha) {
+            function drawCreateScreen(ctx, w, h, displayText, selectedCat, contentAlpha, skipChrome) {
                 const a = contentAlpha != null ? contentAlpha : 1;
-                drawChrome(ctx, w, h, true, 0);
+                if (!skipChrome) drawChrome(ctx, w, h, true, 0);
                 if (a <= 0.01) return;
                 ctx.save();
                 const pad = w*0.06;
@@ -4681,9 +4708,9 @@
                 ctx.restore();
             }
 
-            function drawProgramScreen(ctx, w, h, prog, contentAlpha) {
+            function drawProgramScreen(ctx, w, h, prog, contentAlpha, skipChrome) {
                 const a = contentAlpha != null ? contentAlpha : 1;
-                drawChrome(ctx, w, h, true, 0);
+                if (!skipChrome) drawChrome(ctx, w, h, true, 0);
                 if (a <= 0.01) return;
                 ctx.save();
                 const pad = w * 0.06;
@@ -4872,9 +4899,9 @@
             const waveAmplitudes = [];
             for (let i = 0; i < 60; i++) waveAmplitudes.push(0.3 + Math.sin(i*0.3)*0.2 + (Math.sin(i*7.3)*0.5+0.5)*0.3);
 
-            function drawPlayerScreen(ctx, w, h, currentTime, contentAlpha) {
+            function drawPlayerScreen(ctx, w, h, currentTime, contentAlpha, skipChrome) {
                 const a = contentAlpha != null ? contentAlpha : 1;
-                drawChrome(ctx, w, h, false, 0);
+                if (!skipChrome) drawChrome(ctx, w, h, false, 0);
                 if (a <= 0.01) return;
                 ctx.save();
                 const cx = w/2, pad = w*0.08;
@@ -5060,6 +5087,7 @@
 
             // Easing: ease-out cubic
             function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+            function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
             // --- Phase timings (ms) ---
             const FADE_DURATION     = 1400;   // fade-in per screen (longer for per-element stagger)
@@ -5414,7 +5442,7 @@
 
                 // Timings
                 const HERO_SCREEN_HOLD = 5000;  // show each screen for 5s
-                const HERO_XFADE_DUR = 800;     // crossfade duration
+                const HERO_XFADE_DUR = 1000;    // crossfade duration
 
                 // Category mapping per intention
                 const heroIntentionCats = [null, 'sleep', 'focus'];
@@ -5511,7 +5539,7 @@
                         if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-cp'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'xfade-cp') {
                         const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
-                        const e = easeOutCubic(t);
+                        const e = easeInOutCubic(t);
                         createA = 1 - e;
                         programA = e;
                         if (t >= 1) { heroPhase = 'program'; heroPhaseTime = 0; }
@@ -5520,7 +5548,7 @@
                         if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-pp'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'xfade-pp') {
                         const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
-                        const e = easeOutCubic(t);
+                        const e = easeInOutCubic(t);
                         programA = 1 - e;
                         playerA = e;
                         if (t >= 1) { heroPhase = 'player'; heroPhaseTime = 0; }
@@ -5529,7 +5557,7 @@
                         if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-pc'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'xfade-pc') {
                         const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
-                        const e = easeOutCubic(t);
+                        const e = easeInOutCubic(t);
                         playerA = 1 - e;
                         createA = e;
                         if (t >= 1) { heroPhase = 'create'; heroPhaseTime = 0; }
@@ -5539,24 +5567,26 @@
                     // Clear canvas
                     hCtx.clearRect(0, 0, HW, HH);
 
-                    // Draw base chrome
-                    drawScreenBg(hCtx, 0, 0, HW, HH);
+                    // Draw shared chrome once at full alpha (no flicker during crossfade)
+                    // Use tab bar for create/program, home bar for player
+                    const hasTabBar = playerA < 0.99;
+                    drawChrome(hCtx, HW, HH, hasTabBar, 0);
 
-                    // Draw whichever screens are active (blend via globalAlpha)
+                    // Cross-fade only the CONTENT of each screen (skip chrome)
                     const heroTyped = intentions[heroIntentionIdx].substring(0, heroCharIdx);
                     if (createA > 0.01) {
                         hCtx.save(); hCtx.globalAlpha = createA;
-                        drawCreateScreen(hCtx, HW, HH, heroTyped, heroActiveCat, 1);
+                        drawCreateScreen(hCtx, HW, HH, heroTyped, heroActiveCat, 1, true);
                         hCtx.restore();
                     }
                     if (programA > 0.01) {
                         hCtx.save(); hCtx.globalAlpha = programA;
-                        drawProgramScreen(hCtx, HW, HH, programs[heroProgramIdx], 1);
+                        drawProgramScreen(hCtx, HW, HH, programs[heroProgramIdx], 1, true);
                         hCtx.restore();
                     }
                     if (playerA > 0.01) {
                         hCtx.save(); hCtx.globalAlpha = playerA;
-                        drawPlayerScreen(hCtx, HW, HH, heroPlayerTime, 1);
+                        drawPlayerScreen(hCtx, HW, HH, heroPlayerTime, 1, true);
                         hCtx.restore();
                     }
 
