@@ -40,6 +40,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         body {
@@ -47,6 +48,96 @@
             background: #0a0a0f;
             color: white;
             overflow-x: hidden;
+        }
+
+        /* Landing Header */
+        .landing-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.3s ease;
+        }
+
+        .landing-header.scrolled {
+            background: rgba(10, 10, 15, 0.85);
+        }
+
+        .landing-header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .landing-header .header-logo img {
+            width: 100px;
+            height: auto;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .landing-header .header-logo:hover img {
+            opacity: 1;
+        }
+
+        .landing-header-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .landing-header-nav a {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .landing-header-nav a:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .landing-header-nav a.active {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .landing-header-content {
+                padding: 10px 16px;
+            }
+
+            .landing-header .header-logo img {
+                width: 85px;
+            }
+
+            .landing-header-nav {
+                gap: 16px;
+            }
+
+            .landing-header-nav a {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .landing-header-nav {
+                gap: 10px;
+            }
+
+            .landing-header-nav a {
+                font-size: 10px;
+            }
         }
 
         /* Phosphene Background */
@@ -89,22 +180,23 @@
         .hero {
             position: relative;
             z-index: 10;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px 24px 40px;
+            padding: 110px 24px 32px;
         }
 
         @media (min-width: 768px) {
             .hero {
-                padding: 32px 24px 60px;
+                padding: 130px 24px 48px;
+                min-height: 80vh;
             }
         }
 
         .hero-content {
-            max-width: 900px;
+            max-width: 1200px;
+            width: 100%;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -113,10 +205,65 @@
             padding: 12px 0;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 900px) {
             .hero-content {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                text-align: left;
+                gap: 48px;
                 padding: 16px 0;
             }
+        }
+
+        /* Hero Left Column */
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media (min-width: 900px) {
+            .hero-left {
+                flex: 1;
+                min-width: 0;
+                align-items: flex-start;
+            }
+        }
+
+        /* Hero Right Column — Phone Mockup */
+        .hero-right {
+            display: none;
+        }
+
+        @media (min-width: 900px) {
+            .hero-right {
+                display: flex;
+                flex: 0 0 320px;
+                align-items: center;
+                justify-content: center;
+                max-height: calc(100vh - 120px);
+                overflow: visible;
+            }
+        }
+
+        .hero-phone-frame {
+            width: 260px;
+            position: relative;
+            padding: 8px;
+            background: linear-gradient(145deg, rgba(40, 42, 54, 0.8), rgba(20, 22, 30, 0.9));
+            border-radius: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+                        0 0 80px rgba(107, 140, 255, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-phone-frame canvas {
+            width: 100%;
+            height: auto;
+            border-radius: 28px;
+            display: block;
         }
 
         .logo {
@@ -136,10 +283,10 @@
         .hero h1 {
             font-family: 'Crimson Pro', serif;
             font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 100;
+            font-weight: 300;
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.25;
-            margin-bottom: 0;
+            margin-bottom: 16px;
             min-height: 1.25em;
             opacity: 0; /* Hide initially */
         }
@@ -179,9 +326,9 @@
             margin: 0 auto 32px;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 900px) {
             .hero-subtitle {
-                margin-bottom: 64px;
+                margin: 0 0 32px;
             }
         }
 
@@ -259,113 +406,99 @@
             }
         }
 
-        /* Hero Inline Quotes */
-        .hero-quotes {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
+        /* Hero Quote Carousel — single line, rotating */
+        .hero-quote-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 32px;
+            overflow: hidden;
             margin-top: 28px;
             margin-bottom: 8px;
-            padding: 24px 24px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            max-width: 800px;
         }
 
-        .hero-quotes-row {
+        @media (min-width: 900px) {
+            .hero-quote-carousel {
+                max-width: 100%;
+            }
+        }
+
+        .hero-carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px 28px;
-            max-width: 100%;
-        }
-
-        .hero-quote {
-            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.75);
+            height: 32px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
             text-decoration: none;
-            transition: all 0.2s ease;
         }
 
-        .hero-quote:hover {
-            color: rgba(255, 255, 255, 0.95);
+        @media (min-width: 900px) {
+            .hero-carousel-item {
+                justify-content: flex-start;
+            }
         }
 
-        .hero-quote-avatar {
-            width: 28px;
-            height: 28px;
+        .hero-carousel-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-carousel-avatar {
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .hero-quote-text {
-            font-style: italic;
-        }
-
-        .hero-quote-author {
-            color: rgba(255, 255, 255, 0.45);
-            font-style: normal;
-            font-size: 14px;
-        }
-
-        .hero-more-reviews {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .hero-carousel-text {
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            color: rgba(107, 140, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            margin-top: 8px;
+            color: rgba(255, 255, 255, 0.65);
+            font-style: italic;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .hero-more-reviews:hover {
-            color: rgba(107, 140, 255, 1);
+        .hero-carousel-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+            font-style: normal;
+            flex-shrink: 0;
         }
 
-        .hero-more-reviews svg {
-            transition: transform 0.2s ease;
-        }
-
-        .hero-more-reviews:hover svg {
-            transform: translateY(2px);
+        .hero-carousel-stars {
+            color: #f5a623;
+            font-size: 11px;
+            letter-spacing: 1px;
+            flex-shrink: 0;
         }
 
         @media (max-width: 600px) {
-            .hero-quotes {
-                padding: 24px 24px;
-                margin-top: 32px;
+            .hero-quote-carousel {
+                height: 28px;
             }
 
-            .hero-quotes-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                padding: 0 8px;
+            .hero-carousel-item {
+                height: 28px;
             }
 
-            .hero-quote {
-                font-size: 14px;
-                text-align: left;
-                max-width: 100%;
-            }
-
-            .hero-quote-text {
-                white-space: normal;
-                word-break: break-word;
-            }
-
-            .hero-quote-author {
+            .hero-carousel-text {
                 font-size: 12px;
-                flex-shrink: 0;
+            }
+
+            .hero-carousel-author {
+                font-size: 11px;
             }
         }
 
@@ -625,6 +758,12 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
+        }
+
+        @media (min-width: 900px) {
+            .hero-cta-box {
+                align-items: flex-start;
+            }
         }
 
         .hero-cta-headline {
@@ -1839,12 +1978,17 @@
             font-family: 'Inter', sans-serif;
             font-size: clamp(1.125rem, 3vw, 1.375rem);
             color: rgba(255, 255, 255, 0.5);
-            margin-top: 32px;
+            margin-top: 20px;
             font-weight: 400;
             text-align: center;
             max-width: 600px;
             line-height: 1.7;
-            letter-spacing: -0.01em;
+        }
+
+        @media (min-width: 900px) {
+            .scenario-tagline {
+                text-align: left;
+            }
         }
 
         .scenario-tagline em {
@@ -1873,7 +2017,13 @@
             justify-content: center;
             gap: 16px;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 900px) {
+            .hero-badges-row {
+                justify-content: flex-start;
+            }
         }
 
         .hero-badge-divider {
@@ -2476,100 +2626,115 @@
     </style>
 </head>
 <body>
+    <!-- Landing Page Header -->
+    <header class="landing-header" id="landingHeader">
+        <div class="landing-header-content">
+            <a href="#hero" class="header-logo">
+                <img src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" alt="Whitespace">
+            </a>
+            <nav class="landing-header-nav">
+                <a href="#">Home</a>
+                <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer">iOS</a>
+                <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer">Android</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#audio-sample">Sample</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+                <a href="/blog">Blog</a>
+            </nav>
+        </div>
+    </header>
+
     <canvas id="phosphene-canvas" data-intensity="1"></canvas>
 
     <!-- Hero Section - Minimal -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <img 
-                src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" 
-                alt="Whitespace" 
-                class="logo fade-up visible fade-up-delay-3"
-            >
+            <!-- Left Column: Text Content -->
+            <div class="hero-left">
+                <h1 id="heroHeadline">
+                    Meditation made for you.<br>Every time.
+                </h1>
 
-            <h1 id="heroHeadline">
-                Meditation made for you.<br>Every time.
-            </h1>
+                <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
+                <div class="hero-badges-row fade-up visible fade-up-delay-7">
+                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
+                        <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
+                        <span>#1 Product of the Day</span>
+                    </a>
+                    <span class="hero-badge-divider">·</span>
+                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
+                        <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
+                        <span>#3 Product of the Week</span>
+                    </a>
+                    <span class="hero-badge-divider">·</span>
+                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
+                        <span style="color: #f5a623; font-style: normal; font-size: 12px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span>on the App Store</span>
+                    </a>
+                </div>
 
-            <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
-            <div class="hero-badges-row fade-up visible fade-up-delay-7">
-                <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                    <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
-                    <span>#1 Product of the Day</span>
-                </a>
-                <span class="hero-badge-divider">·</span>
-                <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                    <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
-                    <span>#3 Product of the Week</span>
-                </a>
-                <span class="hero-badge-divider">·</span>
-                <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                    <span style="color: #f5a623; font-style: normal; font-size: 12px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                    <span>on the App Store</span>
-                </a>
+                <div class="hero-cta-box fade-up visible fade-up-delay-8" style="margin-top: 32px;">
+                    <p class="hero-cta-headline">Get <strong>4 free sessions</strong> when you download</p>
+                    <div class="hero-cta-timer-row">
+                        <span class="hero-cta-timer-label">Offer ends in</span>
+                        <span class="countdown-timer" id="hero-timer">1d 23:59:59</span>
+                    </div>
+                    <div class="app-store-buttons">
+                        <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-badge">
+                            <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1737590400" alt="Download on the App Store">
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-badge google-play">
+                            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Rotating Quote Carousel -->
+                <div class="hero-quote-carousel fade-up visible fade-up-delay-9" id="heroQuoteCarousel">
+                    <a href="https://x.com/lifeofchar1ie/status/2018350092588048641" target="_blank" rel="noopener" class="hero-carousel-item active" data-idx="0">
+                        <img src="https://unavatar.io/twitter/lifeofchar1ie" alt="" class="hero-carousel-avatar">
+                        <span class="hero-carousel-text">"Clear, elegant, and personal"</span>
+                        <span class="hero-carousel-author">— Charlie</span>
+                    </a>
+                    <a href="#testimonials" class="hero-carousel-item" data-idx="1">
+                        <span class="hero-carousel-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="hero-carousel-text">"Modern/futuristic meditation app"</span>
+                        <span class="hero-carousel-author">— Zid Kim</span>
+                    </a>
+                    <a href="https://x.com/HiEllenNg" target="_blank" rel="noopener" class="hero-carousel-item" data-idx="2">
+                        <img src="https://unavatar.io/twitter/HiEllenNg" alt="" class="hero-carousel-avatar">
+                        <span class="hero-carousel-text">"I actually dozed off in the middle of it"</span>
+                        <span class="hero-carousel-author">— Ellen</span>
+                    </a>
+                    <a href="#testimonials" class="hero-carousel-item" data-idx="3">
+                        <span class="hero-carousel-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="hero-carousel-text">"More personal than those commercial apps"</span>
+                        <span class="hero-carousel-author">— R O</span>
+                    </a>
+                    <a href="https://x.com/yusukelp" target="_blank" rel="noopener" class="hero-carousel-item" data-idx="4">
+                        <img src="https://unavatar.io/twitter/yusukelp" alt="" class="hero-carousel-avatar">
+                        <span class="hero-carousel-text">"This is insane. It blew my mind"</span>
+                        <span class="hero-carousel-author">— Yusuke</span>
+                    </a>
+                    <a href="#testimonials" class="hero-carousel-item" data-idx="5">
+                        <span class="hero-carousel-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="hero-carousel-text">"The best in the world"</span>
+                        <span class="hero-carousel-author">— Rich To Dust</span>
+                    </a>
+                </div>
             </div>
 
-            <div class="hero-cta-box fade-up visible fade-up-delay-8" style="margin-top: 20px;">
-                <p class="hero-cta-headline">Get <strong>5 free sessions</strong> when you download</p>
-                <div class="hero-cta-timer-row">
-                    <span class="hero-cta-timer-label">Offer ends in</span>
-                    <span class="countdown-timer" id="hero-timer">1d 23:59:59</span>
+            <!-- Right Column: Animated Phone Mockup -->
+            <div class="hero-right fade-up visible fade-up-delay-8">
+                <div class="hero-phone-frame">
+                    <canvas id="hero-phone-canvas" width="660" height="1400"></canvas>
                 </div>
-                <div class="app-store-buttons">
-                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-badge">
-                        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1737590400" alt="Download on the App Store">
-                    </a>
-                    <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer" class="app-store-badge google-play">
-                        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
-                    </a>
-                </div>
-            </div>
-
-            <div class="hero-quotes fade-up visible fade-up-delay-9">
-                <div class="hero-quotes-row">
-                    <a href="https://x.com/lifeofchar1ie/status/2018350092588048641" target="_blank" rel="noopener" class="hero-quote">
-                        <img src="https://unavatar.io/twitter/lifeofchar1ie" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"Clear, elegant, and personal"</span>
-                        <span class="hero-quote-author">— Charlie</span>
-                    </a>
-                    <a href="#testimonials" class="hero-quote">
-                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                        <span class="hero-quote-text">"Modern/futuristic meditation app"</span>
-                        <span class="hero-quote-author">— Zid Kim</span>
-                    </a>
-                    <a href="https://x.com/HiEllenNg" target="_blank" rel="noopener" class="hero-quote">
-                        <img src="https://unavatar.io/twitter/HiEllenNg" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"I actually dozed off in the middle of it 😂"</span>
-                        <span class="hero-quote-author">— Ellen</span>
-                    </a>
-                    <a href="#testimonials" class="hero-quote">
-                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                        <span class="hero-quote-text">"More personal than those commercial apps"</span>
-                        <span class="hero-quote-author">— R O</span>
-                    </a>
-                    <a href="https://x.com/yusukelp" target="_blank" rel="noopener" class="hero-quote">
-                        <img src="https://unavatar.io/twitter/yusukelp" alt="" class="hero-quote-avatar">
-                        <span class="hero-quote-text">"This is insane. It blew my mind"</span>
-                        <span class="hero-quote-author">— Yusuke</span>
-                    </a>
-                    <a href="#testimonials" class="hero-quote">
-                        <span class="hero-quote-text" style="color: #f5a623; font-style: normal; font-size: 13px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                        <span class="hero-quote-text">"The best in the world"</span>
-                        <span class="hero-quote-author">— Rich To Dust</span>
-                    </a>
-                </div>
-                <a href="#testimonials" class="hero-more-reviews">
-                    See more reviews
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </a>
             </div>
         </div>
 
-        <div class="scroll-indicator fade-up visible" style="transition-delay: 1.5s;">
-            <div class="scroll-mouse">
-                <div class="scroll-dot"></div>
-            </div>
-        </div>
+        <!-- scroll indicator removed — content visible below fold -->
     </section>
 
     <!-- Punchline Section -->
@@ -2881,7 +3046,7 @@
     </section>
 
     <!-- How It Works Section -->
-    <section>
+    <section id="how-it-works">
         <div class="section-container">
             <div class="section-header fade-up">
                 <h2>How It Works</h2>
@@ -3062,7 +3227,7 @@
                         <span>on the App Store</span>
                     </a>
                 </div>
-                <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Limited Time Early Access Bonus: Download now and get 5 free sessions.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Limited Time Early Access Bonus: Download now and get 4 free sessions.</p>
                 
                 <div class="app-store-buttons" style="justify-content: center;">
                     <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer" class="app-store-badge">
@@ -3081,7 +3246,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="faq-section">
+    <section class="faq-section" id="faq">
         <div class="faq-container">
             <div class="section-header fade-up">
                 <h2>Questions? We've got answers.</h2>
@@ -3148,7 +3313,7 @@
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>Whitespace is free to download. During our Limited Time Early Access Bonus, you get 5 free sessions to start. After that, you can choose a subscription plan based on how often you practice — Flow, Elevate, or Immerse.</p>
+                    <p>Whitespace is free to download. During our Limited Time Early Access Bonus, you get 4 free sessions to start. After that, you can choose a subscription plan based on how often you practice — Flow, Elevate, or Immerse.</p>
                 </div>
             </div>
 
@@ -3187,7 +3352,7 @@
                     </svg>
                 </button>
                 <div class="faq-answer">
-                    <p>Fair. The best way to find out is to try it. Download the app and get 5 free sessions — no commitment. If it's not for you, no hard feelings.</p>
+                    <p>Fair. The best way to find out is to try it. Download the app and get 4 free sessions — no commitment. If it's not for you, no hard feelings.</p>
                 </div>
             </div>
 
@@ -3311,6 +3476,53 @@
     <script src="/assets/js/phosphene.js"></script>
 
     <script>
+        // ==========================================
+        // Landing Header — scroll effects & active nav
+        // ==========================================
+        (function() {
+            const header = document.getElementById('landingHeader');
+            const navLinks = header.querySelectorAll('.landing-header-nav a[href^="#"]');
+            const sections = [];
+            navLinks.forEach(link => {
+                const id = link.getAttribute('href').slice(1);
+                const el = document.getElementById(id);
+                if (el) sections.push({ el, link });
+            });
+
+            function onScroll() {
+                // Scrolled background
+                header.classList.toggle('scrolled', window.scrollY > 60);
+
+                // Active section highlight
+                const scrollY = window.scrollY + 120;
+                let active = null;
+                sections.forEach(({ el, link }) => {
+                    if (el.offsetTop <= scrollY) active = link;
+                    link.classList.remove('active');
+                });
+                if (active) active.classList.add('active');
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+
+        // ==========================================
+        // Hero Quote Carousel — rotate every 1.5s
+        // ==========================================
+        (function() {
+            const carousel = document.getElementById('heroQuoteCarousel');
+            if (!carousel) return;
+            const items = carousel.querySelectorAll('.hero-carousel-item');
+            let current = 0;
+
+            setInterval(() => {
+                items[current].classList.remove('active');
+                current = (current + 1) % items.length;
+                items[current].classList.add('active');
+            }, 1500);
+        })();
+
         // ==========================================
         // Word-by-Word Animation for Hero Headline
         // ==========================================
@@ -3648,8 +3860,8 @@
         // Countdown Timer
         // ==========================================
         function initCountdown() {
-            // February 8, 2026 11:59:59 PM HST (UTC-10)
-            const endDate = new Date('2026-02-09T09:59:59Z').getTime();
+            // Sunday February 15, 2026 11:59:59 PM HST (UTC-10)
+            const endDate = new Date('2026-02-16T09:59:59Z').getTime();
             
             function updateCountdown() {
                 const now = new Date().getTime();
@@ -4671,6 +4883,57 @@
             // Timing inspired by create.tsx: 600ms fade+slide, ease-out, staggered
             const W = 660, H = 1400;
 
+            // Phosphene orbs for How It Works canvases (shared factory)
+            function createStepPhosphenes() {
+                const orbs = [];
+                const count = 8;
+                for (let i = 0; i < count; i++) {
+                    const hue = Math.random() > 0.4 ? 210 + Math.random() * 30 : 250 + Math.random() * 20;
+                    orbs.push({
+                        x: Math.random(), y: Math.random(),
+                        baseRadius: Math.random() * 0.35 + 0.40,
+                        opacity: Math.random() * 0.06 + 0.04,
+                        vx: (Math.random() - 0.5) * 0.00008,
+                        vy: (Math.random() - 0.5) * 0.00008,
+                        hue: hue, sat: Math.random() * 20 + 15, lit: Math.random() * 20 + 35,
+                        pulseSpeed: Math.random() * 0.006 + 0.003,
+                        pulsePhase: Math.random() * Math.PI * 2
+                    });
+                }
+                return orbs;
+            }
+            const stepOrbs1 = createStepPhosphenes();
+            const stepOrbs2 = createStepPhosphenes();
+            const stepOrbs3 = createStepPhosphenes();
+
+            function drawStepPhosphene(ctx, w, h, orbs) {
+                ctx.save();
+                ctx.globalCompositeOperation = 'screen';
+                orbs.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    p.vx += (Math.random() - 0.5) * 0.000002;
+                    p.vy += (Math.random() - 0.5) * 0.000002;
+                    p.vx = Math.max(-0.00015, Math.min(0.00015, p.vx));
+                    p.vy = Math.max(-0.00015, Math.min(0.00015, p.vy));
+                    if (p.x < -0.4) p.x = 1.4; if (p.x > 1.4) p.x = -0.4;
+                    if (p.y < -0.4) p.y = 1.4; if (p.y > 1.4) p.y = -0.4;
+                    p.pulsePhase += p.pulseSpeed;
+                    const pulse = Math.sin(p.pulsePhase);
+                    const r = (p.baseRadius + pulse * 0.06) * w;
+                    const op = Math.min(p.opacity + pulse * 0.015, 0.12);
+                    const px = p.x * w, py = p.y * h;
+                    const g = ctx.createRadialGradient(px, py, 0, px, py, r);
+                    g.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, ${op})`);
+                    g.addColorStop(0.4, `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, ${op * 0.5})`);
+                    g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.arc(px, py, r, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.restore();
+            }
+
             // Canvas wrapper elements for CSS opacity/transform transitions
             const frame1 = c1.closest('.screenshot-card');
             const frame2 = c2.closest('.screenshot-card');
@@ -4935,6 +5198,11 @@
                 drawProgramScreen(ctx2, W, H, programs[programIdx], screenAlpha[1]);
                 drawPlayerScreen(ctx3, W, H, playerTime, screenAlpha[2]);
 
+                // Overlay phosphene orbs on all 3 screens
+                drawStepPhosphene(ctx1, W, H, stepOrbs1);
+                drawStepPhosphene(ctx2, W, H, stepOrbs2);
+                drawStepPhosphene(ctx3, W, H, stepOrbs3);
+
                 // --- Draw touch phosphene on steps 2 & 3 during content phase ---
                 if (phase === 'content') {
                     const ct = phaseTime;
@@ -4986,6 +5254,9 @@
                         drawCreateScreen(ctx1, W, H, '', null, 0);
                         drawProgramScreen(ctx2, W, H, programs[0], 0);
                         drawPlayerScreen(ctx3, W, H, 0, 0);
+                        drawStepPhosphene(ctx1, W, H, stepOrbs1);
+                        drawStepPhosphene(ctx2, W, H, stepOrbs2);
+                        drawStepPhosphene(ctx3, W, H, stepOrbs3);
                         // Begin waterfall fade-in
                         phase = 'fadein-1';
                         phaseTime = 0;
@@ -4994,6 +5265,194 @@
                 });
             }, { threshold: 0.1 });
             observer.observe(c1.closest('.screenshots-grid'));
+
+            // =====================================================
+            // HERO PHONE MOCKUP — cycles Create → Program → Player
+            // =====================================================
+            const heroCanvas = document.getElementById('hero-phone-canvas');
+            if (heroCanvas) {
+                const hCtx = heroCanvas.getContext('2d');
+                const HW = 660, HH = 1400;
+
+                // Hero phone has its own independent state
+                let heroPhase = 'create';   // 'create' | 'xfade-cp' | 'program' | 'xfade-pp' | 'player' | 'xfade-pc'
+                let heroPhaseTime = 0;
+                let heroLastFrame = 0;
+
+                // Typing state for hero
+                let heroCharIdx = 0;
+                let heroTypingTimer = 0;
+                let heroErasing = false;
+                let heroIntentionIdx = 0;
+                let heroActiveCat = null;
+
+                // Program state
+                let heroProgramIdx = 0;
+
+                // Player state
+                let heroPlayerTime = 0;
+                const heroPlayerTotal = 636;
+
+                // Timings
+                const HERO_SCREEN_HOLD = 5000;  // show each screen for 5s
+                const HERO_XFADE_DUR = 800;     // crossfade duration
+
+                // Category mapping per intention
+                const heroIntentionCats = [null, 'sleep', 'focus'];
+
+                // Phosphene orbs for hero phone background (matches phosphene.js style)
+                const heroPhosphenes = [];
+                (function initHeroPhosphenes() {
+                    const count = 8;
+                    for (let i = 0; i < count; i++) {
+                        const hue = Math.random() > 0.4 ? 210 + Math.random() * 30 : 250 + Math.random() * 20;
+                        const sat = Math.random() * 20 + 15;
+                        const lit = Math.random() * 20 + 35;
+                        heroPhosphenes.push({
+                            x: Math.random(),
+                            y: Math.random(),
+                            baseRadius: Math.random() * 0.35 + 0.40,
+                            opacity: Math.random() * 0.06 + 0.04,
+                            vx: (Math.random() - 0.5) * 0.00008,
+                            vy: (Math.random() - 0.5) * 0.00008,
+                            hue: hue,
+                            sat: sat,
+                            lit: lit,
+                            pulseSpeed: Math.random() * 0.006 + 0.003,
+                            pulsePhase: Math.random() * Math.PI * 2
+                        });
+                    }
+                })();
+
+                function drawPhospheneOrbs(ctx, w, h, time) {
+                    ctx.save();
+                    heroPhosphenes.forEach(p => {
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vx += (Math.random() - 0.5) * 0.000002;
+                        p.vy += (Math.random() - 0.5) * 0.000002;
+                        p.vx = Math.max(-0.00015, Math.min(0.00015, p.vx));
+                        p.vy = Math.max(-0.00015, Math.min(0.00015, p.vy));
+                        if (p.x < -0.4) p.x = 1.4;
+                        if (p.x > 1.4) p.x = -0.4;
+                        if (p.y < -0.4) p.y = 1.4;
+                        if (p.y > 1.4) p.y = -0.4;
+                        p.pulsePhase += p.pulseSpeed;
+                        const pulse = Math.sin(p.pulsePhase);
+                        const r = (p.baseRadius + pulse * 0.06) * w;
+                        const op = Math.min(p.opacity + pulse * 0.015, 0.12);
+                        const px = p.x * w, py = p.y * h;
+                        const g = ctx.createRadialGradient(px, py, 0, px, py, r);
+                        g.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, ${op})`);
+                        g.addColorStop(0.4, `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, ${op * 0.5})`);
+                        g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                        ctx.fillStyle = g;
+                        ctx.beginPath();
+                        ctx.arc(px, py, r, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    ctx.restore();
+                }
+
+                function heroAnimate(ts) {
+                    if (!heroLastFrame) heroLastFrame = ts;
+                    const dt = Math.min(ts - heroLastFrame, 50);
+                    heroLastFrame = ts;
+                    heroPhaseTime += dt;
+
+                    // --- Typing always runs ---
+                    heroTypingTimer += dt;
+                    const curIntention = intentions[heroIntentionIdx];
+                    if (!heroErasing) {
+                        if (heroCharIdx < curIntention.length) {
+                            if (heroTypingTimer > 55) { heroCharIdx++; heroTypingTimer = 0; }
+                        } else if (heroTypingTimer > 2000) {
+                            heroErasing = true; heroTypingTimer = 0;
+                        }
+                    } else {
+                        if (heroCharIdx > 0) {
+                            if (heroTypingTimer > 30) { heroCharIdx--; heroTypingTimer = 0; }
+                        } else {
+                            heroErasing = false; heroTypingTimer = 0;
+                            heroIntentionIdx = (heroIntentionIdx + 1) % intentions.length;
+                            heroActiveCat = heroIntentionCats[heroIntentionIdx];
+                            heroProgramIdx = heroIntentionIdx;
+                        }
+                    }
+
+                    // Player time
+                    heroPlayerTime += 6 * (dt / 1000) * 10;
+                    if (heroPlayerTime > heroPlayerTotal) heroPlayerTime = 0;
+
+                    // --- Phase machine ---
+                    let createA = 0, programA = 0, playerA = 0;
+
+                    if (heroPhase === 'create') {
+                        createA = 1;
+                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-cp'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'xfade-cp') {
+                        const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
+                        const e = easeOutCubic(t);
+                        createA = 1 - e;
+                        programA = e;
+                        if (t >= 1) { heroPhase = 'program'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'program') {
+                        programA = 1;
+                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-pp'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'xfade-pp') {
+                        const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
+                        const e = easeOutCubic(t);
+                        programA = 1 - e;
+                        playerA = e;
+                        if (t >= 1) { heroPhase = 'player'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'player') {
+                        playerA = 1;
+                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-pc'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'xfade-pc') {
+                        const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
+                        const e = easeOutCubic(t);
+                        playerA = 1 - e;
+                        createA = e;
+                        if (t >= 1) { heroPhase = 'create'; heroPhaseTime = 0; }
+                    }
+
+                    // --- Draw: layer the screens with alpha compositing ---
+                    // Clear canvas
+                    hCtx.clearRect(0, 0, HW, HH);
+
+                    // Draw base chrome
+                    drawScreenBg(hCtx, 0, 0, HW, HH);
+
+                    // Draw whichever screens are active (blend via globalAlpha)
+                    const heroTyped = intentions[heroIntentionIdx].substring(0, heroCharIdx);
+                    if (createA > 0.01) {
+                        hCtx.save(); hCtx.globalAlpha = createA;
+                        drawCreateScreen(hCtx, HW, HH, heroTyped, heroActiveCat, 1);
+                        hCtx.restore();
+                    }
+                    if (programA > 0.01) {
+                        hCtx.save(); hCtx.globalAlpha = programA;
+                        drawProgramScreen(hCtx, HW, HH, programs[heroProgramIdx], 1);
+                        hCtx.restore();
+                    }
+                    if (playerA > 0.01) {
+                        hCtx.save(); hCtx.globalAlpha = playerA;
+                        drawPlayerScreen(hCtx, HW, HH, heroPlayerTime, 1);
+                        hCtx.restore();
+                    }
+
+                    // Overlay phosphene orbs using 'screen' blend so they add light
+                    hCtx.save();
+                    hCtx.globalCompositeOperation = 'screen';
+                    drawPhospheneOrbs(hCtx, HW, HH, ts);
+                    hCtx.restore();
+
+                    requestAnimationFrame(heroAnimate);
+                }
+
+                // Start hero animation immediately (it's above the fold)
+                requestAnimationFrame(heroAnimate);
+            }
         })();
 
     </script>
