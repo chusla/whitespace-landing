@@ -112,7 +112,117 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        @media (max-width: 768px) {
+        /* Hamburger Button */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            margin-right: -8px;
+            z-index: 1002;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .hamburger-btn svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+
+        .hamburger-btn .hamburger-line {
+            stroke: rgba(255, 255, 255, 0.7);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        .hamburger-btn:hover .hamburger-line {
+            stroke: rgba(255, 255, 255, 0.95);
+        }
+
+        .hamburger-btn.active .hamburger-line-1 {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .hamburger-btn.active .hamburger-line-2 {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active .hamburger-line-3 {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 998;
+            background: rgba(10, 10, 15, 0.6);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Mobile Menu Drawer */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 280px;
+            max-width: 80vw;
+            z-index: 999;
+            background: rgba(14, 14, 20, 0.97);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 100px 28px 40px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu a {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: color 0.2s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu a:active {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        @media (max-width: 900px) {
             .landing-header-content {
                 padding: 10px 16px;
             }
@@ -122,21 +232,16 @@
             }
 
             .landing-header-nav {
-                gap: 16px;
+                display: none;
             }
 
-            .landing-header-nav a {
-                font-size: 11px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .landing-header-nav {
-                gap: 10px;
+            .hamburger-btn {
+                display: block;
             }
 
-            .landing-header-nav a {
-                font-size: 10px;
+            .mobile-menu-overlay,
+            .mobile-menu {
+                display: block;
             }
         }
 
@@ -1399,9 +1504,10 @@
         }
 
         .final-cta .hero-badges-row {
-            flex-wrap: nowrap;
-            white-space: nowrap;
+            flex-wrap: wrap;
+            white-space: normal;
             font-size: 0.9em;
+            justify-content: center;
         }
 
         .cta-box {
@@ -2072,6 +2178,29 @@
             }
         }
 
+        .hero-badge-img {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .hero-badge-img:hover {
+            transform: translateY(-2px);
+            opacity: 0.85;
+        }
+
+        .hero-badge-img img {
+            height: 34px;
+            width: auto;
+            display: block;
+            border-radius: 6px;
+        }
+
+        @media (min-width: 480px) {
+            .hero-badge-img img {
+                height: 40px;
+            }
+        }
+
         /* Hero CTA Button - Phosphene Glow */
         .hero-cta-btn {
             display: inline-block;
@@ -2716,9 +2845,32 @@
                 <a href="#pricing">Pricing</a>
                 <a href="#faq">FAQ</a>
                 <a href="/blog">Blog</a>
+                <a href="https://orynth.dev/projects/whitespace-sleep-learn-focus" target="_blank" rel="noopener">$WHITE</a>
             </nav>
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line class="hamburger-line hamburger-line-1" x1="4" y1="6" x2="20" y2="6" />
+                    <line class="hamburger-line hamburger-line-2" x1="4" y1="12" x2="20" y2="12" />
+                    <line class="hamburger-line hamburger-line-3" x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+            </button>
         </div>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="#">Home</a>
+        <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener noreferrer">iOS</a>
+        <a href="https://play.google.com/store/apps/details?id=io.one2all.whitespace" target="_blank" rel="noopener noreferrer">Android</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#audio-sample">Sample</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="/blog">Blog</a>
+        <a href="https://orynth.dev/projects/whitespace-sleep-learn-focus" target="_blank" rel="noopener">$WHITE</a>
+    </nav>
 
     <canvas id="phosphene-canvas" data-intensity="1"></canvas>
 
@@ -2749,16 +2901,12 @@
                 </div>
 
                 <div class="hero-badges-row fade-up visible fade-up-delay-8" style="margin-top: 20px;">
-                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                        <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
-                        <span>#1 Product of the Day</span>
+                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-badge-img">
+                        <img src="src/assets/POTD1A.png" alt="Uneed Daily Winner #1">
                     </a>
-                    <span class="hero-badge-divider">·</span>
-                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                        <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
-                        <span>Top 3 Product of the Week</span>
+                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-badge-img">
+                        <img src="src/assets/POTW3A.png" alt="Uneed Weekly Winner #3">
                     </a>
-                    <span class="hero-badge-divider">·</span>
                     <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
                         <span style="color: #f5a623; font-style: normal; font-size: 12px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                         <span>on the App Store</span>
@@ -2798,6 +2946,10 @@
                         <span class="hero-carousel-author">— Rich To Dust</span>
                     </a>
                 </div>
+
+                <a href="https://orynth.dev/projects/whitespace-sleep-learn-focus" target="_blank" rel="noopener" class="hero-badge-img fade-up visible fade-up-delay-9" style="margin-top: 12px;">
+                    <img src="https://orynth.dev/api/badge/whitespace-sleep-learn-focus?theme=dark&style=minimal" alt="Featured on Orynth" width="152" height="48">
+                </a>
             </div>
 
             <!-- Right Column: Animated Phone Mockup -->
@@ -3325,22 +3477,6 @@
             <div class="cta-box">
                 <img src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" alt="Whitespace" style="width: 88px; height: auto; margin-bottom: 20px; opacity: 0.85;">
                 <h2 class="crimson">Start 10x'ing from the inside out</h2>
-                <div class="hero-badges-row" style="margin-bottom: 24px;">
-                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                        <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
-                        <span>#1 Product of the Day</span>
-                    </a>
-                    <span class="hero-badge-divider">·</span>
-                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                        <img src="src/assets/uneed-logo.avif" alt="Uneed" class="potd-badge-inline">
-                        <span>Top 3 Product of the Week</span>
-                    </a>
-                    <span class="hero-badge-divider">·</span>
-                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
-                        <span style="color: #f5a623; font-style: normal; font-size: 12px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                        <span>on the App Store</span>
-                    </a>
-                </div>
                 <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 32px; font-size: 1.125rem;">Download free today and get <strong style="color: rgba(255,255,255,0.85);">4 bonus sessions</strong>. Limited time only.</p>
                 
                 <div class="app-store-buttons" style="justify-content: center;">
@@ -3354,6 +3490,18 @@
                 <div class="countdown-wrapper" id="ctaCountdown" style="margin-top: 24px;">
                     <span class="countdown-label">Bonus ends in</span>
                     <span class="countdown-timer" id="cta-timer">6d 05:32:18</span>
+                </div>
+                <div class="hero-badges-row" style="margin-top: 32px;">
+                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-badge-img">
+                        <img src="src/assets/POTD1A.png" alt="Uneed Daily Winner #1">
+                    </a>
+                    <a href="https://www.uneed.best/tool/whitespace" target="_blank" rel="noopener" class="hero-badge-img">
+                        <img src="src/assets/POTW3A.png" alt="Uneed Weekly Winner #3">
+                    </a>
+                    <a href="https://apps.apple.com/us/app/whitespace-sleep-learn-focus/id6755617899" target="_blank" rel="noopener" class="hero-potd-row" style="text-decoration: none;">
+                        <span style="color: #f5a623; font-style: normal; font-size: 12px; letter-spacing: 1px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span>on the App Store</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -3619,6 +3767,63 @@
 
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
+        })();
+
+        // ==========================================
+        // Mobile Hamburger Menu
+        // ==========================================
+        (function() {
+            const btn = document.getElementById('hamburgerBtn');
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            if (!btn || !menu || !overlay) return;
+
+            function openMenu() {
+                btn.classList.add('active');
+                menu.classList.add('active');
+                overlay.classList.add('active');
+                btn.setAttribute('aria-expanded', 'true');
+                btn.setAttribute('aria-label', 'Close menu');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                btn.classList.remove('active');
+                menu.classList.remove('active');
+                overlay.classList.remove('active');
+                btn.setAttribute('aria-expanded', 'false');
+                btn.setAttribute('aria-label', 'Open menu');
+                document.body.style.overflow = '';
+            }
+
+            btn.addEventListener('click', function() {
+                if (menu.classList.contains('active')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            overlay.addEventListener('click', closeMenu);
+
+            // Close on nav link click
+            menu.querySelectorAll('a').forEach(function(link) {
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && menu.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
+
+            // Close if resized back to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 900 && menu.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
         })();
 
         // ==========================================
