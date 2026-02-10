@@ -239,7 +239,7 @@
         @media (min-width: 900px) {
             .hero-right {
                 display: flex;
-                flex: 0 0 420px;
+                flex: 0 0 370px;
                 align-items: center;
                 justify-content: center;
                 max-height: calc(100vh - 120px);
@@ -248,7 +248,7 @@
         }
 
         .hero-phone-frame {
-            width: 360px;
+            width: 310px;
             position: relative;
             padding: 8px;
             background: linear-gradient(145deg, rgba(40, 42, 54, 0.8), rgba(20, 22, 30, 0.9));
@@ -4569,11 +4569,12 @@
                 ctx.globalAlpha = elA(a, 1);
                 const inputY = startY + titleLineH*2 + h*0.08;
                 ctx.font = `300 ${w*0.04}px Crimson Pro, serif`;
-                ctx.fillStyle = displayText ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
+                const hasText = displayText != null; // null = placeholder, "" = empty typed input
+                ctx.fillStyle = hasText && displayText.length > 0 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)';
                 ctx.textAlign = 'center';
-                ctx.fillText(displayText || 'feel confident before my presentation', w/2, inputY);
-                if (displayText) {
-                    const tw = ctx.measureText(displayText).width;
+                ctx.fillText(hasText ? (displayText || '') : 'feel confident before my presentation', w/2, inputY);
+                if (hasText) {
+                    const tw = displayText.length > 0 ? ctx.measureText(displayText).width : 0;
                     const cursorVisible = (Date.now() % 1000) < 500;
                     if (cursorVisible) {
                         ctx.fillStyle = 'rgba(107,140,255,0.8)';
@@ -4719,18 +4720,29 @@
                 let curY = h * SAFE_TOP_RATIO + 20*s;
                 let ei = 0; // element index for stagger
 
-                // Element 0: Header
+                // Element 0: Header (back chevron + "Program Preview" + heart)
                 ctx.globalAlpha = elA(a, ei++);
                 ctx.fillStyle = 'rgba(255,255,255,0.55)';
                 ctx.font = `400 ${15*s}px Inter, sans-serif`;
                 ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
                 ctx.fillText('Program Preview', w/2, curY);
+                // Back chevron
                 ctx.strokeStyle = 'rgba(255,255,255,0.55)';
                 ctx.lineWidth = 1.8*s;
                 ctx.beginPath();
                 ctx.moveTo(pad + 8*s, curY - 3*s);
                 ctx.lineTo(pad + 2*s, curY - 9*s);
                 ctx.lineTo(pad + 8*s, curY - 15*s);
+                ctx.stroke();
+                // Heart icon next to back button (matching player modal)
+                const ppHeartX = pad + 24*s, ppHeartY = curY - 9*s, ppHeartSz = 8*s;
+                ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1.5*s;
+                ctx.beginPath();
+                ctx.moveTo(ppHeartX, ppHeartY + ppHeartSz * 0.3);
+                ctx.bezierCurveTo(ppHeartX, ppHeartY - ppHeartSz * 0.25, ppHeartX - ppHeartSz, ppHeartY - ppHeartSz * 0.25, ppHeartX - ppHeartSz, ppHeartY + ppHeartSz * 0.1);
+                ctx.bezierCurveTo(ppHeartX - ppHeartSz, ppHeartY + ppHeartSz * 0.55, ppHeartX, ppHeartY + ppHeartSz * 0.85, ppHeartX, ppHeartY + ppHeartSz);
+                ctx.bezierCurveTo(ppHeartX, ppHeartY + ppHeartSz * 0.85, ppHeartX + ppHeartSz, ppHeartY + ppHeartSz * 0.55, ppHeartX + ppHeartSz, ppHeartY + ppHeartSz * 0.1);
+                ctx.bezierCurveTo(ppHeartX + ppHeartSz, ppHeartY - ppHeartSz * 0.25, ppHeartX, ppHeartY - ppHeartSz * 0.25, ppHeartX, ppHeartY + ppHeartSz * 0.3);
                 ctx.stroke();
                 curY += 34*s;
 
@@ -4769,10 +4781,6 @@
                 ctx.textAlign = 'left';
                 const statsStr = `${prog.stats.sessions} sessions  ·  ${prog.stats.duration}  ·  ${prog.stats.credits} credits`;
                 ctx.fillText(statsStr, pad + 14*s, curY);
-                const statsW = ctx.measureText(statsStr).width;
-                ctx.fillStyle = 'rgba(255,255,255,0.3)';
-                ctx.font = `${13*s}px sans-serif`;
-                ctx.fillText('\u2661', pad + 14*s + statsW + 10*s, curY + 1*s);
                 curY += 28*s;
 
                 // Element 4: Create All + Customize
@@ -4911,19 +4919,27 @@
                 // Element 0: Top nav
                 ctx.globalAlpha = elA(a, ei++);
                 const navY = h * SAFE_TOP_RATIO + 16*s;
+                // Back chevron
                 ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 1.5*s;
                 ctx.beginPath();
                 ctx.moveTo(pad + 6*s, navY - 2*s);
                 ctx.lineTo(pad, navY - 8*s);
                 ctx.lineTo(pad + 6*s, navY - 14*s);
                 ctx.stroke();
-                ctx.font = `${14*s}px sans-serif`;
-                ctx.fillStyle = 'rgba(255,255,255,0.4)';
-                ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-                ctx.fillText('\u2661', pad + 20*s, navY);
+                // Heart icon (vector outline, sized to match UI)
+                const heartX = pad + 22*s, heartY = navY - 8*s, heartSz = 9*s;
+                ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1.5*s;
+                ctx.beginPath();
+                ctx.moveTo(heartX, heartY + heartSz * 0.3);
+                ctx.bezierCurveTo(heartX, heartY - heartSz * 0.25, heartX - heartSz, heartY - heartSz * 0.25, heartX - heartSz, heartY + heartSz * 0.1);
+                ctx.bezierCurveTo(heartX - heartSz, heartY + heartSz * 0.55, heartX, heartY + heartSz * 0.85, heartX, heartY + heartSz);
+                ctx.bezierCurveTo(heartX, heartY + heartSz * 0.85, heartX + heartSz, heartY + heartSz * 0.55, heartX + heartSz, heartY + heartSz * 0.1);
+                ctx.bezierCurveTo(heartX + heartSz, heartY - heartSz * 0.25, heartX, heartY - heartSz * 0.25, heartX, heartY + heartSz * 0.3);
+                ctx.stroke();
+                // Close text
                 ctx.font = `400 ${13*s}px Inter, sans-serif`;
                 ctx.fillStyle = 'rgba(255,255,255,0.4)';
-                ctx.textAlign = 'right';
+                ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
                 ctx.fillText('Close', w - pad, navY);
 
                 const footerY = h - 50*s;
@@ -5398,7 +5414,7 @@
                         setScreenVisuals(1, 0, SLIDE_PX);
                         setScreenVisuals(2, 0, SLIDE_PX);
                         // Draw initial screens (chrome visible, content hidden)
-                        drawCreateScreen(ctx1, W, H, '', null, 0);
+                        drawCreateScreen(ctx1, W, H, null, null, 0);
                         drawProgramScreen(ctx2, W, H, programs[0], 0);
                         drawPlayerScreen(ctx3, W, H, 0, 0);
                         drawStepPhosphene(ctx1, W, H, stepOrbs1);
@@ -5422,7 +5438,8 @@
                 const HW = 660, HH = 1400;
 
                 // Hero phone has its own independent state
-                let heroPhase = 'create';   // 'create' | 'xfade-cp' | 'program' | 'xfade-pp' | 'player' | 'xfade-pc'
+                // Fade-out-then-fade-in: only one screen visible at a time (no overlapping text)
+                let heroPhase = 'create';   // 'create' | 'fadeout-c' | 'fadein-p' | 'program' | 'fadeout-p' | 'fadein-pl' | 'player' | 'fadeout-pl' | 'fadein-c'
                 let heroPhaseTime = 0;
                 let heroLastFrame = 0;
 
@@ -5442,10 +5459,14 @@
 
                 // Timings
                 const HERO_SCREEN_HOLD = 5000;  // show each screen for 5s
-                const HERO_XFADE_DUR = 1000;    // crossfade duration
+                const HERO_FADE_DUR = 500;      // fade duration (overlay curtain)
+                const HERO_BLANK    = 400;      // blank beat between screens
 
                 // Category mapping per intention
                 const heroIntentionCats = [null, 'sleep', 'focus'];
+
+                // Touch phosphene state for hero phone
+                let heroTouchTime = 0; // time within current screen hold
 
                 // Phosphene orbs for hero phone background (matches phosphene.js style)
                 const heroPhosphenes = [];
@@ -5507,23 +5528,24 @@
                     heroLastFrame = ts;
                     heroPhaseTime += dt;
 
-                    // --- Typing always runs ---
-                    heroTypingTimer += dt;
-                    const curIntention = intentions[heroIntentionIdx];
-                    if (!heroErasing) {
-                        if (heroCharIdx < curIntention.length) {
-                            if (heroTypingTimer > 55) { heroCharIdx++; heroTypingTimer = 0; }
-                        } else if (heroTypingTimer > 2000) {
-                            heroErasing = true; heroTypingTimer = 0;
-                        }
-                    } else {
-                        if (heroCharIdx > 0) {
-                            if (heroTypingTimer > 30) { heroCharIdx--; heroTypingTimer = 0; }
+                    // --- Typing runs only during the create HOLD phase (frozen during fades) ---
+                    if (heroPhase === 'create') {
+                        heroTypingTimer += dt;
+                        const curIntention = intentions[heroIntentionIdx];
+                        if (!heroErasing) {
+                            if (heroCharIdx < curIntention.length) {
+                                if (heroTypingTimer > 55) { heroCharIdx++; heroTypingTimer = 0; }
+                            } else if (heroTypingTimer > 2000) {
+                                heroErasing = true; heroTypingTimer = 0;
+                            }
                         } else {
-                            heroErasing = false; heroTypingTimer = 0;
-                            heroIntentionIdx = (heroIntentionIdx + 1) % intentions.length;
-                            heroActiveCat = heroIntentionCats[heroIntentionIdx];
-                            heroProgramIdx = heroIntentionIdx;
+                            if (heroCharIdx > 0) {
+                                if (heroTypingTimer > 30) { heroCharIdx--; heroTypingTimer = 0; }
+                            } else {
+                                heroErasing = false; heroTypingTimer = 0;
+                                heroIntentionIdx = (heroIntentionIdx + 1) % intentions.length;
+                                heroActiveCat = heroIntentionCats[heroIntentionIdx];
+                            }
                         }
                     }
 
@@ -5531,63 +5553,140 @@
                     heroPlayerTime += 6 * (dt / 1000) * 10;
                     if (heroPlayerTime > heroPlayerTotal) heroPlayerTime = 0;
 
-                    // --- Phase machine ---
-                    let createA = 0, programA = 0, playerA = 0;
+                    // --- Phase machine: fade-out → blank → fade-in (no overlap ever) ---
+                    // heroScreen: which content to draw (only during hold & fade phases)
+                    // overlayA: 0 = content fully visible, 1 = content fully hidden behind dark curtain
+                    let heroScreen = 'create';
+                    let overlayA = 0;        // dark curtain alpha (0=see content, 1=hidden)
+                    let heroHasTabBar = true;
+                    let drawContent = true;  // false during blank phase
+
+                    // Advance touch timer during hold phases only
+                    if (heroPhase === 'create' || heroPhase === 'program' || heroPhase === 'player') {
+                        heroTouchTime += dt;
+                    }
 
                     if (heroPhase === 'create') {
-                        createA = 1;
-                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-cp'; heroPhaseTime = 0; }
-                    } else if (heroPhase === 'xfade-cp') {
-                        const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
-                        const e = easeInOutCubic(t);
-                        createA = 1 - e;
-                        programA = e;
-                        if (t >= 1) { heroPhase = 'program'; heroPhaseTime = 0; }
+                        heroScreen = 'create'; heroHasTabBar = true; overlayA = 0;
+                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'fadeout-c'; heroPhaseTime = 0; heroTouchTime = 0; }
+                    } else if (heroPhase === 'fadeout-c') {
+                        heroScreen = 'create'; heroHasTabBar = true;
+                        overlayA = easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
+                        if (heroPhaseTime >= HERO_FADE_DUR) {
+                            heroPhase = 'blank-cp'; heroPhaseTime = 0;
+                            heroProgramIdx = heroIntentionIdx; // lock content
+                        }
+                    } else if (heroPhase === 'blank-cp') {
+                        heroHasTabBar = true; drawContent = false;
+                        if (heroPhaseTime >= HERO_BLANK) { heroPhase = 'fadein-p'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'fadein-p') {
+                        heroScreen = 'program'; heroHasTabBar = true;
+                        overlayA = 1 - easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
+                        if (heroPhaseTime >= HERO_FADE_DUR) { heroPhase = 'program'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'program') {
-                        programA = 1;
-                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-pp'; heroPhaseTime = 0; }
-                    } else if (heroPhase === 'xfade-pp') {
-                        const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
-                        const e = easeInOutCubic(t);
-                        programA = 1 - e;
-                        playerA = e;
-                        if (t >= 1) { heroPhase = 'player'; heroPhaseTime = 0; }
+                        heroScreen = 'program'; heroHasTabBar = true; overlayA = 0;
+                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'fadeout-p'; heroPhaseTime = 0; heroTouchTime = 0; }
+                    } else if (heroPhase === 'fadeout-p') {
+                        heroScreen = 'program'; heroHasTabBar = true;
+                        overlayA = easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
+                        if (heroPhaseTime >= HERO_FADE_DUR) {
+                            heroPhase = 'blank-pp'; heroPhaseTime = 0;
+                            heroPlayerTime = 0; // reset player
+                        }
+                    } else if (heroPhase === 'blank-pp') {
+                        heroHasTabBar = false; drawContent = false;
+                        if (heroPhaseTime >= HERO_BLANK) { heroPhase = 'fadein-pl'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'fadein-pl') {
+                        heroScreen = 'player'; heroHasTabBar = false;
+                        overlayA = 1 - easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
+                        if (heroPhaseTime >= HERO_FADE_DUR) { heroPhase = 'player'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'player') {
-                        playerA = 1;
-                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'xfade-pc'; heroPhaseTime = 0; }
-                    } else if (heroPhase === 'xfade-pc') {
-                        const t = Math.min(heroPhaseTime / HERO_XFADE_DUR, 1);
-                        const e = easeInOutCubic(t);
-                        playerA = 1 - e;
-                        createA = e;
-                        if (t >= 1) { heroPhase = 'create'; heroPhaseTime = 0; }
+                        heroScreen = 'player'; heroHasTabBar = false; overlayA = 0;
+                        if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'fadeout-pl'; heroPhaseTime = 0; heroTouchTime = 0; }
+                    } else if (heroPhase === 'fadeout-pl') {
+                        heroScreen = 'player'; heroHasTabBar = false;
+                        overlayA = easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
+                        if (heroPhaseTime >= HERO_FADE_DUR) { heroPhase = 'blank-pc'; heroPhaseTime = 0; }
+                    } else if (heroPhase === 'blank-pc') {
+                        heroHasTabBar = true; drawContent = false;
+                        if (heroPhaseTime >= HERO_BLANK) {
+                            heroPhase = 'fadein-c'; heroPhaseTime = 0;
+                            // Reset typing state so create screen starts fresh (no flash of full text)
+                            heroCharIdx = 0;
+                            heroTypingTimer = 0;
+                            heroErasing = false;
+                        }
+                    } else if (heroPhase === 'fadein-c') {
+                        heroScreen = 'create'; heroHasTabBar = true;
+                        overlayA = 1 - easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
+                        if (heroPhaseTime >= HERO_FADE_DUR) { heroPhase = 'create'; heroPhaseTime = 0; }
                     }
 
-                    // --- Draw: layer the screens with alpha compositing ---
-                    // Clear canvas
+                    // --- Draw ---
                     hCtx.clearRect(0, 0, HW, HH);
+                    const hS = HW / 390;
 
-                    // Draw shared chrome once at full alpha (no flicker during crossfade)
-                    // Use tab bar for create/program, home bar for player
-                    const hasTabBar = playerA < 0.99;
-                    drawChrome(hCtx, HW, HH, hasTabBar, 0);
+                    // 1. Background
+                    drawScreenBg(hCtx, 0, 0, HW, HH);
 
-                    // Cross-fade only the CONTENT of each screen (skip chrome)
-                    const heroTyped = intentions[heroIntentionIdx].substring(0, heroCharIdx);
-                    if (createA > 0.01) {
-                        hCtx.save(); hCtx.globalAlpha = createA;
-                        drawCreateScreen(hCtx, HW, HH, heroTyped, heroActiveCat, 1, true);
+                    // 2. Screen content at full alpha (only during hold/fade phases)
+                    if (drawContent) {
+                        const heroTyped = intentions[heroIntentionIdx].substring(0, heroCharIdx);
+                        if (heroScreen === 'create') {
+                            drawCreateScreen(hCtx, HW, HH, heroTyped, heroActiveCat, 1, true);
+                        } else if (heroScreen === 'program') {
+                            drawProgramScreen(hCtx, HW, HH, programs[heroProgramIdx], 1, true);
+                        } else if (heroScreen === 'player') {
+                            drawPlayerScreen(hCtx, HW, HH, heroPlayerTime, 1, true);
+                        }
+                    }
+
+                    // 3. Dark curtain overlay — covers only the content area, not chrome
+                    if (overlayA > 0.01 || !drawContent) {
+                        const curtainA = drawContent ? overlayA : 1;
+                        hCtx.save();
+                        hCtx.globalAlpha = curtainA;
+                        drawScreenBg(hCtx, 0, 0, HW, HH);
                         hCtx.restore();
                     }
-                    if (programA > 0.01) {
-                        hCtx.save(); hCtx.globalAlpha = programA;
-                        drawProgramScreen(hCtx, HW, HH, programs[heroProgramIdx], 1, true);
-                        hCtx.restore();
+
+                    // 4. Chrome ON TOP of curtain (always fully visible)
+                    drawStatusBar(hCtx, 0, 0, HW, HH);
+                    drawDynamicIsland(hCtx, 0, 0, HW, HH);
+                    if (heroHasTabBar) {
+                        drawTabBar(hCtx, HW, HH, hS, 0);
+                    } else {
+                        drawHomeBar(hCtx, HW, HH, hS);
                     }
-                    if (playerA > 0.01) {
-                        hCtx.save(); hCtx.globalAlpha = playerA;
-                        drawPlayerScreen(hCtx, HW, HH, heroPlayerTime, 1, true);
-                        hCtx.restore();
+
+                    // 5. Touch phosphene cursor (screens 2 & 3 only, during hold phase)
+                    if (drawContent && overlayA < 0.1 && (heroScreen === 'program' || heroScreen === 'player')) {
+                        const ht = heroTouchTime;
+                        const HTDELAY = 1500;
+                        const HTMOVE  = 700;
+                        const HTTAP   = HTDELAY + HTMOVE + 200;
+                        const HTRIPPLE = 500;
+                        const HTEND   = HTTAP + HTRIPPLE + 600;
+
+                        if (ht >= HTDELAY && ht < HTEND) {
+                            let tStart, tTarget;
+                            if (heroScreen === 'program') {
+                                tStart  = { x: 500, y: 500 };
+                                tTarget = { x: 330, y: 650 };
+                            } else {
+                                tStart  = { x: 500, y: 500 };
+                                tTarget = { x: 330, y: 640 };
+                            }
+
+                            const moveT = Math.min(1, Math.max(0, (ht - HTDELAY) / HTMOVE));
+                            const eased = easeOutCubic(moveT);
+                            const tx = lerp(tStart.x, tTarget.x, eased);
+                            const ty = lerp(tStart.y, tTarget.y, eased);
+                            const tFadeIn = Math.min(1, (ht - HTDELAY) / 300);
+                            const tFadeOut = ht > HTTAP + HTRIPPLE ? Math.max(0, 1 - (ht - HTTAP - HTRIPPLE) / 500) : 1;
+                            const tapP = ht >= HTTAP ? Math.min(1, (ht - HTTAP) / HTRIPPLE) : 0;
+                            drawTouchPhosphene(hCtx, tx, ty, tFadeIn * tFadeOut, tapP);
+                        }
                     }
 
                     // Overlay phosphene orbs using 'screen' blend so they add light
