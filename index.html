@@ -2732,9 +2732,7 @@
                 </h1>
 
                 <p class="scenario-tagline fade-up visible fade-up-delay-7">Whitespace crafts <em>fresh, personalized</em> spoken meditations for exactly where you are. <strong>On-demand.</strong></p>
-                <p class="hero-cta-lead fade-up visible fade-up-delay-7" style="font-family: 'Inter', sans-serif; font-size: 0.95rem; color: rgba(255,255,255,0.55); margin-top: 28px; margin-bottom: 0;">Why wait? Start 10x'ing your inner self right now.</p>
-
-                <div class="hero-cta-box fade-up visible fade-up-delay-8" style="margin-top: 16px;">
+                <div class="hero-cta-box fade-up visible fade-up-delay-8" style="margin-top: 44px;">
                     <p class="hero-cta-headline">Download free + get <strong>4 bonus sessions</strong></p>
                     <div class="hero-cta-timer-row">
                         <span class="hero-cta-timer-label">Limited time. Offer ends in</span>
@@ -4734,15 +4732,16 @@
                 ctx.lineTo(pad + 2*s, curY - 9*s);
                 ctx.lineTo(pad + 8*s, curY - 15*s);
                 ctx.stroke();
-                // Heart icon next to back button (matching player modal)
-                const ppHeartX = pad + 24*s, ppHeartY = curY - 9*s, ppHeartSz = 8*s;
+                // Heart icon next to back button (matching player modal, proper proportions)
+                const phcx = pad + 24*s, phcy = curY - 9*s;
+                const phw = 7*s, phh = 8*s;
                 ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1.5*s;
                 ctx.beginPath();
-                ctx.moveTo(ppHeartX, ppHeartY + ppHeartSz * 0.3);
-                ctx.bezierCurveTo(ppHeartX, ppHeartY - ppHeartSz * 0.25, ppHeartX - ppHeartSz, ppHeartY - ppHeartSz * 0.25, ppHeartX - ppHeartSz, ppHeartY + ppHeartSz * 0.1);
-                ctx.bezierCurveTo(ppHeartX - ppHeartSz, ppHeartY + ppHeartSz * 0.55, ppHeartX, ppHeartY + ppHeartSz * 0.85, ppHeartX, ppHeartY + ppHeartSz);
-                ctx.bezierCurveTo(ppHeartX, ppHeartY + ppHeartSz * 0.85, ppHeartX + ppHeartSz, ppHeartY + ppHeartSz * 0.55, ppHeartX + ppHeartSz, ppHeartY + ppHeartSz * 0.1);
-                ctx.bezierCurveTo(ppHeartX + ppHeartSz, ppHeartY - ppHeartSz * 0.25, ppHeartX, ppHeartY - ppHeartSz * 0.25, ppHeartX, ppHeartY + ppHeartSz * 0.3);
+                ctx.moveTo(phcx, phcy + phh);
+                ctx.bezierCurveTo(phcx - phw*0.2, phcy + phh*0.6, phcx - phw, phcy + phh*0.2, phcx - phw, phcy - phh*0.15);
+                ctx.bezierCurveTo(phcx - phw, phcy - phh*0.7, phcx - phw*0.2, phcy - phh, phcx, phcy - phh*0.6);
+                ctx.bezierCurveTo(phcx + phw*0.2, phcy - phh, phcx + phw, phcy - phh*0.7, phcx + phw, phcy - phh*0.15);
+                ctx.bezierCurveTo(phcx + phw, phcy + phh*0.2, phcx + phw*0.2, phcy + phh*0.6, phcx, phcy + phh);
                 ctx.stroke();
                 curY += 34*s;
 
@@ -4926,15 +4925,16 @@
                 ctx.lineTo(pad, navY - 8*s);
                 ctx.lineTo(pad + 6*s, navY - 14*s);
                 ctx.stroke();
-                // Heart icon (vector outline, sized to match UI)
-                const heartX = pad + 22*s, heartY = navY - 8*s, heartSz = 9*s;
+                // Heart icon (vector outline, proper proportions)
+                const hcx = pad + 22*s, hcy = navY - 8*s;
+                const hw = 8*s, hh = 9*s; // half-width, half-height
                 ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1.5*s;
                 ctx.beginPath();
-                ctx.moveTo(heartX, heartY + heartSz * 0.3);
-                ctx.bezierCurveTo(heartX, heartY - heartSz * 0.25, heartX - heartSz, heartY - heartSz * 0.25, heartX - heartSz, heartY + heartSz * 0.1);
-                ctx.bezierCurveTo(heartX - heartSz, heartY + heartSz * 0.55, heartX, heartY + heartSz * 0.85, heartX, heartY + heartSz);
-                ctx.bezierCurveTo(heartX, heartY + heartSz * 0.85, heartX + heartSz, heartY + heartSz * 0.55, heartX + heartSz, heartY + heartSz * 0.1);
-                ctx.bezierCurveTo(heartX + heartSz, heartY - heartSz * 0.25, heartX, heartY - heartSz * 0.25, heartX, heartY + heartSz * 0.3);
+                ctx.moveTo(hcx, hcy + hh);  // bottom tip
+                ctx.bezierCurveTo(hcx - hw*0.2, hcy + hh*0.6, hcx - hw, hcy + hh*0.2, hcx - hw, hcy - hh*0.15);
+                ctx.bezierCurveTo(hcx - hw, hcy - hh*0.7, hcx - hw*0.2, hcy - hh, hcx, hcy - hh*0.6);
+                ctx.bezierCurveTo(hcx + hw*0.2, hcy - hh, hcx + hw, hcy - hh*0.7, hcx + hw, hcy - hh*0.15);
+                ctx.bezierCurveTo(hcx + hw, hcy + hh*0.2, hcx + hw*0.2, hcy + hh*0.6, hcx, hcy + hh);
                 ctx.stroke();
                 // Close text
                 ctx.font = `400 ${13*s}px Inter, sans-serif`;
@@ -5439,14 +5439,13 @@
 
                 // Hero phone has its own independent state
                 // Fade-out-then-fade-in: only one screen visible at a time (no overlapping text)
-                let heroPhase = 'create';   // 'create' | 'fadeout-c' | 'fadein-p' | 'program' | 'fadeout-p' | 'fadein-pl' | 'player' | 'fadeout-pl' | 'fadein-c'
+                let heroPhase = 'fadein-c'; // start with staggered fade-in for first screen
                 let heroPhaseTime = 0;
                 let heroLastFrame = 0;
 
                 // Typing state for hero
                 let heroCharIdx = 0;
                 let heroTypingTimer = 0;
-                let heroErasing = false;
                 let heroIntentionIdx = 0;
                 let heroActiveCat = null;
 
@@ -5459,7 +5458,8 @@
 
                 // Timings
                 const HERO_SCREEN_HOLD = 5000;  // show each screen for 5s
-                const HERO_FADE_DUR = 500;      // fade duration (overlay curtain)
+                const HERO_FADE_DUR = 500;      // fade-out duration (overlay curtain)
+                const HERO_FADEIN_DUR = 1200;   // fade-in duration (staggered elements, matching How It Works)
                 const HERO_BLANK    = 400;      // blank beat between screens
 
                 // Category mapping per intention
@@ -5528,25 +5528,14 @@
                     heroLastFrame = ts;
                     heroPhaseTime += dt;
 
-                    // --- Typing runs only during the create HOLD phase (frozen during fades) ---
+                    // --- Typing runs only during the create HOLD phase (type once, then hold) ---
                     if (heroPhase === 'create') {
-                        heroTypingTimer += dt;
                         const curIntention = intentions[heroIntentionIdx];
-                        if (!heroErasing) {
-                            if (heroCharIdx < curIntention.length) {
-                                if (heroTypingTimer > 55) { heroCharIdx++; heroTypingTimer = 0; }
-                            } else if (heroTypingTimer > 2000) {
-                                heroErasing = true; heroTypingTimer = 0;
-                            }
-                        } else {
-                            if (heroCharIdx > 0) {
-                                if (heroTypingTimer > 30) { heroCharIdx--; heroTypingTimer = 0; }
-                            } else {
-                                heroErasing = false; heroTypingTimer = 0;
-                                heroIntentionIdx = (heroIntentionIdx + 1) % intentions.length;
-                                heroActiveCat = heroIntentionCats[heroIntentionIdx];
-                            }
+                        if (heroCharIdx < curIntention.length) {
+                            heroTypingTimer += dt;
+                            if (heroTypingTimer > 55) { heroCharIdx++; heroTypingTimer = 0; }
                         }
+                        // Once fully typed, just hold — no erasing
                     }
 
                     // Player time
@@ -5557,7 +5546,8 @@
                     // heroScreen: which content to draw (only during hold & fade phases)
                     // overlayA: 0 = content fully visible, 1 = content fully hidden behind dark curtain
                     let heroScreen = 'create';
-                    let overlayA = 0;        // dark curtain alpha (0=see content, 1=hidden)
+                    let overlayA = 0;        // dark curtain alpha (0=see content, 1=hidden) — used for fade-outs
+                    let heroContentA = 1;    // content alpha (0-1) — used for staggered fade-ins
                     let heroHasTabBar = true;
                     let drawContent = true;  // false during blank phase
 
@@ -5581,8 +5571,9 @@
                         if (heroPhaseTime >= HERO_BLANK) { heroPhase = 'fadein-p'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'fadein-p') {
                         heroScreen = 'program'; heroHasTabBar = true;
-                        overlayA = 1 - easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
-                        if (heroPhaseTime >= HERO_FADE_DUR) { heroPhase = 'program'; heroPhaseTime = 0; }
+                        heroContentA = easeOutCubic(Math.min(heroPhaseTime / HERO_FADEIN_DUR, 1));
+                        overlayA = 0;
+                        if (heroPhaseTime >= HERO_FADEIN_DUR) { heroPhase = 'program'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'program') {
                         heroScreen = 'program'; heroHasTabBar = true; overlayA = 0;
                         if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'fadeout-p'; heroPhaseTime = 0; heroTouchTime = 0; }
@@ -5598,8 +5589,9 @@
                         if (heroPhaseTime >= HERO_BLANK) { heroPhase = 'fadein-pl'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'fadein-pl') {
                         heroScreen = 'player'; heroHasTabBar = false;
-                        overlayA = 1 - easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
-                        if (heroPhaseTime >= HERO_FADE_DUR) { heroPhase = 'player'; heroPhaseTime = 0; }
+                        heroContentA = easeOutCubic(Math.min(heroPhaseTime / HERO_FADEIN_DUR, 1));
+                        overlayA = 0;
+                        if (heroPhaseTime >= HERO_FADEIN_DUR) { heroPhase = 'player'; heroPhaseTime = 0; }
                     } else if (heroPhase === 'player') {
                         heroScreen = 'player'; heroHasTabBar = false; overlayA = 0;
                         if (heroPhaseTime >= HERO_SCREEN_HOLD) { heroPhase = 'fadeout-pl'; heroPhaseTime = 0; heroTouchTime = 0; }
@@ -5611,15 +5603,17 @@
                         heroHasTabBar = true; drawContent = false;
                         if (heroPhaseTime >= HERO_BLANK) {
                             heroPhase = 'fadein-c'; heroPhaseTime = 0;
-                            // Reset typing state so create screen starts fresh (no flash of full text)
+                            // Advance to next intention and reset typing for fresh start
+                            heroIntentionIdx = (heroIntentionIdx + 1) % intentions.length;
+                            heroActiveCat = heroIntentionCats[heroIntentionIdx];
                             heroCharIdx = 0;
                             heroTypingTimer = 0;
-                            heroErasing = false;
                         }
                     } else if (heroPhase === 'fadein-c') {
                         heroScreen = 'create'; heroHasTabBar = true;
-                        overlayA = 1 - easeOutCubic(Math.min(heroPhaseTime / HERO_FADE_DUR, 1));
-                        if (heroPhaseTime >= HERO_FADE_DUR) { heroPhase = 'create'; heroPhaseTime = 0; }
+                        heroContentA = easeOutCubic(Math.min(heroPhaseTime / HERO_FADEIN_DUR, 1));
+                        overlayA = 0;
+                        if (heroPhaseTime >= HERO_FADEIN_DUR) { heroPhase = 'create'; heroPhaseTime = 0; }
                     }
 
                     // --- Draw ---
@@ -5629,15 +5623,15 @@
                     // 1. Background
                     drawScreenBg(hCtx, 0, 0, HW, HH);
 
-                    // 2. Screen content at full alpha (only during hold/fade phases)
+                    // 2. Screen content with staggered element alpha (matching How It Works)
                     if (drawContent) {
                         const heroTyped = intentions[heroIntentionIdx].substring(0, heroCharIdx);
                         if (heroScreen === 'create') {
-                            drawCreateScreen(hCtx, HW, HH, heroTyped, heroActiveCat, 1, true);
+                            drawCreateScreen(hCtx, HW, HH, heroTyped, heroActiveCat, heroContentA, true);
                         } else if (heroScreen === 'program') {
-                            drawProgramScreen(hCtx, HW, HH, programs[heroProgramIdx], 1, true);
+                            drawProgramScreen(hCtx, HW, HH, programs[heroProgramIdx], heroContentA, true);
                         } else if (heroScreen === 'player') {
-                            drawPlayerScreen(hCtx, HW, HH, heroPlayerTime, 1, true);
+                            drawPlayerScreen(hCtx, HW, HH, heroPlayerTime, heroContentA, true);
                         }
                     }
 
