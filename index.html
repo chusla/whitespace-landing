@@ -75,6 +75,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            overflow: hidden;
         }
 
         .landing-header .header-logo img {
@@ -92,6 +93,8 @@
             display: flex;
             align-items: center;
             gap: 28px;
+            flex-shrink: 1;
+            min-width: 0;
         }
 
         .landing-header-nav a {
@@ -222,9 +225,20 @@
             color: rgba(255, 255, 255, 0.95);
         }
 
+        @media (max-width: 1100px) {
+            .landing-header-nav {
+                gap: 16px;
+            }
+
+            .landing-header-nav a {
+                font-size: 12px;
+            }
+        }
+
         @media (max-width: 900px) {
             .landing-header-content {
                 padding: 10px 16px;
+                overflow: visible;
             }
 
             .landing-header .header-logo img {
@@ -232,11 +246,11 @@
             }
 
             .landing-header-nav {
-                display: none;
+                display: none !important;
             }
 
             .hamburger-btn {
-                display: block;
+                display: block !important;
             }
 
             .mobile-menu-overlay,
@@ -863,6 +877,9 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         @media (min-width: 900px) {
@@ -906,13 +923,18 @@
 
         @media (max-width: 500px) {
             .hero-cta-box {
-                padding: 20px 20px;
-                margin: 32px 8px 0;
+                padding: 20px 16px;
+                margin: 32px 0 0;
                 border-radius: 16px;
             }
 
             .hero-cta-headline {
                 font-size: 16px;
+            }
+
+            .hero-cta-timer-row {
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
 
@@ -1004,6 +1026,7 @@
         .app-store-buttons {
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             gap: 0;
             align-items: center;
             justify-content: center;
@@ -1027,10 +1050,12 @@
         .app-store-badge img {
             height: 40px;
             width: auto;
+            max-width: 100%;
         }
 
         .app-store-badge.google-play img {
             height: 58px;
+            max-width: 100%;
         }
 
         @media (min-width: 480px) {
@@ -1508,6 +1533,20 @@
             white-space: normal;
             font-size: 0.9em;
             justify-content: center;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .final-cta .hero-badge-img img {
+            max-width: 100%;
+            height: auto;
+            max-height: 34px;
+        }
+
+        @media (min-width: 480px) {
+            .final-cta .hero-badge-img img {
+                max-height: 40px;
+            }
         }
 
         .cta-box {
@@ -1518,8 +1557,16 @@
             border-radius: 24px;
             padding: 48px 24px;
             text-align: center;
+            overflow: hidden;
         }
 
+
+        @media (max-width: 400px) {
+            .cta-box {
+                padding: 36px 16px;
+                border-radius: 18px;
+            }
+        }
 
         @media (min-width: 768px) {
             .cta-box {
@@ -1816,7 +1863,9 @@
 
         .footer-links {
             display: flex;
-            gap: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 32px;
         }
 
         .footer-link {
@@ -2127,9 +2176,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 12px 16px;
             flex-wrap: wrap;
             margin-top: 20px;
+            max-width: 100%;
         }
 
         @media (min-width: 900px) {
@@ -2148,6 +2198,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .hero-potd-row span {
@@ -2191,6 +2242,7 @@
         .hero-badge-img img {
             height: 34px;
             width: auto;
+            max-width: 100%;
             display: block;
             border-radius: 6px;
         }
@@ -2825,6 +2877,121 @@
 
         .faq-contact a:hover {
             color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ==========================================
+           Comprehensive Mobile Responsive Fixes
+           Common phone sizes: 320-430px
+           ========================================== */
+        @media (max-width: 480px) {
+            /* Reduce section padding on small screens */
+            section {
+                padding: 64px 16px;
+            }
+
+            .faq-section {
+                padding: 64px 16px;
+            }
+
+            /* Tighten section headers */
+            .section-header {
+                margin-bottom: 40px;
+            }
+
+            /* Ensure content images scale within containers */
+            .cta-box img,
+            .screenshot-frame img,
+            .journal-card img,
+            .feature-card img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* Constrain final CTA on small phones */
+            .final-cta {
+                padding: 0 4px;
+            }
+
+            /* Hero badges scale on small phones */
+            .hero-badges-row {
+                gap: 10px 12px;
+            }
+
+            .hero-badge-img img {
+                height: 30px;
+            }
+
+            /* Footer tighten */
+            .footer-left {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .footer-links {
+                gap: 16px 24px;
+            }
+
+            /* Pricing cards tighter padding */
+            .tier-card {
+                padding: 24px 16px;
+            }
+
+            /* Review cards tighter */
+            .review-card {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            /* Very small phones (iPhone SE 1st gen, Galaxy A series) */
+            section {
+                padding: 48px 12px;
+            }
+
+            .faq-section {
+                padding: 48px 12px;
+            }
+
+            .hero {
+                padding: 100px 12px 24px;
+            }
+
+            .cta-box {
+                padding: 28px 12px;
+            }
+
+            .hero-cta-box {
+                padding: 16px 12px;
+            }
+
+            .hero-cta-headline {
+                font-size: 15px;
+            }
+
+            .hero-badges-row {
+                gap: 8px 10px;
+            }
+
+            .hero-badge-img img {
+                height: 26px;
+            }
+
+            .app-store-badge img {
+                height: 36px;
+            }
+
+            .app-store-badge.google-play img {
+                height: 52px;
+            }
+
+            .landing-header-content {
+                padding: 8px 12px;
+            }
+
+            .landing-header .header-logo img {
+                width: 75px;
+            }
         }
     </style>
 </head>
