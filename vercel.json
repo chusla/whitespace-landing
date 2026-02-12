@@ -5,7 +5,19 @@
       "maxDuration": 10
     }
   },
+  "headers": [
+    {
+      "source": "/.well-known/apple-app-site-association",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ]
+    }
+  ],
   "rewrites": [
+    {
+      "source": "/space/:id",
+      "destination": "/space/index.html"
+    },
     {
       "source": "/privacy",
       "destination": "/privacy.html"

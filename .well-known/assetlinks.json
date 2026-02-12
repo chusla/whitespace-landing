@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.one2all.whitespace",
+      "sha256_cert_fingerprints": [
+        "3B:AF:8C:C1:2E:D9:65:58:11:36:13:AB:63:E6:50:0C:86:BF:FA:CF:F8:F3:E5:CA:32:E6:FD:DA:37:9F:00:C8"
+      ]
+    }
+  }
+]
