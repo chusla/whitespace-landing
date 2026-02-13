@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <title>Delete Account & Data — Whitespace</title>
+    <meta name="description" content="Request deletion of your Whitespace account and associated data.">
+    
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://trywhitespace.com/remove_data">
+    <meta property="og:title" content="Delete Account & Data — Whitespace">
+    <meta property="og:description" content="Request deletion of your Whitespace account and associated data.">
+    <meta property="og:image" content="https://trywhitespace.com/src/assets/twitter-10x-your-inner-self.png">
+    <meta property="og:site_name" content="Whitespace | 10x Your Inner Self">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://trywhitespace.com/remove_data">
+    <meta name="twitter:title" content="Delete Account & Data — Whitespace">
+    <meta name="twitter:description" content="Request deletion of your Whitespace account and associated data.">
+    <meta name="twitter:image" content="https://trywhitespace.com/src/assets/twitter-10x-your-inner-self.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: rgb(10, 10, 15);
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        #phosphene-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .header {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 0 30px rgba(107, 140, 255, 0.4));
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 300;
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Steps Section */
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 24px;
+            padding-top: 20px;
+        }
+
+        .steps {
+            margin-bottom: 48px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: rgba(107, 140, 255, 0.2);
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(107, 140, 255, 0.12);
+            color: rgba(107, 140, 255, 0.9);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .step-content h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .step-content a {
+            color: rgba(107, 140, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .step-content a:hover {
+            color: rgba(107, 140, 255, 1);
+        }
+
+        /* Data Info Cards */
+        .data-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .data-card {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        .data-card.deleted {
+            border-color: rgba(107, 140, 255, 0.15);
+        }
+
+        .data-card.retained {
+            border-color: rgba(255, 180, 100, 0.12);
+        }
+
+        .data-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .data-card-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .data-card.deleted .data-card-icon {
+            background: rgba(107, 140, 255, 0.12);
+        }
+
+        .data-card.retained .data-card-icon {
+            background: rgba(255, 180, 100, 0.12);
+        }
+
+        .data-card-label {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-card.deleted .data-card-label {
+            color: rgba(107, 140, 255, 0.8);
+        }
+
+        .data-card.retained .data-card-label {
+            color: rgba(255, 180, 100, 0.8);
+        }
+
+        .data-card ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .data-card li {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-card li:last-child {
+            border-bottom: none;
+        }
+
+        .data-card li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .data-card.deleted li::before {
+            background: rgba(107, 140, 255, 0.5);
+        }
+
+        .data-card.retained li::before {
+            background: rgba(255, 180, 100, 0.5);
+        }
+
+        /* Retention Notice */
+        .retention-notice {
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            margin-bottom: 48px;
+        }
+
+        .retention-notice p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .retention-notice strong {
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 500;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 48px 0;
+        }
+
+        /* Request Form */
+        .form-section {
+            margin-bottom: 48px;
+        }
+
+        .form-card {
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(16px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.3s ease, background 0.3s ease;
+            -webkit-appearance: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: rgba(107, 140, 255, 0.4);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .form-group select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .form-group select option {
+            background: rgb(20, 20, 30);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: rgba(107, 140, 255, 0.15);
+            border: 1px solid rgba(107, 140, 255, 0.3);
+            border-radius: 14px;
+            color: rgba(107, 140, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .submit-btn:hover {
+            background: rgba(107, 140, 255, 0.22);
+            border-color: rgba(107, 140, 255, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .form-note {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 300;
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+
+        .form-note a {
+            color: rgba(107, 140, 255, 0.7);
+            text-decoration: none;
+        }
+
+        .form-note a:hover {
+            color: rgba(107, 140, 255, 0.9);
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px 32px;
+        }
+
+        .success-message .check-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(107, 140, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-message .check-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: rgba(107, 140, 255, 0.9);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .success-message h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .success-message p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Error message */
+        .error-message {
+            display: none;
+            padding: 14px 18px;
+            background: rgba(255, 100, 100, 0.08);
+            border: 1px solid rgba(255, 100, 100, 0.2);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: rgba(255, 140, 140, 0.9);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Loading state */
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(107, 140, 255, 0.3);
+            border-top-color: rgba(107, 140, 255, 0.9);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .submit-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 40px 16px;
+            }
+
+            .data-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                padding: 24px 20px;
+            }
+
+            .step {
+                gap: 16px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="phosphene-canvas"></canvas>
+
+    <div class="container">
+        <div class="header">
+            <a href="/"><img src="https://c4c7ee2640e335085d93afe0c1a41ae6.cdn.bubble.io/f1766176221836x544526176091019140/whitespace.png" alt="Whitespace" class="logo"></a>
+            <h1>Delete Account & Data</h1>
+            <p class="subtitle">Request the deletion of your Whitespace account or associated data. Whether you signed in with Google, Apple, or email, we'll process your request promptly.</p>
+        </div>
+
+        <!-- Steps -->
+        <h2 class="section-title">How to Request Deletion</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Fill out the form below</h3>
+                    <p>Provide the email address associated with your Whitespace account and select whether you'd like to delete your account or specific data.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>We verify your identity</h3>
+                    <p>For your protection, we'll send a confirmation email to verify the request came from you.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Your data is deleted</h3>
+                    <p>Once verified, your data will be permanently removed within 30 days. You'll receive a confirmation when the process is complete.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Data Breakdown -->
+        <h2 class="section-title">What Happens to Your Data</h2>
+        <div class="data-cards">
+            <div class="data-card deleted">
+                <div class="data-card-header">
+                    <div class="data-card-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(107, 140, 255, 0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </div>
+                    <span class="data-card-label">Permanently Deleted</span>
+                </div>
+                <ul>
+                    <li>Account & profile (name, email, preferences)</li>
+                    <li>Generated audio tracks & scripts</li>
+                    <li>Listening history & session data</li>
+                    <li>Personalization profile & learned context</li>
+                    <li>Learn programs & course progress</li>
+                    <li>Calendar connections & synced events</li>
+                    <li>Concierge suggestions & preferences</li>
+                    <li>Favorites, playlists & scheduled sessions</li>
+                    <li>Credit balance & discount redemptions</li>
+                    <li>Push notification token</li>
+                </ul>
+            </div>
+            <div class="data-card retained">
+                <div class="data-card-header">
+                    <div class="data-card-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255, 180, 100, 0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <span class="data-card-label">Temporarily Retained</span>
+                </div>
+                <ul>
+                    <li>Credit & purchase transaction records (up to 7 years, tax/legal compliance)</li>
+                    <li>Subscription & billing records (up to 7 years, tax/legal compliance)</li>
+                    <li>Technical & error logs (up to 90 days)</li>
+                    <li>Legal compliance records</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="retention-notice">
+            <p><strong>Please note:</strong> Account deletion is irreversible. Any unused credits will be forfeited. If you've connected Google Calendar for the Concierge feature, your calendar tokens, synced events, suggestions, feedback, and learned preferences will all be permanently removed. Subscription payments already processed by Apple or Google are subject to their respective refund policies. We recommend cancelling your subscription before requesting account deletion.</p>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Request Form -->
+        <div class="form-section">
+            <h2 class="section-title">Submit a Deletion Request</h2>
+            <div class="form-card">
+                <form id="deletion-form">
+                    <div class="form-group">
+                        <label for="email">Email address associated with your account</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="request-type">What would you like to delete?</label>
+                        <select id="request-type" name="request-type" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="account">Delete my account and all data</option>
+                            <option value="data-only">Delete my data only (keep account)</option>
+                            <option value="calendar">Delete my calendar & Concierge data only</option>
+                            <option value="specific">Delete specific data</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="details-group" style="display: none;">
+                        <label for="details">Please describe which data you'd like deleted</label>
+                        <textarea id="details" name="details" placeholder="e.g., my session history, personalization data, calendar data..."></textarea>
+                    </div>
+                    <div class="error-message" id="error-message"></div>
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        <span class="spinner"></span>
+                        <span class="btn-text">Send Deletion Request</span>
+                    </button>
+                </form>
+                <div class="success-message" id="success-message">
+                    <div class="check-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h3>Request Sent</h3>
+                    <p>Your deletion request has been sent to our team and a confirmation email is on its way. We'll follow up to verify your identity and process the deletion. Please allow up to 30 days for completion.</p>
+                </div>
+                <p class="form-note">You can also email us directly at <a href="mailto:hello@trywhitespace.com">hello@trywhitespace.com</a></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">&copy; 2026 Whitespace</p>
+            <div class="footer-links">
+                <a href="/" class="footer-link">Home</a>
+                <a href="/terms" class="footer-link">Terms</a>
+                <a href="/privacy" class="footer-link">Privacy</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show/hide details field based on selection
+        const requestType = document.getElementById('request-type');
+        const detailsGroup = document.getElementById('details-group');
+        
+        requestType.addEventListener('change', function() {
+            detailsGroup.style.display = (this.value === 'specific') ? 'block' : 'none';
+        });
+
+        // Form submission — sends request via API
+        const form = document.getElementById('deletion-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const type = document.getElementById('request-type').value;
+            const details = document.getElementById('details').value.trim();
+
+            // Validate
+            if (!email || !type) return;
+
+            // Reset error state
+            errorMessage.style.display = 'none';
+            errorMessage.textContent = '';
+
+            // Loading state
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            btnText.textContent = 'Sending...';
+
+            try {
+                const response = await fetch('/api/delete-request', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        requestType: type,
+                        details: details || undefined
+                    })
+                });
+
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseErr) {
+                    throw new Error('Unable to reach our server. Please try again or email hello@trywhitespace.com directly.');
+                }
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Something went wrong. Please try again.');
+                }
+
+                // Success — show confirmation
+                form.style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+
+            } catch (err) {
+                // Show error
+                errorMessage.textContent = err.message;
+                errorMessage.style.display = 'block';
+
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+                btnText.textContent = 'Send Deletion Request';
+            }
+        });
+    </script>
+
+    <script>
+        // Phosphene Background
+        const canvas = document.getElementById('phosphene-canvas');
+        const ctx = canvas.getContext('2d');
+        let phosphenes = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createPhosphenes() {
+            phosphenes = [];
+            const count = 60;
+            for (let i = 0; i < count; i++) {
+                const hue = Math.random() > 0.5 ? 220 + Math.random() * 30 : 260 + Math.random() * 20;
+                phosphenes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 150 + 80,
+                    opacity: Math.random() * 0.04 + 0.015,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    color: `hsl(${hue}, 70%, 60%)`
+                });
+            }
+        }
+
+        function animatePhosphenes() {
+            ctx.fillStyle = 'rgb(10, 10, 15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            phosphenes.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < -p.radius) p.x = canvas.width + p.radius;
+                if (p.x > canvas.width + p.radius) p.x = -p.radius;
+                if (p.y < -p.radius) p.y = canvas.height + p.radius;
+                if (p.y > canvas.height + p.radius) p.y = -p.radius;
+
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                gradient.addColorStop(0, p.color.replace(')', `, ${p.opacity})`).replace('hsl', 'hsla'));
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animatePhosphenes);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createPhosphenes();
+        });
+
+        resizeCanvas();
+        createPhosphenes();
+        animatePhosphenes();
+    </script>
+
+    <!-- Vercel Analytics & Speed Insights -->
+    <script src="/assets/js/analytics.js"></script>
+</body>
+</html>

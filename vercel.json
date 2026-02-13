@@ -3,6 +3,10 @@
     "api/subscribe.js": {
       "memory": 1024,
       "maxDuration": 10
+    },
+    "api/delete-request.js": {
+      "memory": 1024,
+      "maxDuration": 10
     }
   },
   "headers": [
@@ -17,6 +21,10 @@
     {
       "source": "/space/:id",
       "destination": "/space/index.html"
+    },
+    {
+      "source": "/remove_data",
+      "destination": "/remove_data.html"
     },
     {
       "source": "/privacy",
